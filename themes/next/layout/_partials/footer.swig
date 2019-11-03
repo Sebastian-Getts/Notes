@@ -70,3 +70,4 @@
 {%- endif %}
 
 {{- next_inject('footer') }}
+

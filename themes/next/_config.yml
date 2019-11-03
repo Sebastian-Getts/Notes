@@ -78,7 +78,7 @@ footer:
     # Theme & scheme info link (Theme - NexT.scheme).
     enable: true
     # Version info of NexT after scheme info (vX.X.X).
-    version: false
+    version: true
 
   ages:
     # site running time
@@ -117,9 +117,9 @@ creative_commons:
 # ---------------------------------------------------------------
 
 # Schemes
-# scheme: Muse
+scheme: Muse
 # scheme: Mist
-scheme: Pisces
+# scheme: Pisces
 # scheme: Gemini
 
 
@@ -136,8 +136,8 @@ menu:
   home: / || home
   about: /about/ || user
   # top: /top/ || signal
-  # tags: /tags/ || tags
-  # categories: /categories/ || th
+  tags: /tags/ || tags
+  categories: /categories/ || th
   archives: /archives/ || archive
   movies: /movies/ || video-camera
   # schedule: /schedule/ || calendar
@@ -407,7 +407,7 @@ bookmark:
 
 # `Follow me on GitHub` banner in the top-right corner.
 github_banner:
-  enable: true
+  enable: false
   permalink: https://github.com/Sebastian-Getts
   title: Follow me on GitHub
 
@@ -845,9 +845,9 @@ pdf:
 
 # Mermaid tag
 mermaid:
-  enable: false
+  enable: true
   # Available themes: default | dark | forest | neutral
-  theme: forest
+  theme: default
 
 # --------------------------------------------------------------
 # Sitemap Settings
@@ -930,11 +930,14 @@ cursor_effect: fireworks
 
 # window woblle
 wobble:
-  enable: false  # 是否开启边缘波动效果
+  enable: true  # 是否开启边缘波动效果
   radius: 50  # 波动半径
   sidebar: true  # 开启侧边栏边缘摆动
   header: true  # 开启头部边缘摆动
   footer: true  # 开启脚部边缘摆动
+
+# colorful trilateral riband background
+evanyou: false
 
 #! ---------------------------------------------------------------
 #! DO NOT EDIT THE FOLLOWING SETTINGS
@@ -1052,7 +1055,7 @@ vendors:
   # Example:
   # mermaid: //cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js
   # mermaid: //cdnjs.cloudflare.com/ajax/libs/mermaid/8.0.0/mermaid.min.js
-  mermaid:
+  mermaid: //cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js
 
   # Internal version: 1.2.1
   # Example:
@@ -1080,7 +1083,7 @@ vendors:
   # canvas_sphere: //cdn.jsdelivr.net/gh/theme-next/theme-next-three@1/canvas_sphere.min.js
   three:
   three_waves:
-  canvas_lines:
+  canvas_lines: 
   canvas_sphere:
 
   # Internal version: 1.0.0
@@ -1093,7 +1096,7 @@ vendors:
   # Internal version: 1.0.0
   # Example:
   # canvas_ribbon: //cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-ribbon@1/canvas-ribbon.js
-  canvas_ribbon:
+  canvas_ribbon: 
 
 # Assets
 css: css
