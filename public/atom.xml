@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Sebastian Getts</title>
+  
+  <subtitle>I&#39;m the new one.</subtitle>
+  <link href="/atom.xml" rel="self"/>
+  
+  <link href="http://yoursite.com/"/>
+  <updated>2019-11-03T08:08:51.719Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name>Sebastian</name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>bt01</title>
+    <link href="http://yoursite.com/2019/11/03/bt01/"/>
+    <id>http://yoursite.com/2019/11/03/bt01/</id>
+    <published>2019-11-03T04:41:57.000Z</published>
+    <updated>2019-11-03T08:08:51.719Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>涉及基本数据结构和算法</p><ul><li>数组</li><li>链表</li><li>二叉树</li><li>哈希函数</li></ul><p>参考资料：</p><ul><li>BitCoin and Cryptocurrency Technologies A Comprehensive Introduction</li><li>以太坊白皮书、黄皮书、原代码</li><li>Solidity文档</li></ul><h3 id="大纲"><a href="#大纲" class="headerlink" title="大纲"></a>大纲</h3><h4 id="比特币"><a href="#比特币" class="headerlink" title="比特币"></a>比特币</h4><ul><li>密码学基础</li><li>比特币的数据结构</li><li>公式协议和系统实现</li><li>挖矿算法和难度调整</li><li>比特币脚本</li><li>软分叉和硬分叉</li><li>匿名和隐私保护</li></ul><a id="more"></a><h4 id="以太坊"><a href="#以太坊" class="headerlink" title="以太坊"></a>以太坊</h4><ul><li>概述：基于账户的分布式账本</li><li>数据结构：状态树、交易树、收据树</li><li>GHOST协议</li><li>挖矿：memory-hard mining puzzle</li><li>挖矿难度调整</li><li>权益证明<ul><li>Casper the Friendly Finality Gadget(FFG)</li></ul></li><li>智能合约</li></ul><h2 id="密码学原理"><a href="#密码学原理" class="headerlink" title="密码学原理"></a>密码学原理</h2><p>比特币，虽然被成为加密货币（<em>crypto-currency</em>），但是交易信息都是公开的。<br>比特币中用到的两个密码学中的两个功能：<strong>哈希</strong>， <strong>签名</strong>。</p><h3 id="哈希"><a href="#哈希" class="headerlink" title="哈希"></a>哈希</h3><p>密码学中用的哈希函数被称为<em>Cryptographic hash function</em>, 有两个性质，一个是 <em>collision resistance</em>，另一个是 <em>hiding</em>。 除了以上两个性质，比特币中用到的哈希函数的性质还有一个：puzzle friendly。</p><ol><li><p>collision resistance</p><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var x, y;</span><br><span class="line">x != y;</span><br><span class="line">有哈希函数H</span><br><span class="line">使得</span><br><span class="line">H(x)=H(y)</span><br></pre></td></tr></table></figure><p>哈希碰撞是客观存在，但是没有高效的方法来人为的方式去造成哈希碰撞。前提是输入空间很大。因为输入空间是有限的，例如256位的哈希值，输出空间位2的256次方。</p><p>collision resistance的使用：</p><p>用来求message的digest，防止篡改。</p><p>理论上证明不出来任何一个哈希函数是collision resistance的，目前是实践经验来证明的。也有一些哈希函数以前被人认为是collision resistance的，后来被证明不具备那个性质，可以认为制造出来。</p><p><strong>note</strong>：MD5。</p></li><li><p>hiding</p><p>x -&gt; H(x), H(x)不会透露出任何关于x的信息，即是不可逆的。</p><p>可以与第一个性质结合起来用作digital commitment(digital equivalent of a sealed envelope)。相当于第三方托管。前提同样是输入空间要足够大，如果不够大， 可以在做哈希前在后面加入随机数来组成一个数，一同做哈希运算。</p></li><li><p>puzzle friendly</p><p>只看输入，很难猜到哈希函数的输出。如果想要某个区间内的哈希值，没有捷径，一个一个去试，这也是工作量证明。</p><p>挖矿是寻找一个nonce，最后要满足H(block header) &lt;= target。挖空困难，但是验证很容易（difficult to solve, but easy to verify）</p></li></ol><p>比特币中用到哈希函数sha-256.（Security Hash Algorithm）</p><h3 id="签名"><a href="#签名" class="headerlink" title="签名"></a>签名</h3><p>与日常生活中开账户的方式不同，比特币用户要开账户只需创建一对key：public key, private key。不需要任何人的批准。</p><h4 id="asymmetric-encryption-algorithm"><a href="#asymmetric-encryption-algorithm" class="headerlink" title="asymmetric encryption algorithm"></a>asymmetric encryption algorithm</h4><p>最开始的是encryption algorithm, 对称加密。通信双方约定一个密钥，加密和解密都是同一个key。不足的地方是key的分发不安全。</p><p>非对称，加密和解密使用的是同一个人的key，任何人都可以公开他自己的public key，这是用来加密的，解密用的是他自己的private key，保存在自己的本地即可。公钥相当于银行账户，要转给你钱，只需要知道你的公钥即可。</p><p>这对key是可以用来签名的。例如，当你完成了一笔交易的时候，就可以用你的私钥去签名，别人去验证的时候可以用你的公钥去完成验证。</p><p><strong>note</strong>：创建账户时产生的相同的公私钥的概率可以忽略不计，微乎其微的可能性。但仍需要选取一个好的a good source randomness。</p><h3 id="summary"><a href="#summary" class="headerlink" title="summary"></a>summary</h3><p>比特币中，一般是先对一个message取hash，然后再对hash签名。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;简介&quot;&gt;&lt;a href=&quot;#简介&quot; class=&quot;headerlink&quot; title=&quot;简介&quot;&gt;&lt;/a&gt;简介&lt;/h1&gt;&lt;p&gt;涉及基本数据结构和算法&lt;/p&gt;&lt;ul&gt;
+&lt;li&gt;数组&lt;/li&gt;
+&lt;li&gt;链表&lt;/li&gt;
+&lt;li&gt;二叉树&lt;/li&gt;
+&lt;li&gt;哈希函数&lt;/li&gt;
+&lt;/ul&gt;&lt;p&gt;参考资料：&lt;/p&gt;&lt;ul&gt;
+&lt;li&gt;BitCoin and Cryptocurrency Technologies A Comprehensive Introduction&lt;/li&gt;
+&lt;li&gt;以太坊白皮书、黄皮书、原代码&lt;/li&gt;
+&lt;li&gt;Solidity文档&lt;/li&gt;
+&lt;/ul&gt;&lt;h3 id=&quot;大纲&quot;&gt;&lt;a href=&quot;#大纲&quot; class=&quot;headerlink&quot; title=&quot;大纲&quot;&gt;&lt;/a&gt;大纲&lt;/h3&gt;&lt;h4 id=&quot;比特币&quot;&gt;&lt;a href=&quot;#比特币&quot; class=&quot;headerlink&quot; title=&quot;比特币&quot;&gt;&lt;/a&gt;比特币&lt;/h4&gt;&lt;ul&gt;
+&lt;li&gt;密码学基础&lt;/li&gt;
+&lt;li&gt;比特币的数据结构&lt;/li&gt;
+&lt;li&gt;公式协议和系统实现&lt;/li&gt;
+&lt;li&gt;挖矿算法和难度调整&lt;/li&gt;
+&lt;li&gt;比特币脚本&lt;/li&gt;
+&lt;li&gt;软分叉和硬分叉&lt;/li&gt;
+&lt;li&gt;匿名和隐私保护&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+    
+      <category term="技术" scheme="http://yoursite.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+      <category term="bt" scheme="http://yoursite.com/categories/%E6%8A%80%E6%9C%AF/bt/"/>
+    
+    
+      <category term="密码学" scheme="http://yoursite.com/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/"/>
+    
+      <category term="比特币" scheme="http://yoursite.com/tags/%E6%AF%94%E7%89%B9%E5%B8%81/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>preface</title>
+    <link href="http://yoursite.com/2019/11/03/preface/"/>
+    <id>http://yoursite.com/2019/11/03/preface/</id>
+    <published>2019-11-02T17:17:12.000Z</published>
+    <updated>2019-11-02T17:46:33.791Z</updated>
+    
+    <content type="html"><![CDATA[<p>简单规划下博客的tag和categories，这样以后写起来更有目的性，而不是杂乱无章。<br>categories： 应该是大类，譬如饮食、文化、旅游等等。所以，我的博客的categories目前应该会有类似如下分类：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">categories:</span><br><span class="line">- 技术</span><br><span class="line">- 博客</span><br></pre></td></tr></table></figure></p><p>这样表示 技术是博客的父类。所以父类一级的应该会有效率、技术、观影、生活。效率下会有工作、其它。技术会有java、python、Spring、raspberPi、frontend、explore</p><a id="more"></a><p>tags： 为每篇文章贴标签，这个暂时即兴吧。。。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;简单规划下博客的tag和categories，这样以后写起来更有目的性，而不是杂乱无章。&lt;br&gt;categories： 应该是大类，譬如饮食、文化、旅游等等。所以，我的博客的categories目前应该会有类似如下分类：&lt;br&gt;&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;categories:&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;- 技术&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;- 博客&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;/p&gt;&lt;p&gt;这样表示 技术是博客的父类。所以父类一级的应该会有效率、技术、观影、生活。效率下会有工作、其它。技术会有java、python、Spring、raspberPi、frontend、explore&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="plans" scheme="http://yoursite.com/categories/plans/"/>
+    
+    
+      <category term="states" scheme="http://yoursite.com/tags/states/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>nginx</title>
+    <link href="http://yoursite.com/2019/11/02/nginx/"/>
+    <id>http://yoursite.com/2019/11/02/nginx/</id>
+    <published>2019-11-02T14:53:32.000Z</published>
+    <updated>2019-11-02T17:52:37.709Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="NIGNX"><a href="#NIGNX" class="headerlink" title="NIGNX"></a>NIGNX</h1><p><em>Nginx</em> (engine x) 是一个高性能的HTTP和<strong>反向代理</strong>web服务器，同时也提供了IMAP/POP3/SMTP服务。Nginx是由伊戈尔·赛索耶夫为俄罗斯访问量第二的Rambler.ru站点（俄文：Рамблер）开发的，第一个公开版本0.1.0发布于2004年10月4日。</p><p>Nginx是一款轻量级的Web服务器反向代理服务器及电子邮件（IMAP/POP3）代理服务器，在BSD-like 协议下发行。其特点是占有内存少，并发能力强，事实上nginx的并发能力确实在同类型的网页服务器中表现较好。</p><a id="more"></a><p>特点：</p><ul><li>反向代理</li><li>负载均衡</li><li>动静分离</li><li>高可用</li></ul><h2 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h2><p>客户端对代理是无感知的，因为客户端不需要任何配置就可以访问，只需要将请求发送到反向代理服务器，由反向代理服务器去选择目标服务器获取数据后，再返回给客户端。此时反向代理服务器的目标服务器对外就是一个服务器，暴露的是代理服务器地址，隐藏了真实服务器IP地址。</p><h2 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h2><p>如果把局域网外的Internet比作资源库，则局域网中的客户端要访问Internet，则需要通过代理服务器来访问，这种代理服务就称作正向代理。（nginx还可以用作正向代理来进行上网功能。）</p><p>正向访问需要在浏览器配置代理服务器。</p><h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><p>单个服务器解决不了问题，我们增加服务器的数量，然后将请求分发到各个服务上，将原先请求集中到单个服务器上的情况改为将请求分发到多个服务器上，将负载分发到不同的服务器，即负载均衡。</p><h2 id="动静分离"><a href="#动静分离" class="headerlink" title="动静分离"></a>动静分离</h2><p>为了加快网站的解析速度，可以把动态页面和静态页面由不同的服务器来解析，加快解析速度。降低原来单个服务器的压力。静态资源和动态资源分开部署放置两台不同的服务器。</p><p>静态资源：html, css, js</p><p>动态资源：jsp, servlet</p><h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p>前提条件：进入nginx目录</p><p>/usr/localnginx/sbin</p><ul><li>查看nginx版本号</li><li>启动</li><li>关闭</li><li>重新加载nginx</li></ul><h4 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h4><p>由三部分组成</p><p>全局块</p><p>events块</p><p>http块</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;NIGNX&quot;&gt;&lt;a href=&quot;#NIGNX&quot; class=&quot;headerlink&quot; title=&quot;NIGNX&quot;&gt;&lt;/a&gt;NIGNX&lt;/h1&gt;&lt;p&gt;&lt;em&gt;Nginx&lt;/em&gt; (engine x) 是一个高性能的HTTP和&lt;strong&gt;反向代理&lt;/strong&gt;web服务器，同时也提供了IMAP/POP3/SMTP服务。Nginx是由伊戈尔·赛索耶夫为俄罗斯访问量第二的Rambler.ru站点（俄文：Рамблер）开发的，第一个公开版本0.1.0发布于2004年10月4日。&lt;/p&gt;&lt;p&gt;Nginx是一款轻量级的Web服务器反向代理服务器及电子邮件（IMAP/POP3）代理服务器，在BSD-like 协议下发行。其特点是占有内存少，并发能力强，事实上nginx的并发能力确实在同类型的网页服务器中表现较好。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="技术" scheme="http://yoursite.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+      <category term="explore" scheme="http://yoursite.com/categories/%E6%8A%80%E6%9C%AF/explore/"/>
+    
+    
+      <category term="network" scheme="http://yoursite.com/tags/network/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>swagger</title>
+    <link href="http://yoursite.com/2019/11/02/swagger/"/>
+    <id>http://yoursite.com/2019/11/02/swagger/</id>
+    <published>2019-11-02T14:51:41.000Z</published>
+    <updated>2019-11-03T04:29:23.864Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="SWAGGER"><a href="#SWAGGER" class="headerlink" title="SWAGGER"></a>SWAGGER</h1><h2 id="前后端分离"><a href="#前后端分离" class="headerlink" title="前后端分离"></a>前后端分离</h2><p>Vue + SpringBoot</p><p>后端时代：前端只有管理静态页面；模板引擎jsp</p><p>前后端分离时代：</p><ul><li>后端：后端控制层、服务层、数据访问层</li><li>前端：前端控制层，视图层<ul><li>伪造后端数据，json。不需要后端，前端一九能够跑起来</li></ul></li><li>前后端交互：api</li><li>前后端相对独立，松耦合</li><li>前后端甚至可以部署在不同的服务器上</li></ul><a id="more"></a><p>产生一个问题：</p><ul><li>前后端集成联调，前后端人员无法做到及时协商</li></ul><p>解决方案：</p><ul><li>首先指定schema（计划的提纲），实时更新api</li><li>早些年，指定word文档计划</li><li>前后端分离<ul><li>前端测试后端接口：postman</li><li>后端提供接口，需要实时更新最新的消息及改动</li></ul></li></ul><h2 id="swagger"><a href="#swagger" class="headerlink" title="swagger"></a>swagger</h2><p>restful api 文档在线自动生成工具</p><p>在项目使用swagger需要springfox</p><ul><li>swagger2</li><li>ui</li></ul><h4 id="springboot集成swagger"><a href="#springboot集成swagger" class="headerlink" title="springboot集成swagger"></a>springboot集成swagger</h4><p>导入相关依赖：</p><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger2 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.springfox<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>springfox-swagger2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.9.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.springfox<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>springfox-swagger-ui<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.9.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br></pre></td></tr></table></figure><h4 id="配置swagger"><a href="#配置swagger" class="headerlink" title="配置swagger"></a>配置swagger</h4><p>swagger的实例<strong>docket</strong></p><h5 id="配置swagger信息"><a href="#配置swagger信息" class="headerlink" title="配置swagger信息"></a>配置swagger信息</h5><p>新建一个关于swagger的配置类</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableSwagger</span>2</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SwaggerConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Docket <span class="title">docket</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2)</span><br><span class="line">                .apiInfo(apiInfo());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> ApiInfo <span class="title">apiInfo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Contact contact = <span class="keyword">new</span> Contact(<span class="string">"Sebastian"</span>, <span class="string">"https://www.raspberrypi.org/"</span>, <span class="string">"2573992956@qq.com"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ApiInfo(<span class="string">"Sebastian's api document"</span>, <span class="string">"FUN SWAGGER"</span>, <span class="string">"1.1"</span>,</span><br><span class="line">                <span class="string">"http://www.baidu.com"</span>, contact, <span class="string">"Apache 2.0"</span>,</span><br><span class="line">                <span class="string">"http://www.bing.com"</span>, <span class="keyword">new</span> ArrayList());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h5 id="配置扫描接口及开关"><a href="#配置扫描接口及开关" class="headerlink" title="配置扫描接口及开关"></a>配置扫描接口及开关</h5><p>Docket.select()</p><blockquote><p> RequestHandlerSelectors //配置要扫描接口的方式</p></blockquote><p>源码涉及<a href="https://www.jb51.net/article/49405.htm" target="_blank" rel="noopener">链式调用</a></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Docket <span class="title">docket</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2)</span><br><span class="line">        .apiInfo(apiInfo())</span><br><span class="line">        .enable(<span class="keyword">false</span>)</span><br><span class="line">        .select()</span><br><span class="line">        .apis(RequestHandlerSelectors.basePackage(<span class="string">"com.sunday.personal.tuesday.controller"</span>))</span><br><span class="line">        <span class="comment">//                .paths(PathSelectors.ant("/com/sunday/personal/tuesday/config/*"))</span></span><br><span class="line">        .build(); <span class="comment">//build</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//basePackage, 扫描路径中的</span></span><br><span class="line"><span class="comment">//any，扫描全部</span></span><br><span class="line"><span class="comment">//withClassAnnotation(RestController.class)，扫描类上有…的类</span></span><br><span class="line"><span class="comment">//withMethodAnnotation(...)，扫描方法上有…的类</span></span><br></pre></td></tr></table></figure><p><u>只在测试环境使用swagger：</u></p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Docket <span class="title">docket</span><span class="params">(Environment environment)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//<span class="doctag">TODO:</span>设置要显示的swagger环境</span></span><br><span class="line">    <span class="comment">//Profiles profiles = Profiles.of("dev");</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取项目的环境</span></span><br><span class="line">    <span class="keyword">boolean</span> flag = environment.acceptsProfiles(); <span class="comment">//acceptsProfiles(profiles)</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2)</span><br><span class="line">        .apiInfo(apiInfo())</span><br><span class="line">        .enable(<span class="keyword">false</span>)</span><br><span class="line">        .select()</span><br><span class="line">        .apis(RequestHandlerSelectors.basePackage(<span class="string">"com.sunday.personal.tuesday.controller"</span>))</span><br><span class="line">        <span class="comment">//                .paths(PathSelectors.ant("/com/sunday/personal/tuesday/config/*"))</span></span><br><span class="line">        .build(); <span class="comment">//build</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="配置api分组"><a href="#配置api分组" class="headerlink" title="配置api分组"></a>配置api分组</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Docket <span class="title">docket2</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2).groupName(<span class="string">"crm"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Docket <span class="title">docket1</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2).groupName(<span class="string">"pay"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Docket <span class="title">docket</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//<span class="doctag">TODO:</span>设置要显示的swagger环境</span></span><br><span class="line">    <span class="comment">//        Profiles profiles = Profiles.of("dev");</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取项目的环境</span></span><br><span class="line">    <span class="comment">//        boolean flag = environment.acceptsProfiles(); //acceptsProfiles(profiles)</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2)</span><br><span class="line">        .apiInfo(apiInfo())</span><br><span class="line">        .groupName(<span class="string">"interface"</span>)</span><br><span class="line">        .enable(<span class="keyword">true</span>)</span><br><span class="line">        .select()</span><br><span class="line">        .apis(RequestHandlerSelectors.basePackage(<span class="string">"com.sunday.personal.tuesday.controller"</span>))</span><br><span class="line">        .build(); <span class="comment">//build</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h4 id="实体类配置"><a href="#实体类配置" class="headerlink" title="实体类配置"></a>实体类配置</h4><p>@Api…注释</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;SWAGGER&quot;&gt;&lt;a href=&quot;#SWAGGER&quot; class=&quot;headerlink&quot; title=&quot;SWAGGER&quot;&gt;&lt;/a&gt;SWAGGER&lt;/h1&gt;&lt;h2 id=&quot;前后端分离&quot;&gt;&lt;a href=&quot;#前后端分离&quot; class=&quot;headerlink&quot; title=&quot;前后端分离&quot;&gt;&lt;/a&gt;前后端分离&lt;/h2&gt;&lt;p&gt;Vue + SpringBoot&lt;/p&gt;&lt;p&gt;后端时代：前端只有管理静态页面；模板引擎jsp&lt;/p&gt;&lt;p&gt;前后端分离时代：&lt;/p&gt;&lt;ul&gt;
+&lt;li&gt;后端：后端控制层、服务层、数据访问层&lt;/li&gt;
+&lt;li&gt;前端：前端控制层，视图层&lt;ul&gt;
+&lt;li&gt;伪造后端数据，json。不需要后端，前端一九能够跑起来&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;前后端交互：api&lt;/li&gt;
+&lt;li&gt;前后端相对独立，松耦合&lt;/li&gt;
+&lt;li&gt;前后端甚至可以部署在不同的服务器上&lt;/li&gt;
+&lt;/ul&gt;
+    
+    </summary>
+    
+    
+      <category term="技术" scheme="http://yoursite.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+      <category term="explore" scheme="http://yoursite.com/categories/%E6%8A%80%E6%9C%AF/explore/"/>
+    
+    
+      <category term="swagger" scheme="http://yoursite.com/tags/swagger/"/>
+    
+      <category term="SpringBoot" scheme="http://yoursite.com/tags/SpringBoot/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>乱码</title>
+    <link href="http://yoursite.com/2019/11/02/%E4%B9%B1%E7%A0%81/"/>
+    <id>http://yoursite.com/2019/11/02/乱码/</id>
+    <published>2019-11-02T14:48:39.000Z</published>
+    <updated>2019-11-02T17:53:30.616Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="锟斤拷"><a href="#锟斤拷" class="headerlink" title="锟斤拷"></a>锟斤拷</h2><p>中文乱码。</p><p><code>字符编码</code>：<em>Character encoding</em>是一套法则，使用该法则能够对自然语言的字符的一个集合（如字母表或音节表）与其他东西的一个集合（如号码或电脉冲）进行配对。和莫尔斯电码功能类似，美国定制了一套字符编码，对英语字符与二进制位之间的关系做了统一规定，即ASCII码。</p><p><code>ASCII</code>(<em>American Standard Code for Information Interchange，美国信息交换标准代码</em>)基于拉丁字母的一套编码系统，主要用于显示现代英语，共128个字符。</p><a id="more"></a><p><code>Unicode</code>(<em>万国码、国际码、统一码、单一码</em>)，至今仍在不断修增，每个新版本都加入更多的字符。虽然统一了全世界字符的编码，但没有规定如何存储。于是有了UTF(<em>Unicode Transformation Format</em>)，常见的有: </p><ul><li><p>UTF-8 使用一至四个字节为每个字符编码</p></li><li><p>UTF-16 使用二或四个字节为每个字符编码</p></li><li><p>UTF-32 使用四个字节为每个字符编码</p></li></ul><p>排在前面的优先纳入Unicode的文字，可能优先使用1、2字节存储了，对于后面纳入的文字，就要使用3字节或四字节存储了，后纳入的对存储空间要求就会很大。对于常用的汉字，在UTF-8中采用3字节进行编码。但是如果有一种只包含中文和ASCII编码的话，就不需要3个字节了，2个就够了。几乎不会出现别国文字的网站（只服务于国家或地区的）就方便使用。</p><p><code>GB2312</code>1981年，国标局制定并实施了GB2312-80编码，标准简体中文字符集（不支持繁体中文）</p><p><code>GBK</code>微软利用GB2312-80未使用的编码空间，收录GB13000.1-93全部字符制定了GBK编码，这样，一个纯中文网站可以采用这种编码节省存储空间。</p><p><code>乱码</code>锟斤拷的由来：<strong>把一串中文字符通过<em>UTF-8</em>进行编码传输给别人，别人拿到这串文字后，通过<em>GBK</em>进行解码，得到的内容就会是“锟斤拷……” </strong></p><p><code>锟斤拷</code>Unicode官方定义无法显示的字为<em>0xFFFD REPLACEMENT CHARACTER</em>，他的16进制形式是三个字节<em>0xEF 0xBF 0xBD</em>，如果有两个连续的字符都无法显示，那么这编码放在GBK（一个汉字两个字节）正好对应的就是锟(0xEFBF)斤(0xBDEF)拷(0xBFBD)。所以出现这三个字，就是<strong>UTF-8</strong>和<strong>GBK</strong>的转换出了问题。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h2 id=&quot;锟斤拷&quot;&gt;&lt;a href=&quot;#锟斤拷&quot; class=&quot;headerlink&quot; title=&quot;锟斤拷&quot;&gt;&lt;/a&gt;锟斤拷&lt;/h2&gt;&lt;p&gt;中文乱码。&lt;/p&gt;&lt;p&gt;&lt;code&gt;字符编码&lt;/code&gt;：&lt;em&gt;Character encoding&lt;/em&gt;是一套法则，使用该法则能够对自然语言的字符的一个集合（如字母表或音节表）与其他东西的一个集合（如号码或电脉冲）进行配对。和莫尔斯电码功能类似，美国定制了一套字符编码，对英语字符与二进制位之间的关系做了统一规定，即ASCII码。&lt;/p&gt;&lt;p&gt;&lt;code&gt;ASCII&lt;/code&gt;(&lt;em&gt;American Standard Code for Information Interchange，美国信息交换标准代码&lt;/em&gt;)基于拉丁字母的一套编码系统，主要用于显示现代英语，共128个字符。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="技术" scheme="http://yoursite.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+      <category term="explore" scheme="http://yoursite.com/categories/%E6%8A%80%E6%9C%AF/explore/"/>
+    
+    
+      <category term="unicode" scheme="http://yoursite.com/tags/unicode/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>bat</title>
+    <link href="http://yoursite.com/2019/10/31/bat/"/>
+    <id>http://yoursite.com/2019/10/31/bat/</id>
+    <published>2019-10-31T04:17:08.000Z</published>
+    <updated>2019-11-02T17:52:08.837Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="BATCH"><a href="#BATCH" class="headerlink" title="BATCH"></a>BATCH</h1><p>扩展名为<strong>bat</strong>或<strong>cmd</strong>。</p><p>在用机是Windows系统，想写一个脚本来代替每次写完后重复输入的命令，大致是：</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br><span class="line">hexo g</span><br><span class="line">hex d</span><br><span class="line">git add . </span><br><span class="line">git commit -m <span class="string">"update"</span></span><br><span class="line">git push -f</span><br></pre></td></tr></table></figure><h2 id="符号"><a href="#符号" class="headerlink" title="符号"></a>符号</h2><p>@：  不显示它后边的命令语句，只显示命令执行的结果 </p><a id="more"></a><p> &amp; ： 命令连接符，将两个命令连续执行不用分行 </p><p> &amp;&amp; ： 当前一个命令成功时，才执行后一个命令，否则不执行 </p><p>||：上一个命令执行失败才执行下一个命令</p><p>|：管道符号。将上一个命令输出的内容作为下一个命令的输入内容。</p><p>>：重定向符号。将命令的输出结果重定向到后面的设备文件中，原文件的内容被覆盖。</p><h2 id="idea"><a href="#idea" class="headerlink" title="idea"></a>idea</h2><p>可以使用<code>&amp;&amp;</code>来完成连续执行命令的过程，并且上一个执行成功时才执行下一个命令。</p><p>e.g.:</p><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d &amp;&amp; git add . &amp;&amp; git commit -m <span class="string">"update"</span> &amp;&amp; git push -f</span><br></pre></td></tr></table></figure>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h1 id=&quot;BATCH&quot;&gt;&lt;a href=&quot;#BATCH&quot; class=&quot;headerlink&quot; title=&quot;BATCH&quot;&gt;&lt;/a&gt;BATCH&lt;/h1&gt;&lt;p&gt;扩展名为&lt;strong&gt;bat&lt;/strong&gt;或&lt;strong&gt;cmd&lt;/strong&gt;。&lt;/p&gt;&lt;p&gt;在用机是Windows系统，想写一个脚本来代替每次写完后重复输入的命令，大致是：&lt;/p&gt;&lt;figure class=&quot;highlight bash&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;hexo clean&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;hexo g&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;hex d&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git add . &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git commit -m &lt;span class=&quot;string&quot;&gt;&quot;update&quot;&lt;/span&gt;&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;git push -f&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;&lt;h2 id=&quot;符号&quot;&gt;&lt;a href=&quot;#符号&quot; class=&quot;headerlink&quot; title=&quot;符号&quot;&gt;&lt;/a&gt;符号&lt;/h2&gt;&lt;p&gt;@：  不显示它后边的命令语句，只显示命令执行的结果 &lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="技术" scheme="http://yoursite.com/categories/%E6%8A%80%E6%9C%AF/"/>
+    
+      <category term="explore" scheme="http://yoursite.com/categories/%E6%8A%80%E6%9C%AF/explore/"/>
+    
+    
+      <category term="script" scheme="http://yoursite.com/tags/script/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Hello World</title>
+    <link href="http://yoursite.com/2019/10/29/hello-world/"/>
+    <id>http://yoursite.com/2019/10/29/hello-world/</id>
+    <published>2019-10-29T05:52:19.656Z</published>
+    <updated>2019-10-29T05:52:19.657Z</updated>
+    
+    <content type="html"><![CDATA[<p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p><a id="more"></a><h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p><h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p><h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p><h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure><p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Welcome to &lt;a href=&quot;https://hexo.io/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;Hexo&lt;/a&gt;! This is your very first post. Check &lt;a href=&quot;https://hexo.io/docs/&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;documentation&lt;/a&gt; for more info. If you get any problems when using Hexo, you can find the answer in &lt;a href=&quot;https://hexo.io/docs/troubleshooting.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;troubleshooting&lt;/a&gt; or you can ask me on &lt;a href=&quot;https://github.com/hexojs/hexo/issues&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;GitHub&lt;/a&gt;.&lt;/p&gt;
+    
+    </summary>
+    
+    
+    
+  </entry>
+  
+</feed>

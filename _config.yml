@@ -4,8 +4,8 @@
 
 # Site
 title: Sebastian Getts
-subtitle: an imagable geek
-description: I like reading and coding
+subtitle: I'm the new one.
+description: I'm feeling lucky!
 keywords: Python, Java, Go
 author: Sebastian
 language: en
@@ -90,7 +90,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: 3-hexo
+theme: next
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -98,3 +98,19 @@ deploy:
   type: git
   repo: git@github.com:Sebastian-Getts/sebastian-getts.github.io.git
   branch: master
+
+# 文章结尾提示语
+post_end_tag:
+  enabled: true  # 是否开启文末的本文结束标记
+  icon: paw # 结束标记之间的图标
+
+# --------------------------------------------------------------
+# douban settings
+# --------------------------------------------------------------
+douban:
+  user: 140146774
+  builtin: false
+  movie:
+    title: 'This is my movie title'
+    quote: 'This is my movie quote'
+  timeout: 1000
