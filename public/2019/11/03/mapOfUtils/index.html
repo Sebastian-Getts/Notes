@@ -54,14 +54,14 @@
 </script>
 
   <meta name="description" content="不晓得哪里出了问题，总之是一个有点棘手的bug。。。。mermaid无法识别，于是无法作图。。。好像flow也出了问题。。。解决中">
-<meta name="keywords" content="utils">
+<meta name="keywords" content="markdown">
 <meta property="og:type" content="article">
 <meta property="og:title" content="工具图">
 <meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;03&#x2F;mapOfUtils&#x2F;index.html">
 <meta property="og:site_name" content="Sebastian Getts">
 <meta property="og:description" content="不晓得哪里出了问题，总之是一个有点棘手的bug。。。。mermaid无法识别，于是无法作图。。。好像flow也出了问题。。。解决中">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-11-03T15:12:35.240Z">
+<meta property="og:updated_time" content="2019-11-03T15:58:42.183Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2019/11/03/mapOfUtils/">
@@ -223,7 +223,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2019-11-03 17:23:05 / Modified: 23:12:35" itemprop="dateCreated datePublished" datetime="2019-11-03T17:23:05+08:00">2019-11-03</time>
+              <time title="Created: 2019-11-03 17:23:05 / Modified: 23:58:42" itemprop="dateCreated datePublished" datetime="2019-11-03T17:23:05+08:00">2019-11-03</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -231,8 +231,8 @@
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/explore/" itemprop="url" rel="index">
-                    <span itemprop="name">explore</span>
+                  <a href="/categories/utils/" itemprop="url" rel="index">
+                    <span itemprop="name">utils</span>
                   </a>
                 </span>
             </span>
@@ -314,7 +314,20 @@ section 里程碑 0.3
 
 
 
-<h3 id="甘特图"><a href="#甘特图" class="headerlink" title="甘特图"></a>甘特图</h3><p>说了那么多，先贴下<a href="https://mermaidjs.github.io/#/">official site</a>，简直是宝库。慢慢更新。。。<script src="https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.27/webfontloader.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.4.1/snap.svg-min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/js-sequence-diagrams/1.0.6/sequence-diagram-min.js"></script><textarea id="sequence-0-code" style="display: none">Title: 标题：复杂使用
+<h3 id="甘特图"><a href="#甘特图" class="headerlink" title="甘特图"></a>甘特图</h3><p>说了那么多，先贴下<a href="https://mermaidjs.github.io/#/">official site</a>，简直是宝库。慢慢更新。。。<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: Start:>http://www.google.com[blank]
+e=>end:>http://www.google.com
+op1=>operation: My Operation
+sub1=>subroutine: My Subroutine
+cond=>condition: Yes
+or No?:>http://www.google.com
+io=>inputoutput: catch something...
+para=>parallel: parallel tasks
+
+st->op1->cond
+cond(yes)->io->e
+cond(no)->para
+para(path1, bottom)->sub1(right)->op1
+para(path2, top)->op1</textarea><textarea id="flowchart-0-options" style="display: none">{"theme":"simple","scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script><script src="https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.27/webfontloader.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.4.1/snap.svg-min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/js-sequence-diagrams/1.0.6/sequence-diagram-min.js"></script><textarea id="sequence-0-code" style="display: none">Title: 标题：复杂使用
 
 对象A->对象B: 对象B你好吗?（请求）
 
@@ -334,20 +347,7 @@ Note over 小三,对象B: 我们是朋友
 
 participant C
 
-Note right of C: 没人陪我玩</textarea><textarea id="sequence-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12,"theme":"simple"}</textarea><script>  var code = document.getElementById("sequence-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("sequence-0-options").value));  var diagram = Diagram.parse(code);  diagram.drawSVG("sequence-0", options);</script><script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: Start:>http://www.google.com[blank]
-e=>end:>http://www.google.com
-op1=>operation: My Operation
-sub1=>subroutine: My Subroutine
-cond=>condition: Yes
-or No?:>http://www.google.com
-io=>inputoutput: catch something...
-para=>parallel: parallel tasks
-
-st->op1->cond
-cond(yes)->io->e
-cond(no)->para
-para(path1, bottom)->sub1(right)->op1
-para(path2, top)->op1</textarea><textarea id="flowchart-0-options" style="display: none">{"scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12,"theme":"simple"}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script></p>
+Note right of C: 没人陪我玩</textarea><textarea id="sequence-0-options" style="display: none">{"theme":"simple","scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("sequence-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("sequence-0-options").value));  var diagram = Diagram.parse(code);  diagram.drawSVG("sequence-0", options);</script></p>
 
     </div>
 
@@ -391,7 +391,7 @@ para(path2, top)->op1</textarea><textarea id="flowchart-0-options" style="displa
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/utils/" rel="tag"># utils</a>
+              <a href="/tags/markdown/" rel="tag"># markdown</a>
           </div>
 
         
@@ -406,6 +406,9 @@ para(path2, top)->op1</textarea><textarea id="flowchart-0-options" style="displa
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+                <a href="/2019/11/04/PlainTasks/" rel="prev" title="PlainTasks">
+                  PlainTasks <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
       </footer>
@@ -459,7 +462,7 @@ para(path2, top)->op1</textarea><textarea id="flowchart-0-options" style="displa
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">8</span>
+          <span class="site-state-item-count">9</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -472,7 +475,7 @@ para(path2, top)->op1</textarea><textarea id="flowchart-0-options" style="displa
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-count">10</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
