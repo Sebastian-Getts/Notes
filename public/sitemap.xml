@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2019/11/03/mapOfUtils/</loc>
+    
+    <lastmod>2019-11-04T16:06:24.032Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2019/11/04/Pascal-s-Triangle/</loc>
     
     <lastmod>2019-11-04T15:33:12.675Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>http://yoursite.com/2019/11/04/PlainTasks/</loc>
     
     <lastmod>2019-11-03T16:17:52.047Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/11/03/mapOfUtils/</loc>
-    
-    <lastmod>2019-11-03T15:58:42.183Z</lastmod>
     
   </url>
   

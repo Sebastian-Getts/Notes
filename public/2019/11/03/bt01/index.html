@@ -378,8 +378,8 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2019/11/03/mapOfUtils/" rel="prev" title="工具图">
-                  工具图 <i class="fa fa-chevron-right"></i>
+                <a href="/2019/11/03/mapOfUtils/" rel="prev" title="map of utils">
+                  map of utils <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -603,9 +603,9 @@ window.addEventListener('pjax:success', () => {
 
 <script pjax>
 if (document.querySelectorAll('pre.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8/dist/mermaid.min.js', () => {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/mermaid/8.2.0/mermaid.min.js', () => {
     mermaid.initialize({
-      theme: 'default',
+      theme: 'forest',
       logLevel: 3,
       flowchart: { curve: 'linear' },
       gantt: { axisFormat: '%m/%d/%Y' },
