@@ -53,18 +53,18 @@
   };
 </script>
 
-  <meta name="description" content="NIGNXNginx (engine x) 是一个高性能的HTTP和反向代理web服务器，同时也提供了IMAP&#x2F;POP3&#x2F;SMTP服务。Nginx是由伊戈尔·赛索耶夫为俄罗斯访问量第二的Rambler.ru站点（俄文：Рамблер）开发的，第一个公开版本0.1.0发布于2004年10月4日。Nginx是一款轻量级的Web服务器反向代理服务器及电子邮件（IMAP&#x2F;POP3）代理服务器，在BSD-l">
-<meta name="keywords" content="network">
+  <meta name="description" content="读了华罗庚的著作《杨辉三角》有感：杨辉三角引申出的杨辉恒等式，利用了排列组合的原理，可以作用在二项式、开方等等的方面，简直amazing。。。。。。。。Btw，练习了Latex语法。">
+<meta name="keywords" content="PermutationAndCombination">
 <meta property="og:type" content="article">
-<meta property="og:title" content="nginx">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;02&#x2F;nginx&#x2F;index.html">
+<meta property="og:title" content="Pascal&#39;s Triangle">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;04&#x2F;Pascal-s-Triangle&#x2F;index.html">
 <meta property="og:site_name" content="Sebastian Getts">
-<meta property="og:description" content="NIGNXNginx (engine x) 是一个高性能的HTTP和反向代理web服务器，同时也提供了IMAP&#x2F;POP3&#x2F;SMTP服务。Nginx是由伊戈尔·赛索耶夫为俄罗斯访问量第二的Rambler.ru站点（俄文：Рамблер）开发的，第一个公开版本0.1.0发布于2004年10月4日。Nginx是一款轻量级的Web服务器反向代理服务器及电子邮件（IMAP&#x2F;POP3）代理服务器，在BSD-l">
+<meta property="og:description" content="读了华罗庚的著作《杨辉三角》有感：杨辉三角引申出的杨辉恒等式，利用了排列组合的原理，可以作用在二项式、开方等等的方面，简直amazing。。。。。。。。Btw，练习了Latex语法。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-11-02T17:52:37.709Z">
+<meta property="og:updated_time" content="2019-11-04T06:05:39.890Z">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="http://yoursite.com/2019/11/02/nginx/">
+<link rel="canonical" href="http://yoursite.com/2019/11/04/Pascal-s-Triangle/">
 
 
 <script id="page-configurations">
@@ -78,7 +78,7 @@
   };
 </script>
 
-  <title>nginx | Sebastian Getts</title>
+  <title>Pascal's Triangle | Sebastian Getts</title>
   
 
 
@@ -199,7 +199,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/02/nginx/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/04/Pascal-s-Triangle/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -212,7 +212,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          nginx
+          Pascal's Triangle
         </h1>
 
         <div class="post-meta">
@@ -221,30 +221,18 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2019-11-02 22:53:32" itemprop="dateCreated datePublished" datetime="2019-11-02T22:53:32+08:00">2019-11-02</time>
+              <time title="Created: 2019-11-04 13:02:35 / Modified: 14:05:39" itemprop="dateCreated datePublished" datetime="2019-11-04T13:02:35+08:00">2019-11-04</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-11-03 01:52:37" itemprop="dateModified" datetime="2019-11-03T01:52:37+08:00">2019-11-03</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
-                    <span itemprop="name">技术</span>
-                  </a>
-                </span>
-                  , 
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%8A%80%E6%9C%AF/explore/" itemprop="url" rel="index">
-                    <span itemprop="name">explore</span>
+                  <a href="/categories/Math/" itemprop="url" rel="index">
+                    <span itemprop="name">Math</span>
                   </a>
                 </span>
             </span>
@@ -260,35 +248,38 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="NIGNX"><a href="#NIGNX" class="headerlink" title="NIGNX"></a>NIGNX</h1><p><em>Nginx</em> (engine x) 是一个高性能的HTTP和<strong>反向代理</strong>web服务器，同时也提供了IMAP/POP3/SMTP服务。Nginx是由伊戈尔·赛索耶夫为俄罗斯访问量第二的Rambler.ru站点（俄文：Рамблер）开发的，第一个公开版本0.1.0发布于2004年10月4日。</p><p>Nginx是一款轻量级的Web服务器反向代理服务器及电子邮件（IMAP/POP3）代理服务器，在BSD-like 协议下发行。其特点是占有内存少，并发能力强，事实上nginx的并发能力确实在同类型的网页服务器中表现较好。</p><a id="more"></a>
-
-<p>特点：</p>
-<ul>
-<li>反向代理</li>
-<li>负载均衡</li>
-<li>动静分离</li>
-<li>高可用</li>
+        <p>读了华罗庚的著作《杨辉三角》有感：杨辉三角引申出的杨辉恒等式，利用了排列组合的原理，可以作用在二项式、开方等等的方面，简直amazing。。。。。。。。Btw，练习了Latex语法。</p>
+<a id="more"></a>
+<p>类似下方的三角形，被称为杨辉三角，外国称其为帕斯卡三角。</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">   1</span><br><span class="line">  1 1</span><br><span class="line"> 1 2 1</span><br><span class="line">1 3 3 1</span><br><span class="line">.....</span><br></pre></td></tr></table></figure>
+<p>可以推出一般规律：</p>
+<p>第n+1行：</p>
+<script type="math/tex; mode=display">
+1, C_n^1, Cn^2, ..., 1</script><p>其中，用到了熟悉的组合：</p>
+<script type="math/tex; mode=display">
+C_n^r=\frac{n(n-1)...(n-r+1)}{r!}=\frac{n!}{r!(n-r)!}</script><p>他表示<strong>从n件东西中取出r件东西的组合数</strong>。</p>
+<p>从杨辉三角中可以看出：两条斜边都是1，而其余的数都是由其肩上的两个数之和。</p>
+<p>于是有了<strong>杨辉恒等式</strong>：</p>
+<script type="math/tex; mode=display">
+C_{n-1}^{r}+C_{n-1}^{r-1}=C_{n}^{r}(r=1,2,3...n)</script><p>这里是将本没有意义的记号赋予了值：</p>
+<script type="math/tex; mode=display">
+C_{n}^{0}=1, C_{n-1}{n}=0</script><p>杨辉恒等式的具体证明结果如下：</p>
+<script type="math/tex; mode=display">
+C_{n-1}^{r}+C_{n-1}^{r-1}=\frac{(n-1)!}{r!(n-1-r)!}+\frac{(n-1)!}{(r-1)!(n-r)!}
+=\frac{(n-1)!}{r!(n-r)!}(n-r)+\frac{(n-1)!}{r!(n-r)!}r=\frac{n!}{r!(n-r)!}
+=C_{n}^{r}</script><h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><ul>
+<li>二项式定理</li>
+<li>开方</li>
+<li>高阶等差级数</li>
+<li>……</li>
 </ul>
-<h2 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h2><p>客户端对代理是无感知的，因为客户端不需要任何配置就可以访问，只需要将请求发送到反向代理服务器，由反向代理服务器去选择目标服务器获取数据后，再返回给客户端。此时反向代理服务器的目标服务器对外就是一个服务器，暴露的是代理服务器地址，隐藏了真实服务器IP地址。</p>
-<h2 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h2><p>如果把局域网外的Internet比作资源库，则局域网中的客户端要访问Internet，则需要通过代理服务器来访问，这种代理服务就称作正向代理。（nginx还可以用作正向代理来进行上网功能。）</p>
-<p>正向访问需要在浏览器配置代理服务器。</p>
-<h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><p>单个服务器解决不了问题，我们增加服务器的数量，然后将请求分发到各个服务上，将原先请求集中到单个服务器上的情况改为将请求分发到多个服务器上，将负载分发到不同的服务器，即负载均衡。</p>
-<h2 id="动静分离"><a href="#动静分离" class="headerlink" title="动静分离"></a>动静分离</h2><p>为了加快网站的解析速度，可以把动态页面和静态页面由不同的服务器来解析，加快解析速度。降低原来单个服务器的压力。静态资源和动态资源分开部署放置两台不同的服务器。</p>
-<p>静态资源：html, css, js</p>
-<p>动态资源：jsp, servlet</p>
-<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p>前提条件：进入nginx目录</p>
-<p>/usr/localnginx/sbin</p>
-<ul>
-<li>查看nginx版本号</li>
-<li>启动</li>
-<li>关闭</li>
-<li>重新加载nginx</li>
-</ul>
-<h4 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h4><p>由三部分组成</p>
-<p>全局块</p>
-<p>events块</p>
-<p>http块</p>
-
+<h3 id="Latex"><a href="#Latex" class="headerlink" title="Latex"></a>Latex</h3><p>组合：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">C_&#123;n-1&#125;^&#123;r&#125;, \tbinom&#123;n&#125;&#123;m&#125;</span><br></pre></td></tr></table></figure>
+<script type="math/tex; mode=display">
+C_{n-1}^{r},\tbinom{n}{m}</script><p>分数：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">\frac&#123;(n-1)!&#125;&#123;r!(n-1-r)!&#125;</span><br></pre></td></tr></table></figure>
+<script type="math/tex; mode=display">
+\frac{(n-1)!}{r!(n-1-r)!}</script>
     </div>
 
     
@@ -331,24 +322,21 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/network/" rel="tag"># network</a>
+              <a href="/tags/PermutationAndCombination/" rel="tag"># PermutationAndCombination</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-                <a href="/2019/11/02/swagger/" rel="next" title="swagger">
-                  <i class="fa fa-chevron-left"></i> swagger
+                <a href="/2019/11/04/PlainTasks/" rel="next" title="PlainTasks">
+                  <i class="fa fa-chevron-left"></i> PlainTasks
                 </a>
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2019/11/03/preface/" rel="prev" title="preface">
-                  preface <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
       </footer>
