@@ -3,6 +3,7 @@ title: Pascal's Triangle
 date: 2019-11-04 13:02:35
 categories: Math
 tags: PermutationAndCombination
+mathjax: true
 ---
 
 读了华罗庚的著作《杨辉三角》有感：杨辉三角引申出的杨辉恒等式，利用了排列组合的原理，可以作用在二项式、开方等等的方面，简直amazing。。。。。。。。Btw，练习了Latex语法。
@@ -81,9 +82,13 @@ $$
 \frac{(n-1)!}{r!(n-1-r)!}
 $$
 
+- note: 如果想使用mathjax，开启latex，需要在头部添加：
 
+  ```properties
+  mathjax: true
+  ```
 
-
+  
 
 
 

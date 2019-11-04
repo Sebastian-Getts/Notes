@@ -248,65 +248,70 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>不晓得哪里出了问题，总之是一个有点棘手的bug。。。。mermaid无法识别，于是无法作图。。。好像flow也出了问题。。。解决中<br><a id="more"></a></p>
-<h2 id="聊聊如何方便的使用图"><a href="#聊聊如何方便的使用图" class="headerlink" title="聊聊如何方便的使用图"></a>聊聊如何方便的使用图</h2><p>markdown下的制图非常的美观又方便，我常用的是<strong>标准流程图</strong> ，时序图和甘特图以前在软件工程的课上有使用过，后来接触的就比较少了，而且用的工具也不是markdown，是更为专业点的软件Rose（好像是）。总而言之，今天总结下这些形形色色的图。免得日后使用的时候一通bing、一脸懵，。</p>
-<p>下面先介绍工具。</p>
+        <p>&#x4E0D;&#x6653;&#x5F97;&#x54EA;&#x91CC;&#x51FA;&#x4E86;&#x95EE;&#x9898;&#xFF0C;&#x603B;&#x4E4B;&#x662F;&#x4E00;&#x4E2A;&#x6709;&#x70B9;&#x68D8;&#x624B;&#x7684;bug&#x3002;&#x3002;&#x3002;&#x3002;mermaid&#x65E0;&#x6CD5;&#x8BC6;&#x522B;&#xFF0C;&#x4E8E;&#x662F;&#x65E0;&#x6CD5;&#x4F5C;&#x56FE;&#x3002;&#x3002;&#x3002;&#x597D;&#x50CF;flow&#x4E5F;&#x51FA;&#x4E86;&#x95EE;&#x9898;&#x3002;&#x3002;&#x3002;&#x89E3;&#x51B3;&#x4E2D;</p>
+<a id="more"></a>
+<h2 id="&#x804A;&#x804A;&#x5982;&#x4F55;&#x65B9;&#x4FBF;&#x7684;&#x4F7F;&#x7528;&#x56FE;"><a href="#&#x804A;&#x804A;&#x5982;&#x4F55;&#x65B9;&#x4FBF;&#x7684;&#x4F7F;&#x7528;&#x56FE;" class="headerlink" title="&#x804A;&#x804A;&#x5982;&#x4F55;&#x65B9;&#x4FBF;&#x7684;&#x4F7F;&#x7528;&#x56FE;"></a>&#x804A;&#x804A;&#x5982;&#x4F55;&#x65B9;&#x4FBF;&#x7684;&#x4F7F;&#x7528;&#x56FE;</h2><p>markdown&#x4E0B;&#x7684;&#x5236;&#x56FE;&#x975E;&#x5E38;&#x7684;&#x7F8E;&#x89C2;&#x53C8;&#x65B9;&#x4FBF;&#xFF0C;&#x6211;&#x5E38;&#x7528;&#x7684;&#x662F;<strong>&#x6807;&#x51C6;&#x6D41;&#x7A0B;&#x56FE;</strong> &#xFF0C;&#x65F6;&#x5E8F;&#x56FE;&#x548C;&#x7518;&#x7279;&#x56FE;&#x4EE5;&#x524D;&#x5728;&#x8F6F;&#x4EF6;&#x5DE5;&#x7A0B;&#x7684;&#x8BFE;&#x4E0A;&#x6709;&#x4F7F;&#x7528;&#x8FC7;&#xFF0C;&#x540E;&#x6765;&#x63A5;&#x89E6;&#x7684;&#x5C31;&#x6BD4;&#x8F83;&#x5C11;&#x4E86;&#xFF0C;&#x800C;&#x4E14;&#x7528;&#x7684;&#x5DE5;&#x5177;&#x4E5F;&#x4E0D;&#x662F;markdown&#xFF0C;&#x662F;&#x66F4;&#x4E3A;&#x4E13;&#x4E1A;&#x70B9;&#x7684;&#x8F6F;&#x4EF6;Rose&#xFF08;&#x597D;&#x50CF;&#x662F;&#xFF09;&#x3002;&#x603B;&#x800C;&#x8A00;&#x4E4B;&#xFF0C;&#x4ECA;&#x5929;&#x603B;&#x7ED3;&#x4E0B;&#x8FD9;&#x4E9B;&#x5F62;&#x5F62;&#x8272;&#x8272;&#x7684;&#x56FE;&#x3002;&#x514D;&#x5F97;&#x65E5;&#x540E;&#x4F7F;&#x7528;&#x7684;&#x65F6;&#x5019;&#x4E00;&#x901A;bing&#x3001;&#x4E00;&#x8138;&#x61F5;&#xFF0C;&#x3002;</p>
+<p>&#x4E0B;&#x9762;&#x5148;&#x4ECB;&#x7ECD;&#x5DE5;&#x5177;&#x3002;</p>
 <h2 id="flow"><a href="#flow" class="headerlink" title="flow"></a>flow</h2><p><a href="https://github.com/adrai/flowchart.js">flowchart.js github site</a></p>
 <p><a href="https://jingyan.baidu.com/article/48b558e3035d9a7f38c09aeb.html">another</a></p>
-<p>标签类型：start, end, operation, subroutine, condition, inputoutput, parallel</p>
-<p>流程图的语法分为两部分，前面部分用来定义流程图元素，后面部分用来连接流程图元素，指定流程图的执行走向。</p>
-<p>定义元素阶段的语法是：<strong>tag=&gt;type:content:&gt;url</strong>, e.g.: st=&gt;start: Start</p>
-<p>tag: 名称任意</p>
-<p>type: 名称固定</p>
-<p>content: 任意，冒号与文本之间要有空格。</p>
-<p>连接流程图元素阶段的语法：使用-&gt;来连接两个元素，对于condition类型，有yes和no两个分支。每个分支可以定义分支走向，默认向下。</p>
-<p>示例：</p>
+<p>&#x6807;&#x7B7E;&#x7C7B;&#x578B;&#xFF1A;start, end, operation, subroutine, condition, inputoutput, parallel</p>
+<p>&#x6D41;&#x7A0B;&#x56FE;&#x7684;&#x8BED;&#x6CD5;&#x5206;&#x4E3A;&#x4E24;&#x90E8;&#x5206;&#xFF0C;&#x524D;&#x9762;&#x90E8;&#x5206;&#x7528;&#x6765;&#x5B9A;&#x4E49;&#x6D41;&#x7A0B;&#x56FE;&#x5143;&#x7D20;&#xFF0C;&#x540E;&#x9762;&#x90E8;&#x5206;&#x7528;&#x6765;&#x8FDE;&#x63A5;&#x6D41;&#x7A0B;&#x56FE;&#x5143;&#x7D20;&#xFF0C;&#x6307;&#x5B9A;&#x6D41;&#x7A0B;&#x56FE;&#x7684;&#x6267;&#x884C;&#x8D70;&#x5411;&#x3002;</p>
+<p>&#x5B9A;&#x4E49;&#x5143;&#x7D20;&#x9636;&#x6BB5;&#x7684;&#x8BED;&#x6CD5;&#x662F;&#xFF1A;<strong>tag=&gt;type:content:&gt;url</strong>, e.g.: st=&gt;start: Start</p>
+<p>tag: &#x540D;&#x79F0;&#x4EFB;&#x610F;</p>
+<p>type: &#x540D;&#x79F0;&#x56FA;&#x5B9A;</p>
+<p>content: &#x4EFB;&#x610F;&#xFF0C;&#x5192;&#x53F7;&#x4E0E;&#x6587;&#x672C;&#x4E4B;&#x95F4;&#x8981;&#x6709;&#x7A7A;&#x683C;&#x3002;</p>
+<p>&#x8FDE;&#x63A5;&#x6D41;&#x7A0B;&#x56FE;&#x5143;&#x7D20;&#x9636;&#x6BB5;&#x7684;&#x8BED;&#x6CD5;&#xFF1A;&#x4F7F;&#x7528;-&gt;&#x6765;&#x8FDE;&#x63A5;&#x4E24;&#x4E2A;&#x5143;&#x7D20;&#xFF0C;&#x5BF9;&#x4E8E;condition&#x7C7B;&#x578B;&#xFF0C;&#x6709;yes&#x548C;no&#x4E24;&#x4E2A;&#x5206;&#x652F;&#x3002;&#x6BCF;&#x4E2A;&#x5206;&#x652F;&#x53EF;&#x4EE5;&#x5B9A;&#x4E49;&#x5206;&#x652F;&#x8D70;&#x5411;&#xFF0C;&#x9ED8;&#x8BA4;&#x5411;&#x4E0B;&#x3002;</p>
+<p>&#x793A;&#x4F8B;&#xFF1A;</p>
 <ul>
-<li>st=&gt;start: 开始</li>
-<li>op1=&gt;operation: 操作、执行说明</li>
-<li>cond=&gt;condition: 确认</li>
-<li>e=&gt;end: 结束</li>
+<li>st=&gt;start: &#x5F00;&#x59CB;</li>
+<li>op1=&gt;operation: &#x64CD;&#x4F5C;&#x3001;&#x6267;&#x884C;&#x8BF4;&#x660E;</li>
+<li>cond=&gt;condition: &#x786E;&#x8BA4;</li>
+<li>e=&gt;end: &#x7ED3;&#x675F;</li>
 <li>parallel(path1, )-&gt;x; parallel(path2, )-&gt;x</li>
 </ul>
 <div id="flowchart-0" class="flow-chart"></div>
 
 <h2 id="mermaid"><a href="#mermaid" class="headerlink" title="mermaid"></a>mermaid</h2><p> Generation of diagram and flowchart from text in a similar manner as markdown </p>
-<p>以上是官方的介绍，以下是官方的demo</p>
+<p>&#x4EE5;&#x4E0A;&#x662F;&#x5B98;&#x65B9;&#x7684;&#x4ECB;&#x7ECD;&#xFF0C;&#x4EE5;&#x4E0B;&#x662F;&#x5B98;&#x65B9;&#x7684;demo</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">A-&gt;&gt; B: Query</span><br><span class="line">B-&gt;&gt; C: Forward query</span><br><span class="line">Note right of C: Thinking...</span><br><span class="line">C-&gt;&gt; B: Response</span><br><span class="line">B-&gt;&gt; A: Forward response</span><br></pre></td></tr></table></figure>
-<pre class="mermaid">sequenceDiagram
-A->> B: Query
-B->> C: Forward query
-Note right of C: Thinking...
-C->> B: Response
-B->> A: Forward response</pre>
 
-<p>很强大有没有。。不是很懂这是啥图，下面还有正经的甘特图：</p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">gantt</span><br><span class="line">dateFormat  YYYY-MM-DD</span><br><span class="line">title Shop项目交付计划</span><br><span class="line"></span><br><span class="line">section 里程碑 0.1 </span><br><span class="line">数据库设计          :active,    p1, 2016-08-15, 3d</span><br><span class="line">详细设计            :           p2, after p1, 2d</span><br><span class="line"></span><br><span class="line">section 里程碑 0.2</span><br><span class="line">后端开发            :           p3, 2016-08-22, 20d</span><br><span class="line">前端开发            :           p4, 2016-08-22, 15d</span><br><span class="line"></span><br><span class="line">section 里程碑 0.3</span><br><span class="line">功能测试            :       p6, after p3, 5d</span><br><span class="line">上线               :       p7, after p6, 2d</span><br><span class="line">交付               :       p8, afterp7, 2d</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">sequenceDiagram
+A-&gt;&gt; B: Query
+B-&gt;&gt; C: Forward query
+Note right of C: Thinking...
+C-&gt;&gt; B: Response
+B-&gt;&gt; A: Forward response</pre>
+
+<p>&#x5F88;&#x5F3A;&#x5927;&#x6709;&#x6CA1;&#x6709;&#x3002;&#x3002;&#x4E0D;&#x662F;&#x5F88;&#x61C2;&#x8FD9;&#x662F;&#x5565;&#x56FE;&#xFF0C;&#x4E0B;&#x9762;&#x8FD8;&#x6709;&#x6B63;&#x7ECF;&#x7684;&#x7518;&#x7279;&#x56FE;&#xFF1A;</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">gantt</span><br><span class="line">dateFormat  YYYY-MM-DD</span><br><span class="line">title Shop&#x9879;&#x76EE;&#x4EA4;&#x4ED8;&#x8BA1;&#x5212;</span><br><span class="line"></span><br><span class="line">section &#x91CC;&#x7A0B;&#x7891; 0.1 </span><br><span class="line">&#x6570;&#x636E;&#x5E93;&#x8BBE;&#x8BA1;          :active,    p1, 2016-08-15, 3d</span><br><span class="line">&#x8BE6;&#x7EC6;&#x8BBE;&#x8BA1;            :           p2, after p1, 2d</span><br><span class="line"></span><br><span class="line">section &#x91CC;&#x7A0B;&#x7891; 0.2</span><br><span class="line">&#x540E;&#x7AEF;&#x5F00;&#x53D1;            :           p3, 2016-08-22, 20d</span><br><span class="line">&#x524D;&#x7AEF;&#x5F00;&#x53D1;            :           p4, 2016-08-22, 15d</span><br><span class="line"></span><br><span class="line">section &#x91CC;&#x7A0B;&#x7891; 0.3</span><br><span class="line">&#x529F;&#x80FD;&#x6D4B;&#x8BD5;            :       p6, after p3, 5d</span><br><span class="line">&#x4E0A;&#x7EBF;               :       p7, after p6, 2d</span><br><span class="line">&#x4EA4;&#x4ED8;               :       p8, afterp7, 2d</span><br></pre></td></tr></table></figure>
+
+
+
 <pre class="mermaid">gantt
 dateFormat  YYYY-MM-DD
-title Shop项目交付计划
+title Shop&#x9879;&#x76EE;&#x4EA4;&#x4ED8;&#x8BA1;&#x5212;
 
-section 里程碑 0.1 
-数据库设计          :active,    p1, 2016-08-15, 3d
-详细设计            :           p2, after p1, 2d
+section &#x91CC;&#x7A0B;&#x7891; 0.1 
+&#x6570;&#x636E;&#x5E93;&#x8BBE;&#x8BA1;          :active,    p1, 2016-08-15, 3d
+&#x8BE6;&#x7EC6;&#x8BBE;&#x8BA1;            :           p2, after p1, 2d
 
-section 里程碑 0.2
-后端开发            :           p3, 2016-08-22, 20d
-前端开发            :           p4, 2016-08-22, 15d
+section &#x91CC;&#x7A0B;&#x7891; 0.2
+&#x540E;&#x7AEF;&#x5F00;&#x53D1;            :           p3, 2016-08-22, 20d
+&#x524D;&#x7AEF;&#x5F00;&#x53D1;            :           p4, 2016-08-22, 15d
 
-section 里程碑 0.3
-功能测试            :       p6, after p3, 5d
-上线               :       p7, after p6, 2d
-交付               :       p8, afterp7, 2d</pre>
+section &#x91CC;&#x7A0B;&#x7891; 0.3
+&#x529F;&#x80FD;&#x6D4B;&#x8BD5;            :       p6, after p3, 5d
+&#x4E0A;&#x7EBF;               :       p7, after p6, 2d
+&#x4EA4;&#x4ED8;               :       p8, afterp7, 2d</pre>
 
-<h3 id="时序图"><a href="#时序图" class="headerlink" title="时序图"></a>时序图</h3><p>第一行使用<code>sequenceDiagram</code>关键词声明。</p>
-<p>参与者使用<code>participant</code>声明。</p>
-<p> 消息声明是使用<code>[参与者][发送方式][参与者]:消息内容</code>形式声明。</p>
-<p>发送方式有如下几种：</p>
+<h3 id="&#x65F6;&#x5E8F;&#x56FE;"><a href="#&#x65F6;&#x5E8F;&#x56FE;" class="headerlink" title="&#x65F6;&#x5E8F;&#x56FE;"></a>&#x65F6;&#x5E8F;&#x56FE;</h3><p>&#x7B2C;&#x4E00;&#x884C;&#x4F7F;&#x7528;<code>sequenceDiagram</code>&#x5173;&#x952E;&#x8BCD;&#x58F0;&#x660E;&#x3002;</p>
+<p>&#x53C2;&#x4E0E;&#x8005;&#x4F7F;&#x7528;<code>participant</code>&#x58F0;&#x660E;&#x3002;</p>
+<p> &#x6D88;&#x606F;&#x58F0;&#x660E;&#x662F;&#x4F7F;&#x7528;<code>[&#x53C2;&#x4E0E;&#x8005;][&#x53D1;&#x9001;&#x65B9;&#x5F0F;][&#x53C2;&#x4E0E;&#x8005;]:&#x6D88;&#x606F;&#x5185;&#x5BB9;</code>&#x5F62;&#x5F0F;&#x58F0;&#x660E;&#x3002;</p>
+<p>&#x53D1;&#x9001;&#x65B9;&#x5F0F;&#x6709;&#x5982;&#x4E0B;&#x51E0;&#x79CD;&#xFF1A;</p>
 <ul>
-<li>无箭头的实线、虚线</li>
-<li>有箭头的实线、虚线</li>
-<li>有x的实线、虚线</li>
+<li>&#x65E0;&#x7BAD;&#x5934;&#x7684;&#x5B9E;&#x7EBF;&#x3001;&#x865A;&#x7EBF;</li>
+<li>&#x6709;&#x7BAD;&#x5934;&#x7684;&#x5B9E;&#x7EBF;&#x3001;&#x865A;&#x7EBF;</li>
+<li>&#x6709;x&#x7684;&#x5B9E;&#x7EBF;&#x3001;&#x865A;&#x7EBF;</li>
 </ul>
 <div id="sequence-0"></div>
 
@@ -314,40 +319,40 @@ section 里程碑 0.3
 
 
 
-<h3 id="甘特图"><a href="#甘特图" class="headerlink" title="甘特图"></a>甘特图</h3><p>说了那么多，先贴下<a href="https://mermaidjs.github.io/#/">official site</a>，简直是宝库。慢慢更新。。。<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=>start: Start:>http://www.google.com[blank]
-e=>end:>http://www.google.com
-op1=>operation: My Operation
-sub1=>subroutine: My Subroutine
-cond=>condition: Yes
-or No?:>http://www.google.com
-io=>inputoutput: catch something...
-para=>parallel: parallel tasks
+<h3 id="&#x7518;&#x7279;&#x56FE;"><a href="#&#x7518;&#x7279;&#x56FE;" class="headerlink" title="&#x7518;&#x7279;&#x56FE;"></a>&#x7518;&#x7279;&#x56FE;</h3><p>&#x8BF4;&#x4E86;&#x90A3;&#x4E48;&#x591A;&#xFF0C;&#x5148;&#x8D34;&#x4E0B;<a href="https://mermaidjs.github.io/#/">official site</a>&#xFF0C;&#x7B80;&#x76F4;&#x662F;&#x5B9D;&#x5E93;&#x3002;&#x6162;&#x6162;&#x66F4;&#x65B0;&#x3002;&#x3002;&#x3002;<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=&gt;start: Start:&gt;http://www.google.com[blank]
+e=&gt;end:&gt;http://www.google.com
+op1=&gt;operation: My Operation
+sub1=&gt;subroutine: My Subroutine
+cond=&gt;condition: Yes
+or No?:&gt;http://www.google.com
+io=&gt;inputoutput: catch something...
+para=&gt;parallel: parallel tasks
 
-st->op1->cond
-cond(yes)->io->e
-cond(no)->para
-para(path1, bottom)->sub1(right)->op1
-para(path2, top)->op1</textarea><textarea id="flowchart-0-options" style="display: none">{"theme":"simple","scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script><script src="https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.27/webfontloader.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.4.1/snap.svg-min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/js-sequence-diagrams/1.0.6/sequence-diagram-min.js"></script><textarea id="sequence-0-code" style="display: none">Title: 标题：复杂使用
+st-&gt;op1-&gt;cond
+cond(yes)-&gt;io-&gt;e
+cond(no)-&gt;para
+para(path1, bottom)-&gt;sub1(right)-&gt;op1
+para(path2, top)-&gt;op1</textarea><textarea id="flowchart-0-options" style="display: none">{&quot;theme&quot;:&quot;simple&quot;,&quot;scale&quot;:1,&quot;line-width&quot;:2,&quot;line-length&quot;:50,&quot;text-margin&quot;:10,&quot;font-size&quot;:12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script><script src="https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.27/webfontloader.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.4.1/snap.svg-min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/js-sequence-diagrams/1.0.6/sequence-diagram-min.js"></script><textarea id="sequence-0-code" style="display: none">Title: &#x6807;&#x9898;&#xFF1A;&#x590D;&#x6742;&#x4F7F;&#x7528;
 
-对象A->对象B: 对象B你好吗?（请求）
+&#x5BF9;&#x8C61;A-&gt;&#x5BF9;&#x8C61;B: &#x5BF9;&#x8C61;B&#x4F60;&#x597D;&#x5417;?&#xFF08;&#x8BF7;&#x6C42;&#xFF09;
 
-Note right of 对象B: 对象B的描述
+Note right of &#x5BF9;&#x8C61;B: &#x5BF9;&#x8C61;B&#x7684;&#x63CF;&#x8FF0;
 
-Note left of 对象A: 对象A的描述(提示)
+Note left of &#x5BF9;&#x8C61;A: &#x5BF9;&#x8C61;A&#x7684;&#x63CF;&#x8FF0;(&#x63D0;&#x793A;)
 
-对象B-->对象A: 我很好(响应)
+&#x5BF9;&#x8C61;B--&gt;&#x5BF9;&#x8C61;A: &#x6211;&#x5F88;&#x597D;(&#x54CD;&#x5E94;)
 
-对象B->小三: 你好吗
+&#x5BF9;&#x8C61;B-&gt;&#x5C0F;&#x4E09;: &#x4F60;&#x597D;&#x5417;
 
-小三-->>对象A: 对象B找我了
+&#x5C0F;&#x4E09;--&gt;&gt;&#x5BF9;&#x8C61;A: &#x5BF9;&#x8C61;B&#x627E;&#x6211;&#x4E86;
 
-对象A->对象B: 你真的好吗？
+&#x5BF9;&#x8C61;A-&gt;&#x5BF9;&#x8C61;B: &#x4F60;&#x771F;&#x7684;&#x597D;&#x5417;&#xFF1F;
 
-Note over 小三,对象B: 我们是朋友
+Note over &#x5C0F;&#x4E09;,&#x5BF9;&#x8C61;B: &#x6211;&#x4EEC;&#x662F;&#x670B;&#x53CB;
 
 participant C
 
-Note right of C: 没人陪我玩</textarea><textarea id="sequence-0-options" style="display: none">{"theme":"simple","scale":1,"line-width":2,"line-length":50,"text-margin":10,"font-size":12}</textarea><script>  var code = document.getElementById("sequence-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("sequence-0-options").value));  var diagram = Diagram.parse(code);  diagram.drawSVG("sequence-0", options);</script></p>
+Note right of C: &#x6CA1;&#x4EBA;&#x966A;&#x6211;&#x73A9;</textarea><textarea id="sequence-0-options" style="display: none">{&quot;theme&quot;:&quot;simple&quot;,&quot;scale&quot;:1,&quot;line-width&quot;:2,&quot;line-length&quot;:50,&quot;text-margin&quot;:10,&quot;font-size&quot;:12}</textarea><script>  var code = document.getElementById("sequence-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("sequence-0-options").value));  var diagram = Diagram.parse(code);  diagram.drawSVG("sequence-0", options);</script></p>
 
     </div>
 
@@ -645,6 +650,8 @@ if (document.querySelectorAll('pre.mermaid').length) {
 
 
     <div id="pjax">
+
+  
 
   
 
