@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://yoursite.com/2019/11/07/tagOfHexo/</loc>
+    <lastmod>2019-11-07</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2019/11/06/http/</loc>
+    <lastmod>2019-11-05</lastmod>
+  </url>  <url>
     <loc>http://yoursite.com/2019/11/04/Pascal-s-Triangle/</loc>
     <lastmod>2019-11-05</lastmod>
   </url>  <url>

@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="msvalidate.01" content="541BE591C13D7313C3568E6D172218E2">
+  <meta name="baidu-site-verification" content="3qvcDlCoMv">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: true,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="为了能够更好的书写文档，更方便地使用markdown以及hexo，特写此篇总结较为常用的以及探索不常用的语法。。。">
+<meta name="keywords" content="hexo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="tagOfHexo">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;07&#x2F;tagOfHexo&#x2F;index.html">
+<meta property="og:site_name" content="Sebastian Getts">
+<meta property="og:description" content="为了能够更好的书写文档，更方便地使用markdown以及hexo，特写此篇总结较为常用的以及探索不常用的语法。。。">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-11-07T17:05:41.890Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2019/11/07/tagOfHexo/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>tagOfHexo | Sebastian Getts</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sebastian Getts</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">I'm the new one.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-fw fa-video-camera"></i>movies</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/07/tagOfHexo/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Sebastian">
+      <meta itemprop="description" content="I'm feeling lucky!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sebastian Getts">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          tagOfHexo
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-11-07 23:41:44" itemprop="dateCreated datePublished" datetime="2019-11-07T23:41:44+08:00">2019-11-07</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-11-08 01:05:41" itemprop="dateModified" datetime="2019-11-08T01:05:41+08:00">2019-11-08</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/explore/" itemprop="url" rel="index">
+                    <span itemprop="name">explore</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>&#x4E3A;&#x4E86;&#x80FD;&#x591F;&#x66F4;&#x597D;&#x7684;&#x4E66;&#x5199;&#x6587;&#x6863;&#xFF0C;&#x66F4;&#x65B9;&#x4FBF;&#x5730;&#x4F7F;&#x7528;markdown&#x4EE5;&#x53CA;hexo&#xFF0C;&#x7279;&#x5199;&#x6B64;&#x7BC7;&#x603B;&#x7ED3;&#x8F83;&#x4E3A;&#x5E38;&#x7528;&#x7684;&#x4EE5;&#x53CA;&#x63A2;&#x7D22;&#x4E0D;&#x5E38;&#x7528;&#x7684;&#x8BED;&#x6CD5;&#x3002;&#x3002;&#x3002;</p>
+<a id="more"></a>
+<h1 id="&#x5C45;&#x4E2D;"><a href="#&#x5C45;&#x4E2D;" class="headerlink" title="&#x5C45;&#x4E2D;"></a>&#x5C45;&#x4E2D;</h1><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">{% cq %} blah blah blah {% endcq %}</span><br><span class="line">{% centerquote %}blah blah blah{% endcenterquote %}</span><br></pre></td></tr></table></figure>
+<blockquote class="blockquote-center"><p>i think it will be center</p>
+</blockquote>
+<div class="note info">
+            <p>if there is somthing wrong with the grammer,, it will not generate files successfully&#x2026;</p>
+          </div>
+<h1 id="note&#x6807;&#x7B7E;"><a href="#note&#x6807;&#x7B7E;" class="headerlink" title="note&#x6807;&#x7B7E;"></a>note&#x6807;&#x7B7E;</h1><p>&#x901A;&#x8FC7;note&#x6807;&#x7B7E;&#x53EF;&#x4EE5;&#x4E3A;&#x6BB5;&#x843D;&#x6DFB;&#x52A0;&#x80CC;&#x666F;&#x8272;&#x3002;</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">{% note [class] %}</span><br><span class="line">content</span><br><span class="line">{% endnote %}</span><br></pre></td></tr></table></figure>
+<p>&#x5176;&#x4E2D; class &#x53EF;&#x4EE5;&#x4E3A;&#xFF1A;<code>default</code>, <code>primary</code>, <code>success</code>, <code>info</code>, <code>warning</code>, <code>danger</code>&#x3002;</p>
+<div class="note primary">
+            <p>this is primary note tag</p>
+          </div>
+<div class="note success">
+            <p>this is success note tag</p>
+          </div>
+<div class="note info">
+            <p>this is info tag</p>
+          </div>
+<div class="note warning">
+            <p>this is warning tag</p>
+          </div>
+<div class="note danger">
+            <p>this is danger tag</p>
+          </div>
+<div class="note ">
+            <p>this is undefined note tag</p>
+          </div>
+<h1 id="label&#x6807;&#x7B7E;"><a href="#label&#x6807;&#x7B7E;" class="headerlink" title="label&#x6807;&#x7B7E;"></a>label&#x6807;&#x7B7E;</h1><blockquote>
+<p>&#x8BED;&#x6CD5;&#xFF1A; <span class="label [class]">text</span></p>
+</blockquote>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">I heard the echo, {% label default@from the valleys and the heart %}</span><br><span class="line">Open to the lonely soul of {% label info@sickle harvesting %}</span><br><span class="line">Repeat outrightly, but also repeat the well-being of</span><br><span class="line">Eventually {% label warning@swaying in the desert oasis %}</span><br><span class="line">{% label success@I believe %} I am</span><br><span class="line">{% label primary@Born as the bright summer flowers %}</span><br><span class="line">Do not withered undefeated fiery demon rule</span><br><span class="line">Heart rate and breathing to bear {% label danger@the load of the cumbersome %}</span><br><span class="line">Bored</span><br></pre></td></tr></table></figure>
+<p>I heard the echo, <span class="label default">from the valleys and the heart</span><br>Open to the lonely soul of <span class="label info">sickle harvesting</span><br>Repeat outrightly, but also repeat the well-being of<br>Eventually <span class="label warning">swaying in the desert oasis</span><br><span class="label success">I believe</span> I am<br><span class="label primary">Born as the bright summer flowers</span><br>Do not withered undefeated fiery demon rule<br>Heart rate and breathing to bear <span class="label danger">the load of the cumbersome</span><br>Bored</p>
+<h1 id="button&#x6309;&#x94AE;"><a href="#button&#x6309;&#x94AE;" class="headerlink" title="button&#x6309;&#x94AE;"></a>button&#x6309;&#x94AE;</h1><p>&#x53EF;&#x4EE5;&#x6DFB;&#x52A0;&#x5E26;&#x6709;&#x4E3B;&#x9898;&#x6837;&#x5F0F;&#x7684;&#x6309;&#x94AE;&#x3002;</p>
+<blockquote>
+<a class="btn" href="/path/to/url/" title="title"><i class="fa fa-icon [class]"></i>text</a>
+</blockquote>
+<p>&#x4E5F;&#x53EF;&#x4EE5;&#x5199;&#x4E3A;&#xFF1A;</p>
+<blockquote>
+<a class="btn" href="/path/to/url" title="title"><i class="fa fa-icon [class]"></i>text</a>
+</blockquote>
+<p>e.g.:</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">{% btn #, content %}</span><br><span class="line">{% btn #, content &amp; title, title %}</span><br><span class="line">{% btn #, content &amp; image, home %}</span><br><span class="line">{% btn #, content $ big-imgage, home fa-fw fa-lg %}</span><br></pre></td></tr></table></figure>
+<a class="btn" href="#">content</a>
+<a class="btn" href="#"><i class="fa fa-title"></i>content &amp; title</a>
+<a class="btn" href="#"><i class="fa fa-home"></i>content &amp; image</a>
+<a class="btn" href="#"><i class="fa fa-home fa-fw fa-lg"></i>content $ big-imgage</a>
+<h1 id="tab&#x6807;&#x7B7E;"><a href="#tab&#x6807;&#x7B7E;" class="headerlink" title="tab&#x6807;&#x7B7E;"></a>tab&#x6807;&#x7B7E;</h1><p>&#x7528;&#x4E8E;&#x521B;&#x5EFA;tab&#x9009;&#x9879;&#x5361;&#x3002;</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">{% tabs [unique name], [index] %}</span><br><span class="line"><span class="code">	&lt;!--tab1--&gt;</span></span><br><span class="line"><span class="code">	content</span></span><br><span class="line"><span class="code">	&lt;!--tab2--&gt;</span></span><br><span class="line"><span class="code">	content</span></span><br><span class="line">{% endtabs %}</span><br></pre></td></tr></table></figure>
+<div class="tabs" id="tab&#x6807;&#x7B7E;&#x5217;&#x8868;"><ul class="nav-tabs"></ul><div class="tab-content"></div></div>   
+<p>&lt;% note warning %&gt;</p>
+<p>&#x8FD9;&#x4E2A;&#x8C8C;&#x4F3C;&#x4E0D;&#x8D77;&#x4F5C;&#x7528;&#x3002;&#x3002;&#x3002;</p>
+<p>&lt;% endnote %&gt;</p>
+<h1 id="&#x5F15;&#x7528;&#x7AD9;&#x5185;&#x94FE;&#x63A5;"><a href="#&#x5F15;&#x7528;&#x7AD9;&#x5185;&#x94FE;&#x63A5;" class="headerlink" title="&#x5F15;&#x7528;&#x7AD9;&#x5185;&#x94FE;&#x63A5;"></a>&#x5F15;&#x7528;&#x7AD9;&#x5185;&#x94FE;&#x63A5;</h1><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{% post_link slug [title] %}</span><br></pre></td></tr></table></figure>
+<p>slug&#xFF1A;&#x8868;&#x793A;<code>_post</code>&#x4E0B;&#x7684;&#x6587;&#x4EF6;&#x540D;&#x3002;</p>
+<p>&#x5C31;&#x50CF;&#x8FD9;&#x6837;&#xFF1A;&#x8FD9;&#x662F;&#x4E00;&#x7BC7;&#x4ECB;&#x7ECD;&#x6BD4;&#x7279;&#x5E01;&#x7684;<a href="/2019/11/03/bt01/" title="&#x535A;&#x5BA2;">&#x535A;&#x5BA2;</a> =.=</p>
+<h1 id="&#x63D2;&#x5165;swig&#x4EE3;&#x7801;"><a href="#&#x63D2;&#x5165;swig&#x4EE3;&#x7801;" class="headerlink" title="&#x63D2;&#x5165;swig&#x4EE3;&#x7801;"></a>&#x63D2;&#x5165;swig&#x4EE3;&#x7801;</h1><p>&#x60F3;&#x63D2;&#x5165;swig&#x4EE3;&#x7801;&#xFF08;&#x5305;&#x62EC;&#x539F;&#x751F;html&#x3001;js&#x7B49;&#xFF09;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;raw&#x6807;&#x7B7E;<strong>&#x7981;&#x6B62;markdown&#x5F15;&#x64CE;</strong>u&#x5B89;&#x7136;&#x6807;&#x7B7E;&#x5185;&#x7684;&#x5185;&#x5BB9;&#x3002;</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">{% raw %}</span><br><span class="line">content</span><br><span class="line">{% endraw %}</span><br></pre></td></tr></table></figure>
+<p>&#x7528;&#x9014;&#xFF1A;&#x5E38;&#x7528;&#x4E8E;&#x5728;&#x9875;&#x9762;&#x5185;&#x5F15;&#x5165;&#x7B2C;&#x4E09;&#x65B9;&#x811A;&#x672C;&#x5B9E;&#x73B0;&#x7279;&#x6B8A;&#x529F;&#x80FD;&#xFF0C;&#x5C24;&#x5176;&#x662F;&#x8BE5;&#x7B2C;&#x4E09;&#x65B9;&#x811A;&#x672C;&#x5C1A;&#x65E0;i&#x76F8;&#x5173;hexo&#x63D2;&#x4EF6;&#x652F;&#x6301;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;<strong>&#x5199;&#x539F;&#x751F;Web&#x9875;&#x9762;</strong>&#x7684;&#x5F62;&#x5F0F;&#x5F15;&#x5165;&#x811A;&#x672C;&#x5E76;&#x5B9E;&#x73B0;&#x903B;&#x8F91;&#x3002;</p>
+<div class="note warning">
+            <p>What is swig?</p>
+          </div>
+<h1 id="&#x63D2;&#x5165;Gist"><a href="#&#x63D2;&#x5165;Gist" class="headerlink" title="&#x63D2;&#x5165;Gist"></a>&#x63D2;&#x5165;Gist</h1><div class="note danger">
+            <p>What is gist&#x2026;</p>
+          </div>
+ <blockquote class="blockquote-center"><p><a href="https://theme-next.iissnan.com/tag-plugins.html" target="_blank" rel="noopener">reference</a></p>
+</blockquote> 
+
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+<div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 感谢阅读 --------</span>
+    </div>
+  
+</div>
+      </div>
+    
+      
+        <div class="reward-container">
+  <div>Donate comment here.</div>
+  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    Donate
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="Sebastian WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Sebastian Alipay">
+        <p>Alipay</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/hexo/" rel="tag"># hexo</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/11/06/http/" rel="next" title="http">
+                  <i class="fa fa-chevron-left"></i> http
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Sebastian"
+    src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Sebastian</p>
+  <div class="site-description" itemprop="description">I'm feeling lucky!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Sebastian-Getts" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Sebastian-Getts" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:zzzqsw@gmail.com" title="E-Mail &amp;rarr; mailto:zzzqsw@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/mchin6" title="Instagram &amp;rarr; https:&#x2F;&#x2F;instagram.com&#x2F;mchin6" rel="noopener" target="_blank"><i class="fa fa-fw fa-instagram"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sebastian</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a>
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.4.2
+  </div>
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      element.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script pjax>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/mermaid/8.2.0/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme: 'forest',
+      logLevel: 3,
+      flowchart: { curve: 'linear' },
+      gantt: { axisFormat: '%m/%d/%Y' },
+      sequence: { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+    <div id="pjax">
+
+  
+
+  
+
+  
+
+  
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+
+
+
+  <script src="/js/wobblewindow.js"></script>
+  <script>
+    //只在桌面版网页启用特效
+    if( window.innerWidth > 768  ){
+      $(document).ready(function () {
+        
+          $('#header').wobbleWindow({
+            radius: 50,
+            movementTop: false,
+            movementLeft: false,
+            movementRight: false,
+            debug: false,
+          });
+        
+
+        
+          $('#sidebar').wobbleWindow({
+            radius: 50,
+            movementLeft: false,
+            movementTop: false,
+            movementBottom: false,
+            position: 'fixed',
+            debug: false,
+          });
+        
+
+        
+          $('#footer').wobbleWindow({
+            radius: 50,
+            movementBottom: false,
+            movementLeft: false,
+            movementRight: false,
+            offsetX: ,
+            position: 'absolute',
+            debug: false,
+          });
+        
+      });
+    }
+  </script>
+
+
+
+
+
+
+
+
+    </div>
+</body>
+</html>
