@@ -60,12 +60,5 @@ Nginx是一款轻量级的Web服务器反向代理服务器及电子邮件（IMA
 - 关闭
 - 重新加载nginx
 
-#### 配置文件
+[referenct](https://mp.weixin.qq.com/s/PeNWaCDf_6gp2fCQa0Gvng)
 
-由三部分组成
-
-全局块
-
-events块
-
-http块
