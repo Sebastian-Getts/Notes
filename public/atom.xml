@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2019-11-13T16:12:02.707Z</updated>
+  <updated>2019-11-14T06:24:31.915Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>ProbablityAndStatics</title>
+    <link href="http://yoursite.com/2019/11/14/ProbablityAndStatics/"/>
+    <id>http://yoursite.com/2019/11/14/ProbablityAndStatics/</id>
+    <published>2019-11-14T04:52:44.000Z</published>
+    <updated>2019-11-14T06:24:31.915Z</updated>
+    
+    <content type="html"><![CDATA[<p>&#x6982;&#x7387;&#x8BBA;&#x4E0E;&#x6570;&#x7406;&#x7EDF;&#x8BA1;&#xFF0C;&#x771F;&#x9999;~</p><a id="more"></a><h1 id="&#x4E8B;&#x4EF6;&#x7684;&#x6982;&#x7387;"><a href="#&#x4E8B;&#x4EF6;&#x7684;&#x6982;&#x7387;" class="headerlink" title="&#x4E8B;&#x4EF6;&#x7684;&#x6982;&#x7387;"></a>&#x4E8B;&#x4EF6;&#x7684;&#x6982;&#x7387;</h1><p>&#x51E0;&#x4E2A;&#x4E13;&#x6709;&#x540D;&#x8BCD;&#x8BB0;&#x4E86;&#x5FD8;&#xFF0C;&#x5FD8;&#x4E86;&#x8BB0;&#x3002;&#x3002;&#x3002;</p><p><strong>&#x4E8B;&#x4EF6;</strong>&#xFF1A;&#x662F;&#x6307;&#x67D0;&#x79CD;&#x60C5;&#x51B5;&#x7684;&#x9648;&#x8FF0;&#xFF0C;&#x4ED6;&#x53EF;&#x80FD;&#x53D1;&#x751F;&#xFF0C;&#x4E5F;&#x53EF;&#x80FD;&#x4E0D;&#x53D1;&#x751F;&#x3002;&#x53D1;&#x751F;&#x4E0E;&#x5426;&#x8981;&#x7B49;&#x8BD5;&#x9A8C;&#x8FC7;&#x540E;&#x624D;&#x77E5;&#x9053;&#x7ED3;&#x679C;&#x3002;&#x3002;&#xFF08;&#x8FD9;&#x4E2A;&#x597D;&#x50CF;&#x662F;&#x5E38;&#x8BC6;&#xFF0C;&#x867D;&#x7136;&#x8DDF;&#x5B9E;&#x9645;&#x751F;&#x6D3B;&#x4E2D;&#x7684;&#x201C;&#x4E8B;&#x4EF6;&#x201D;&#x6982;&#x5FF5;&#x4E0D;&#x4E00;&#x6837;&#xFF09;</p><p><strong>&#x53E4;&#x5178;&#x6982;&#x7387;</strong>&#xFF1A;&#x8BBE;&#x4E00;&#x4E2A;&#x8BD5;&#x9A8C;&#x6709;<em>N</em>&#x4E2A;<strong>&#x7B49;&#x53EF;&#x80FD;</strong>&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x800C;&#x4E8B;&#x4EF6;<em>E</em>&#x6070;&#x5305;&#x542B;&#x5176;&#x4E2D;&#x7684;M&#x4E2A;&#x7ED3;&#x679C;&#xFF0C;&#x5219;&#x4E8B;&#x4EF6;<em>E</em>&#x7684;&#x6982;&#x7387;&#xFF0C;&#x8BB0;&#x4E3A;<em>P(E)</em>&#xFF0C;&#x5B9A;&#x4E49;&#x4E3A;<br>$$<br>P(E)=M/N<br>$$<br>&#x53E4;&#x5178;&#x6982;&#x7387;&#x7684;&#x8BA1;&#x7B97;&#x4E3B;&#x8981;&#x57FA;&#x4E8E;&#x6392;&#x5217;&#x7EC4;&#x5408;&#xFF0C;&#x4E0B;&#x9762;&#x804A;&#x804A;&#x5173;&#x4E8E;&#x6392;&#x5217;&#x7EC4;&#x5408;&#x7684;&#x51E0;&#x4E2A;&#x7B80;&#x5355;&#x516C;&#x5F0F;&#xFF1A;</p><p>&#x6839;&#x636E;&#x53E4;&#x5178;&#x6982;&#x7387;&#x516C;&#x5F0F;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;&#x4ED6;&#x7684;&#x8BA1;&#x7B97;&#x5F52;&#x7ED3;&#x4E3A;&#x8BA1;&#x7B97;&#x4E24;&#x4E2A;&#x6570;M&#x548C;N&#xFF0C;&#x8FD9;&#x79CD;&#x8BA1;&#x7B97;&#x5927;&#x591A;&#x6D89;&#x53CA;&#x6392;&#x5217;&#x7EC4;&#x5408;&#xFF0C;&#x4E8C;&#x8005;&#x7684;&#x533A;&#x522B;&#x5728;&#x4E8E;&#xFF1A;&#x6392;&#x5217;&#x8981;&#x8BA1;&#x8F83;&#x6B21;&#x5E8F;&#x800C;&#x7EC4;&#x5408;&#x4E0D;&#x8BA1;&#x8F83;&#xFF08;ab&#x548C;ba&#x662F;&#x4E0D;&#x540C;&#x7684;&#x6392;&#x5217;&#xFF0C;&#x4F46;&#x662F;&#x662F;&#x76F8;&#x540C;&#x7684;&#x7EC4;&#x5408;&#xFF09;&#x3002;</p><ol><li><p>n&#x4E2A;&#x4E0D;&#x540C;&#x7684;&#x7269;&#x4EF6;&#x4E2D;&#x53D6;r&#xFF08;r&#x5927;&#x4E8E;1&#x5C0F;&#x4E8E;n&#xFF09;&#x4E2A;&#x7684;&#x4E0D;&#x540C;&#x6392;&#x5217;&#x603B;&#x6570;<br>$$<br>P^n_r=n(n-1)(n-2)&#x2026;(n-r+1)<br>$$<br>&#x4ECE;n&#x4E2A;&#x7269;&#x4EF6;&#x4E2D;&#x53D6;&#x51FA;&#x4E00;&#x4E2A;&#x6392;&#x5728;&#x961F;&#x5217;&#x7B2C;&#x4E00;&#x4F4D;&#x7684;&#x53D6;&#x6CD5;&#x6709;<em>n</em>&#x79CD;&#xFF0C;&#x518D;&#x53D6;&#x4E00;&#x4E2A;&#x6392;&#x5728;&#x7B2C;&#x4E8C;&#x4F4D;&#x7684;&#x53D6;&#x6CD5;&#x6709;<em>n-1</em>&#x79CD;&#x2026;&#x2026;&#x76F4;&#x5230;&#x53D6;&#x4E00;&#x4E2A;&#x6392;&#x5728;&#x7B2C;<em>r</em>&#x4F4D;&#x7684;&#x53D6;&#x6CD5;&#x4E3A;<em>n-r+1</em>&#x79CD;&#x3002;&#xFF08;think over n-r+1&#xFF0C;&#x53D6;&#x5B8C;1&#x4E2A;&#x4EE5;&#x540E;&#x5C31;&#x53D8;&#x6210;&#x4E86;n-r&#xFF0C;&#x5408;&#x9898;)</p><p>&#x7279;&#x522B;&#xFF0C;&#x82E5;<em>r=n</em>&#xFF0C;&#x7531;&#x4E0A;&#x5F0F;&#x53EF;&#x5F97;&#xFF1A;<br>$$<br>P^n_r=n(n-1)(n-2)&#x2026;1=n!<br>$$<br><em>0!</em>&#x4E3A;1&#xFF0C;&#x8D1F;&#x6570;&#x7684;&#x9636;&#x4E58;&#x6CA1;&#x6709;&#x610F;&#x4E49;&#x3002;</p></li></ol><ol start="2"><li><p>n&#x4E2A;&#x4E0D;&#x540C;&#x7269;&#x4EF6;&#x4E2D;&#x53D6;r&#xFF08;r&#x5927;&#x4E8E;1&#x5C0F;&#x4E8E;n&#xFF09;&#x4E2A;&#x7684;&#x4E0D;&#x540C;&#x7EC4;&#x5408;&#x6570;<br>$$<br>C^n_r=\frac{P^n_r}{r!}=\frac{n!}{r!(n-r)!}<br>$$<br>&#x56E0;&#x4E3A;&#xFF0C;&#x6BCF;&#x4E00;&#x4E2A;&#x5305;&#x542B;<em>r</em>&#x7269;&#x4EF6;&#x7684;&#x7EC4;&#x5408;&#xFF0C;&#x53EF;&#x4EE5;&#x4EA7;&#x751F;<em>r!</em>&#x4E2A;&#x4E0D;&#x540C;&#x7684;&#x6392;&#x5217;&#xFF0C;&#x6240;&#x4EE5;&#x6392;&#x5217;&#x6570;&#x5E94;&#x4E3A;&#x7EC4;&#x5408;&#x6570;&#x7684;<em>r!</em>&#x500D;&#x3002;&#x7EC4;&#x5408;&#x6570;&#x516C;&#x5F0F;&#x4E5F;&#x5E38;&#x79F0;&#x4E3A;&#x7EC4;&#x5408;&#x7CFB;&#x6570;&#x3002;</p><p>&#x4EE5;&#x540E;&#x4F1A;&#x91C7;&#x7528;&#x66F4;&#x4E3A;&#x5E38;&#x7528;&#x7684;&#x7EC4;&#x5408;&#x7684;&#x5199;&#x6CD5;&#xFF1A;<br>$$<br>C^n_r=\tbinom{n}{r}<br>$$</p><ul><li>&#x7EA6;&#x5B9A;1&#xFF0C;0&#xFF01;=1<br>$$<br>\tbinom{n}{0}=\frac{n!}{0!(n-0)!}=1<br>$$</li></ul></li></ol><ul><li>&#x53EA;&#x8981;<em>r</em>&#x4E3A;&#x975E;&#x8D1F;&#x6574;&#x6570;&#xFF0C;<em>n</em>&#x65E0;&#x8BBA;&#x4E3A;&#x4F55;&#x5B9E;&#x6570;&#xFF0C;&#x90FD;&#x6709;&#x610F;&#x4E49;&#x3002;<br>$$<br>\tbinom{n}{r}=\frac{P^n_r}{r!}=\frac{n(n-1)(n-2)&#x2026;(n-r+1)}{r!}<br>$$<br>&#x6240;&#x4EE5;&#x53EF;&#x4E0D;&#x6BD4;&#x9650;&#x5236;&#x4E3A;&#x81EA;&#x7136;&#x6570;&#x3002;<br>$$<br>\tbinom{-1}{r}=\frac{(-1)(-2)(-3)&#x2026;(-r)}{r!}=(-1)^r<br>$$</li></ul><ol start="3"><li><p>&#x4E0E;&#x4E8C;&#x9879;&#x5F0F;&#x5C55;&#x5F00;&#x7684;&#x5173;&#x7CFB;</p><p>&#x7EC4;&#x5408;&#x7CFB;&#x6570;&#x53C8;&#x79F0;&#x4E3A;&#x4E8C;&#x9879;&#x5F0F;&#x7CFB;&#x6570;&#xFF1A;<br>$$<br>(a+b)^n=\sum_{i=0}^n \binom{n}{i} a^i b^{n-i}<br>$$</p></li></ol><p>   &#x8BC1;&#x660E;&#xFF1A;&#x4E3A;&#x4E86;&#x4EA7;&#x751F;$$a^ib^{n-i}$$&#x8FD9;&#x4E00;&#x9879;&#xFF0C;&#x5728;n&#x4E2A;(a+b)&#x4E2D;&#xFF0C;&#x8981;&#x4ECE;&#x5176;&#x4E2D;&#x7684;i&#x4E2A;&#x53D6;&#x51FA;a&#xFF0C;&#x53E6;n-i&#x4E2A;&#x53D6;&#x51FA;b&#x3002;&#x4ECE;n&#x4E2A;&#x4E2D;&#x53D6;&#x51FA;i&#x4E2A;&#x7684;&#x4E0D;&#x540C;&#x53D6;&#x6CD5;&#x4E3A;$$\tbinom{n}{i}$$&#xFF0C;&#x4E5F;&#x5C31;&#x662F;$$a^ib^{n-i}$$&#x7684;&#x7CFB;&#x6570;&#x3002;</p><p>   &#x5229;&#x7528;&#x4E8C;&#x9879;&#x5F0F;&#x7CFB;&#x6570;&#x7684;&#x516C;&#x5F0F;&#x8FD8;&#x53EF;&#x4EE5;&#x63A8;&#x51FA;&#x66F4;&#x591A;&#x6709;&#x8DA3;&#x7684;&#x7EC4;&#x5408;&#x516C;&#x5F0F;&#xFF1A;</p><ul><li><p>a=b=1<br>$$<br>2^n=\binom{n}{0}+\binom{n}{1}+\binom{n}{2}+&#x2026;\binom{n}{n}<br>$$</p></li><li><p>a=-1, b=1<br>$$<br>0=\binom{n}{0}-\binom{n}{1}+\binom{n}{2}-&#x2026;(-1)^n\binom{n}{n}<br>$$</p></li></ul><ul><li>&#x53E6;&#x4E00;&#x4E2A;&#x6709;&#x7528;&#x7684;&#x516C;&#x5F0F;&#xFF0C;&#x7531;&#x6052;&#x7B49;&#x5F0F;<br>$$<br>(1+x)^{m+n}=(1+x)^m (1+x)^n<br>$$<br>&#x5373;&#xFF1A;<br>$$<br>\sum_{j=0}^{m+n}\binom{m+n}{j}x^j=\sum_{j=0}^m\binom{m}{j} \sum_{j=0}^n\binom{n}{j}<br>$$</li></ul><pre><code>&#x6BD4;&#x8F83;&#x4E24;&#x8FB9;&#x7CFB;&#x6570;x^k&#x5F97;&#x5230;&#x7684;&#xFF08;&#x3002;&#x3002;&#x4E0D;&#x6653;&#x5F97;&#x54EA;&#x91CC;&#x6709;&#x7528; &#x76EE;&#x524D;&#x6765;&#x8BF4;&#xFF09;$$\binom{m+n}{k}=\sum_{i=0}^k \binom{m}{i} \binom{n}{k-i}$$</code></pre><ol start="4"><li><em>n</em>&#x4E2A;&#x4E0D;&#x540C;&#x7269;&#x4EF6;&#x5206;&#x6210;<em>k</em>&#x5806;&#xFF0C;&#x5404;&#x5806;&#x7269;&#x4EF6;&#x6570;&#x5206;&#x522B;&#x4E3A;r1,r2&#x2026;rk&#x7684;&#x5206;&#x53D1;</li></ol>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;概率论与数理统计，真香~&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Math" scheme="http://yoursite.com/categories/Math/"/>
+    
+      <category term="ProbablityAndStatics" scheme="http://yoursite.com/categories/Math/ProbablityAndStatics/"/>
+    
+    
+      <category term="parobablity&amp;Statics" scheme="http://yoursite.com/tags/parobablity-Statics/"/>
+    
+  </entry>
   
   <entry>
     <title>binaryTree</title>
