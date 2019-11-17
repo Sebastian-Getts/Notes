@@ -1,0 +1,632 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="msvalidate.01" content="541BE591C13D7313C3568E6D172218E2">
+  <meta name="baidu-site-verification" content="3qvcDlCoMv">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: true,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="&amp;#x6BD4;&amp;#x7279;&amp;#x5E01;&amp;#x4E2D;&amp;#x6700;&amp;#x57FA;&amp;#x7840;&amp;#x7684;&amp;#x6570;&amp;#x636E;&amp;#x7ED3;&amp;#x6784;&amp;#xFF1A;&amp;#x533A;&amp;#x5757;&amp;#x94FE;hash&amp;#x6307;&amp;#x9488;&amp;#x666E;&amp;#x901A;&amp;#x7684;&amp;#x6307;&amp;#x9488;&amp;#x5B58;&amp;#x5">
+<meta name="keywords" content="datastructure">
+<meta property="og:type" content="article">
+<meta property="og:title" content="bt02">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;17&#x2F;bt02&#x2F;index.html">
+<meta property="og:site_name" content="Sebastian Getts">
+<meta property="og:description" content="&amp;#x6BD4;&amp;#x7279;&amp;#x5E01;&amp;#x4E2D;&amp;#x6700;&amp;#x57FA;&amp;#x7840;&amp;#x7684;&amp;#x6570;&amp;#x636E;&amp;#x7ED3;&amp;#x6784;&amp;#xFF1A;&amp;#x533A;&amp;#x5757;&amp;#x94FE;hash&amp;#x6307;&amp;#x9488;&amp;#x666E;&amp;#x901A;&amp;#x7684;&amp;#x6307;&amp;#x9488;&amp;#x5B58;&amp;#x5">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2019-11-17T08:04:01.298Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2019/11/17/bt02/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>bt02 | Sebastian Getts</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sebastian Getts</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">I'm the new one.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-fw fa-video-camera"></i>movies</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/17/bt02/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Sebastian">
+      <meta itemprop="description" content="I'm feeling lucky!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sebastian Getts">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          bt02
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2019-11-17 15:17:04 / Modified: 16:04:01" itemprop="dateCreated datePublished" datetime="2019-11-17T15:17:04+08:00">2019-11-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/" itemprop="url" rel="index">
+                    <span itemprop="name">技术</span>
+                  </a>
+                </span>
+                  , 
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%8A%80%E6%9C%AF/bt/" itemprop="url" rel="index">
+                    <span itemprop="name">bt</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>&#x6BD4;&#x7279;&#x5E01;&#x4E2D;&#x6700;&#x57FA;&#x7840;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF1A;&#x533A;&#x5757;&#x94FE;</p><h1 id="hash&#x6307;&#x9488;"><a href="#hash&#x6307;&#x9488;" class="headerlink" title="hash&#x6307;&#x9488;"></a>hash&#x6307;&#x9488;</h1><p>&#x666E;&#x901A;&#x7684;&#x6307;&#x9488;&#x5B58;&#x50A8;&#x7684;&#x662F;&#x67D0;&#x4E2A;&#x7ED3;&#x6784;&#x4F53;&#x5728;&#x5185;&#x5B58;&#x4E2D;&#x7684;&#x5B58;&#x653E;&#x5730;&#x5740;&#xFF0C;&#x800C;hash&#x6307;&#x9488;&#x9664;&#x4E86;&#x5B58;&#x653E;&#x5730;&#x5740;&#x5916;&#x8FD8;&#x4F1A;&#x5B58;&#x50A8;hash&#x503C;&#xFF0C;&#x80FD;&#x591F;&#x68C0;&#x6D4B;&#x7ED3;&#x6784;&#x4F53;&#x7684;&#x5185;&#x5BB9;&#x662F;&#x5426;&#x88AB;&#x7BE1;&#x6539;&#x3002;</p><a id="more"></a>
+<!--mro-->
+
+
+<p>&#x533A;&#x5757;&#x94FE;&#x548C;&#x666E;&#x901A;&#x7684;&#x94FE;&#x8868;&#x7684;&#x533A;&#x522B;&#xFF1A;&#x7528;hash&#x6307;&#x9488;&#x4EE3;&#x66FF;&#x4E86;&#x666E;&#x901A;&#x7684;&#x6307;&#x9488;&#x3002;Block chain is  a linked list using hash pointer.</p>
+<p>&#x533A;&#x5757;&#x94FE;&#x4E2D;&#x7B2C;&#x4E00;&#x4E2A;&#x533A;&#x5757;&#x53EB;genesis block(&#x521B;&#x4E16;&#x7EAA;&#x5757;)&#xFF0C;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x53EB;most recent block&#x3002;&#x53EA;&#x9700;&#x8981;&#x4FDD;&#x5B58;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x533A;&#x5757;&#x7684;hash&#x503C;&#xFF0C;&#x5C31;&#x80FD;&#x68C0;&#x6D4B;&#x51FA;&#x4E4B;&#x524D;&#x6240;&#x6709;&#x533A;&#x5757;&#x662F;&#x5426;&#x88AB;&#x7BE1;&#x6539;&#x3002;</p>
+<h1 id="merkle-tree"><a href="#merkle-tree" class="headerlink" title="merkle tree"></a>merkle tree</h1><p>&#x6BD4;&#x7279;&#x5E01;&#x6C47;&#x4E2D;&#x7684;&#x53E6;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x63A5;&#x7ED3;&#x6784;&#x3002;</p>
+<p>c.f. binary tree</p>
+<p>&#x533A;&#x522B;&#x662F;merkle tree&#x7528;hash&#x6307;&#x9488;&#x4EE3;&#x66FF;&#x4E86;&#x666E;&#x901A;&#x6307;&#x9488;&#x3002;</p>
+<p>merkle tree&#x4E2D;&#x6700;&#x4E0B;&#x9762;&#x4E00;&#x884C;&#x662F;data blocks&#xFF08;&#x6BCF;&#x4E2A;&#x6570;&#x636E;&#x5757;&#x5B9E;&#x9645;&#x4E0A;&#x662F;&#x4E00;&#x4E2A;&#x4EA4;&#x6613;&#xFF0C;transaction&#xFF09;&#xFF0C;&#x4E0A;&#x65B9;&#x5747;&#x662F;hash pointers&#x3002;&#x53EA;&#x9700;&#x8BB0;&#x4F4F;&#x6839;&#x54C8;&#x5E0C;&#x503C;&#xFF08;&#x6700;&#x9876;&#x90E8;&#x7684;&#xFF09;&#xFF0C;&#x5C31;&#x80FD;&#x53D1;&#x73B0;&#x4EFB;&#x4F55;&#x8282;&#x70B9;&#x7684;&#x4FEE;&#x6539;&#x3002;&#x8FD9;&#x6837;&#x6548;&#x7387;&#x66F4;&#x9AD8;&#xFF0C;&#x56E0;&#x4E3A;&#x662F;&#x4E8C;&#x53C9;&#x6811;&#x7684;&#x5F62;&#x5F0F;&#x3002;</p>
+<p>&#x6BCF;&#x4E2A;&#x6570;&#x636E;&#x5757;&#x5206;&#x4E3A;&#x4E24;&#x90E8;&#x5206;&#xFF0C;&#x5757;&#x5934;&#x548C;&#x5757;&#x8EAB;&#x3002;</p>
+<p>block header &#x65E0;&#x4EA4;&#x6613;&#x5185;&#x5BB9;&#xFF0C;&#x53EA;&#x6709;hash&#x503C;, &#x800C;block body&#x4E2D;&#x6709;&#x4EA4;&#x6613;&#x5217;&#x8868;&#x3002;&#x4ED6;&#x4EEC;&#x53EF;&#x4EE5;&#x63D0;&#x4F9B;merkle proof&#xFF08;&#x4ECE;&#x6700;&#x5E95;&#x90E8;&#x7684;&#x67D0;&#x4E2A;blcok&#x5F80;&#x4E0A;&#x4E00;&#x76F4;&#x5230;&#x6839;&#x8282;&#x70B9;&#x5C31;&#x662F;&#x4E00;&#x4E2A;merkle proof&#xFF09;&#x3002;</p>
+<p>&#x8FD9;&#x79CD;&#x8BC1;&#x660E;&#x88AB;&#x79F0;&#x4E3A;&#xFF1A;<strong>proof of membership/inclusion</strong>&#x3002;&#x65F6;&#x95F4;&#x590D;&#x6742;&#x5EA6;&#x4E3A;&#xFF1A;<br>$$<br>\theta(\log n)<br>$$<br>&#x4E5F;&#x53EF;&#x4EE5;&#x5BF9;&#x5E95;&#x90E8;&#x6392;&#x5E8F;&#xFF0C;sorted merkle tree&#xFF0C;&#x4F46;&#x662F;&#x6BD4;&#x7279;&#x5E01;&#x4E2D;&#x6CA1;&#x6709;&#x4F7F;&#x7528;&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x5BF9;&#x505A;&#x5B58;&#x5728;&#x6027;&#x8BC1;&#x660E;&#x3002;</p>
+<h2 id="&#x54C8;&#x5E0C;&#x6307;&#x9488;&#x7684;&#x5176;&#x4ED6;&#x7528;&#x9014;&#xFF1A;"><a href="#&#x54C8;&#x5E0C;&#x6307;&#x9488;&#x7684;&#x5176;&#x4ED6;&#x7528;&#x9014;&#xFF1A;" class="headerlink" title="&#x54C8;&#x5E0C;&#x6307;&#x9488;&#x7684;&#x5176;&#x4ED6;&#x7528;&#x9014;&#xFF1A;"></a>&#x54C8;&#x5E0C;&#x6307;&#x9488;&#x7684;&#x5176;&#x4ED6;&#x7528;&#x9014;&#xFF1A;</h2><p>&#x53EA;&#x8981;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x662F;&#x65E0;&#x73AF;&#x7684;&#xFF0C;&#x90FD;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;hash&#x6307;&#x9488;&#x4EE3;&#x66FF;&#x666E;&#x901A;&#x6307;&#x9488;&#x3002;</p>
+
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+<div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 感谢阅读 --------</span>
+    </div>
+  
+</div>
+      </div>
+    
+      
+        <div class="reward-container">
+  <div>Donate comment here.</div>
+  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    Donate
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="Sebastian WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Sebastian Alipay">
+        <p>Alipay</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/datastructure/" rel="tag"># datastructure</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/11/16/miniprogram/" rel="next" title="miniprogram">
+                  <i class="fa fa-chevron-left"></i> miniprogram
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2019/11/17/bt03/" rel="prev" title="bt03">
+                  bt03 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Sebastian"
+    src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Sebastian</p>
+  <div class="site-description" itemprop="description">I'm feeling lucky!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Sebastian-Getts" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Sebastian-Getts" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:zzzqsw@gmail.com" title="E-Mail &amp;rarr; mailto:zzzqsw@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/mchin6" title="Instagram &amp;rarr; https:&#x2F;&#x2F;instagram.com&#x2F;mchin6" rel="noopener" target="_blank"><i class="fa fa-fw fa-instagram"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sebastian</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a>
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.4.2
+  </div>
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      element.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script pjax>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/mermaid/8.2.0/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme: 'forest',
+      logLevel: 3,
+      flowchart: { curve: 'linear' },
+      gantt: { axisFormat: '%m/%d/%Y' },
+      sequence: { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+    <div id="pjax">
+
+  
+
+  
+
+  
+
+  
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+
+
+
+  <script src="/js/wobblewindow.js"></script>
+  <script>
+    //只在桌面版网页启用特效
+    if( window.innerWidth > 768  ){
+      $(document).ready(function () {
+        
+          $('#header').wobbleWindow({
+            radius: 50,
+            movementTop: false,
+            movementLeft: false,
+            movementRight: false,
+            debug: false,
+          });
+        
+
+        
+          $('#sidebar').wobbleWindow({
+            radius: 50,
+            movementLeft: false,
+            movementTop: false,
+            movementBottom: false,
+            position: 'fixed',
+            debug: false,
+          });
+        
+
+        
+          $('#footer').wobbleWindow({
+            radius: 50,
+            movementBottom: false,
+            movementLeft: false,
+            movementRight: false,
+            offsetX: ,
+            position: 'absolute',
+            debug: false,
+          });
+        
+      });
+    }
+  </script>
+
+
+
+
+
+
+
+
+    </div>
+</body>
+</html>

@@ -102,7 +102,7 @@ $$
 
      
      $$
-     \binom{m+n}{k}=\sum_{i=0}^k \binom{m}{i} \binom{n}{k-i}
+     \binom{m+n}{k} = \sum_{i=0}^k \binom{m}{i} \binom{n}{k-i}
      $$
 
      
