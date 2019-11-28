@@ -30,119 +30,15 @@ emmm，还有个微信小程序大赛，是没机会参加了。
 
 
 
-## 获取用户信息
+## WXSS
 
-相关配置信息都在pages下的配置文件中，不是在全局。用到的配置文件：index.js, index.wxml, index.wxss。
+- 文字
 
-```html
-<!--pages/index/index.wxml-->
-<view class='viewContainer'>
-  <image class='avatar'src="{{userInfo.avatarUrl}}"></image>
-  <button bindgetuserinfo='handleUserInfo' open-type="getUserInfo" style='display:{{isShow?"block":"none"}}' >get user info</button>
-  <text class='sayHi'>Hi,{{userInfo.nickName}}</text>
-  <view class='try' catchtap="handParent">
-    <text catchtap="handChild">have a try</text>
-  </view>
-</view>
-```
+  类选择器，标签选择器， 后代选择器。
 
-在button组件中，`bindgetuserinfo`可以处理用户信息（通过回调获得）。`open-type`作为button的一个属性，是**微信开放能力**获取的标签。
+  属性：width, height, background, border，font-size, color, text-align, line-height, border-radius, margin-left/top..., 
 
 
-
-```js
- /**
-   * 生命周期函数--监听页面加载
-   */
-onLoad: function (options) {
-    this.dealWithUserInfo();
-  },
-
-  /**
-    * 校验用户信息获取
-    */
-  dealWithUserInfo(){
-    wx.getSetting({
-      success: (data) => { //ES6
-        if (data.authSetting['scope.userInfo']) {
-          this.setData({
-            isShow: false
-          })
-        } else {
-          this.setData({
-            isShow: true
-          })
-
-        }
-      }
-    }),
-
-    // console.log(this);
-    wx.getUserInfo({
-      success: (data) => { //作用域。。for 'this'
-        console.log(data);
-        this.setData({
-          userInfo: data.userInfo
-        })
-      },
-      fail: (res) => {
-        console.log(res);
-      }
-    })
-  },
-
-  handleUserInfo(data){
-    if(data.detail.rawData){
-      this.dealWithUserInfo();
-    }
-  },
-```
-
-```js
-  /**
-   * 页面的初始数据
-   */
-  data: {
-    msg:'nice',
-    userInfo:{},
-    isShow:true
-  },
-```
-
-在js中，定义相关行为。在onLoad中调用`dealWithUserInfo`相当于触发了button按钮。在初始化数据中给定`userInfo`空值，然后在回调函数中获取到用户信息后对它更新。
-
-
-
-## swiper
-
-轮播图
-
-```css
-/* pages/list/list.wxss */
-swiper {
-  width: 100%;
-  height: 400rpx;
-}
-
-swiper image {
-  width: 100%;
-  height: 100%;
-}
-```
-
-```html
-<!--pages/list/list.wxml-->
-<view>
-  <swiper indicator-dots indicator-color='gray' indicator-active-color='green'>
-    <swiper-item>
-      <image src="/images/detail/carousel/01.jpg"></image>
-    </swiper-item>
-    <swiper-item>
-      <image src="/images/detail/carousel/02.jpg"></image>
-    </swiper-item>
-  </swiper>
-</view>
-```
 
 ## 模板
 

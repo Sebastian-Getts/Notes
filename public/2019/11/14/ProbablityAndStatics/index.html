@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="Sebastian Getts">
 <meta property="og:description" content="概率论与数理统计的温习。。。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-11-18T05:57:18.872Z">
+<meta property="og:updated_time" content="2019-11-20T06:06:54.716Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2019/11/14/ProbablityAndStatics/">
@@ -229,7 +229,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-11-18 13:57:18" itemprop="dateModified" datetime="2019-11-18T13:57:18+08:00">2019-11-18</time>
+                <time title="Modified: 2019-11-20 14:06:54" itemprop="dateModified" datetime="2019-11-20T14:06:54+08:00">2019-11-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -289,9 +289,8 @@
 <p>&#x8BC1;&#x660E;&#xFF1A;&#x4E3A;&#x4E86;&#x4EA7;&#x751F;$a^ib^{n-i}$&#x8FD9;&#x4E00;&#x9879;&#xFF0C;&#x5728;n&#x4E2A;(a+b)&#x4E2D;&#xFF0C;&#x8981;&#x4ECE;&#x5176;&#x4E2D;&#x7684;i&#x4E2A;&#x53D6;&#x51FA;a&#xFF0C;&#x53E6;n-i&#x4E2A;&#x53D6;&#x51FA;b&#x3002;&#x4ECE;n&#x4E2A;&#x4E2D;&#x53D6;&#x51FA;i&#x4E2A;&#x7684;&#x4E0D;&#x540C;&#x53D6;&#x6CD5;&#x4E3A;$\tbinom{n}{i}$&#xFF0C;&#x4E5F;&#x5C31;&#x662F;$a^ib^{n-i}$&#x7684;&#x7CFB;&#x6570;&#x3002;</p>
 <p>   &#x5229;&#x7528;&#x4E8C;&#x9879;&#x5F0F;&#x7CFB;&#x6570;&#x7684;&#x516C;&#x5F0F;&#x8FD8;&#x53EF;&#x4EE5;&#x63A8;&#x51FA;&#x66F4;&#x591A;&#x6709;&#x8DA3;&#x7684;&#x7EC4;&#x5408;&#x516C;&#x5F0F;&#xFF1A;</p>
 <ul>
-<li>a=b=1<br>$$<br> 2^n=\binom{n}{0}+\binom{n}{1}+\binom{n}{2}+&#x2026;\binom{n}{n}<br>$$</li>
-</ul>
-<ul>
+<li><p>a=b=1<br>$$<br> 2^n=\binom{n}{0}+\binom{n}{1}+\binom{n}{2}+&#x2026;\binom{n}{n}<br>$$</p>
+</li>
 <li><p>a=-1, b=1<br>$$<br>0=\binom{n}{0}-\binom{n}{1}+\binom{n}{2}-&#x2026;(-1)^n\binom{n}{n}<br>$$</p>
 </li>
 <li><p>&#x53E6;&#x4E00;&#x4E2A;&#x6709;&#x7528;&#x7684;&#x516C;&#x5F0F;&#xFF0C;&#x7531;&#x6052;&#x7B49;&#x5F0F;<br>$$<br>(1+x)^{m+n}=(1+x)^m (1+x)^n<br>$$<br>&#x5373;&#xFF1A;<br>$$<br>\sum_{j=0}^{m+n}\binom{m+n}{j}x^j=\sum_{j=0}^m\binom{m}{j} \sum_{j=0}^n\binom{n}{j}<br>$$</p>
@@ -306,15 +305,28 @@ $$</code></pre><ol start="4">
 </ol>
 <p>&#x8BC1;&#x660E;&#x4E5F;&#x4E0D;&#x96BE;&#xFF1A;</p>
 <p>   &#x5148;&#x4ECE;n&#x4E2A;&#x4E2D;&#x53D6;&#x51FA;r1&#x4E2A;&#x4F5C;&#x4E3A;&#x7B2C;&#x4E00;&#x5806;&#xFF0C;&#x53D6;&#x6CD5;&#x4E3A;<br>$$<br>   \binom{n}{r_1}<br>$$<br>   &#x5728;&#x4F59;&#x4E0B;&#x7684;n-1&#x4E2D;&#x53D6;&#x51FA;r2&#x4E2A;&#x4F5C;&#x4E3A;&#x7B2C;&#x4E8C;&#x5806;&#xFF0C;&#x53D6;&#x6CD5;&#x4E3A;<br>$$<br>   \binom{n-r_1}{r_2}<br>$$<br>   &#x4EE5;&#x6B64;&#x7C7B;&#x63A8;&#xFF0C;&#x5F97;&#x5230;&#x5168;&#x90E8;&#x7684;&#x4E0D;&#x540C;&#x7684;&#x5206;&#x6CD5;&#xFF1A;<br>$$<br>   \binom{n}{r_1}\binom{n-r_1}{r_2}\binom{n-r_1-r_2}{r3}&#x2026;\binom{n-r_1-r_2-&#x2026;r_{k-1}}{r_k}<br>$$<br>   note: n-r1-r2-..r(k-1)=rk &#x5316;&#x7B80;&#x540E;&#x5373;&#x53EF;&#x5F97;&#x5230;&#x3002;</p>
-<h2 id="&#x4E8B;&#x4EF6;&#x7684;&#x8FD0;&#x7B97;&#x3001;&#x6761;&#x4EF6;&#x6982;&#x7387;&#x4E0E;&#x72EC;&#x7ACB;&#x6027;"><a href="#&#x4E8B;&#x4EF6;&#x7684;&#x8FD0;&#x7B97;&#x3001;&#x6761;&#x4EF6;&#x6982;&#x7387;&#x4E0E;&#x72EC;&#x7ACB;&#x6027;" class="headerlink" title="&#x4E8B;&#x4EF6;&#x7684;&#x8FD0;&#x7B97;&#x3001;&#x6761;&#x4EF6;&#x6982;&#x7387;&#x4E0E;&#x72EC;&#x7ACB;&#x6027;"></a>&#x4E8B;&#x4EF6;&#x7684;&#x8FD0;&#x7B97;&#x3001;&#x6761;&#x4EF6;&#x6982;&#x7387;&#x4E0E;&#x72EC;&#x7ACB;&#x6027;</h2><h3 id="&#x4E8B;&#x4EF6;&#x7684;&#x4E92;&#x65A5;&#x4E0E;&#x5BF9;&#x7ACB;"><a href="#&#x4E8B;&#x4EF6;&#x7684;&#x4E92;&#x65A5;&#x4E0E;&#x5BF9;&#x7ACB;" class="headerlink" title="&#x4E8B;&#x4EF6;&#x7684;&#x4E92;&#x65A5;&#x4E0E;&#x5BF9;&#x7ACB;"></a>&#x4E8B;&#x4EF6;&#x7684;&#x4E92;&#x65A5;&#x4E0E;&#x5BF9;&#x7ACB;</h3><h3 id="&#x6761;&#x4EF6;&#x6982;&#x7387;"><a href="#&#x6761;&#x4EF6;&#x6982;&#x7387;" class="headerlink" title="&#x6761;&#x4EF6;&#x6982;&#x7387;"></a>&#x6761;&#x4EF6;&#x6982;&#x7387;</h3><h3 id="&#x5168;&#x6982;&#x7387;&#x516C;&#x5F0F;&#x4E0E;&#x8D1D;&#x53F6;&#x65AF;"><a href="#&#x5168;&#x6982;&#x7387;&#x516C;&#x5F0F;&#x4E0E;&#x8D1D;&#x53F6;&#x65AF;" class="headerlink" title="&#x5168;&#x6982;&#x7387;&#x516C;&#x5F0F;&#x4E0E;&#x8D1D;&#x53F6;&#x65AF;"></a>&#x5168;&#x6982;&#x7387;&#x516C;&#x5F0F;&#x4E0E;&#x8D1D;&#x53F6;&#x65AF;</h3><h3 id="&#x8D34;&#x4E00;&#x4E9B;&#x5C0F;&#x9898;"><a href="#&#x8D34;&#x4E00;&#x4E9B;&#x5C0F;&#x9898;" class="headerlink" title="&#x8D34;&#x4E00;&#x4E9B;&#x5C0F;&#x9898;"></a>&#x8D34;&#x4E00;&#x4E9B;&#x5C0F;&#x9898;</h3><ol>
+<h2 id="&#x4E8B;&#x4EF6;&#x7684;&#x8FD0;&#x7B97;&#x3001;&#x6761;&#x4EF6;&#x6982;&#x7387;&#x4E0E;&#x72EC;&#x7ACB;&#x6027;"><a href="#&#x4E8B;&#x4EF6;&#x7684;&#x8FD0;&#x7B97;&#x3001;&#x6761;&#x4EF6;&#x6982;&#x7387;&#x4E0E;&#x72EC;&#x7ACB;&#x6027;" class="headerlink" title="&#x4E8B;&#x4EF6;&#x7684;&#x8FD0;&#x7B97;&#x3001;&#x6761;&#x4EF6;&#x6982;&#x7387;&#x4E0E;&#x72EC;&#x7ACB;&#x6027;"></a>&#x4E8B;&#x4EF6;&#x7684;&#x8FD0;&#x7B97;&#x3001;&#x6761;&#x4EF6;&#x6982;&#x7387;&#x4E0E;&#x72EC;&#x7ACB;&#x6027;</h2><h3 id="&#x4E8B;&#x4EF6;&#x7684;&#x4E92;&#x65A5;&#x4E0E;&#x5BF9;&#x7ACB;"><a href="#&#x4E8B;&#x4EF6;&#x7684;&#x4E92;&#x65A5;&#x4E0E;&#x5BF9;&#x7ACB;" class="headerlink" title="&#x4E8B;&#x4EF6;&#x7684;&#x4E92;&#x65A5;&#x4E0E;&#x5BF9;&#x7ACB;"></a>&#x4E8B;&#x4EF6;&#x7684;&#x4E92;&#x65A5;&#x4E0E;&#x5BF9;&#x7ACB;</h3><p>&#x4E92;&#x65A5;&#x5305;&#x542B;&#x5BF9;&#x7ACB;&#xFF0C;&#x5BF9;&#x7ACB;&#x662F;&#x4E92;&#x65A5;&#x7684;&#x8BF8;&#x591A;&#x60C5;&#x51B5;&#x4E2D;&#x7684;&#x4E00;&#x79CD;&#x3002;</p>
+<h3 id="&#x6761;&#x4EF6;&#x6982;&#x7387;"><a href="#&#x6761;&#x4EF6;&#x6982;&#x7387;" class="headerlink" title="&#x6761;&#x4EF6;&#x6982;&#x7387;"></a>&#x6761;&#x4EF6;&#x6982;&#x7387;</h3><p>&#x8BBE;&#x6709;&#x4E24;&#x4E8B;&#x4EF6;A&#xFF0C;B&#xFF0C;&#x800C;P(B)&#x4E0D;&#x4E3A;0&#xFF0C;&#x5219;&#x5728;&#x7ED9;&#x5B9A;B&#x53D1;&#x751F;&#x7684;&#x6761;&#x4EF6;&#x4E0B;A&#x7684;&#x6761;&#x4EF6;&#x6982;&#x7387;&#xFF0C;&#x8BB0;&#x4E3A;P(A|B)&#xFF0C;&#x5B9A;&#x4E49;&#x4E3A;<br>$$<br>P(A|B)=\frac{P(AB)}{P(B)}<br>$$</p>
+<h3 id="&#x5168;&#x6982;&#x7387;&#x516C;&#x5F0F;&#x4E0E;&#x8D1D;&#x53F6;&#x65AF;"><a href="#&#x5168;&#x6982;&#x7387;&#x516C;&#x5F0F;&#x4E0E;&#x8D1D;&#x53F6;&#x65AF;" class="headerlink" title="&#x5168;&#x6982;&#x7387;&#x516C;&#x5F0F;&#x4E0E;&#x8D1D;&#x53F6;&#x65AF;"></a>&#x5168;&#x6982;&#x7387;&#x516C;&#x5F0F;&#x4E0E;&#x8D1D;&#x53F6;&#x65AF;</h3><h3 id="&#x8D34;&#x4E00;&#x4E9B;&#x5C0F;&#x9898;"><a href="#&#x8D34;&#x4E00;&#x4E9B;&#x5C0F;&#x9898;" class="headerlink" title="&#x8D34;&#x4E00;&#x4E9B;&#x5C0F;&#x9898;"></a>&#x8D34;&#x4E00;&#x4E9B;&#x5C0F;&#x9898;</h3><ol>
 <li>&#x4E00;&#x6279;&#x4EA7;&#x54C1;&#x5171;N&#x4E2A;&#xFF0C;&#x5176;&#x4E2D;&#x5E9F;&#x54C1;&#x6709;M&#x4E2A;&#xFF0C;&#x4ECE;&#x4E2D;&#x968F;&#x673A;&#x53D6;&#x51FA;n&#x4E2A;&#xFF0C;&#x5176;&#x4E2D;&#x6070;&#x597D;m&#x4E2A;&#x5E9F;&#x54C1;&#x7684;&#x6982;&#x7387;&#x662F;&#xFF1F;</li>
 <li>n&#x53CC;&#x76F8;&#x5F02;&#x7684;&#x978B;&#x5171;2n&#x53EA;&#xFF0C;&#x968F;&#x673A;&#x5730;&#x5206;&#x6210;n&#x5806;&#xFF0C;&#x6BCF;&#x5806;2&#x53EA;&#xFF0C;&#x5404;&#x5806;&#x90FD;&#x81EA;&#x6210;&#x4E00;&#x53CC;&#x978B;&#x7684;&#x6982;&#x7387;&#x662F;&#xFF1F;</li>
 <li>n&#x4E2A;&#x7537;&#x5B69;&#xFF0C;m&#x4E2A;&#x5973;&#x5B69;&#xFF08;m&lt;=n+1)&#x968F;&#x673A;&#x5730;&#x6392;&#x6210;&#x4E00;&#x5217;&#xFF0C;&#x4EFB;&#x610F;&#x4E24;&#x4E2A;&#x5973;&#x5B69;&#x90FD;&#x4E0D;&#x76F8;&#x90BB;&#x7684;&#x6982;&#x7387;&#x662F;&#xFF1F;</li>
+<li>&#x53E3;&#x888B;&#x91CC;&#x6709;&#x4E24;&#x76D2;&#x706B;&#x67F4;&#xFF0C;&#x6BCF;&#x76D2;n&#x652F;&#xFF0C;&#x6BCF;&#x6B21;&#x7528;&#x706B;&#x67F4;&#x65F6;&#x4ECE;&#x53E3;&#x888B;&#x91CC;&#x968F;&#x673A;&#x62FF;&#x51FA;&#x4E00;&#x76D2;&#x5E76;&#x7528;&#x6389;&#x4E00;&#x652F;&#xFF0C;&#x5230;&#x67D0;&#x6B21;&#x4F1A;&#x53D1;&#x73B0;&#x53D6;&#x51FA;&#x7684;&#x90A3;&#x4E00;&#x76D2;&#x5DF2;&#x7ECF;&#x7A7A;&#x4E86;&#xFF0C;&#x6B64;&#x65F6;&#xFF0C;&#x53E6;&#x4E00;&#x76D2;&#x6070;&#x597D;&#x6709;m&#x652F;&#x706B;&#x67F4;&#x7684;&#x6982;&#x7387;&#x662F;&#xFF1F;</li>
 </ol>
 <p>&lt;% note info %&gt;</p>
 <p>P=N/M&#xFF0C;&#x6709;&#x5229;&#x4E8E;&#x4E8B;&#x4EF6;&#x53D1;&#x751F;&#x7684;&#x6982;&#x7387;&#x9664;&#x4EE5;&#x4E8B;&#x4EF6;&#x53D1;&#x751F;&#x7684;&#x603B;&#x6982;&#x7387;</p>
 <p>&lt;% endnote %&gt;</p>
-<h3 id="&#x89E3;"><a href="#&#x89E3;" class="headerlink" title="&#x89E3;"></a>&#x89E3;</h3><ol start="2">
+<h3 id="&#x89E3;"><a href="#&#x89E3;" class="headerlink" title="&#x89E3;"></a>&#x89E3;</h3><ol start="3">
+<li><p>&#x603B;&#x6982;&#x7387;&#x4E3A;&#x6240;&#x6709;&#x4EBA;&#x6392;&#x6210;&#x4E00;&#x6392;&#xFF0C;&#x5171;&#x6709;&#x6392;&#x6CD5;&#xFF1A;<br>$$<br>(n+m)!<br>$$<br>&#x6709;&#x5229;&#x4E8E;&#x4E8B;&#x4EF6;&#x53D1;&#x751F;&#x7684;&#x6392;&#x6CD5;&#xFF1A;</p>
+<ul>
+<li><p>&#x6240;&#x6709;&#x7537;&#x751F;&#x6392;&#x6210;&#x4E00;&#x6392;&#xFF0C;&#x6392;&#x6CD5;&#x4E3A; <em>n!</em>&#xFF0C; &#x6392;&#x597D;&#x4E4B;&#x540E;&#x5973;&#x751F;&#x53EF;&#x4EE5;&#x7AD9;&#x7684;&#x4F4D;&#x7F6E;&#x5C31;&#x662F;<em>n+1</em>&#x4E2A;&#xFF0C;&#x4E3A;&#x4E86;&#x4E0D;&#x76F8;&#x90BB;&#xFF0C;&#x5C06;&#x5973;&#x751F;&#x5B89;&#x6392;&#x5728;&#x8FD9;&#x4E9B;&#x4F4D;&#x7F6E;&#x4E2D;&#xFF0C;&#x5219;&#x6392;&#x6CD5;&#x4E3A;<br>$$<br>\binom{n+1}{m}<br>$$</p>
+</li>
+<li><p>&#x5B89;&#x6392;&#x597D;&#x5973;&#x751F;&#x7684;&#x7AD9;&#x4F4D;&#x540E;&#xFF0C;&#x5973;&#x751F;&#x4E4B;&#x95F4;&#x53EF;&#x4EE5;&#x968F;&#x610F;&#x8C03;&#x6362;&#x4F4D;&#x7F6E;&#xFF0C;&#x6392;&#x6CD5;&#x6709;<em>m!</em>&#x79CD;&#xFF0C;&#x6240;&#x4EE5;&#x6709;&#x5229;&#x4E8E;&#x4E8B;&#x4EF6;&#x53D1;&#x751F;&#x7684;&#x6392;&#x5217;&#xFF1A;<br>$$<br>M=n!\binom{n+1}{m}m!<br>$$<br>&#x4E8B;&#x4EF6;&#x53D1;&#x751F;&#x7684;&#x6982;&#x7387;&#x4E3A;&#xFF1A;<br>$$<br>P(E)=\frac{n!\binom{n+1}{m}m!}{(m+n)!}<br>$$</p>
+</li>
+</ul>
+</li>
+</ol>
+<ol start="2">
 <li>2n&#x53EA;&#x978B;&#x5B50;&#xFF0C;&#x968F;&#x673A;&#x5206;&#x6210;n&#x5806;&#xFF0C;&#x6BCF;&#x5806;2&#x53EA;&#xFF0C;&#x5206;&#x6CD5;&#x4E3A;&#xFF1A;<br>$$<br>\binom{2n}{r_1}\binom{2n-r_1}{r_2}&#x2026;\binom{2n-r_1-r_2-&#x2026;r_{k-1}}{r_k}=\frac{(2n)!}{2^n}<br>$$<br>&#x6709;&#x5229;&#x4E8E;&#x4E8B;&#x4EF6;&#x7684;&#x5206;&#x6CD5;&#xFF1A;&#x5C06;&#x6BCF;&#x53CC;&#x6210;&#x5BF9;&#x7684;&#x978B;&#x5B50;&#x7ED1;&#x5728;&#x4E00;&#x8D77;&#x770B;&#x4F5C;&#x4E00;&#x4E2A;&#x7269;&#x4EF6;&#xFF0C;&#x4E00;&#x5171;&#x6709;n&#x4E2A;&#xFF0C;&#x5206;&#x6210;n&#x5806;&#x6BCF;&#x5806;1&#x4E2A;&#x7684;&#x5206;&#x6CD5;&#xFF1A;<br>$$<br>P_1^n=n!<br>$$<br>&#x5219;P(E)&#x4E3A;&#x4E24;&#x4E2A;&#x4E8B;&#x4EF6;&#x7684;&#x6982;&#x7387;&#x76F8;&#x9664;&#xFF1A;<br>$$<br>P(E)=\frac{M}{N}=\frac{n!}{\frac{(2n)!}{2_n}}=\frac{(n!)2^n}{(2n)!}<br>$$</li>
 </ol>
 
@@ -431,20 +443,20 @@ $$</code></pre><ol start="4">
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-count">13</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">23</span>
+        <span class="site-state-item-count">28</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

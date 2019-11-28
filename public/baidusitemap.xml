@@ -1,16 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://yoursite.com/2019/11/23/bootstrap/</loc>
+    <lastmod>2019-11-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2019/11/09/%E4%B8%AD%E5%8F%B0/</loc>
+    <lastmod>2019-11-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2019/11/28/restful/</loc>
+    <lastmod>2019-11-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2019/11/18/javaFX/</loc>
+    <lastmod>2019-11-24</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2019/11/16/miniprogram/</loc>
+    <lastmod>2019-11-22</lastmod>
+  </url>  <url>
     <loc>http://yoursite.com/2019/11/14/ProbablityAndStatics/</loc>
+    <lastmod>2019-11-20</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2019/11/04/Pascal-s-Triangle/</loc>
+    <lastmod>2019-11-18</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2019/11/18/calculator/</loc>
     <lastmod>2019-11-18</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2019/11/17/bt03/</loc>
     <lastmod>2019-11-17</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2019/11/17/bt02/</loc>
-    <lastmod>2019-11-17</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/2019/11/16/miniprogram/</loc>
     <lastmod>2019-11-17</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2019/11/14/binaryTree/</loc>
@@ -22,9 +40,6 @@
     <loc>http://yoursite.com/2019/11/13/thymeleaf01/</loc>
     <lastmod>2019-11-13</lastmod>
   </url>  <url>
-    <loc>http://yoursite.com/2019/11/09/%E4%B8%AD%E5%8F%B0/</loc>
-    <lastmod>2019-11-09</lastmod>
-  </url>  <url>
     <loc>http://yoursite.com/2019/11/02/nginx/</loc>
     <lastmod>2019-11-09</lastmod>
   </url>  <url>
@@ -35,9 +50,6 @@
     <lastmod>2019-11-07</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2019/11/06/http/</loc>
-    <lastmod>2019-11-05</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/2019/11/04/Pascal-s-Triangle/</loc>
     <lastmod>2019-11-05</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2019/11/03/mapOfUtils/</loc>
