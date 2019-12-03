@@ -47,4 +47,7 @@ e.g.:
 ```bash
 hexo clean && hexo g && hexo d && git add . && git commit -m "update" && git push -f
 ```
+----
+# BASH
+今天（2019/12/3）打算在Ubuntu上写个同样功能的脚本。。
 
