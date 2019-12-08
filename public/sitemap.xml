@@ -2,6 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2019/12/08/tensorflow02/</loc>
+    
+    <lastmod>2019-12-08T10:49:46.887Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/12/07/tensorflow01/</loc>
+    
+    <lastmod>2019-12-08T05:04:40.767Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/12/07/http-request/</loc>
+    
+    <lastmod>2019-12-07T04:12:26.289Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/12/03/kafka/</loc>
+    
+    <lastmod>2019-12-04T16:42:20.876Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2019/10/31/bat/</loc>
     
     <lastmod>2019-12-03T13:54:50.566Z</lastmod>
@@ -23,48 +51,6 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/11/03/mapOfUtils/</loc>
-    
-    <lastmod>2019-12-01T02:39:31.623Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/11/14/binaryTree/</loc>
-    
-    <lastmod>2019-12-01T02:39:31.623Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/11/23/bootstrap/</loc>
-    
-    <lastmod>2019-12-01T02:39:31.623Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/11/03/bt01/</loc>
-    
-    <lastmod>2019-12-01T02:39:31.623Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/11/17/bt02/</loc>
-    
-    <lastmod>2019-12-01T02:39:31.623Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/11/17/bt03/</loc>
-    
-    <lastmod>2019-12-01T02:39:31.623Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/2019/11/18/calculator/</loc>
     
     <lastmod>2019-12-01T02:39:31.623Z</lastmod>
@@ -79,7 +65,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/11/14/ProbablityAndStatics/</loc>
+    <loc>http://yoursite.com/2019/11/04/PlainTasks/</loc>
     
     <lastmod>2019-12-01T02:39:31.623Z</lastmod>
     
@@ -100,14 +86,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/11/18/javaFX/</loc>
-    
-    <lastmod>2019-12-01T02:39:31.623Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/11/04/PlainTasks/</loc>
+    <loc>http://yoursite.com/2019/11/14/binaryTree/</loc>
     
     <lastmod>2019-12-01T02:39:31.623Z</lastmod>
     
@@ -121,6 +100,20 @@
   </url>
   
   <url>
+    <loc>http://yoursite.com/2019/11/18/javaFX/</loc>
+    
+    <lastmod>2019-12-01T02:39:31.623Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/11/03/mapOfUtils/</loc>
+    
+    <lastmod>2019-12-01T02:39:31.623Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2019/11/02/nginx/</loc>
     
     <lastmod>2019-12-01T02:39:31.623Z</lastmod>
@@ -128,7 +121,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/11/04/Pascal-s-Triangle/</loc>
+    <loc>http://yoursite.com/2019/11/14/ProbablityAndStatics/</loc>
     
     <lastmod>2019-12-01T02:39:31.623Z</lastmod>
     
@@ -163,6 +156,27 @@
   </url>
   
   <url>
+    <loc>http://yoursite.com/2019/11/23/bootstrap/</loc>
+    
+    <lastmod>2019-12-01T02:39:31.623Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/11/03/bt01/</loc>
+    
+    <lastmod>2019-12-01T02:39:31.623Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/11/04/Pascal-s-Triangle/</loc>
+    
+    <lastmod>2019-12-01T02:39:31.623Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2019/11/07/tagOfHexo/</loc>
     
     <lastmod>2019-12-01T02:39:31.623Z</lastmod>
@@ -170,7 +184,7 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/11/13/thymeleaf01/</loc>
+    <loc>http://yoursite.com/2019/11/17/bt03/</loc>
     
     <lastmod>2019-12-01T02:39:31.623Z</lastmod>
     
@@ -184,6 +198,20 @@
   </url>
   
   <url>
+    <loc>http://yoursite.com/2019/11/13/thymeleaf01/</loc>
+    
+    <lastmod>2019-12-01T02:39:31.623Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/11/17/bt02/</loc>
+    
+    <lastmod>2019-12-01T02:39:31.623Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2019/11/02/%25E4%25B9%25B1%25E7%25A0%2581/</loc>
     
     <lastmod>2019-12-01T02:39:31.623Z</lastmod>
@@ -191,14 +219,14 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/about/index.html</loc>
+    <loc>http://yoursite.com/categories/index.html</loc>
     
     <lastmod>2019-12-01T02:39:31.623Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://yoursite.com/categories/index.html</loc>
+    <loc>http://yoursite.com/about/index.html</loc>
     
     <lastmod>2019-12-01T02:39:31.623Z</lastmod>
     
