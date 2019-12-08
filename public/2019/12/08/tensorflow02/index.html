@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="Sebastian Getts">
 <meta property="og:description" content="试着搭建一个神经网络，总结搭建八股">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-12-08T10:49:46.887Z">
+<meta property="og:updated_time" content="2019-12-08T10:59:27.703Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2019/12/08/tensorflow02/">
@@ -223,7 +223,7 @@
               <span class="post-meta-item-text">Posted on</span>
               
 
-              <time title="Created: 2019-12-08 13:05:17 / Modified: 18:49:46" itemprop="dateCreated datePublished" datetime="2019-12-08T13:05:17+08:00">2019-12-08</time>
+              <time title="Created: 2019-12-08 13:05:17 / Modified: 18:59:27" itemprop="dateCreated datePublished" datetime="2019-12-08T13:05:17+08:00">2019-12-08</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -298,7 +298,7 @@
 <p>e.g.</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">a = tf.constant([<span class="number">1.0</span>,<span class="number">2.0</span>])</span><br><span class="line">b = tf.constant([<span class="number">3.0</span>,<span class="number">4.0</span>])</span><br><span class="line"></span><br><span class="line">result = a + b</span><br><span class="line"><span class="keyword">print</span> result</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Tensor(<span class="string">&quot;add:0&quot;</span>, shape=(<span class="number">2</span>,),dtype=float32)</span><br><span class="line">	&#x8282;&#x70B9;&#x540D;&#xFF1A;&#x7B2C;<span class="number">0</span>&#x4E2A;&#x8F93;&#x51FA; &#x7EF4;&#x5EA6;=&#x4E00;&#x7EF4;&#x6570;&#x7EC4;&#x957F;&#x5EA6;<span class="number">2</span>  &#x6570;&#x636E;&#x7C7B;&#x578B;</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Tensor(<span class="string">&quot;add:0&quot;</span>, shape=(<span class="number">2</span>,),dtype=float32)</span><br><span class="line">&#x8282;&#x70B9;&#x540D;&#xFF1A;&#x7B2C;<span class="number">0</span>&#x4E2A;&#x8F93;&#x51FA; &#x7EF4;&#x5EA6;=&#x4E00;&#x7EF4;&#x6570;&#x7EC4;&#x957F;&#x5EA6;<span class="number">2</span>  &#x6570;&#x636E;&#x7C7B;&#x578B;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -311,7 +311,7 @@
 <blockquote>
 <p>with.tf.Session() as sess: print sess.run(y)</p>
 </blockquote>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">x=tf.constant([[<span class="number">1.0</span>,<span class="number">2.0</span>]])</span><br><span class="line">w=tf.constant([[<span class="number">3.0</span>],[<span class="number">4.0</span>]])</span><br><span class="line"></span><br><span class="line">y=tf.matmul(x,w)</span><br><span class="line"><span class="keyword">print</span> y</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    <span class="keyword">print</span> sess.run(y)</span><br><span class="line">    </span><br><span class="line"> </span><br><span class="line">Tensor(<span class="string">&quot;matmul:0&quot;</span>,shape(<span class="number">1</span>,<span class="number">1</span>),dtype=float32)</span><br><span class="line">[[<span class="number">11.</span>]]</span><br></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line">x=tf.constant([[<span class="number">1.0</span>,<span class="number">2.0</span>]])</span><br><span class="line">w=tf.constant([[<span class="number">3.0</span>],[<span class="number">4.0</span>]])</span><br><span class="line"></span><br><span class="line">y=tf.matmul(x,w)</span><br><span class="line"><span class="keyword">print</span> y</span><br><span class="line"></span><br><span class="line"><span class="keyword">with</span> tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line"><span class="keyword">print</span> sess.run(y)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">Tensor(<span class="string">&quot;matmul:0&quot;</span>,shape(<span class="number">1</span>,<span class="number">1</span>),dtype=float32)</span><br><span class="line">[[<span class="number">11.</span>]]</span><br></pre></td></tr></table></figure>
 
 
 
@@ -336,9 +336,10 @@
 </ol>
 <p>1&#xFF5E;3&#x4E3A;&#x5FAA;&#x73AF;&#x7684;&#x8BAD;&#x7EC3;&#x8FC7;&#x7A0B;&#xFF0C;4&#x4E3A;&#x4F7F;&#x7528;&#x8FC7;&#x7A0B;</p>
 <p>e.g.; &#x751F;&#x4EA7;&#x4E00;&#x6279;&#x96F6;&#x4EF6;&#xFF0C;&#x5C06;&#x4F53;&#x79EF;x1&#x548C;&#x91CD;&#x91CF;x2&#x4E3A;&#x7279;&#x5F81;&#x8F93;&#x5165;NN&#xFF0C;&#x901A;&#x8FC7;NN&#x540E;&#x8F93;&#x51FA;&#x4E00;&#x4E2A;&#x6570;&#x503C;&#x3002;</p>
-<p>&lt;% note info%&gt;</p>
-<p>&#x53D1;&#x73B0;&#x7528;&#x7EBF;&#x6027;&#x4EE3;&#x6570;&#x7684;&#x601D;&#x60F3;&#x53BB;&#x7406;&#x89E3;&#x4F20;&#x64AD;&#x8FC7;&#x7A0B;&#x3001;&#x6743;&#x91CD;&#x8FD9;&#x4E9B;&#x4E1C;&#x897F;&#x4F1A;&#x597D;&#x7406;&#x89E3;&#x4E00;&#x4E9B;</p>
-<p>&lt;% endnote %&gt;</p>
+<div class="note info">
+            <p>&#x53D1;&#x73B0;&#x7528;&#x7EBF;&#x6027;&#x4EE3;&#x6570;&#x7684;&#x601D;&#x60F3;&#x53BB;&#x7406;&#x89E3;&#x4F20;&#x64AD;&#x8FC7;&#x7A0B;&#x3001;&#x6743;&#x91CD;&#x8FD9;&#x4E9B;&#x4E1C;&#x897F;&#x4F1A;&#x597D;&#x7406;&#x89E3;&#x4E00;&#x4E9B;</p>
+          </div>
+
 <p>e.g.1</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#coding:utf-8</span></span><br><span class="line"><span class="comment">#&#x4E24;&#x5C42;&#x7B80;&#x5355;&#x795E;&#x7ECF;&#x7F51;&#x7EDC;&#xFF08;&#x5168;&#x8FDE;&#x63A5;&#xFF09;</span></span><br><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"></span><br><span class="line"><span class="comment">#&#x5B9A;&#x4E49;&#x8F93;&#x5165;&#x548C;&#x8F93;&#x51FA;</span></span><br><span class="line">x = tf.constant([[<span class="number">0.7</span>,<span class="number">0.5</span>]])</span><br><span class="line">w1 = tf.Variable(tf.random_normal([<span class="number">2</span>,<span class="number">3</span>],stddev=<span class="number">1</span>, seed=<span class="number">1</span>))</span><br><span class="line">w2 = tf.Variable(tf.random_normal([<span class="number">3</span>,<span class="number">1</span>],stddev=<span class="number">1</span>,seed=<span class="number">1</span>))</span><br><span class="line"></span><br><span class="line"><span class="comment">#&#x5B9A;&#x4E49;&#x524D;&#x5411;&#x4F20;&#x64AD;&#x8FC7;&#x7A0B;</span></span><br><span class="line">a = tf.matmul(x, w1)</span><br><span class="line">y = tf.matmul(a, w2)</span><br><span class="line"></span><br><span class="line"><span class="comment">#&#x7528;&#x4F1A;&#x8BDD;&#x8BA1;&#x7B97;&#x7ED3;&#x679C;</span></span><br><span class="line">width tf.Session() <span class="keyword">as</span> sess:</span><br><span class="line">    init_op = tf.global_variables_initializer()</span><br><span class="line">    sess.run(init_op)</span><br><span class="line">    <span class="keyword">print</span><span class="string">&quot;y in tf3_3.py is:\n&quot;</span>, sess.run(y)</span><br></pre></td></tr></table></figure>
 
@@ -674,6 +675,54 @@ if (document.querySelectorAll('pre.mermaid').length) {
   
 
   
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
 
   
 

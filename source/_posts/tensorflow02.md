@@ -3,6 +3,7 @@ title: tensorflow02
 date: 2019-12-08 13:05:17
 categories: tensorflow
 tags: tensorflow
+mathjax: true
 ---
 
 试着搭建一个神经网络，总结搭建八股
@@ -42,7 +43,7 @@ print result
 
 ```python
 Tensor("add:0", shape=(2,),dtype=float32)
-	节点名：第0个输出 维度=一维数组长度2  数据类型 
+节点名：第0个输出 维度=一维数组长度2  数据类型 
 ```
 
 
@@ -81,9 +82,9 @@ y=tf.matmul(x,w)
 print y
 
 with tf.Session() as sess:
-    print sess.run(y)
-    
- 
+print sess.run(y)
+
+
 Tensor("matmul:0",shape(1,1),dtype=float32)
 [[11.]]
 ```
@@ -123,11 +124,11 @@ tf.constant 直接给值  tf.constant([3,2,1]) 生成[3,2,1]
 
 e.g.; 生产一批零件，将体积x1和重量x2为特征输入NN，通过NN后输出一个数值。
 
-<% note info%>
+{% note info%}
 
 发现用线性代数的思想去理解传播过程、权重这些东西会好理解一些
 
-<% endnote %>
+{% endnote %}
 
 e.g.1
 
