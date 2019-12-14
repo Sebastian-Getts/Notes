@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>http://yoursite.com/2019/12/10/leecode/</loc>
-    <lastmod>2019-12-10</lastmod>
+    <lastmod>2019-12-14</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2019/12/08/tensorflow02/</loc>
     <lastmod>2019-12-09</lastmod>
@@ -103,7 +103,7 @@
     <loc>http://yoursite.com/2019/11/03/preface/</loc>
     <lastmod>2019-11-02</lastmod>
   </url>  <url>
-    <loc>http://yoursite.com/2019/10/29/hello-world/</loc>
+    <loc>http://yoursite.com/2019/12/13/hello-world/</loc>
     <lastmod>2019-10-29</lastmod>
   </url>
 </urlset>
