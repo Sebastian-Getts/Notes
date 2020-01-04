@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2020/01/04/webservice/</loc>
+    
+    <lastmod>2020-01-04T04:14:35.145Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2019/12/10/leecode/</loc>
     
     <lastmod>2019-12-14T08:01:22.944Z</lastmod>
