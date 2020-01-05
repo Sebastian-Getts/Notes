@@ -50,7 +50,7 @@ Tensor("add:0", shape=(2,),dtype=float32)
 
 ## 计算图
 
-搭建神经网络的计算过程，只搭建，不运算。如序中所示。
+搭建神经网络的计算过程，**只搭建，不运算**。如序中所示。
 
 ```python
 import tensorflow as tf
@@ -61,8 +61,20 @@ w=tf.constant([[3.0],[4.0]])
 y=tf.matmul(x,w)
 print y
 
-Tensor("matmul:0",shape(1,1),dtype=float32)
+输出：Tensor("matmul:0",shape(1,1),dtype=float32)
 ```
+
+如果，不清楚python矩阵，试试这个numpy模块的输出：
+
+```python
+>>> import numpy as np
+
+>>> a = np.arange(15).reshape(3,5)
+>>> a
+>>> a.shape
+```
+
+
 
 
 
@@ -205,6 +217,8 @@ with tf.Session() as sess:
     print "w2:\n", sess.run(w2)
 ```
 
+
+
 # 反向传播
 
 训练模型参数，在所有参数上用梯度下降，使NN模型在训练数据上的损失函数最小。
@@ -288,6 +302,8 @@ with tf.Session() as sess:
     print "w1:\n", sess.run(w1)
     print "w2:\n", sess.run(w2)
 ```
+
+
 
 ## 搭建神经网络的八股：
 

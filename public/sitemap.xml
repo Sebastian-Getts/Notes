@@ -2,6 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2020/01/05/vim/</loc>
+    
+    <lastmod>2020-01-05T14:43:06.896Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/12/08/tensorflow02/</loc>
+    
+    <lastmod>2020-01-04T09:16:18.485Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/01/04/tensorflow03/</loc>
+    
+    <lastmod>2020-01-04T09:01:59.659Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/01/04/javaDataSttructure/</loc>
+    
+    <lastmod>2020-01-04T08:11:58.742Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2020/01/04/webservice/</loc>
     
     <lastmod>2020-01-04T04:14:35.145Z</lastmod>
@@ -12,13 +40,6 @@
     <loc>http://yoursite.com/2019/12/10/leecode/</loc>
     
     <lastmod>2019-12-14T08:01:22.944Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/12/08/tensorflow02/</loc>
-    
-    <lastmod>2019-12-09T03:14:53.361Z</lastmod>
     
   </url>
   
