@@ -54,10 +54,70 @@ Lesson 2 SUMMARY
 
 7. To undo previous actions, type: u (lowercase u)
 
-   To undo all the changes on a line, type: U(capital U)
+   To undo all the changes on a line, type: U(capital U)q
 
    To undo the undo's, type: CTRL-R(lowercase is ok)
 
 ---
 
 Lesson 3 SUMMARY
+
+1. To **put back text** that has just been deleted, type `p`(e.g., `dd` delete the aimed text and put it in the vim register).
+
+   This puts the deleted the text AFTER the cursor(if a line was deleted it will go on the line below the cursor)
+
+2. To **replace** the character under the cursor, type `r` and then the character you want to have there.
+
+3. The change operator allows you to change from the cursor to where the motion takes you.
+
+   eg. Type `ce` to change from the cursor to the end of the word, `c$` to change to the end of a line.
+
+4. The format for change is:
+
+   ```markdown
+   c  [number]  motion
+   ```
+
+---
+
+Lesson 4 SUMMARY
+
+<% note info %>
+
+this lesson is very helpful...
+
+<% endnote %>
+
+1. `CTRL-G` displays your location in the file and the file status.
+
+   ​			   `G` moves to the end of the file.
+
+   `number G` moves to that line number.
+
+   ​				`gg` moves to the first line.
+
+2. Typing `/` followed by a phrase searches FORWARD for the phrase.
+
+   Typing `?` followed by a phrase searches BACKWARD for the phrase.
+
+   After a search type `n` to find the next occurrence int th e same direction or `N` to search in the opposite direction.
+
+   `CTRL-O` takes you back to older positions,  `CTRL-I` to newer positions.
+
+3. Typing `%` while the cursor is on a (, ), [, ], {, or } goes to its match.
+
+4. To substitute new for the first old in a line type `:s/old/new`
+
+   To substitute new for all \'old's on a line type `:s/old/new/g`
+
+   To substitute phrases between two line #'s type `:s/#,#s/old/new/g`
+
+   To substitute all occurrences in the file type `:%s/old/new/g`
+
+   To ask for confirmation each time add \'c' :`%s/old/new/gc`
+
+   note: 'g' means *global*
+
+   ---
+
+   

@@ -1,8 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://yoursite.com/2020/01/11/lcoaldatetime/</loc>
+    <lastmod>2020-01-11</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2020/01/11/javaDocAnno/</loc>
+    <lastmod>2020-01-11</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2020/01/11/urlToPage/</loc>
+    <lastmod>2020-01-11</lastmod>
+  </url>  <url>
     <loc>http://yoursite.com/2020/01/05/vim/</loc>
-    <lastmod>2020-01-05</lastmod>
+    <lastmod>2020-01-11</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2019/12/08/tensorflow02/</loc>
     <lastmod>2020-01-04</lastmod>

@@ -2,9 +2,30 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2020/01/11/lcoaldatetime/</loc>
+    
+    <lastmod>2020-01-11T12:32:50.185Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/01/11/javaDocAnno/</loc>
+    
+    <lastmod>2020-01-11T10:50:53.956Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/01/11/urlToPage/</loc>
+    
+    <lastmod>2020-01-11T08:28:17.236Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2020/01/05/vim/</loc>
     
-    <lastmod>2020-01-05T14:43:06.896Z</lastmod>
+    <lastmod>2020-01-11T07:55:28.522Z</lastmod>
     
   </url>
   

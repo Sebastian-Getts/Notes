@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-01-05T14:43:06.896Z</updated>
+  <updated>2020-01-11T10:50:53.956Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -17,13 +17,84 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>javaDocAnno</title>
+    <link href="http://yoursite.com/2020/01/11/javaDocAnno/"/>
+    <id>http://yoursite.com/2020/01/11/javaDocAnno/</id>
+    <published>2020-01-11T10:13:00.000Z</published>
+    <updated>2020-01-11T10:50:53.956Z</updated>
+    
+    <content type="html"><![CDATA[<p>Java source, documentation and annotations.</p><a id="more"></a>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Java source, documentation and annotations.&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="java" scheme="http://yoursite.com/categories/java/"/>
+    
+    
+      <category term="utils" scheme="http://yoursite.com/tags/utils/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>lcoaldatetime</title>
+    <link href="http://yoursite.com/2020/01/11/lcoaldatetime/"/>
+    <id>http://yoursite.com/2020/01/11/lcoaldatetime/</id>
+    <published>2020-01-11T08:28:37.000Z</published>
+    <updated>2020-01-11T12:32:50.185Z</updated>
+    
+    <content type="html"><![CDATA[<p>Differences between <strong>Date</strong> and <strong>LocalDateTime</strong>, in fact, Date is deprecated.</p><a id="more"></a><h1 id="Date"><a href="#Date" class="headerlink" title="Date"></a>Date</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{</span><br><span class="line"></span><br><span class="line">    Date rightNow = <span class="keyword">new</span> Date();</span><br><span class="line">    System.out.println(<span class="string">&quot;now date: &quot;</span>+rightNow);</span><br><span class="line">    System.out.println(<span class="string">&quot;now year: &quot;</span>+rightNow.getYear());</span><br><span class="line">    System.out.println(<span class="string">&quot;now month: &quot;</span>+rightNow.getMonth());</span><br><span class="line">}</span><br></pre></td></tr></table></figure><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">now date: Sat Jan 11 16:36:03 CST 2020</span><br><span class="line">now year: 120</span><br><span class="line">now month: 0</span><br></pre></td></tr></table></figure><p>so it&#x2019;s <strong>deprecated</strong>.</p><h2 id="SimpleDateFormat"><a href="#SimpleDateFormat" class="headerlink" title="SimpleDateFormat"></a>SimpleDateFormat</h2><p><strong>Date formats are not synchronized.</strong></p><h1 id="LocalDateTime"><a href="#LocalDateTime" class="headerlink" title="LocalDateTime"></a>LocalDateTime</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{</span><br><span class="line"></span><br><span class="line">    LocalDateTime rightNow = LocalDateTime.now();</span><br><span class="line">    System.out.println(<span class="string">&quot;now date: &quot;</span>+rightNow);</span><br><span class="line">    System.out.println(<span class="string">&quot;now month: &quot;</span>+rightNow.getMonth());</span><br><span class="line">    System.out.println(<span class="string">&quot;now year: &quot;</span>+rightNow.getYear());</span><br><span class="line">}</span><br></pre></td></tr></table></figure><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">now date: 2020-01-11T18:45:20.878750</span><br><span class="line">now month: JANUARY</span><br><span class="line">now year: 2020</span><br></pre></td></tr></table></figure><h2 id="DateTimeFormatter"><a href="#DateTimeFormatter" class="headerlink" title="DateTimeFormatter"></a>DateTimeFormatter</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{</span><br><span class="line"></span><br><span class="line">    LocalDateTime rightNow = LocalDateTime.now();</span><br><span class="line"></span><br><span class="line">    System.out.println(rightNow.format(DateTimeFormatter.ISO_DATE));</span><br><span class="line">    System.out.println(rightNow.format(DateTimeFormatter.BASIC_ISO_DATE));</span><br><span class="line">    System.out.println(rightNow.format(DateTimeFormatter.ofPattern(<span class="string">&quot;yyyy/MM/dd&quot;</span>)));</span><br><span class="line">}</span><br></pre></td></tr></table></figure><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2020-01-11</span><br><span class="line">20200111</span><br><span class="line">2020/01/11</span><br></pre></td></tr></table></figure><p>note: most important, <strong>the class is immutable and thread-safe</strong>.</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;Differences between &lt;strong&gt;Date&lt;/strong&gt; and &lt;strong&gt;LocalDateTime&lt;/strong&gt;, in fact, Date is deprecated.&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="java" scheme="http://yoursite.com/categories/java/"/>
+    
+    
+      <category term="utils" scheme="http://yoursite.com/tags/utils/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>urlToPage</title>
+    <link href="http://yoursite.com/2020/01/11/urlToPage/"/>
+    <id>http://yoursite.com/2020/01/11/urlToPage/</id>
+    <published>2020-01-11T08:04:21.000Z</published>
+    <updated>2020-01-11T08:28:17.236Z</updated>
+    
+    <content type="html"><![CDATA[<p>&#x4ECE;&#x8F93;&#x5165;URL&#x5230;&#x9875;&#x9762;&#x5C55;&#x73B0;&#x5230;&#x773C;&#x524D;&#xFF0C;&#x4E2D;&#x95F4;&#x53D1;&#x751F;&#x4E86;&#x4EC0;&#x4E48;&#xFF1F;&#x9762;&#x8BD5;&#x7684;&#x65F6;&#x5019;&#x88AB;&#x95EE;&#x5230;&#x8FC7;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;&#x6211;&#x7684;&#x56DE;&#x7B54;&#x4E3B;&#x8981;&#x96C6;&#x4E2D;&#x5728;&#x4E86;DNS&#x4E0A;&#xFF0C;&#x5176;&#x5B9E;&#x4E2D;&#x95F4;&#x8FD8;&#x6709;&#x5F88;&#x591A;&#x53EF;&#x4EE5;&#x7EC6;&#x7EC6;&#x8BA8;&#x8BBA;&#x7684;&#x5730;&#x65B9;&#x3002;</p><a id="more"></a><h1 id="&#x5E8F;"><a href="#&#x5E8F;" class="headerlink" title="&#x5E8F;"></a>&#x5E8F;</h1><ul><li>DNS</li><li>HTTP&#x8BF7;&#x6C42;</li><li>&#x6D4F;&#x89C8;&#x5668;&#x89E3;&#x6790;&#x3001;&#x6E32;&#x67D3;&#x9875;&#x9762;</li></ul><h1 id="DNS"><a href="#DNS" class="headerlink" title="DNS"></a>DNS</h1><p>Domain Name System&#xFF0C;&#x57DF;&#x540D;&#x89E3;&#x6790;&#xFF0C;&#x6D4F;&#x89C8;&#x5668;&#x4E0D;&#x662F;&#x901A;&#x8FC7;&#x57DF;&#x540D;&#x627E;&#x5230;&#x5BF9;&#x5E94;&#x7684;&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x800C;&#x662F;&#x8981;&#x901A;&#x8FC7;IP&#x5730;&#x5740;&#x3002;</p><p>&#x5BFB;&#x627E;url&#x5BF9;&#x5E94;&#x7684;ip&#xFF1A;</p><ol><li>&#x6D4F;&#x89C8;&#x5668;&#x7F13;&#x5B58;</li><li>&#x64CD;&#x4F5C;&#x7CFB;&#x7EDF;&#x7F13;&#x5B58;</li><li>&#x8DEF;&#x7531;&#x7F13;&#x5B58;</li><li>ISP&#xFF08;Internet Service Provider&#xFF09;&#x7684;DNS&#x670D;&#x52A1;&#x5668;</li><li>&#x8DDF;&#x670D;&#x52A1;&#x5668;</li></ol><p>&#x6D4F;&#x89C8;&#x5668;&#x901A;&#x8FC7;&#x5411;DNS&#x670D;&#x52A1;&#x5668;&#x53D1;&#x9001;&#x57DF;&#x540D;&#x83B7;&#x53D6;&#x5230;&#x5BF9;&#x5E94;&#x7684;IP&#x5730;&#x5740;&#xFF0C;&#x7136;&#x540E;&#x5C06;IP&#x5730;&#x5740;&#x653E;&#x5165;&#x534F;&#x8BAE;&#x4E2D;&#x53D1;&#x9001;&#x7ED9;&#x5BF9;&#x5E94;&#x7684;&#x670D;&#x52A1;&#x5668;&#x3002;</p><h1 id="HTTP&#x8BF7;&#x6C42;"><a href="#HTTP&#x8BF7;&#x6C42;" class="headerlink" title="HTTP&#x8BF7;&#x6C42;"></a>HTTP&#x8BF7;&#x6C42;</h1><p>&#x4ECE;DNS&#x4E2D;&#x83B7;&#x53D6;&#x5230;IP&#x540E;&#x5C31;&#x53EF;&#x4EE5;&#x8FDB;&#x884C;http&#x8BF7;&#x6C42;&#x4E86;&#x3002;&#x6B63;&#x5F0F;&#x53D1;&#x9001;&#x8BF7;&#x6C42;&#x524D;&#x4F1A;&#x8FDB;&#x884C;&#x4E09;&#x6B21;TCP&#x7684;&#x4E09;&#x6B21;&#x63E1;&#x624B;&#xFF0C;&#x901A;&#x8FC7;&#x540E;&#x53D1;&#x9001;&#x8BF7;&#x6C42;&#x62A5;&#x6587;&#x3002;</p><p>&#x6570;&#x636E;&#x4F20;&#x8F93;&#x5B8C;&#x6BD5;&#x540E;&#x8FD8;&#x8981;&#x8FDB;&#x884C;TCP&#x56DB;&#x6B21;&#x63E1;&#x624B;&#x3002;</p><h1 id="&#x6D4F;&#x89C8;&#x5668;&#x89E3;&#x6790;&#x3001;&#x6E32;&#x67D3;&#x9875;&#x9762;"><a href="#&#x6D4F;&#x89C8;&#x5668;&#x89E3;&#x6790;&#x3001;&#x6E32;&#x67D3;&#x9875;&#x9762;" class="headerlink" title="&#x6D4F;&#x89C8;&#x5668;&#x89E3;&#x6790;&#x3001;&#x6E32;&#x67D3;&#x9875;&#x9762;"></a>&#x6D4F;&#x89C8;&#x5668;&#x89E3;&#x6790;&#x3001;&#x6E32;&#x67D3;&#x9875;&#x9762;</h1><p>&#x6D4F;&#x89C8;&#x5668;&#x62FF;&#x5230;HTML&#x540E;&#xFF0C;&#x5C31;&#x5F00;&#x59CB;&#x89E3;&#x6790;&#x6E32;&#x67D3;&#x3002;</p><h2 id="&#x6839;&#x636E;HTML&#x89E3;&#x6790;&#x51FA;DOM&#x6811;"><a href="#&#x6839;&#x636E;HTML&#x89E3;&#x6790;&#x51FA;DOM&#x6811;" class="headerlink" title="&#x6839;&#x636E;HTML&#x89E3;&#x6790;&#x51FA;DOM&#x6811;"></a>&#x6839;&#x636E;HTML&#x89E3;&#x6790;&#x51FA;<strong>DOM</strong>&#x6811;</h2><p>&#x6DF1;&#x5EA6;&#x4F18;&#x5148;&#x904D;&#x5386;</p><h2 id="&#x6839;&#x636E;CSS&#x89E3;&#x6790;&#x751F;&#x6210;CSS&#x89C4;&#x5219;&#x6811;"><a href="#&#x6839;&#x636E;CSS&#x89E3;&#x6790;&#x751F;&#x6210;CSS&#x89C4;&#x5219;&#x6811;" class="headerlink" title="&#x6839;&#x636E;CSS&#x89E3;&#x6790;&#x751F;&#x6210;CSS&#x89C4;&#x5219;&#x6811;"></a>&#x6839;&#x636E;CSS&#x89E3;&#x6790;&#x751F;&#x6210;<strong>CSS&#x89C4;&#x5219;&#x6811;</strong></h2><h2 id="&#x7ED3;&#x5408;DOM&#x6811;&#x548C;CSS&#x89C4;&#x5219;&#x6811;&#xFF0C;&#x751F;&#x6210;&#x6E32;&#x67D3;&#x6811;"><a href="#&#x7ED3;&#x5408;DOM&#x6811;&#x548C;CSS&#x89C4;&#x5219;&#x6811;&#xFF0C;&#x751F;&#x6210;&#x6E32;&#x67D3;&#x6811;" class="headerlink" title="&#x7ED3;&#x5408;DOM&#x6811;&#x548C;CSS&#x89C4;&#x5219;&#x6811;&#xFF0C;&#x751F;&#x6210;&#x6E32;&#x67D3;&#x6811;"></a>&#x7ED3;&#x5408;DOM&#x6811;&#x548C;CSS&#x89C4;&#x5219;&#x6811;&#xFF0C;&#x751F;&#x6210;<strong>&#x6E32;&#x67D3;&#x6811;</strong></h2><h2 id="&#x6839;&#x636E;&#x6E32;&#x67D3;&#x6811;&#x8BA1;&#x7B97;&#x6BCF;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#x7684;&#x4FE1;&#x606F;"><a href="#&#x6839;&#x636E;&#x6E32;&#x67D3;&#x6811;&#x8BA1;&#x7B97;&#x6BCF;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#x7684;&#x4FE1;&#x606F;" class="headerlink" title="&#x6839;&#x636E;&#x6E32;&#x67D3;&#x6811;&#x8BA1;&#x7B97;&#x6BCF;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#x7684;&#x4FE1;&#x606F;"></a>&#x6839;&#x636E;&#x6E32;&#x67D3;&#x6811;&#x8BA1;&#x7B97;&#x6BCF;&#x4E00;&#x4E2A;&#x8282;&#x70B9;&#x7684;&#x4FE1;&#x606F;</h2><h2 id="&#x6839;&#x636E;&#x8BA1;&#x7B97;&#x597D;&#x7684;&#x4FE1;&#x606F;&#x7ED8;&#x5236;&#x9875;&#x9762;"><a href="#&#x6839;&#x636E;&#x8BA1;&#x7B97;&#x597D;&#x7684;&#x4FE1;&#x606F;&#x7ED8;&#x5236;&#x9875;&#x9762;" class="headerlink" title="&#x6839;&#x636E;&#x8BA1;&#x7B97;&#x597D;&#x7684;&#x4FE1;&#x606F;&#x7ED8;&#x5236;&#x9875;&#x9762;"></a>&#x6839;&#x636E;&#x8BA1;&#x7B97;&#x597D;&#x7684;&#x4FE1;&#x606F;&#x7ED8;&#x5236;&#x9875;&#x9762;</h2>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;从输入URL到页面展现到眼前，中间发生了什么？面试的时候被问到过这个问题，我的回答主要集中在了DNS上，其实中间还有很多可以细细讨论的地方。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="network" scheme="http://yoursite.com/categories/network/"/>
+    
+    
+      <category term="url" scheme="http://yoursite.com/tags/url/"/>
+    
+      <category term="update" scheme="http://yoursite.com/tags/update/"/>
+    
+  </entry>
+  
+  <entry>
     <title>vim</title>
     <link href="http://yoursite.com/2020/01/05/vim/"/>
     <id>http://yoursite.com/2020/01/05/vim/</id>
     <published>2020-01-05T13:38:32.000Z</published>
-    <updated>2020-01-05T14:43:06.896Z</updated>
+    <updated>2020-01-11T07:55:28.522Z</updated>
     
-    <content type="html"><![CDATA[<p>summary vim skills from vim official tutor</p><a id="more"></a><h1 id="Lesson-1-2"><a href="#Lesson-1-2" class="headerlink" title="Lesson 1, 2"></a>Lesson 1, 2</h1><ul><li><p>to insert or append text type:</p><p>i    type inserted text: insert before the cursor</p><p>A    type appended text: append after the line</p></li><li><p>to delete the character at the cursor type: <code>x</code></p></li><li><p>type <code>dw</code> to delete a word</p></li><li><p>type <code>d$</code> to delete to the end of the line</p></li><li><p>many commands that change are made from an operator and a motion, a short list of motions:</p><ul><li>w - until the start of the next word, EXCLUDING its first character.</li><li>e - to the end of the current word, INCLUDING the last character.</li><li>$ - to the end of the line, INCLUDING the last character.</li></ul></li></ul><hr><p>Lesson 2 SUMMARY</p><ol><li><p>To delete from the cursor up to the next word type: <code>dw</code></p></li><li><p>To delete from the cursor to the end of a line type: <code>d$</code></p></li><li><p>To delete a whole line type: <code>dd</code></p></li><li><p>To repeat a motion prepend it with a number: <code>2w</code></p></li><li><p>The format for a change command is:</p><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">operator [number] motion</span></span><br><span class="line">where:</span><br><span class="line"><span class="code">operation - is what to do, such as d for delete</span></span><br><span class="line"><span class="code">[number] - is an optional count to repeat the motion</span></span><br><span class="line"><span class="code">motion - moves over the text to operate on such as w(word), $(to the end of line), etc.</span></span><br></pre></td></tr></table></figure></li><li><p>To move to the start of the line use a zero: 0</p></li><li><p>To undo previous actions, type: u (lowercase u)</p><p>To undo all the changes on a line, type: U(capital U)</p><p>To undo the undo&#x2019;s, type: CTRL-R(lowercase is ok)</p></li></ol><hr><p>Lesson 3 SUMMARY</p>]]></content>
+    <content type="html"><![CDATA[<p>summary vim skills from vim official tutor</p><a id="more"></a><h1 id="Lesson-1-2"><a href="#Lesson-1-2" class="headerlink" title="Lesson 1, 2"></a>Lesson 1, 2</h1><ul><li><p>to insert or append text type:</p><p>i    type inserted text: insert before the cursor</p><p>A    type appended text: append after the line</p></li><li><p>to delete the character at the cursor type: <code>x</code></p></li><li><p>type <code>dw</code> to delete a word</p></li><li><p>type <code>d$</code> to delete to the end of the line</p></li><li><p>many commands that change are made from an operator and a motion, a short list of motions:</p><ul><li>w - until the start of the next word, EXCLUDING its first character.</li><li>e - to the end of the current word, INCLUDING the last character.</li><li>$ - to the end of the line, INCLUDING the last character.</li></ul></li></ul><hr><p>Lesson 2 SUMMARY</p><ol><li><p>To delete from the cursor up to the next word type: <code>dw</code></p></li><li><p>To delete from the cursor to the end of a line type: <code>d$</code></p></li><li><p>To delete a whole line type: <code>dd</code></p></li><li><p>To repeat a motion prepend it with a number: <code>2w</code></p></li><li><p>The format for a change command is:</p><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="code">operator [number] motion</span></span><br><span class="line">where:</span><br><span class="line"><span class="code">operation - is what to do, such as d for delete</span></span><br><span class="line"><span class="code">[number] - is an optional count to repeat the motion</span></span><br><span class="line"><span class="code">motion - moves over the text to operate on such as w(word), $(to the end of line), etc.</span></span><br></pre></td></tr></table></figure></li><li><p>To move to the start of the line use a zero: 0</p></li><li><p>To undo previous actions, type: u (lowercase u)</p><p>To undo all the changes on a line, type: U(capital U)q</p><p>To undo the undo&#x2019;s, type: CTRL-R(lowercase is ok)</p></li></ol><hr><p>Lesson 3 SUMMARY</p><ol><li><p>To <strong>put back text</strong> that has just been deleted, type <code>p</code>(e.g., <code>dd</code> delete the aimed text and put it in the vim register).</p><p>This puts the deleted the text AFTER the cursor(if a line was deleted it will go on the line below the cursor)</p></li><li><p>To <strong>replace</strong> the character under the cursor, type <code>r</code> and then the character you want to have there.</p></li><li><p>The change operator allows you to change from the cursor to where the motion takes you.</p><p>eg. Type <code>ce</code> to change from the cursor to the end of the word, <code>c$</code> to change to the end of a line.</p></li><li><p>The format for change is:</p><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c  [number]  motion</span><br></pre></td></tr></table></figure></li></ol><hr><p>Lesson 4 SUMMARY</p><p>&lt;% note info %&gt;</p><p>this lesson is very helpful&#x2026;</p><p>&lt;% endnote %&gt;</p><ol><li><p><code>CTRL-G</code> displays your location in the file and the file status.</p><p>&#x200B;               <code>G</code> moves to the end of the file.</p><p><code>number G</code> moves to that line number.</p><p>&#x200B;                <code>gg</code> moves to the first line.</p></li><li><p>Typing <code>/</code> followed by a phrase searches FORWARD for the phrase.</p><p>Typing <code>?</code> followed by a phrase searches BACKWARD for the phrase.</p><p>After a search type <code>n</code> to find the next occurrence int th e same direction or <code>N</code> to search in the opposite direction.</p><p><code>CTRL-O</code> takes you back to older positions,  <code>CTRL-I</code> to newer positions.</p></li><li><p>Typing <code>%</code> while the cursor is on a (, ), [, ], {, or } goes to its match.</p></li><li><p>To substitute new for the first old in a line type <code>:s/old/new</code></p><p>To substitute new for all &apos;old&#x2019;s on a line type <code>:s/old/new/g</code></p><p>To substitute phrases between two line #&#x2019;s type <code>:s/#,#s/old/new/g</code></p><p>To substitute all occurrences in the file type <code>:%s/old/new/g</code></p><p>To ask for confirmation each time add &apos;c&#x2019; :<code>%s/old/new/gc</code></p><p>note: &#x2018;g&#x2019; means <em>global</em></p><hr></li></ol>]]></content>
     
     <summary type="html">
     
@@ -378,71 +449,6 @@
       <category term="html" scheme="http://yoursite.com/tags/html/"/>
     
       <category term="framework" scheme="http://yoursite.com/tags/framework/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>calculator</title>
-    <link href="http://yoursite.com/2019/11/18/calculator/"/>
-    <id>http://yoursite.com/2019/11/18/calculator/</id>
-    <published>2019-11-18T14:22:40.000Z</published>
-    <updated>2019-11-18T14:22:40.120Z</updated>
-    
-    <summary type="html">
-    
-    </summary>
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title>javaFX</title>
-    <link href="http://yoursite.com/2019/11/18/javaFX/"/>
-    <id>http://yoursite.com/2019/11/18/javaFX/</id>
-    <published>2019-11-18T14:22:16.000Z</published>
-    <updated>2019-11-24T04:10:36.714Z</updated>
-    
-    <content type="html"><![CDATA[<p>JavaFX&#xFF0C;&#x636E;&#x8BF4;&#x751F;&#x4E0D;&#x9022;&#x65F6;&#xFF0C;&#xFF0C;&#x4F46;&#x662F;&#x6211;&#x89C9;&#x5F97;&#x5B83;&#x5F88;&#x5389;&#x5BB3;&#x554A;&#x3002;&#x3002;&#x5199;&#x4E2A;&#x5DE5;&#x5177;&#x81EA;&#x5DF1;&#x7528;&#x4E5F;&#x4E0D;&#x9519;&#x3002;&#x3002;&#x597D;&#x50CF;&#x5F88;&#x591A;&#x5DE5;&#x7A0B;&#x7C7B;&#x7684;&#x5E94;&#x7528;&#x5728;&#x7528;&#x5B83;&#x3002;&#x5728;&#x6CB9;&#x7BA1;&#x4E0A;&#x53D1;&#x73B0;&#x4E86;&#x5173;&#x4E8E;&#x4ED6;&#x7684;&#x5B9D;&#x8D1D;&#x3002;&#x3002;&#x3002;&#x4E4B;&#x524D;&#x5728;b&#x7AD9;&#x4E0A;&#x770B;&#x5230;&#x8FC7;&#x4E00;&#x4E2A;&#x5370;&#x5EA6;&#x5C3C;&#x897F;&#x4E9A;&#x7684;&#x5C0F;&#x54E5;&#x7684;&#x89C6;&#x9891;&#xFF0C;&#x540E;&#x6765;&#x5C31;&#x627E;&#x4E0D;&#x5230;&#x4E86;&#xFF0C;&#x4ECA;&#x5929;&#x53C8;&#x53D1;&#x73B0;&#x4E86;&#x5B83;&#x3002;&#x5730;&#x5740;&#x6587;&#x7AE0;&#x672B;&#x5C3E;&#x7ED9;&#x51FA;&#x3002; p.s. &#x597D;&#x50CF;&#x662F;JetBrains&#x51FA;&#x54C1;&#x7684;&#xFF0C;&#xFF0C;&#x5FC5;&#x5C5E;&#x7CBE;&#x54C1;&#x3002;</p><a id="more"></a><h1 id="&#x5F15;"><a href="#&#x5F15;" class="headerlink" title="&#x5F15;"></a>&#x5F15;</h1><p>&#x4F7F;&#x7528;&#x7684;IDE&#x662F;IntelliJ&#xFF0C;&#x521B;&#x5EFA;&#x540E;&#xFF0C;&#x4ED6;&#x7684;&#x76EE;&#x5F55;&#x7ED3;&#x6784;&#x662F;&#x8FD9;&#x6837;&#x7684;&#xFF1A;</p><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">- </span>Controller</span><br><span class="line"><span class="bullet">- </span>Main</span><br><span class="line"><span class="bullet">- </span>sample.fxml</span><br></pre></td></tr></table></figure><p>&#x9664;&#x6B64;&#x4E4B;&#x5916;&#xFF0C;&#x4F1A;&#x4F7F;&#x7528;&#x63D2;&#x4EF6;<code>Scene Builder</code>&#x548C;&#x5B83;&#x7684;&#x6269;&#x5C55;<code>JFOENIX</code>.</p><p>JavaFX&#x7684;jar&#x5305;&#x5728;java8&#x7684;&#x65F6;&#x5019;&#x662F;&#x878D;&#x5408;&#x7684;&#x3002;&#x4E4B;&#x540E;&#x5C31;&#x72EC;&#x7ACB;&#x51FA;&#x6765;&#x4E86;&#x3002;&#x6BD4;&#x5982;Java11, Java12&#x3002;</p><p>emmmmmm, &#x5148;&#x5B9A;&#x4E2A;&#x5C0F;&#x76EE;&#x6807;&#xFF0C;&#x7528;&#x4ED6;&#x5199;&#x4E2A;&#x8BA1;&#x7B97;&#x5668;&#x3002;&#xFF08;&#x4E4B;&#x524D;&#x5199;&#x8FC7;&#x4E00;&#x4E2A;&#x8BB0;&#x4E8B;&#x672C;&#xFF0C;&#xFF0C;&#x627E;&#x4E0D;&#x5230;&#x4E86;&#x3002;&#x3002;so sad ==&#xFF09;</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;JavaFX，据说生不逢时，，但是我觉得它很厉害啊。。写个工具自己用也不错。。好像很多工程类的应用在用它。在油管上发现了关于他的宝贝。。。之前在b站上看到过一个印度尼西亚的小哥的视频，后来就找不到了，今天又发现了它。地址文章末尾给出。 p.s. 好像是JetBrains出品的，，必属精品。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="JavaFX" scheme="http://yoursite.com/categories/JavaFX/"/>
-    
-    
-      <category term="javafx" scheme="http://yoursite.com/tags/javafx/"/>
-    
-      <category term="GUI" scheme="http://yoursite.com/tags/GUI/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>bt03</title>
-    <link href="http://yoursite.com/2019/11/17/bt03/"/>
-    <id>http://yoursite.com/2019/11/17/bt03/</id>
-    <published>2019-11-17T08:04:18.000Z</published>
-    <updated>2019-11-17T08:46:02.904Z</updated>
-    
-    <content type="html"><![CDATA[<p> &#x6BD4;&#x7279;&#x5E01;&#x4E2D;&#x7684;&#x534F;&#x8BAE;&#x3002;&#x4E0E;&#x7EB8;&#x8D28;&#x8D27;&#x5E01;&#x4E0D;&#x540C;&#x7684;&#x662F;&#xFF0C;&#x5982;&#x4F55;&#x9632;&#x8303;double spending attack&#xFF0C;&#x5373;&#x53CC;&#x82B1;&#x653B;&#x51FB;&#x3002;</p><a id="more"></a><h1 id="&#x53BB;&#x4E2D;&#x5FC3;&#x5316;"><a href="#&#x53BB;&#x4E2D;&#x5FC3;&#x5316;" class="headerlink" title="&#x53BB;&#x4E2D;&#x5FC3;&#x5316;"></a>&#x53BB;&#x4E2D;&#x5FC3;&#x5316;</h1><p>&#x4F20;&#x7EDF;&#x884C;&#x4E1A;&#x4E2D;&#xFF0C;&#x5982;&#x679C;&#x7EB8;&#x5E01;&#x6539;&#x4E3A;&#x6570;&#x5B57;&#x8D27;&#x5E01;&#xFF0C;&#x6BCF;&#x6B21;&#x652F;&#x4ED8;&#x90FD;&#x9700;&#x8981;&#x901A;&#x8FC7;&#x592E;&#x884C;&#x6765;&#x5224;&#x65AD;&#x662F;&#x5426;&#x6D88;&#x8D39;&#x8FC7;&#x67D0;&#x4E2A;&#x6570;&#x5B57;&#x8D27;&#x5E01;&#x4EE5;&#x9632;&#x8303;double spending attack&#xFF0C;&#x8FD9;&#x6837;&#x8FD8;&#x662F;&#x4E2D;&#x5FC3;&#x5316;&#x7684;&#x3002;</p><ul><li>&#x8D27;&#x5E01;&#x53D1;&#x884C;&#x6743;</li><li>double spending attack</li></ul><h2 id="double-spending-attack"><a href="#double-spending-attack" class="headerlink" title="double spending attack"></a>double spending attack</h2><p>&#x4E0E;&#x4F20;&#x7EDF;&#x7C7B;&#x4F3C;&#xFF0C;&#x4E5F;&#x662F;&#x9700;&#x8981;&#x7EF4;&#x62A4;&#x4E00;&#x4E2A;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x6765;&#x5224;&#x65AD;&#xFF0C;&#x53EA;&#x4E0D;&#x8FC7;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x4E0D;&#x662F;&#x7531;&#x592E;&#x884C;&#x6765;&#x7EF4;&#x62A4;&#xFF0C;&#x800C;&#x662F;&#x7531;&#x6240;&#x6709;&#x7528;&#x6237;&#x6765;&#x7EF4;&#x62A4;&#x3002;</p><p>block header</p><ul><li>reversion</li><li>hash of previous block header</li><li>Merkle root hash</li><li>target</li><li>nonce</li></ul><p>block body</p><ul><li>transaction list<ul><li>full node(fully validating node)</li><li>light node</li></ul></li></ul><p>&#x4E00;&#x822C;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x8F7B;&#x8282;&#x70B9;&#x65E0;&#x6CD5;&#x9A8C;&#x8BC1;&#x6574;&#x6761;&#x533A;&#x5757;&#x94FE;&#x7684;&#x6B63;&#x786E;&#x6027;&#xFF0C;&#x56E0;&#x4E3A;&#x4ED6;&#x7684;&#x5934;&#x90E8;&#x6CA1;&#x6709;&#x5305;&#x542B;&#x5168;&#x90E8;&#x7684;hash&#x503C;&#x3002;</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt; 比特币中的协议。与纸质货币不同的是，如何防范double spending attack，即双花攻击。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="技术" scheme="http://yoursite.com/categories/%E6%8A%80%E6%9C%AF/"/>
-    
-      <category term="bt" scheme="http://yoursite.com/categories/%E6%8A%80%E6%9C%AF/bt/"/>
-    
-    
-      <category term="principle" scheme="http://yoursite.com/tags/principle/"/>
     
   </entry>
   

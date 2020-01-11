@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="Sebastian Getts">
 <meta property="og:description" content="summary vim skills from vim official tutor">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-01-05T14:43:06.896Z">
+<meta property="og:updated_time" content="2020-01-11T07:55:28.522Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2020/01/05/vim/">
@@ -221,10 +221,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-01-05 21:38:32 / Modified: 22:43:06" itemprop="dateCreated datePublished" datetime="2020-01-05T21:38:32+08:00">2020-01-05</time>
+              <time title="Created: 2020-01-05 21:38:32" itemprop="dateCreated datePublished" datetime="2020-01-05T21:38:32+08:00">2020-01-05</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-01-11 15:55:28" itemprop="dateModified" datetime="2020-01-11T15:55:28+08:00">2020-01-11</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -287,12 +293,53 @@
 <li><p>To move to the start of the line use a zero: 0</p>
 </li>
 <li><p>To undo previous actions, type: u (lowercase u)</p>
-<p>To undo all the changes on a line, type: U(capital U)</p>
+<p>To undo all the changes on a line, type: U(capital U)q</p>
 <p>To undo the undo&#x2019;s, type: CTRL-R(lowercase is ok)</p>
 </li>
 </ol>
 <hr>
 <p>Lesson 3 SUMMARY</p>
+<ol>
+<li><p>To <strong>put back text</strong> that has just been deleted, type <code>p</code>(e.g., <code>dd</code> delete the aimed text and put it in the vim register).</p>
+<p>This puts the deleted the text AFTER the cursor(if a line was deleted it will go on the line below the cursor)</p>
+</li>
+<li><p>To <strong>replace</strong> the character under the cursor, type <code>r</code> and then the character you want to have there.</p>
+</li>
+<li><p>The change operator allows you to change from the cursor to where the motion takes you.</p>
+<p>eg. Type <code>ce</code> to change from the cursor to the end of the word, <code>c$</code> to change to the end of a line.</p>
+</li>
+<li><p>The format for change is:</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c  [number]  motion</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<hr>
+<p>Lesson 4 SUMMARY</p>
+<p>&lt;% note info %&gt;</p>
+<p>this lesson is very helpful&#x2026;</p>
+<p>&lt;% endnote %&gt;</p>
+<ol>
+<li><p><code>CTRL-G</code> displays your location in the file and the file status.</p>
+<p>&#x200B;               <code>G</code> moves to the end of the file.</p>
+<p><code>number G</code> moves to that line number.</p>
+<p>&#x200B;                <code>gg</code> moves to the first line.</p>
+</li>
+<li><p>Typing <code>/</code> followed by a phrase searches FORWARD for the phrase.</p>
+<p>Typing <code>?</code> followed by a phrase searches BACKWARD for the phrase.</p>
+<p>After a search type <code>n</code> to find the next occurrence int th e same direction or <code>N</code> to search in the opposite direction.</p>
+<p><code>CTRL-O</code> takes you back to older positions,  <code>CTRL-I</code> to newer positions.</p>
+</li>
+<li><p>Typing <code>%</code> while the cursor is on a (, ), [, ], {, or } goes to its match.</p>
+</li>
+<li><p>To substitute new for the first old in a line type <code>:s/old/new</code></p>
+<p>To substitute new for all &apos;old&#x2019;s on a line type <code>:s/old/new/g</code></p>
+<p>To substitute phrases between two line #&#x2019;s type <code>:s/#,#s/old/new/g</code></p>
+<p>To substitute all occurrences in the file type <code>:%s/old/new/g</code></p>
+<p>To ask for confirmation each time add &apos;c&#x2019; :<code>%s/old/new/gc</code></p>
+<p>note: &#x2018;g&#x2019; means <em>global</em></p>
+<hr>
+</li>
+</ol>
 
     </div>
 
@@ -351,6 +398,9 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+                <a href="/2020/01/11/urlToPage/" rel="prev" title="urlToPage">
+                  urlToPage <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
       </footer>
@@ -404,20 +454,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">39</span>
+          <span class="site-state-item-count">42</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
