@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="msvalidate.01" content="541BE591C13D7313C3568E6D172218E2">
+  <meta name="baidu-site-verification" content="3qvcDlCoMv">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: true,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="vue learning… 渐进式JavaScript框架, reference">
+<meta name="keywords" content="vue">
+<meta property="og:type" content="article">
+<meta property="og:title" content="vue01">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;17&#x2F;vue01&#x2F;index.html">
+<meta property="og:site_name" content="Sebastian Getts">
+<meta property="og:description" content="vue learning… 渐进式JavaScript框架, reference">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-01-17T13:57:10.157Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/01/17/vue01/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>vue01 | Sebastian Getts</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sebastian Getts</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">I'm the new one.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-fw fa-video-camera"></i>movies</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/17/vue01/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Sebastian">
+      <meta itemprop="description" content="I'm feeling lucky!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sebastian Getts">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          vue01
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-01-17 12:55:47 / Modified: 21:57:10" itemprop="dateCreated datePublished" datetime="2020-01-17T12:55:47+08:00">2020-01-17</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/vue/" itemprop="url" rel="index">
+                    <span itemprop="name">vue</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>vue learning&#x2026; &#x6E10;&#x8FDB;&#x5F0F;JavaScript&#x6846;&#x67B6;, <a href="https://cn.vuejs.org/v2/guide" target="_blank" rel="noopener">reference</a></p>
+<a id="more"></a>
+
+<h1 id="&#x5E8F;"><a href="#&#x5E8F;" class="headerlink" title="&#x5E8F;"></a>&#x5E8F;</h1><p>&#x6E10;&#x8FDB;&#xFF1A;&#x58F0;&#x660E;&#x5F0F;&#x6E32;&#x67D3;-&gt;&#x7EC4;&#x4EF6;&#x7CFB;&#x7EDF;-&gt;&#x5BA2;&#x6237;&#x7AEF;&#x8DEF;&#x7531;-&gt;&#x96C6;&#x4E2D;&#x5F0F;&#x72B6;&#x6001;&#x7BA1;&#x7406;-&gt;&#x9879;&#x76EE;&#x6784;&#x5EFA;</p>
+<h1 id="&#x4F7F;&#x7528;"><a href="#&#x4F7F;&#x7528;" class="headerlink" title="&#x4F7F;&#x7528;"></a>&#x4F7F;&#x7528;</h1><h3 id="&#x539F;&#x751F;JS&#xFF1A;"><a href="#&#x539F;&#x751F;JS&#xFF1A;" class="headerlink" title="&#x539F;&#x751F;JS&#xFF1A;"></a>&#x539F;&#x751F;JS&#xFF1A;</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">&quot;msg&quot;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;script type=<span class="string">&quot;text/javacript&quot;</span>&gt;</span><br><span class="line">    <span class="keyword">var</span> msg = <span class="string">&apos;Hello World&apos;</span>;</span><br><span class="line">	<span class="keyword">var</span> div = <span class="built_in">document</span>.getElementById(<span class="string">&apos;msg&apos;</span>);</span><br><span class="line">	div.innerHTML = msg;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="jQuery&#xFF1A;"><a href="#jQuery&#xFF1A;" class="headerlink" title="jQuery&#xFF1A;"></a>jQuery&#xFF1A;</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">&quot;msg&quot;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;script type=<span class="string">&quot;text&quot;</span>/javascript<span class="string">&quot; src=&quot;</span>js/jquery.js<span class="string">&quot;&gt;&lt;/srcipt&gt;</span></span><br><span class="line"><span class="string">&lt;script type=&quot;</span>text/javascript<span class="string">&quot;&gt;</span></span><br><span class="line"><span class="string">    var msg = &apos;Hello World&apos;;</span></span><br><span class="line"><span class="string">	$(&apos;#msg&apos;).html(msg);</span></span><br><span class="line"><span class="string">&lt;/script&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>jQuery&#x5BF9;&#x539F;&#x751F;&#x8FDB;&#x884C;&#x5C01;&#x88C5;&#x3002;</p>
+<hr>
+<h3 id="Vue-js"><a href="#Vue-js" class="headerlink" title="Vue.js:"></a>Vue.js:</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">    &lt;div&gt;{{msg}}&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>div&gt;</span><br><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span> src=<span class="string">&quot;js/vue.js&quot;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">    <span class="keyword">new</span> Vue({</span><br><span class="line">    	el: <span class="string">&apos;#app&apos;</span>,</span><br><span class="line">    	data:{</span><br><span class="line">            msg: <span class="string">&apos;Hello world&apos;</span></span><br><span class="line">        }</span><br><span class="line">})</span><br></pre></td></tr></table></figure>
+
+<h4 id="&#x6B65;&#x9AA4;&#xFF1A;"><a href="#&#x6B65;&#x9AA4;&#xFF1A;" class="headerlink" title="&#x6B65;&#x9AA4;&#xFF1A;"></a>&#x6B65;&#x9AA4;&#xFF1A;</h4><ol>
+<li>&#x9700;&#x8981;&#x63D0;&#x4F9B;&#x6807;&#x7B7E;&#x7528;&#x4E8E;&#x586B;&#x5145;&#x6570;&#x636E;</li>
+<li>&#x5F15;&#x5165;vue.js&#x5E93;&#x6587;&#x4EF6;</li>
+<li>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;vue&#x7684;&#x8BED;&#x6CD5;&#x505A;&#x529F;&#x80FD;&#x4E86;</li>
+<li>&#x628A;vue&#x63D0;&#x4F9B;&#x7684;&#x6570;&#x636E;&#x586B;&#x5145;&#x5230;&#x6807;&#x7B7E;&#x91CC;&#x9762;</li>
+</ol>
+<p>&#x4E0D;&#x518D;&#x6D89;&#x53CA;&#x5E95;&#x5C42;&#x7684;DOM&#x64CD;&#x4F5C;&#x3002;</p>
+<h4 id="&#x5B9E;&#x4F8B;&#x53C2;&#x6570;&#xFF1A;"><a href="#&#x5B9E;&#x4F8B;&#x53C2;&#x6570;&#xFF1A;" class="headerlink" title="&#x5B9E;&#x4F8B;&#x53C2;&#x6570;&#xFF1A;"></a>&#x5B9E;&#x4F8B;&#x53C2;&#x6570;&#xFF1A;</h4><ul>
+<li>el&#xFF1A;&#x5143;&#x7D20;&#x7684;&#x6302;&#x8F7D;&#x4F4D;&#x7F6E;&#xFF08;&#x4E00;&#x822C;&#x662F;css&#x9009;&#x62E9;&#x5668;&#xFF09;</li>
+<li>data&#xFF1A;&#x6A21;&#x578B;&#x6570;&#x636E;&#xFF08;&#x503C;&#x662F;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#xFF09;</li>
+</ul>
+<h4 id="&#x5DEE;&#x503C;&#x8868;&#x8FBE;&#x5F0F;&#xFF1A;"><a href="#&#x5DEE;&#x503C;&#x8868;&#x8FBE;&#x5F0F;&#xFF1A;" class="headerlink" title="&#x5DEE;&#x503C;&#x8868;&#x8FBE;&#x5F0F;&#xFF1A;"></a>&#x5DEE;&#x503C;&#x8868;&#x8FBE;&#x5F0F;&#xFF1A;</h4><ul>
+<li>&#x5C06;&#x6570;&#x636E;&#x586B;&#x5145;&#x5230;html&#x6807;&#x7B7E;&#x4E2D;</li>
+<li>&#x5DEE;&#x503C;&#x8868;&#x8FBE;&#x5F0F;&#x652F;&#x6301;&#x57FA;&#x672C;&#x7684;&#x8BA1;&#x7B97;&#x64CD;&#x4F5C;&#xFF08;&#x82B1;&#x62EC;&#x53F7;&#x4E2D;&#x53EF;&#x662F;js&#x8FD0;&#x7B97;&#xFF09;</li>
+</ul>
+<h4 id="&#x7F16;&#x8BD1;&#xFF1A;"><a href="#&#x7F16;&#x8BD1;&#xFF1A;" class="headerlink" title="&#x7F16;&#x8BD1;&#xFF1A;"></a>&#x7F16;&#x8BD1;&#xFF1A;</h4><p>vue&#x4EE3;&#x7801;-&gt;vue&#x6846;&#x67B6;-&gt;&#x539F;&#x751F;js&#x4EE3;&#x7801;</p>
+<hr>
+<h2 id="&#x6A21;&#x677F;&#x8BED;&#x6CD5;"><a href="#&#x6A21;&#x677F;&#x8BED;&#x6CD5;" class="headerlink" title="&#x6A21;&#x677F;&#x8BED;&#x6CD5;"></a>&#x6A21;&#x677F;&#x8BED;&#x6CD5;</h2><p>&#x524D;&#x7AEF;&#x6E32;&#x67D3;&#xFF1A;</p>
+<p>&#x628A;&#x6570;&#x636E;&#x586B;&#x5145;&#x5230;HTML&#x6807;&#x7B7E;&#x4E2D;&#x3002;</p>
+<ul>
+<li>&#x539F;&#x751F;js&#x62FC;&#x63A5;&#x5B57;&#x7B26;&#x4E32;</li>
+<li>&#x4F7F;&#x7528;&#x524D;&#x6BB5;&#x6A21;&#x677F;&#x5F15;&#x64CE;</li>
+<li>&#x4F7F;&#x7528;vue&#x7279;&#x6709;&#x7684;&#x6A21;&#x677F;&#x5F15;&#x64CE;</li>
+</ul>
+<p>&#x8BED;&#x6CD5;&#x6982;&#x89C8;&#xFF1A;</p>
+<ul>
+<li>&#x5DEE;&#x503C;&#x8868;&#x8FBE;&#x5F0F;</li>
+<li>&#x6307;&#x4EE4;</li>
+<li>&#x4E8B;&#x4EF6;&#x7ED1;&#x5B9A;</li>
+<li>&#x5C5E;&#x6027;&#x7ED1;&#x5B9A;</li>
+<li>&#x6837;&#x5F0F;&#x7ED1;&#x5B9A;</li>
+<li>&#x5206;&#x652F;&#x5FAA;&#x73AF;&#x7ED3;&#x6784;</li>
+</ul>
+<h3 id="&#x6307;&#x4EE4;"><a href="#&#x6307;&#x4EE4;" class="headerlink" title="&#x6307;&#x4EE4;"></a>&#x6307;&#x4EE4;</h3><p>&#x672C;&#x8D28;&#x5C31;&#x662F;&#x81EA;&#x5B9A;&#x4E49;&#x5C5E;&#x6027;&#xFF0C;&#x683C;&#x5F0F;&#xFF1A;&#x4EE5;v-&#x5F00;&#x59CB;&#xFF08;&#x6BD4;&#x5982;&#xFF1A;v-cloak&#xFF09;</p>
+<h4 id="v-cloak"><a href="#v-cloak" class="headerlink" title="v-cloak"></a>v-cloak</h4><ul>
+<li>&#x5DEE;&#x503C;&#x8868;&#x8FBE;&#x5F0F;&#x5B58;&#x5728;&#x7684;&#x95EE;&#x9898;&#xFF1A;&#x95EA;&#x52A8;</li>
+<li>&#x4F7F;&#x7528;&#x8BE5;&#x6307;&#x4EE4;&#x53EF;&#x4EE5;&#x89E3;&#x51B3;</li>
+<li>&#x539F;&#x7406;&#xFF1A;&#x5148;&#x9690;&#x85CF;&#xFF0C;&#x66FF;&#x6362;&#x597D;&#x503C;&#x4E4B;&#x540E;&#x518D;&#x663E;&#x793A;&#x6700;&#x7EC8;&#x7684;&#x503C;</li>
+</ul>
+<p><a href="https://cn.vuejs.org/v2/api/#v-cloak" target="_blank" rel="noopener">reference</a></p>
+<ol>
+<li>&#x63D0;&#x4F9B;&#x6837;&#x5F0F;</li>
+<li>&#x5728;&#x5DEE;&#x503C;&#x8868;&#x8FBE;&#x5F0F;&#x6240;&#x5728;&#x6807;&#x7B7E;&#x4E2D;&#x6DFB;&#x52A0;v-cloak&#x6307;&#x4EE4;</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=<span class="string">&quot;text/css&quot;</span>&gt;</span><br><span class="line">    [v-cloak]{</span><br><span class="line">        display: none;</span><br><span class="line">    }</span><br><span class="line">&lt;<span class="regexp">/style&gt;</span></span><br><span class="line"><span class="regexp">...</span></span><br><span class="line"><span class="regexp">&lt;body&gt;</span></span><br><span class="line"><span class="regexp">    &lt;div id=&quot;app&quot;&gt;</span></span><br><span class="line"><span class="regexp">        &lt;div v-cloak&gt;{{msg}}&lt;/</span>div&gt;</span><br><span class="line">	&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>body&gt;</span><br></pre></td></tr></table></figure>
+
+<h4 id="v-text"><a href="#v-text" class="headerlink" title="v-text"></a>v-text</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-texxt=<span class="string">&apos;msg&apos;</span>&gt;<span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>&#x6548;&#x679C;&#x8DDF;&#x5DEE;&#x503C;&#x8868;&#x8FBE;&#x5F0F;&#x4E00;&#x6837;&#xFF0C;&#x4F46;&#x662F;&#x6CA1;&#x6709;&#x5DEE;&#x503C;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x95EA;&#x52A8;&#x95EE;&#x9898;&#xFF0C;&#x7528;&#x6237;&#x4F53;&#x9A8C;&#x66F4;&#x597D;&#x3002;</p>
+<h4 id="v-html"><a href="#v-html" class="headerlink" title="v-html"></a>v-html</h4><p>&#x586B;&#x5145;HTML&#x7684;&#x7247;&#x6BB5;&#x3002;&#x4F1A;&#x89E3;&#x6790;&#x3002;&#x4F46;&#x662F;&#x4F1A;&#x6709;&#x4E00;&#x5B9A;&#x7684;&#x5371;&#x9669;&#x6027;&#xFF0C;&#x5BB9;&#x6613;&#x5BFC;&#x81F4;<code>XSS</code>&#xFF08;&#x8DE8;&#x7AD9;&#x811A;&#x672C;&#x653B;&#x51FB;&#xFF09;&#x3002;&#x672C;&#x7F51;&#x7AD9;&#x5185;&#x90E8;&#x6570;&#x636E;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#xFF0C;&#x7B2C;&#x4E09;&#x65B9;&#x7684;&#x6570;&#x636E;&#x4E0D;&#x53EF;&#x4EE5;&#x7528;&#x3002;</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-html=<span class="string">&apos;msg1&apos;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line">data:{</span><br><span class="line">    msg1:<span class="string">&apos;&lt;h1&gt;HTML&lt;/h1&gt;&apos;</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<h4 id="v-pre"><a href="#v-pre" class="headerlink" title="v-pre"></a>v-pre</h4><p>&#x586B;&#x5145;&#x539F;&#x59CB;&#x4FE1;&#x606F;&#x3002;&#x4F8B;&#x5982;&#xFF1A;&#x4E0D;&#x89E3;&#x6790;&#x82B1;&#x62EC;&#x53F7;&#x3002;&#x8DF3;&#x8FC7;&#x7F16;&#x8BD1;&#x3002;</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-pre&gt;{{msgg}}&lt;<span class="regexp">/div&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="&#x6570;&#x636E;&#x54CD;&#x5E94;&#x5F0F;"><a href="#&#x6570;&#x636E;&#x54CD;&#x5E94;&#x5F0F;" class="headerlink" title="&#x6570;&#x636E;&#x54CD;&#x5E94;&#x5F0F;"></a>&#x6570;&#x636E;&#x54CD;&#x5E94;&#x5F0F;</h4><ul>
+<li>&#x5982;&#x4F55;&#x7406;&#x89E3;<ul>
+<li>html5&#x4E2D;&#x7684;&#x54CD;&#x5E94;&#x5F0F;&#xFF08;&#x5C4F;&#x5E55;&#x5C3A;&#x5BF8;&#x53D8;&#x5316;&#x5BFC;&#x81F4;&#x6837;&#x5F0F;&#x7684;&#x53D8;&#x5316;&#xFF09;</li>
+<li>&#x6570;&#x636E;&#x7684;&#x54CD;&#x5E94;&#x5F0F;&#xFF08;&#x6570;&#x636E;&#x7684;&#x53D8;&#x5316;&#x5BFC;&#x81F4;&#x9875;&#x9762;&#x5185;&#x5BB9;&#x7684;&#x53D8;&#x5316;&#xFF09;</li>
+</ul>
+</li>
+<li>&#x6570;&#x636E;&#x7ED1;&#x5B9A;&#xFF1A;&#x5C06;&#x6570;&#x636E;&#x586B;&#x5145;&#x5230;&#x6807;&#x7B7E;&#x4E2D;</li>
+<li>v-once&#xFF1A;&#x53EA;&#x7F16;&#x8BD1;&#x4E00;&#x6B21;&#xFF0C;&#x663E;&#x793A;&#x5185;&#x5BB9;&#x4E4B;&#x540E;&#x4E0D;&#x518D;&#x5177;&#x6709;&#x54CD;&#x5E94;&#x5F0F;&#x529F;&#x80FD;</li>
+</ul>
+<p>&#x54CD;&#x5E94;&#x5F0F;&#xFF1A;f12&#x540E;&#x5728;&#x63A7;&#x5236;&#x53F0;&#x4E5F;&#x53EF;&#x4EE5;&#x4FEE;&#x6539;&#x6570;&#x636E;&#xFF0C;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;<code>vm.msg</code>&#xFF0C;<code>vm.msg=123</code>&#x3002;&#x6570;&#x636E;&#x53D8;&#x5316;&#x540E;&#x9875;&#x9762;&#x4E5F;&#x4F1A;&#x8DDF;&#x7740;&#x53D8;&#x5316;&#xFF0C;&#x6570;&#x636E;&#x9A71;&#x52A8;&#x3002;</p>
+<p>v-once&#x5C31;&#x662F;&#x4E3A;&#x4E86;&#x9632;&#x6B62;&#x5728;&#x63A7;&#x5236;&#x53F0;&#x4FEE;&#x6539;&#x6570;&#x636E;&#xFF0C;&#x8FD9;&#x6837;&#x53EF;&#x4EE5;&#x63D0;&#x9AD8;&#x6027;&#x80FD;&#x3002;</p>
+<h3 id="&#x53CC;&#x5411;&#x6570;&#x636E;&#x7ED1;&#x5B9A;"><a href="#&#x53CC;&#x5411;&#x6570;&#x636E;&#x7ED1;&#x5B9A;" class="headerlink" title="&#x53CC;&#x5411;&#x6570;&#x636E;&#x7ED1;&#x5B9A;"></a>&#x53CC;&#x5411;&#x6570;&#x636E;&#x7ED1;&#x5B9A;</h3><p>&#x53CC;&#x5411;&#xFF1A;&#x6570;&#x636E;-&gt;&#x9875;&#x9762;&#xFF0C;&#x7528;&#x6237;&#x4FEE;&#x6539;&#x5185;&#x5BB9;-&gt;&#x5F71;&#x54CD;&#x6A21;&#x578B;&#x6570;&#x636E;</p>
+<h4 id="v-model"><a href="#v-model" class="headerlink" title="v-model"></a>v-model</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;input type=<span class="string">&quot;text&quot;</span> v-model=<span class="string">&apos;msg&apos;</span>&gt;</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h4><p>M(model) : data&#x4E2D;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x672C;&#x8D28;&#x662F;plain javascript objects</p>
+<p>V(view) &#xFF1A; &#x89C6;&#x56FE;&#xFF0C;&#x6A21;&#x677F;&#xFF0C;&#x672C;&#x8D28;&#x662F;dom&#x5143;&#x7D20;</p>
+<p>VM(View-Model)&#xFF1A; &#x662F;&#x4E24;&#x8005;&#x7684;&#x7ED3;&#x5408;&#xFF0C;&#x63A7;&#x5236;&#x80FD;&#x529B;&#x3002;&#x4E24;&#x8005;&#x672C;&#x4E0D;&#x80FD;&#x76F4;&#x63A5;&#x4EA4;&#x4E92;&#xFF0C;&#x6240;&#x4EE5;&#x6709;&#x4E86;vue&#x8FDB;&#x5C01;&#x88C5;&#xFF08;&#x5E95;&#x5C42;&#x662F;DOM Listen, Data Bindings&#xFF09;&#x3002;</p>
+<h3 id="&#x4E8B;&#x4EF6;&#x7ED1;&#x5B9A;"><a href="#&#x4E8B;&#x4EF6;&#x7ED1;&#x5B9A;" class="headerlink" title="&#x4E8B;&#x4EF6;&#x7ED1;&#x5B9A;"></a>&#x4E8B;&#x4EF6;&#x7ED1;&#x5B9A;</h3><h4 id="v-on"><a href="#v-on" class="headerlink" title="v-on"></a>v-on</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&apos;button&apos;</span> v-on:click=<span class="string">&apos;num++&apos;</span>/&gt;</span><br><span class="line"></span><br><span class="line">&lt;input type=<span class="string">&apos;button&apos;</span> @click=<span class="string">&apos;nunm++&apos;</span>/&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;{{num}}&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;div&gt;</span></span><br><span class="line"><span class="regexp">    &lt;button v-on:click=&apos;num++&apos;&gt;click&lt;/</span>button&gt;</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">data:{</span></span><br><span class="line"><span class="regexp">    num:0</span></span><br><span class="line"><span class="regexp">}</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="&#x65B9;&#x6CD5;"><a href="#&#x65B9;&#x6CD5;" class="headerlink" title="&#x65B9;&#x6CD5;"></a>&#x65B9;&#x6CD5;</h4><p><strong>methods</strong>&#x7528;&#x6765;&#x5199;&#x65B9;&#x6CD5;&#xFF0C;&#x62BD;&#x53D6;&#x201C;num++&#x201D;&#x653E;&#x5728;&#x65B9;&#x6CD5;&#x4E2D;&#xFF0C;&#x589E;&#x52A0;&#x53EF;&#x8BFB;&#x6027;&#x3002;</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">methods:{</span><br><span class="line">    handle: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{</span><br><span class="line">        <span class="keyword">this</span>.num++; <span class="comment">//this means vue object vm.</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+
+
+<p>&#x8C03;&#x7528;&#x65B9;&#x5F0F;&#x6709;&#x4E24;&#x79CD;</p>
+<ul>
+<li><p>&#x76F4;&#x63A5;&#x7ED1;&#x5B9A;&#x51FD;&#x6570;&#x540D;&#x79F0;</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;button v-on:click=<span class="string">&apos;say&apos;</span>&gt;Hello&lt;<span class="regexp">/button&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>&#x8C03;&#x7528;&#x51FD;&#x6570;</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;button v-on:click=<span class="string">&apos;say()&apos;</span>&gt;Say hi&lt;<span class="regexp">/button&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<h4 id="&#x4E8B;&#x4EF6;&#x51FD;&#x6570;&#x4F20;&#x53C2;"><a href="#&#x4E8B;&#x4EF6;&#x51FD;&#x6570;&#x4F20;&#x53C2;" class="headerlink" title="&#x4E8B;&#x4EF6;&#x51FD;&#x6570;&#x4F20;&#x53C2;"></a>&#x4E8B;&#x4EF6;&#x51FD;&#x6570;&#x4F20;&#x53C2;</h4><p>&#x666E;&#x901A;&#x53C2;&#x6570;&#x548C;&#x4E8B;&#x4EF6;&#x5BF9;&#x8C61;&#xFF08;event&#xFF09;</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;button v-on:click=<span class="string">&apos;say(&quot;hi&quot;, $event)&apos;</span>&gt;Say hi&lt;<span class="regexp">/button&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>$event</code>&#x4E3A;&#x56FA;&#x5B9A;&#x5199;&#x6CD5;&#x3002;</p>
+<ol>
+<li>&#x5982;&#x679C;&#x4E8B;&#x4EF6;&#x76F4;&#x63A5;&#x7ED1;&#x5B9A;&#x51FD;&#x6570;&#x540D;&#x79F0;&#xFF0C;&#x90A3;&#x4E48;&#x4F1A;&#x9ED8;&#x8BA4;&#x8239;&#x4F53;&#x4E8B;&#x4EF6;&#x5BF9;&#x8C61;&#x4F5C;&#x4E3A;&#x4E8B;&#x4EF6;&#x51FD;&#x6570;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x53C2;&#x6570;</li>
+<li>&#x5982;&#x679C;&#x4E8B;&#x4EF6;&#x7ED1;&#x5B9A;&#x51FD;&#x6570;&#x8C03;&#x7528;&#xFF08;&#x6CA1;&#x52A0;&#x62EC;&#x53F7;&#xFF09;&#xFF0C;&#x90A3;&#x4E48;&#x4E8B;&#x4EF6;&#x5BF9;&#x8C61;&#x5FC5;&#x987B;&#x4F5C;&#x4E3A;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#x663E;&#x793A;&#x4F20;&#x9012;&#xFF0C;&#x5E76;&#x4E14;&#x4E8B;&#x4EF6;&#x5BF9;&#x8C61;&#x7684;&#x540D;&#x79F0;&#x5FC5;&#x987B;&#x662F;<code>$event</code>&#x3002;</li>
+</ol>
+<h4 id="&#x4E8B;&#x4EF6;&#x4FEE;&#x9970;&#x7B26;"><a href="#&#x4E8B;&#x4EF6;&#x4FEE;&#x9970;&#x7B26;" class="headerlink" title="&#x4E8B;&#x4EF6;&#x4FEE;&#x9970;&#x7B26;"></a>&#x4E8B;&#x4EF6;&#x4FEE;&#x9970;&#x7B26;</h4><ul>
+<li><p>stop &#x963B;&#x6B62;&#x5192;&#x6CE1;</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a v-on:click.stop=<span class="string">&quot;handle&quot;</span>&gt;jump&lt;<span class="regexp">/a&gt;</span></span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>prevent &#x963B;&#x6B62;&#x9ED8;&#x8BA4;&#x884C;&#x4E3A;</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a v-on:click.prevent=<span class="string">&quot;handle&quot;</span>&gt;jump&lt;<span class="regexp">/a&gt;</span></span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>&#x5192;&#x6CE1;</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-on:click=<span class="string">&apos;handle0&apos;</span>&gt;</span><br><span class="line">    &lt;button v-on:click=<span class="string">&apos;handle1&apos;</span>&gt;click&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>div&gt;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;a href=<span class="string">&quot;http://www.google.com&quot;</span> v-on:click=<span class="string">&apos;handle2&apos;</span>&gt;google&lt;<span class="regexp">/a&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>div&gt;</span><br><span class="line"></span><br><span class="line">methods:{</span><br><span class="line">    handle0: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{</span><br><span class="line">        <span class="keyword">this</span>.num++;</span><br><span class="line">    },</span><br><span class="line">    handle1:<span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>{</span><br><span class="line">        event.stopPropagation(); <span class="comment">//traditional</span></span><br><span class="line">    },</span><br><span class="line">    handle2:<span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>{</span><br><span class="line">        event.preventDefault();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<p>&#x70B9;&#x51FB;button&#x540E;&#x4F1A;&#x5192;&#x6CE1;&#xFF0C;&#x89E6;&#x53D1;&#x7236;&#x5143;&#x7D20;&#x7684;div&#x4E2D;&#x7684;<code>handle0</code>.</p>
+<p>&#x4F20;&#x7EDF;&#x7684;&#x5F62;&#x5F0F;&#x662F;<code>event.stopPropagation()</code>&#xFF0C;&#x5728;vue&#x4E2D;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<code>v-on:click.stop</code>&#x3002;</p>
+<h4 id="&#x6309;&#x952E;&#x4FEE;&#x9970;&#x7B26;"><a href="#&#x6309;&#x952E;&#x4FEE;&#x9970;&#x7B26;" class="headerlink" title="&#x6309;&#x952E;&#x4FEE;&#x9970;&#x7B26;"></a>&#x6309;&#x952E;&#x4FEE;&#x9970;&#x7B26;</h4><p>&#x7528;&#x5728;&#x952E;&#x76D8;&#x4E8B;&#x4EF6;&#x4E2D;&#x8FDB;&#x884C;&#x8FC7;&#x6EE4;&#xFF08;&#x6307;&#x5B9A;&#xFF09;&#xFF0C;&#x6309;&#x952E;&#x89E6;&#x53D1;&#x51FD;&#x6570;&#x3002;</p>
+<ul>
+<li><p>.enter</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input v-on:keyup.enter=<span class="string">&apos;submit&apos;</span>&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+<ul>
+<li><p>.delete</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input v-on:keyup.delete=<span class="string">&apos;handle&apos;</span>&gt;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<p>&#x2026;</p>
+<h4 id="&#x81EA;&#x5B9A;&#x4E49;&#x6309;&#x952E;&#x4FEE;&#x9970;&#x7B26;"><a href="#&#x81EA;&#x5B9A;&#x4E49;&#x6309;&#x952E;&#x4FEE;&#x9970;&#x7B26;" class="headerlink" title="&#x81EA;&#x5B9A;&#x4E49;&#x6309;&#x952E;&#x4FEE;&#x9970;&#x7B26;"></a>&#x81EA;&#x5B9A;&#x4E49;&#x6309;&#x952E;&#x4FEE;&#x9970;&#x7B26;</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Vue.config.keyCodes.f1 = <span class="number">112</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&apos;text&apos;</span> v-on:keyup=<span class="string">&apos;handle&apos;</span>&gt;</span><br><span class="line"></span><br><span class="line">methods:{</span><br><span class="line">    handle:<span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>{</span><br><span class="line">        <span class="built_in">console</span>.log(event.keyCode)<span class="comment">//&#x5229;&#x7528;keyCode&#x81EA;&#x5B9A;&#x4E49;</span></span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">&lt;input type=<span class="string">&apos;text&apos;</span> v-on.keyup<span class="number">.65</span>=<span class="string">&apos;handle&apos;</span>&gt;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="&#x8BA1;&#x7B97;&#x5668;"><a href="#&#x8BA1;&#x7B97;&#x5668;" class="headerlink" title="&#x8BA1;&#x7B97;&#x5668;"></a>&#x8BA1;&#x7B97;&#x5668;</h3><ul>
+<li>&#x901A;&#x8FC7;<code>v-model</code>&#x6307;&#x4EE4;&#x5B9E;&#x73B0;&#x6570;&#x503C;&#x4E4B;&#x95F4;&#x7684;&#x7ED1;&#x5B9A;</li>
+<li>&#x7ED9;&#x8BA1;&#x7B97;&#x6309;&#x94AE;&#x7ED1;&#x5B9A;&#x4E8B;&#x4EF6;&#xFF0C;&#x5B9E;&#x73B0;&#x8BA1;&#x7B97;&#x903B;&#x8F91;</li>
+<li>&#x5C06;&#x8BA1;&#x7B97;&#x7ED3;&#x679C;&#x7ED1;&#x5B9A;&#x5BF9;&#x5E94;&#x4F4D;&#x7F6E;</li>
+</ul>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">        &lt;title&gt;Document&lt;<span class="regexp">/title&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        &lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">            &lt;h1&gt;Simple Calculator&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">            &lt;div&gt;</span></span><br><span class="line"><span class="regexp">                &lt;span&gt;NUM A: &lt;/</span>span&gt;</span><br><span class="line">                &lt;span&gt;</span><br><span class="line">                    &lt;input type=<span class="string">&quot;text&quot;</span> v-model=<span class="string">&apos;a&apos;</span>&gt;</span><br><span class="line">                &lt;<span class="regexp">/span&gt;</span></span><br><span class="line"><span class="regexp">            &lt;/</span>div&gt;</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;span&gt;NUM B: <span class="xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line">                &lt;span&gt;</span><br><span class="line">                    &lt;input type=<span class="string">&quot;text&quot;</span> v-model=<span class="string">&apos;b&apos;</span>&gt;</span><br><span class="line">                &lt;<span class="regexp">/span&gt;</span></span><br><span class="line"><span class="regexp">            &lt;/</span>div&gt;</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;button v-on:click=<span class="string">&apos;handle&apos;</span>&gt;CALCULATE&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">            &lt;/</span>div&gt;</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;span&gt;SOLUTION:<span class="xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line">                &lt;span v-text=<span class="string">&apos;result&apos;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line">            &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>div&gt;</span><br><span class="line">        &lt;script type=<span class="string">&quot;text/javascript&quot;</span> src=<span class="string">&quot;js/vue.js&quot;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">        &lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">            <span class="keyword">var</span> vm = <span class="keyword">new</span> Vue({</span><br><span class="line">                el: <span class="string">&apos;#app&apos;</span>,</span><br><span class="line">                data: {</span><br><span class="line">                    a: <span class="string">&apos;&apos;</span>,</span><br><span class="line">                    b: <span class="string">&apos;&apos;</span>,</span><br><span class="line">                    result: <span class="string">&apos;&apos;</span></span><br><span class="line">                },</span><br><span class="line">                methods: {</span><br><span class="line">                    handle: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{</span><br><span class="line"></span><br><span class="line">                        <span class="keyword">this</span>.result = <span class="built_in">parseInt</span>(<span class="keyword">this</span>.a) + <span class="built_in">parseInt</span>(<span class="keyword">this</span>.b);</span><br><span class="line">                    }</span><br><span class="line">                }</span><br><span class="line">            });</span><br><span class="line">        &lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>body&gt;</span><br><span class="line">&lt;<span class="regexp">/html&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="&#x5C5E;&#x6027;&#x7ED1;&#x5B9A;"><a href="#&#x5C5E;&#x6027;&#x7ED1;&#x5B9A;" class="headerlink" title="&#x5C5E;&#x6027;&#x7ED1;&#x5B9A;"></a>&#x5C5E;&#x6027;&#x7ED1;&#x5B9A;</h3><h4 id="v-bind"><a href="#v-bind" class="headerlink" title="v-bind"></a>v-bind</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;a v-bind:hreff=<span class="string">&apos;url&apos;</span>&gt;jump&lt;<span class="regexp">/a&gt;</span></span><br><span class="line"><span class="regexp">&lt;a :href=&apos;url&apos;&gt;jump&lt;/</span>a&gt;</span><br></pre></td></tr></table></figure>
+
+<p>&#x5BF9;&#x6BD4;&#x4E00;&#x4E0B;&#x4F7F;&#x7528;&#x524D;&#x540E;&#xFF0C;</p>
+<p>&#x4F7F;&#x7528;&#x524D;&#xFF1A;</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=<span class="string">&quot;www.google.com&quot;</span>&gt;Google&lt;<span class="regexp">/a&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>&#x4F7F;&#x7528;&#x540E;&#xFF1A;</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;a v-bind:href=<span class="string">&quot;url&quot;</span>&gt;Google&lt;<span class="regexp">/a&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">data:{</span></span><br><span class="line"><span class="regexp">    url: &apos;www.google.com&apos;</span></span><br><span class="line"><span class="regexp">}</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="&#x53CC;&#x5411;&#x7ED1;&#x5B9A;&#x539F;&#x7406;"><a href="#&#x53CC;&#x5411;&#x7ED1;&#x5B9A;&#x539F;&#x7406;" class="headerlink" title="&#x53CC;&#x5411;&#x7ED1;&#x5B9A;&#x539F;&#x7406;"></a>&#x53CC;&#x5411;&#x7ED1;&#x5B9A;&#x539F;&#x7406;</h4><p>v-model&#x7684;&#x5E95;&#x5C42;&#x7528;&#x5230;&#x4E86;<code>v-bind</code>.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input v-bind:value=<span class="string">&quot;msg&quot;</span> v-on:input=<span class="string">&quot;msg=$event.target.value&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&quot;text&quot;</span> v-bind:value=<span class="string">&quot;msg&quot;</span> v-on:input=<span class="string">&apos;handle&apos;</span>&gt;</span><br><span class="line">    </span><br><span class="line">data:{</span><br><span class="line">    msg: <span class="string">&apos;hello&apos;</span></span><br><span class="line">},</span><br><span class="line">methods: {</span><br><span class="line">    handle: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>{</span><br><span class="line">        <span class="keyword">this</span>.msg = event.target.value;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="&#x6837;&#x5F0F;&#x7ED1;&#x5B9A;"><a href="#&#x6837;&#x5F0F;&#x7ED1;&#x5B9A;" class="headerlink" title="&#x6837;&#x5F0F;&#x7ED1;&#x5B9A;"></a>&#x6837;&#x5F0F;&#x7ED1;&#x5B9A;</h3><h4 id="class&#x6837;&#x5F0F;&#x5904;&#x7406;"><a href="#class&#x6837;&#x5F0F;&#x5904;&#x7406;" class="headerlink" title="class&#x6837;&#x5F0F;&#x5904;&#x7406;"></a>class&#x6837;&#x5F0F;&#x5904;&#x7406;</h4><p>&#x5BF9;&#x8C61;&#x8BED;&#x6CD5;&#xFF1A;</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-bind:<span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;{active: isActive}&quot;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>&#x6570;&#x7EC4;&#x8BED;&#x6CD5;&#xFF1A;</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-bidn:<span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;[activeClass, errorClass]&quot;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>&#x7B80;&#x5316;class&#x7ED1;&#x5B9A;&#x7684;&#x503C;&#xFF1A;</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-bind:<span class="class"><span class="keyword">class</span></span>=<span class="string">&apos;arrClasses&apos;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line">data:{</span><br><span class="line">    arrClasses:[<span class="string">&apos;active&apos;</span>,<span class="string">&apos;error&apos;</span>]</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-bind:<span class="class"><span class="keyword">class</span></span>=<span class="string">&apos;obejctClasses&apos;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line">data:{</span><br><span class="line">    objectClasses:{</span><br><span class="line">        active: <span class="literal">true</span>,</span><br><span class="line">        error: <span class="literal">true</span></span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line">methods: {</span><br><span class="line">    handle: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{</span><br><span class="line">        <span class="keyword">this</span>.objectClasses.error = <span class="literal">false</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<p>&#x5168;&#x5C40;&#x5B9A;&#x4E49;&#x7684;&#x9ED8;&#x8BA4;class&#x4F1A;&#x88AB;&#x4FDD;&#x7559;&#xFF0C;&#x65B0;&#x7ED1;&#x5B9A;&#x4F1A;&#x548C;&#x9ED8;&#x8BA4;&#x7684;&#x7ED3;&#x5408;&#x5728;&#x4E00;&#x8D77;&#x3002;</p>
+<h4 id="style&#x6837;&#x5F0F;&#x5904;&#x7406;"><a href="#style&#x6837;&#x5F0F;&#x5904;&#x7406;" class="headerlink" title="style&#x6837;&#x5F0F;&#x5904;&#x7406;"></a>style&#x6837;&#x5F0F;&#x5904;&#x7406;</h4><p>&#x5BF9;&#x8C61;&#x8BED;&#x6CD5;&#xFF1A;</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-bind:style=<span class="string">&quot;{color:activeColor, fontSize:fontsize}&quot;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>&#x6570;&#x7EC4;&#x8BED;&#x6CD5;&#xFF1A;</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-bind:style=<span class="string">&quot;[basestyles, overridignstyles]&quot;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<h3 id="&#x5206;&#x652F;&#x7ED3;&#x6784;"><a href="#&#x5206;&#x652F;&#x7ED3;&#x6784;" class="headerlink" title="&#x5206;&#x652F;&#x7ED3;&#x6784;"></a>&#x5206;&#x652F;&#x7ED3;&#x6784;</h3><ul>
+<li>v-if &#x63A7;&#x5236;&#x5143;&#x7D20;&#x662F;&#x5426;&#x6E32;&#x67D3;&#x5230;&#x9875;&#x9762;</li>
+<li>v-else-if &#x540C;&#x4E0A;</li>
+<li>v-else &#x540C;&#x4E0A;</li>
+<li>v-show&#xFF1A;&#x63A7;&#x5236;&#x5143;&#x7D20;&#x6837;&#x5F0F;&#x662F;&#x5426;&#x663E;&#x793A; display:none&#x3002;&#x5DF2;&#x7ECF;&#x6E32;&#x67D3;&#x5230;&#x9875;&#x9762;</li>
+</ul>
+<p>&#x9891;&#x7E41;&#x7684;&#x663E;&#x793A;&#x6216;&#x9690;&#x85CF;&#xFF1A;<code>v-show</code></p>
+<h3 id="&#x5FAA;&#x73AF;&#x7ED3;&#x6784;"><a href="#&#x5FAA;&#x73AF;&#x7ED3;&#x6784;" class="headerlink" title="&#x5FAA;&#x73AF;&#x7ED3;&#x6784;"></a>&#x5FAA;&#x73AF;&#x7ED3;&#x6784;</h3><p>v-for&#x904D;&#x5386;&#x6570;&#x7EC4;</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;li v-<span class="keyword">for</span>=<span class="string">&apos;item in list&apos;</span>&gt;{{item}}&lt;<span class="regexp">/li&gt;</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;li v-<span class="keyword">for</span>=<span class="string">&apos;(item, index) in list&apos;</span>&gt;{{item}} + <span class="string">&apos;---&apos;</span>+{{index}}&lt;<span class="regexp">/li&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>key&#x6765;&#x5E2E;&#x52A9;Vue&#x533A;&#x5206;&#x4E0D;&#x540C;&#x5143;&#x7D20;&#xFF0C;&#x4ECE;&#x800C;&#x63D0;&#x9AD8;&#x6027;&#x80FD;&#x3002;</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;li :key=<span class="string">&apos;item.id&apos;</span> v-<span class="keyword">for</span>=<span class="string">&apos;(item, index) in list&apos;</span>&gt;{{item}}+<span class="string">&apos;--&apos;</span>+{{index}}&lt;<span class="regexp">/li&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>e.g.</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;li v-<span class="keyword">for</span>=<span class="string">&apos;item in frutits&apos;</span>&gt;{{item}}&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">&lt;li v-for=&apos;(item,index) in fruits&apos;&gt;{{item+&apos;---&apos;+index}}&lt;/</span>li&gt;</span><br><span class="line"></span><br><span class="line">data:{</span><br><span class="line">    fruits:[<span class="string">&apos;apple&apos;</span>,<span class="string">&apos;orange&apos;</span>,<span class="string">&apos;banana&apos;</span>]</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;li v-<span class="keyword">for</span>=<span class="string">&apos;item in my fruits&apos;</span>&gt;</span><br><span class="line">    &lt;span&gt;{{item.ename}}&lt;<span class="regexp">/span&gt;</span></span><br><span class="line"><span class="regexp">	&lt;span&gt;{{item.cname}}&lt;/</span>span&gt;</span><br><span class="line">&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">data:{</span></span><br><span class="line"><span class="regexp">    myfrutis:[{</span></span><br><span class="line"><span class="regexp">        ename:&apos;apple&apos;,</span></span><br><span class="line"><span class="regexp">        cname:&apos;&#x82F9;&#x679C;&apos;</span></span><br><span class="line"><span class="regexp">    }]</span></span><br><span class="line"><span class="regexp">}</span></span><br></pre></td></tr></table></figure>
+
+<p>v-for&#x904D;&#x5386;&#x5BF9;&#x8C61;&#xFF1A;</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-<span class="keyword">for</span>=<span class="string">&apos;(value, key, index) in object&apos;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>&#x4E0E;<code>v-if</code>&#x7ED3;&#x5408;&#x4F7F;&#x7528;&#xFF1A;</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-<span class="keyword">if</span>=<span class="string">&apos;value==12&apos;</span> v-<span class="keyword">for</span>=<span class="string">&apos;(value, key, index) in object&apos;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+<div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 感谢阅读 --------</span>
+    </div>
+  
+</div>
+      </div>
+    
+      
+        <div class="reward-container">
+  <div>Donate comment here.</div>
+  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    Donate
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="Sebastian WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Sebastian Alipay">
+        <p>Alipay</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/vue/" rel="tag"># vue</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/01/12/uml/" rel="next" title="uml">
+                  <i class="fa fa-chevron-left"></i> uml
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Sebastian"
+    src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Sebastian</p>
+  <div class="site-description" itemprop="description">I'm feeling lucky!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">44</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">18</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Sebastian-Getts" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Sebastian-Getts" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:zzzqsw@gmail.com" title="E-Mail &amp;rarr; mailto:zzzqsw@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/mchin6" title="Instagram &amp;rarr; https:&#x2F;&#x2F;instagram.com&#x2F;mchin6" rel="noopener" target="_blank"><i class="fa fa-fw fa-instagram"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sebastian</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a>
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.4.2
+  </div>
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      element.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script pjax>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/mermaid/8.2.0/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme: 'forest',
+      logLevel: 3,
+      flowchart: { curve: 'linear' },
+      gantt: { axisFormat: '%m/%d/%Y' },
+      sequence: { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+    <div id="pjax">
+
+  
+
+  
+
+  
+
+  
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+
+
+
+  <script src="/js/wobblewindow.js"></script>
+  <script>
+    //只在桌面版网页启用特效
+    if( window.innerWidth > 768  ){
+      $(document).ready(function () {
+        
+          $('#header').wobbleWindow({
+            radius: 50,
+            movementTop: false,
+            movementLeft: false,
+            movementRight: false,
+            debug: false,
+          });
+        
+
+        
+          $('#sidebar').wobbleWindow({
+            radius: 50,
+            movementLeft: false,
+            movementTop: false,
+            movementBottom: false,
+            position: 'fixed',
+            debug: false,
+          });
+        
+
+        
+          $('#footer').wobbleWindow({
+            radius: 50,
+            movementBottom: false,
+            movementLeft: false,
+            movementRight: false,
+            offsetX: ,
+            position: 'absolute',
+            debug: false,
+          });
+        
+      });
+    }
+  </script>
+
+
+
+
+
+
+
+
+    </div>
+</body>
+</html>
