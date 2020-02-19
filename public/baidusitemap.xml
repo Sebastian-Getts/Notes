@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://yoursite.com/2019/12/10/leecode/</loc>
+    <lastmod>2020-02-08</lastmod>
+  </url>  <url>
     <loc>http://yoursite.com/2020/01/19/vue06/</loc>
     <lastmod>2020-01-19</lastmod>
   </url>  <url>
@@ -51,9 +54,6 @@
   </url>  <url>
     <loc>http://yoursite.com/2020/01/04/webservice/</loc>
     <lastmod>2020-01-04</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/2019/12/10/leecode/</loc>
-    <lastmod>2019-12-14</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2019/12/07/tensorflow01/</loc>
     <lastmod>2019-12-09</lastmod>

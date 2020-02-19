@@ -232,3 +232,168 @@ public int removeDuplicates(int[] nums) {
 
 
 
+# Longest Common Prefix
+
+Write a function to find the longest common prefix string  amongst an array of strings. If there is no common prefix, return an empty string`""`.
+
+## Solution
+
+### Approach 1: Horizontal scanning
+
+![image.png](https://i.loli.net/2020/02/01/zmUXiwkoG7Dgq8R.png)
+
+```java
+public String longestCommonPrefix(String[] strs) {
+    if (strs.length == 0) {
+        return "";
+    }
+    String prefix = strs[0];
+    for (int i = 1; i < strs.length; i++) {
+        while (strs[i].indexOf(prefix) != 0) {
+            prefix = prefix.substring(0, prefix.length() - 1);
+            if (prefix.isEmpty()) {
+                return "";
+            }
+        }
+    }
+    return prefix;
+}
+```
+
+#### Complexity Analysis
+
+- Time Complexity: *O(S)*, where *S* is the sum of all characters in all strings.
+
+  In the worst case  all *n* strings are the same. The algorithm compares the string **S1** with the other strings \[S2...Sn]. There are *S* character comparisons, where *S* is the sum of all characters in the input array.
+
+- Space complexity: *O(1)*. We only used constant extra space.
+
+### Approach 2: Vertical scanning
+
+Imagine a very shot string is at the end of the array. The approach will still do *S* comparisons. One way to optimize this case is to do vertical scanning. We compare characters from top to bottom on the same column(same character index of the strings) before moving on to the next column.
+
+```java
+private String longestCommonPrefix2(String[] strs) {
+    if (strs == null || strs.length == 0) {
+        return "";
+    }
+    for (int i = 0; i < strs[0].length(); i++) {
+        char c = strs[0].charAt(i);
+        for (int j = 1; j < strs.length; j++) {
+            if (i == strs[j].length() || strs[j].charAt(i) != c) {
+                return strs[0].substring(0, i);
+            }
+        }
+    }
+    return strs[0];
+}
+```
+
+#### Complexity Analysis
+
+- Time complexity: *O(S)*, where *S* is the sum of all characters in all strings. In the worst case there will be *n* equal strings with length *m* and the algorithm perform *S* = *m x n* character comparisons. Even though the worst case is still the same as *Approach 1*, in the best case there are at most *n x minLen* comparisons where *minLen* is the length of the shortest string in the array.
+- Space complexity: *O(1)*. We only used constant extra space.
+
+### Approach 3: Divide and conquer
+
+![image.png](https://i.loli.net/2020/02/01/MzcPpRCeEYbH8nx.png)
+
+...
+
+### Approach 4: Binary search
+
+# Longest Substring Without Repeating Characters
+
+## approach 1: brute force
+
+```java
+public class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int n = s.length();
+        int ans = 0;
+        for (int i = 0; i < n; i++)
+            for (int j = i + 1; j <= n; j++)
+                if (allUnique(s, i, j)) ans = Math.max(ans, j - i);
+        return ans;
+    }
+
+    public boolean allUnique(String s, int start, int end) {
+        Set<Character> set = new HashSet<>();
+        for (int i = start; i < end; i++) {
+            Character ch = s.charAt(i);
+            if (set.contains(ch)) return false;
+            set.add(ch);
+        }
+        return true;
+    }
+}
+```
+
+### time complexity: O(n^3)
+
+## approach 2: Sliding Window
+
+```java
+public class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int n = s.length();
+        Set<Character> set = new HashSet<>();
+        int ans = 0, i = 0, j = 0;
+        while (i < n && j < n) {
+            // try to extend the range [i, j]
+            if (!set.contains(s.charAt(j))){
+                set.add(s.charAt(j++));
+                ans = Math.max(ans, j - i);
+            }
+            else {
+                set.remove(s.charAt(i++));
+            }
+        }
+        return ans;
+    }
+}
+```
+
+time complexity: O(2n)
+
+## approach 3: Sliding Window Optimized
+
+### Using HashMap
+
+```java
+public class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int n = s.length(), ans = 0;
+        Map<Character, Integer> map = new HashMap<>(); // current index of character
+        // try to extend the range [i, j]
+        for (int j = 0, i = 0; j < n; j++) {
+            if (map.containsKey(s.charAt(j))) {
+                i = Math.max(map.get(s.charAt(j)), i);
+            }
+            ans = Math.max(ans, j - i + 1);
+            map.put(s.charAt(j), j + 1);
+        }
+        return ans;
+    }
+}
+```
+
+### Using ASCII 128
+
+```java
+public class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        int n = s.length(), ans = 0;
+        int[] index = new int[128]; // current index of character
+        // try to extend the range [i, j]
+        for (int j = 0, i = 0; j < n; j++) {
+            i = Math.max(index[s.charAt(j)], i);
+            ans = Math.max(ans, j - i + 1);
+            index[s.charAt(j)] = j + 1;
+        }
+        return ans;
+    }
+}
+```
+
+time complexity: O(n)
