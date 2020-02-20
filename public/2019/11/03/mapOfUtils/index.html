@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="Sebastian Getts">
 <meta property="og:description" content="不晓得哪里出了问题，总之是一个有点棘手的bug。。。。mermaid无法识别，于是无法作图。。。好像flow也出了问题。。。解决中">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2019-11-04T16:06:24.032Z">
+<meta property="og:updated_time" content="2020-01-16T05:26:45.211Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2019/11/03/mapOfUtils/">
@@ -229,7 +229,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-11-05 00:06:24" itemprop="dateModified" datetime="2019-11-05T00:06:24+08:00">2019-11-05</time>
+                <time title="Modified: 2020-01-16 13:26:45" itemprop="dateModified" datetime="2020-01-16T13:26:45+08:00">2020-01-16</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -275,20 +275,40 @@
 <li>e=&gt;end: &#x7ED3;&#x675F;</li>
 <li>parallel(path1, )-&gt;x; parallel(path2, )-&gt;x</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">st=&gt;start: Start:&gt;http://www.google.com[blank]</span><br><span class="line">e=&gt;end:&gt;http://www.google.com</span><br><span class="line">op1=&gt;operation: My Operation</span><br><span class="line">sub1=&gt;subroutine: My Subroutine</span><br><span class="line">cond=&gt;condition: Yes</span><br><span class="line">or No?:&gt;http://www.google.com</span><br><span class="line">io=&gt;inputoutput: catch something...</span><br><span class="line">para=&gt;parallel: parallel tasks</span><br><span class="line"></span><br><span class="line">st-&gt;op1-&gt;cond</span><br><span class="line">cond(yes)-&gt;io-&gt;e</span><br><span class="line">cond(no)-&gt;para</span><br><span class="line">para(path1, bottom)-&gt;sub1(right)-&gt;op1</span><br><span class="line">para(path2, top)-&gt;op1</span><br></pre></td></tr></table></figure>
+<div id="flowchart-0" class="flow-chart"></div>
 
 <h2 id="mermaid"><a href="#mermaid" class="headerlink" title="mermaid"></a>mermaid</h2><p> Generation of diagram and flowchart from text in a similar manner as markdown </p>
 <p>&#x4EE5;&#x4E0A;&#x662F;&#x5B98;&#x65B9;&#x7684;&#x4ECB;&#x7ECD;&#xFF0C;&#x4EE5;&#x4E0B;&#x662F;&#x5B98;&#x65B9;&#x7684;demo</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">A-&gt;&gt; B: Query</span><br><span class="line">B-&gt;&gt; C: Forward query</span><br><span class="line">Note right of C: Thinking...</span><br><span class="line">C-&gt;&gt; B: Response</span><br><span class="line">B-&gt;&gt; A: Forward response</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">A-&gt;&gt; B: Query</span><br><span class="line">B-&gt;&gt; C: Forward query</span><br><span class="line">Note right of C: Thinking...</span><br><span class="line">C-&gt;&gt; B: Response</span><br><span class="line">B-&gt;&gt; A: Forward response</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">sequenceDiagram
+A-&gt;&gt; B: Query
+B-&gt;&gt; C: Forward query
+Note right of C: Thinking...
+C-&gt;&gt; B: Response
+B-&gt;&gt; A: Forward response</pre>
 
 <p>&#x5F88;&#x5F3A;&#x5927;&#x6709;&#x6CA1;&#x6709;&#x3002;&#x3002;&#x4E0D;&#x662F;&#x5F88;&#x61C2;&#x8FD9;&#x662F;&#x5565;&#x56FE;&#xFF0C;&#x4E0B;&#x9762;&#x8FD8;&#x6709;&#x6B63;&#x7ECF;&#x7684;&#x7518;&#x7279;&#x56FE;&#xFF1A;</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">gantt</span><br><span class="line">dateFormat  YYYY-MM-DD</span><br><span class="line">title Shop&#x9879;&#x76EE;&#x4EA4;&#x4ED8;&#x8BA1;&#x5212;</span><br><span class="line"></span><br><span class="line">section &#x91CC;&#x7A0B;&#x7891; 0.1 </span><br><span class="line">&#x6570;&#x636E;&#x5E93;&#x8BBE;&#x8BA1;          :active,    p1, 2016-08-15, 3d</span><br><span class="line">&#x8BE6;&#x7EC6;&#x8BBE;&#x8BA1;            :           p2, after p1, 2d</span><br><span class="line"></span><br><span class="line">section &#x91CC;&#x7A0B;&#x7891; 0.2</span><br><span class="line">&#x540E;&#x7AEF;&#x5F00;&#x53D1;            :           p3, 2016-08-22, 20d</span><br><span class="line">&#x524D;&#x7AEF;&#x5F00;&#x53D1;            :           p4, 2016-08-22, 15d</span><br><span class="line"></span><br><span class="line">section &#x91CC;&#x7A0B;&#x7891; 0.3</span><br><span class="line">&#x529F;&#x80FD;&#x6D4B;&#x8BD5;            :       p6, after p3, 5d</span><br><span class="line">&#x4E0A;&#x7EBF;               :       p7, after p6, 2d</span><br><span class="line">&#x4EA4;&#x4ED8;               :       p8, afterp7, 2d</span><br></pre></td></tr></table></figure>
 
 
 
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">gantt</span><br><span class="line">dateFormat  YYYY-MM-DD</span><br><span class="line">title Shop&#x9879;&#x76EE;&#x4EA4;&#x4ED8;&#x8BA1;&#x5212;</span><br><span class="line"></span><br><span class="line">section &#x91CC;&#x7A0B;&#x7891; 0.1 </span><br><span class="line">&#x6570;&#x636E;&#x5E93;&#x8BBE;&#x8BA1;          :active,    p1, 2016-08-15, 3d</span><br><span class="line">&#x8BE6;&#x7EC6;&#x8BBE;&#x8BA1;            :           p2, after p1, 2d</span><br><span class="line"></span><br><span class="line">section &#x91CC;&#x7A0B;&#x7891; 0.2</span><br><span class="line">&#x540E;&#x7AEF;&#x5F00;&#x53D1;            :           p3, 2016-08-22, 20d</span><br><span class="line">&#x524D;&#x7AEF;&#x5F00;&#x53D1;            :           p4, 2016-08-22, 15d</span><br><span class="line"></span><br><span class="line">section &#x91CC;&#x7A0B;&#x7891; 0.3</span><br><span class="line">&#x529F;&#x80FD;&#x6D4B;&#x8BD5;            :       p6, after p3, 5d</span><br><span class="line">&#x4E0A;&#x7EBF;               :       p7, after p6, 2d</span><br><span class="line">&#x4EA4;&#x4ED8;               :       p8, afterp7, 2d</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">gantt
+dateFormat  YYYY-MM-DD
+title Shop&#x9879;&#x76EE;&#x4EA4;&#x4ED8;&#x8BA1;&#x5212;
+
+section &#x91CC;&#x7A0B;&#x7891; 0.1 
+&#x6570;&#x636E;&#x5E93;&#x8BBE;&#x8BA1;          :active,    p1, 2016-08-15, 3d
+&#x8BE6;&#x7EC6;&#x8BBE;&#x8BA1;            :           p2, after p1, 2d
+
+section &#x91CC;&#x7A0B;&#x7891; 0.2
+&#x540E;&#x7AEF;&#x5F00;&#x53D1;            :           p3, 2016-08-22, 20d
+&#x524D;&#x7AEF;&#x5F00;&#x53D1;            :           p4, 2016-08-22, 15d
+
+section &#x91CC;&#x7A0B;&#x7891; 0.3
+&#x529F;&#x80FD;&#x6D4B;&#x8BD5;            :       p6, after p3, 5d
+&#x4E0A;&#x7EBF;               :       p7, after p6, 2d
+&#x4EA4;&#x4ED8;               :       p8, afterp7, 2d</pre>
 
 <h3 id="&#x65F6;&#x5E8F;&#x56FE;"><a href="#&#x65F6;&#x5E8F;&#x56FE;" class="headerlink" title="&#x65F6;&#x5E8F;&#x56FE;"></a>&#x65F6;&#x5E8F;&#x56FE;</h3><p>&#x7B2C;&#x4E00;&#x884C;&#x4F7F;&#x7528;<code>sequenceDiagram</code>&#x5173;&#x952E;&#x8BCD;&#x58F0;&#x660E;&#x3002;</p>
 <p>&#x53C2;&#x4E0E;&#x8005;&#x4F7F;&#x7528;<code>participant</code>&#x58F0;&#x660E;&#x3002;</p>
@@ -299,13 +319,46 @@
 <li>&#x6709;&#x7BAD;&#x5934;&#x7684;&#x5B9E;&#x7EBF;&#x3001;&#x865A;&#x7EBF;</li>
 <li>&#x6709;x&#x7684;&#x5B9E;&#x7EBF;&#x3001;&#x865A;&#x7EBF;</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">Title: &#x6807;&#x9898;&#xFF1A;&#x590D;&#x6742;&#x4F7F;&#x7528;</span><br><span class="line"></span><br><span class="line">&#x5BF9;&#x8C61;A-&gt;&#x5BF9;&#x8C61;B: &#x5BF9;&#x8C61;B&#x4F60;&#x597D;&#x5417;?&#xFF08;&#x8BF7;&#x6C42;&#xFF09;</span><br><span class="line"></span><br><span class="line">Note right of &#x5BF9;&#x8C61;B: &#x5BF9;&#x8C61;B&#x7684;&#x63CF;&#x8FF0;</span><br><span class="line"></span><br><span class="line">Note left of &#x5BF9;&#x8C61;A: &#x5BF9;&#x8C61;A&#x7684;&#x63CF;&#x8FF0;(&#x63D0;&#x793A;)</span><br><span class="line"></span><br><span class="line">&#x5BF9;&#x8C61;B--&gt;&#x5BF9;&#x8C61;A: &#x6211;&#x5F88;&#x597D;(&#x54CD;&#x5E94;)</span><br><span class="line"></span><br><span class="line">&#x5BF9;&#x8C61;B-&gt;&#x5C0F;&#x4E09;: &#x4F60;&#x597D;&#x5417;</span><br><span class="line"></span><br><span class="line">&#x5C0F;&#x4E09;--&gt;&gt;&#x5BF9;&#x8C61;A: &#x5BF9;&#x8C61;B&#x627E;&#x6211;&#x4E86;</span><br><span class="line"></span><br><span class="line">&#x5BF9;&#x8C61;A-&gt;&#x5BF9;&#x8C61;B: &#x4F60;&#x771F;&#x7684;&#x597D;&#x5417;&#xFF1F;</span><br><span class="line"></span><br><span class="line">Note over &#x5C0F;&#x4E09;,&#x5BF9;&#x8C61;B: &#x6211;&#x4EEC;&#x662F;&#x670B;&#x53CB;</span><br><span class="line"></span><br><span class="line">participant C</span><br><span class="line"></span><br><span class="line">Note right of C: &#x6CA1;&#x4EBA;&#x966A;&#x6211;&#x73A9;</span><br></pre></td></tr></table></figure>
+<div id="sequence-0"></div>
 
 
 
 
 
-<h3 id="&#x7518;&#x7279;&#x56FE;"><a href="#&#x7518;&#x7279;&#x56FE;" class="headerlink" title="&#x7518;&#x7279;&#x56FE;"></a>&#x7518;&#x7279;&#x56FE;</h3><p>&#x8BF4;&#x4E86;&#x90A3;&#x4E48;&#x591A;&#xFF0C;&#x5148;&#x8D34;&#x4E0B;<a href="https://mermaidjs.github.io/#/" target="_blank" rel="noopener">official site</a>&#xFF0C;&#x7B80;&#x76F4;&#x662F;&#x5B9D;&#x5E93;&#x3002;&#x6162;&#x6162;&#x66F4;&#x65B0;&#x3002;&#x3002;&#x3002;</p>
+<h3 id="&#x7518;&#x7279;&#x56FE;"><a href="#&#x7518;&#x7279;&#x56FE;" class="headerlink" title="&#x7518;&#x7279;&#x56FE;"></a>&#x7518;&#x7279;&#x56FE;</h3><p>&#x8BF4;&#x4E86;&#x90A3;&#x4E48;&#x591A;&#xFF0C;&#x5148;&#x8D34;&#x4E0B;<a href="https://mermaidjs.github.io/#/" target="_blank" rel="noopener">official site</a>&#xFF0C;&#x7B80;&#x76F4;&#x662F;&#x5B9D;&#x5E93;&#x3002;&#x6162;&#x6162;&#x66F4;&#x65B0;&#x3002;&#x3002;&#x3002;<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=&gt;start: Start:&gt;http://www.google.com[blank]
+e=&gt;end:&gt;http://www.google.com
+op1=&gt;operation: My Operation
+sub1=&gt;subroutine: My Subroutine
+cond=&gt;condition: Yes
+or No?:&gt;http://www.google.com
+io=&gt;inputoutput: catch something...
+para=&gt;parallel: parallel tasks
+
+st-&gt;op1-&gt;cond
+cond(yes)-&gt;io-&gt;e
+cond(no)-&gt;para
+para(path1, bottom)-&gt;sub1(right)-&gt;op1
+para(path2, top)-&gt;op1</textarea><textarea id="flowchart-0-options" style="display: none">{&quot;theme&quot;:&quot;simple&quot;,&quot;scale&quot;:1,&quot;line-width&quot;:2,&quot;line-length&quot;:50,&quot;text-margin&quot;:10,&quot;font-size&quot;:12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script><script src="https://cdnjs.cloudflare.com/ajax/libs/webfont/1.6.27/webfontloader.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/snap.svg/0.4.1/snap.svg-min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/js-sequence-diagrams/1.0.6/sequence-diagram-min.js"></script><textarea id="sequence-0-code" style="display: none">Title: &#x6807;&#x9898;&#xFF1A;&#x590D;&#x6742;&#x4F7F;&#x7528;
+
+&#x5BF9;&#x8C61;A-&gt;&#x5BF9;&#x8C61;B: &#x5BF9;&#x8C61;B&#x4F60;&#x597D;&#x5417;?&#xFF08;&#x8BF7;&#x6C42;&#xFF09;
+
+Note right of &#x5BF9;&#x8C61;B: &#x5BF9;&#x8C61;B&#x7684;&#x63CF;&#x8FF0;
+
+Note left of &#x5BF9;&#x8C61;A: &#x5BF9;&#x8C61;A&#x7684;&#x63CF;&#x8FF0;(&#x63D0;&#x793A;)
+
+&#x5BF9;&#x8C61;B--&gt;&#x5BF9;&#x8C61;A: &#x6211;&#x5F88;&#x597D;(&#x54CD;&#x5E94;)
+
+&#x5BF9;&#x8C61;B-&gt;&#x5C0F;&#x4E09;: &#x4F60;&#x597D;&#x5417;
+
+&#x5C0F;&#x4E09;--&gt;&gt;&#x5BF9;&#x8C61;A: &#x5BF9;&#x8C61;B&#x627E;&#x6211;&#x4E86;
+
+&#x5BF9;&#x8C61;A-&gt;&#x5BF9;&#x8C61;B: &#x4F60;&#x771F;&#x7684;&#x597D;&#x5417;&#xFF1F;
+
+Note over &#x5C0F;&#x4E09;,&#x5BF9;&#x8C61;B: &#x6211;&#x4EEC;&#x662F;&#x670B;&#x53CB;
+
+participant C
+
+Note right of C: &#x6CA1;&#x4EBA;&#x966A;&#x6211;&#x73A9;</textarea><textarea id="sequence-0-options" style="display: none">{&quot;theme&quot;:&quot;simple&quot;,&quot;scale&quot;:1,&quot;line-width&quot;:2,&quot;line-length&quot;:50,&quot;text-margin&quot;:10,&quot;font-size&quot;:12}</textarea><script>  var code = document.getElementById("sequence-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("sequence-0-options").value));  var diagram = Diagram.parse(code);  diagram.drawSVG("sequence-0", options);</script></p>
 
     </div>
 
@@ -420,7 +473,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

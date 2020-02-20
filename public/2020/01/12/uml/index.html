@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="Sebastian Getts">
 <meta property="og:description" content="The Unified Modeling Language(UML) is a general-purpose, developmental, modeling language in the field of software engineering that is intended to provide a standard way to visualize the design of a s">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-01-12T17:06:40.520Z">
+<meta property="og:updated_time" content="2020-02-20T11:06:08.273Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2020/01/12/uml/">
@@ -229,7 +229,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-01-13 01:06:40" itemprop="dateModified" datetime="2020-01-13T01:06:40+08:00">2020-01-13</time>
+                <time title="Modified: 2020-02-20 19:06:08" itemprop="dateModified" datetime="2020-02-20T19:06:08+08:00">2020-02-20</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -266,7 +266,8 @@
 <li>SubClass1 and SubClass2 are specializations of Super Class</li>
 <li><strong>A solid line with a hollow arrowhead that point <u>from the child to the parent class</u></strong></li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">classDiagram</span><br><span class="line">Class &lt;|-- SubClass1</span><br><span class="line">Class &lt;|-- SubClass2</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">classDiagram
+Class <|-- subclass1 class <|-- subclass2< pre>
 
 
 
@@ -276,7 +277,8 @@
 <li>There is an association between Class1 and Class2</li>
 <li><strong>A solid line connecting two classes</strong></li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">classDiagram</span><br><span class="line">Class1 .. Class2</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">classDiagram
+Class1 .. Class2</pre>
 
 
 
@@ -288,7 +290,8 @@
 <li>Objects of Class1 and Class2 have separate lifetimes</li>
 <li><strong>A solid line with an unfilled diamond at the association end connected to the class of composite</strong></li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">classDiagram</span><br><span class="line">Class1 o-- Class2</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">classDiagram
+Class1 o-- Class2</pre>
 
 <hr>
 <h2 id="Composition"><a href="#Composition" class="headerlink" title="Composition"></a>Composition</h2><p>A special type of aggregation <strong>where parts are destroyed when the whole is destroyed.</strong></p>
@@ -297,7 +300,8 @@
 <li>Class2 cannot stand by itself</li>
 <li><strong>A solid line with a filled diamond at the association connected to the class of composite</strong></li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">classDiagram</span><br><span class="line">Class1 *-- Class2</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">classDiagram
+Class1 *-- Class2</pre>
 
 <hr>
 <h2 id="Dependency"><a href="#Dependency" class="headerlink" title="Dependency"></a>Dependency</h2><ul>
@@ -305,11 +309,12 @@
 <li>Class1 depends on Class2</li>
 <li>A dashed line with an open arrow</li>
 </ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">classDiagram</span><br><span class="line">Class1 ..&gt; Class2</span><br></pre></td></tr></table></figure>
+<pre class="mermaid">classDiagram
+Class1 ..&gt; Class2</pre>
 
 
 
-
+</|--></pre>
     </div>
 
     
@@ -367,8 +372,8 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2020/01/17/vue01/" rel="prev" title="vue01">
-                  vue01 <i class="fa fa-chevron-right"></i>
+                <a href="/2020/01/16/hello-world/" rel="prev" title="Hello World">
+                  Hello World <i class="fa fa-chevron-right"></i>
                 </a>
             </div>
           </div>
@@ -423,7 +428,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">50</span>
+          <span class="site-state-item-count">49</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
