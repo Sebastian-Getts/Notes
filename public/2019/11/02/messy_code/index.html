@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="msvalidate.01" content="541BE591C13D7313C3568E6D172218E2">
+  <meta name="baidu-site-verification" content="3qvcDlCoMv">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: true,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="&amp;#x951F;&amp;#x65A4;&amp;#x62F7;&amp;#x4E2D;&amp;#x6587;&amp;#x4E71;&amp;#x7801;&amp;#x3002;&amp;#x5B57;&amp;#x7B26;&amp;#x7F16;&amp;#x7801;&amp;#xFF1A;_Character encoding_&amp;#x662F;&amp;#x4E00;&amp;#x5957;&amp;#x6CD5;&amp;#x5219;&amp;#xFF0C;&amp;#x4F7F;&amp;#x7528;&amp;#x8BE5;&amp;#x6">
+<meta name="keywords" content="unicode">
+<meta property="og:type" content="article">
+<meta property="og:title" content="messy code">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;02&#x2F;messy_code&#x2F;index.html">
+<meta property="og:site_name" content="Sebastian Getts">
+<meta property="og:description" content="&amp;#x951F;&amp;#x65A4;&amp;#x62F7;&amp;#x4E2D;&amp;#x6587;&amp;#x4E71;&amp;#x7801;&amp;#x3002;&amp;#x5B57;&amp;#x7B26;&amp;#x7F16;&amp;#x7801;&amp;#xFF1A;_Character encoding_&amp;#x662F;&amp;#x4E00;&amp;#x5957;&amp;#x6CD5;&amp;#x5219;&amp;#xFF0C;&amp;#x4F7F;&amp;#x7528;&amp;#x8BE5;&amp;#x6">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-03-05T17:58:35.990Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2019/11/02/messy_code/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>messy code | Sebastian Getts</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sebastian Getts</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">I'm the new one.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-fw fa-video-camera"></i>movies</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/02/messy_code/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Sebastian">
+      <meta itemprop="description" content="I'm feeling lucky!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sebastian Getts">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          messy code
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              <time title="Created: 2019-11-02 22:48:39" itemprop="dateCreated datePublished" datetime="2019-11-02T22:48:39+08:00">2019-11-02</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-03-06 01:58:35" itemprop="dateModified" datetime="2020-03-06T01:58:35+08:00">2020-03-06</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CS/" itemprop="url" rel="index">
+                    <span itemprop="name">CS</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="&#x951F;&#x65A4;&#x62F7;"><a href="#&#x951F;&#x65A4;&#x62F7;" class="headerlink" title="&#x951F;&#x65A4;&#x62F7;"></a>&#x951F;&#x65A4;&#x62F7;</h2><p>&#x4E2D;&#x6587;&#x4E71;&#x7801;&#x3002;</p><p><code>&#x5B57;&#x7B26;&#x7F16;&#x7801;</code>&#xFF1A;_Character encoding_&#x662F;&#x4E00;&#x5957;&#x6CD5;&#x5219;&#xFF0C;&#x4F7F;&#x7528;&#x8BE5;&#x6CD5;&#x5219;&#x80FD;&#x591F;&#x5BF9;&#x81EA;&#x7136;&#x8BED;&#x8A00;&#x7684;&#x5B57;&#x7B26;&#x7684;&#x4E00;&#x4E2A;&#x96C6;&#x5408;&#xFF08;&#x5982;&#x5B57;&#x6BCD;&#x8868;&#x6216;&#x97F3;&#x8282;&#x8868;&#xFF09;&#x4E0E;&#x5176;&#x4ED6;&#x4E1C;&#x897F;&#x7684;&#x4E00;&#x4E2A;&#x96C6;&#x5408;&#xFF08;&#x5982;&#x53F7;&#x7801;&#x6216;&#x7535;&#x8109;&#x51B2;&#xFF09;&#x8FDB;&#x884C;&#x914D;&#x5BF9;&#x3002;&#x548C;&#x83AB;&#x5C14;&#x65AF;&#x7535;&#x7801;&#x529F;&#x80FD;&#x7C7B;&#x4F3C;&#xFF0C;&#x7F8E;&#x56FD;&#x5B9A;&#x5236;&#x4E86;&#x4E00;&#x5957;&#x5B57;&#x7B26;&#x7F16;&#x7801;&#xFF0C;&#x5BF9;&#x82F1;&#x8BED;&#x5B57;&#x7B26;&#x4E0E;&#x4E8C;&#x8FDB;&#x5236;&#x4F4D;&#x4E4B;&#x95F4;&#x7684;&#x5173;&#x7CFB;&#x505A;&#x4E86;&#x7EDF;&#x4E00;&#x89C4;&#x5B9A;&#xFF0C;&#x5373;ASCII&#x7801;&#x3002;</p><a id="more"></a>
+
+<p><code>ASCII</code>(<em>American Standard Code for Information Interchange&#xFF0C;&#x7F8E;&#x56FD;&#x4FE1;&#x606F;&#x4EA4;&#x6362;&#x6807;&#x51C6;&#x4EE3;&#x7801;</em>)&#x57FA;&#x4E8E;&#x62C9;&#x4E01;&#x5B57;&#x6BCD;&#x7684;&#x4E00;&#x5957;&#x7F16;&#x7801;&#x7CFB;&#x7EDF;&#xFF0C;&#x4E3B;&#x8981;&#x7528;&#x4E8E;&#x663E;&#x793A;&#x73B0;&#x4EE3;&#x82F1;&#x8BED;&#xFF0C;&#x5171;128&#x4E2A;&#x5B57;&#x7B26;&#x3002;</p>
+<p><code>Unicode</code>(<em>&#x4E07;&#x56FD;&#x7801;&#x3001;&#x56FD;&#x9645;&#x7801;&#x3001;&#x7EDF;&#x4E00;&#x7801;&#x3001;&#x5355;&#x4E00;&#x7801;</em>)&#xFF0C;&#x81F3;&#x4ECA;&#x4ECD;&#x5728;&#x4E0D;&#x65AD;&#x4FEE;&#x589E;&#xFF0C;&#x6BCF;&#x4E2A;&#x65B0;&#x7248;&#x672C;&#x90FD;&#x52A0;&#x5165;&#x66F4;&#x591A;&#x7684;&#x5B57;&#x7B26;&#x3002;&#x867D;&#x7136;&#x7EDF;&#x4E00;&#x4E86;&#x5168;&#x4E16;&#x754C;&#x5B57;&#x7B26;&#x7684;&#x7F16;&#x7801;&#xFF0C;&#x4F46;&#x6CA1;&#x6709;&#x89C4;&#x5B9A;&#x5982;&#x4F55;&#x5B58;&#x50A8;&#x3002;&#x4E8E;&#x662F;&#x6709;&#x4E86;UTF(<em>Unicode Transformation Format</em>)&#xFF0C;&#x5E38;&#x89C1;&#x7684;&#x6709;: </p>
+<ul>
+<li><p>UTF-8 &#x4F7F;&#x7528;&#x4E00;&#x81F3;&#x56DB;&#x4E2A;&#x5B57;&#x8282;&#x4E3A;&#x6BCF;&#x4E2A;&#x5B57;&#x7B26;&#x7F16;&#x7801;</p>
+</li>
+<li><p>UTF-16 &#x4F7F;&#x7528;&#x4E8C;&#x6216;&#x56DB;&#x4E2A;&#x5B57;&#x8282;&#x4E3A;&#x6BCF;&#x4E2A;&#x5B57;&#x7B26;&#x7F16;&#x7801;</p>
+</li>
+<li><p>UTF-32 &#x4F7F;&#x7528;&#x56DB;&#x4E2A;&#x5B57;&#x8282;&#x4E3A;&#x6BCF;&#x4E2A;&#x5B57;&#x7B26;&#x7F16;&#x7801;</p>
+</li>
+</ul>
+<p>&#x6392;&#x5728;&#x524D;&#x9762;&#x7684;&#x4F18;&#x5148;&#x7EB3;&#x5165;Unicode&#x7684;&#x6587;&#x5B57;&#xFF0C;&#x53EF;&#x80FD;&#x4F18;&#x5148;&#x4F7F;&#x7528;1&#x3001;2&#x5B57;&#x8282;&#x5B58;&#x50A8;&#x4E86;&#xFF0C;&#x5BF9;&#x4E8E;&#x540E;&#x9762;&#x7EB3;&#x5165;&#x7684;&#x6587;&#x5B57;&#xFF0C;&#x5C31;&#x8981;&#x4F7F;&#x7528;3&#x5B57;&#x8282;&#x6216;&#x56DB;&#x5B57;&#x8282;&#x5B58;&#x50A8;&#x4E86;&#xFF0C;&#x540E;&#x7EB3;&#x5165;&#x7684;&#x5BF9;&#x5B58;&#x50A8;&#x7A7A;&#x95F4;&#x8981;&#x6C42;&#x5C31;&#x4F1A;&#x5F88;&#x5927;&#x3002;&#x5BF9;&#x4E8E;&#x5E38;&#x7528;&#x7684;&#x6C49;&#x5B57;&#xFF0C;&#x5728;UTF-8&#x4E2D;&#x91C7;&#x7528;3&#x5B57;&#x8282;&#x8FDB;&#x884C;&#x7F16;&#x7801;&#x3002;&#x4F46;&#x662F;&#x5982;&#x679C;&#x6709;&#x4E00;&#x79CD;&#x53EA;&#x5305;&#x542B;&#x4E2D;&#x6587;&#x548C;ASCII&#x7F16;&#x7801;&#x7684;&#x8BDD;&#xFF0C;&#x5C31;&#x4E0D;&#x9700;&#x8981;3&#x4E2A;&#x5B57;&#x8282;&#x4E86;&#xFF0C;2&#x4E2A;&#x5C31;&#x591F;&#x4E86;&#x3002;&#x51E0;&#x4E4E;&#x4E0D;&#x4F1A;&#x51FA;&#x73B0;&#x522B;&#x56FD;&#x6587;&#x5B57;&#x7684;&#x7F51;&#x7AD9;&#xFF08;&#x53EA;&#x670D;&#x52A1;&#x4E8E;&#x56FD;&#x5BB6;&#x6216;&#x5730;&#x533A;&#x7684;&#xFF09;&#x5C31;&#x65B9;&#x4FBF;&#x4F7F;&#x7528;&#x3002;</p>
+<p><code>GB2312</code>1981&#x5E74;&#xFF0C;&#x56FD;&#x6807;&#x5C40;&#x5236;&#x5B9A;&#x5E76;&#x5B9E;&#x65BD;&#x4E86;GB2312-80&#x7F16;&#x7801;&#xFF0C;&#x6807;&#x51C6;&#x7B80;&#x4F53;&#x4E2D;&#x6587;&#x5B57;&#x7B26;&#x96C6;&#xFF08;&#x4E0D;&#x652F;&#x6301;&#x7E41;&#x4F53;&#x4E2D;&#x6587;&#xFF09;</p>
+<p><code>GBK</code>&#x5FAE;&#x8F6F;&#x5229;&#x7528;GB2312-80&#x672A;&#x4F7F;&#x7528;&#x7684;&#x7F16;&#x7801;&#x7A7A;&#x95F4;&#xFF0C;&#x6536;&#x5F55;GB13000.1-93&#x5168;&#x90E8;&#x5B57;&#x7B26;&#x5236;&#x5B9A;&#x4E86;GBK&#x7F16;&#x7801;&#xFF0C;&#x8FD9;&#x6837;&#xFF0C;&#x4E00;&#x4E2A;&#x7EAF;&#x4E2D;&#x6587;&#x7F51;&#x7AD9;&#x53EF;&#x4EE5;&#x91C7;&#x7528;&#x8FD9;&#x79CD;&#x7F16;&#x7801;&#x8282;&#x7701;&#x5B58;&#x50A8;&#x7A7A;&#x95F4;&#x3002;</p>
+<p><code>&#x4E71;&#x7801;</code>&#x951F;&#x65A4;&#x62F7;&#x7684;&#x7531;&#x6765;&#xFF1A;*<em>&#x628A;&#x4E00;&#x4E32;&#x4E2D;&#x6587;&#x5B57;&#x7B26;&#x901A;&#x8FC7;_UTF-8_&#x8FDB;&#x884C;&#x7F16;&#x7801;&#x4F20;&#x8F93;&#x7ED9;&#x522B;&#x4EBA;&#xFF0C;&#x522B;&#x4EBA;&#x62FF;&#x5230;&#x8FD9;&#x4E32;&#x6587;&#x5B57;&#x540E;&#xFF0C;&#x901A;&#x8FC7;_GBK_&#x8FDB;&#x884C;&#x89E3;&#x7801;&#xFF0C;&#x5F97;&#x5230;&#x7684;&#x5185;&#x5BB9;&#x5C31;&#x4F1A;&#x662F;&#x201C;&#x951F;&#x65A4;&#x62F7;&#x2026;&#x2026;&#x201D; *</em></p>
+<p><code>&#x951F;&#x65A4;&#x62F7;</code>Unicode&#x5B98;&#x65B9;&#x5B9A;&#x4E49;&#x65E0;&#x6CD5;&#x663E;&#x793A;&#x7684;&#x5B57;&#x4E3A;_0xFFFD REPLACEMENT CHARACTER_&#xFF0C;&#x4ED6;&#x7684;16&#x8FDB;&#x5236;&#x5F62;&#x5F0F;&#x662F;&#x4E09;&#x4E2A;&#x5B57;&#x8282;_0xEF 0xBF 0xBD_&#xFF0C;&#x5982;&#x679C;&#x6709;&#x4E24;&#x4E2A;&#x8FDE;&#x7EED;&#x7684;&#x5B57;&#x7B26;&#x90FD;&#x65E0;&#x6CD5;&#x663E;&#x793A;&#xFF0C;&#x90A3;&#x4E48;&#x8FD9;&#x7F16;&#x7801;&#x653E;&#x5728;GBK&#xFF08;&#x4E00;&#x4E2A;&#x6C49;&#x5B57;&#x4E24;&#x4E2A;&#x5B57;&#x8282;&#xFF09;&#x6B63;&#x597D;&#x5BF9;&#x5E94;&#x7684;&#x5C31;&#x662F;&#x951F;(0xEFBF)&#x65A4;(0xBDEF)&#x62F7;(0xBFBD)&#x3002;&#x6240;&#x4EE5;&#x51FA;&#x73B0;&#x8FD9;&#x4E09;&#x4E2A;&#x5B57;&#xFF0C;&#x5C31;&#x662F;<strong>UTF-8</strong>&#x548C;<strong>GBK</strong>&#x7684;&#x8F6C;&#x6362;&#x51FA;&#x4E86;&#x95EE;&#x9898;&#x3002;</p>
+
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+<div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 感谢阅读 --------</span>
+    </div>
+  
+</div>
+      </div>
+    
+      
+        <div class="reward-container">
+  <div>Donate comment here.</div>
+  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    Donate
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="Sebastian WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Sebastian Alipay">
+        <p>Alipay</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/unicode/" rel="tag"># unicode</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2019/10/31/bat/" rel="next" title="bat">
+                  <i class="fa fa-chevron-left"></i> bat
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2019/11/02/swagger/" rel="prev" title="swagger">
+                  swagger <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Sebastian"
+    src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Sebastian</p>
+  <div class="site-description" itemprop="description">I'm feeling lucky!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">40</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">38</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Sebastian-Getts" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Sebastian-Getts" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:zzzqsw@gmail.com" title="E-Mail &amp;rarr; mailto:zzzqsw@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/mchin6" title="Instagram &amp;rarr; https:&#x2F;&#x2F;instagram.com&#x2F;mchin6" rel="noopener" target="_blank"><i class="fa fa-fw fa-instagram"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sebastian</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a>
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.4.2
+  </div>
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      element.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script pjax>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/mermaid/8.2.0/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme: 'forest',
+      logLevel: 3,
+      flowchart: { curve: 'linear' },
+      gantt: { axisFormat: '%m/%d/%Y' },
+      sequence: { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+    <div id="pjax">
+
+  
+
+  
+
+  
+
+  
+
+  <script async src="/js/cursor/fireworks.js"></script>
+
+
+
+
+  <script src="/js/wobblewindow.js"></script>
+  <script>
+    //只在桌面版网页启用特效
+    if( window.innerWidth > 768  ){
+      $(document).ready(function () {
+        
+          $('#header').wobbleWindow({
+            radius: 50,
+            movementTop: false,
+            movementLeft: false,
+            movementRight: false,
+            debug: false,
+          });
+        
+
+        
+          $('#sidebar').wobbleWindow({
+            radius: 50,
+            movementLeft: false,
+            movementTop: false,
+            movementBottom: false,
+            position: 'fixed',
+            debug: false,
+          });
+        
+
+        
+          $('#footer').wobbleWindow({
+            radius: 50,
+            movementBottom: false,
+            movementLeft: false,
+            movementRight: false,
+            offsetX: ,
+            position: 'absolute',
+            debug: false,
+          });
+        
+      });
+    }
+  </script>
+
+
+
+
+
+
+
+
+    </div>
+</body>
+</html>

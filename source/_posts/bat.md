@@ -1,10 +1,8 @@
 ---
 title: bat
 date: 2019-10-31 12:17:08
-categories:
-- 技术
-- explore
-tags: script
+categories: Shell
+tags: Windows
 ---
 
 # BATCH

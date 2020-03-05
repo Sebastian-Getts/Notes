@@ -1,9 +1,7 @@
 ---
 title: 事件的概率
 date: 2019-11-14 12:52:44
-categories:
-- Math
-- ProbablityAndStatics
+categories: Math
 tags: parobablity&Statics
 mathjax: true
 ---

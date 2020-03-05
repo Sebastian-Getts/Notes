@@ -1,7 +1,7 @@
 ---
 title: vue04
 date: 2020-01-19 15:07:46
-categories: vue
+categories: Vue
 tags: vue
 ---
 

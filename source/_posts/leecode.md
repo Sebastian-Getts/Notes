@@ -1,7 +1,7 @@
 ---
 title: leecode
 date: 2019-12-10 13:13:28
-categories: algorithm
+categories: Leecode
 tags: leecode_easy
 ---
 

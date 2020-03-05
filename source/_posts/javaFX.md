@@ -1,10 +1,9 @@
 ---
 title: javaFX
 date: 2019-11-18 22:22:16
-categories: JavaFX
+categories: Java
 tags:
-- javafx
-- GUI
+- JavaFX
 ---
 
 JavaFX，据说生不逢时，，但是我觉得它很厉害啊。。写个工具自己用也不错。。好像很多工程类的应用在用它。在油管上发现了关于他的宝贝。。。之前在b站上看到过一个印度尼西亚的小哥的视频，后来就找不到了，今天又发现了它。地址文章末尾给出。 p.s. 好像是JetBrains出品的，，必属精品。

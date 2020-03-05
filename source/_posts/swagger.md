@@ -1,9 +1,7 @@
 ---
 title: swagger
 date: 2019-11-02 22:51:41
-categories: 
-- 技术
-- explore
+categories: Java
 tags:
 - swagger
 - SpringBoot

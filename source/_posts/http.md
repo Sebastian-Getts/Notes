@@ -1,7 +1,7 @@
 ---
 title: http
 date: 2019-11-06 00:11:40
-categories: frontend
+categories: CS
 tags:
 - request
 - session

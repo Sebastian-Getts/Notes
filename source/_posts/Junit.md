@@ -1,7 +1,7 @@
 ---
 title: Junit
 date: 2019-12-01 21:14:41
-categories: java
+categories: Java
 tags: Junit
 ---
 

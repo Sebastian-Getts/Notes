@@ -1,7 +1,7 @@
 ---
 title: bootstrap
 date: 2019-11-23 23:00:54
-categories: frontend
+categories: bootstrap
 tags:
 - html
 - framework

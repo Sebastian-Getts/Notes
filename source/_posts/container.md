@@ -1,9 +1,7 @@
 ---
 title: container
 date: 2019-11-09 11:40:10
-categories: 
-- 技术
-- java
+categories: Java
 tags: container
 ---
 

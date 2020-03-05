@@ -1,7 +1,7 @@
 ---
 title: tagOfHexo
 date: 2019-11-07 23:41:44
-categories: explore
+categories: Hexo
 tags: hexo
 ---
 

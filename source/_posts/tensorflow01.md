@@ -1,7 +1,7 @@
 ---
 title: tensorflow01
 date: 2019-12-07 11:36:19
-categories: tensorflow
+categories: Tensorflow
 tags:
 - tensorflow
 - python

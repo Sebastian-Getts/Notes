@@ -1,7 +1,7 @@
 ---
 title: vue01
 date: 2020-01-17 12:55:47
-categories: vue
+categories: Vue
 tags: vue
 ---
 

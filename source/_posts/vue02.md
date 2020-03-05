@@ -1,7 +1,7 @@
 ---
 title: vue02
 date: 2020-01-17 23:21:24
-categories: vue
+categories: Vue
 tags: vue
 ---
 

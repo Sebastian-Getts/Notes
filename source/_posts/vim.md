@@ -1,7 +1,7 @@
 ---
 title: vim
 date: 2020-01-05 21:38:32
-categories: utils
+categories: Vim
 tags: vim
 ---
 

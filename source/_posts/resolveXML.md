@@ -1,9 +1,7 @@
 ---
 title: resolveXML
 date: 2019-11-13 23:41:20
-categories:
-- 技术
-- java
+categories: Java
 tags: xml
 ---
 

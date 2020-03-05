@@ -1,7 +1,7 @@
 ---
 title: JavaCollectionsFramework
 date: 2020-01-04 14:55:28
-categories: java
+categories: Java
 tags: collectionsFramework
 ---
 

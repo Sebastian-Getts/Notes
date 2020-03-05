@@ -1,7 +1,7 @@
 ---
 title: tensorflow02
 date: 2019-12-08 13:05:17
-categories: tensorflow
+categories: Tensorflow
 tags: tensorflow
 mathjax: true
 ---

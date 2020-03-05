@@ -1,9 +1,7 @@
 ---
 title: nginx
 date: 2019-11-02 22:53:32
-categories:
-- 技术
-- explore
+categories: Nginx
 tags: network
 ---
 # NIGNX

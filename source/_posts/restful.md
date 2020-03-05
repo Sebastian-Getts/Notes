@@ -1,7 +1,7 @@
 ---
 title: restful
 date: 2019-11-28 22:17:48
-categories: utils
+categories: Java
 tags:
 - http
 - swagger
