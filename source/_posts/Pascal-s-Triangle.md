@@ -135,7 +135,37 @@ $$
   mathjax: true
   ```
 
-  
+
+
+
+## 相关
+
+一道leecode数组相关的算法题目，给一个二维数组，输入一个数字，生成相应高度的杨辉三角。
+
+```java
+public List<List<Integer>> generate(int numRows){
+    if(numRows==0){
+        return null;
+    }
+    List<List<Integer>> result = new ArrayList<>();
+    List<Integer>> pre = new ArrayList<>();
+    pre.add(1);
+    result.add(pre);
+    
+    for(int i=2; i <= numRows; i++){
+        List<Integer> cur = new ArrayList<>();
+        cur.add(1);
+        for(int j=0;j < pre.size()-1; j++){
+            //middle
+            cur.add(pre.get(j) + pre.get(j+1));
+        }
+        cur.add(1);
+        result.add(cur);
+        pre = cur;
+    }
+    return result;
+}
+```
 
 
 

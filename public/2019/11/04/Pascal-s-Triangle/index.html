@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="Sebastian Getts">
 <meta property="og:description" content="读华罗庚的著作《杨辉三角》有感：杨辉三角引申出的杨辉恒等式，利用了排列组合的原理，可以作用在二项式、开方等等的方面，简直amazing。。。。。。。。Btw，练习了Latex语法。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-01-16T05:26:45.144Z">
+<meta property="og:updated_time" content="2020-02-22T03:36:18.308Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2019/11/04/Pascal-s-Triangle/">
@@ -229,7 +229,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-01-16 13:26:45" itemprop="dateModified" datetime="2020-01-16T13:26:45+08:00">2020-01-16</time>
+                <time title="Modified: 2020-02-22 11:36:18" itemprop="dateModified" datetime="2020-02-22T11:36:18+08:00">2020-02-22</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -310,9 +310,13 @@
 
 
 
-
 </li>
 </ul>
+<h2 id="&#x76F8;&#x5173;"><a href="#&#x76F8;&#x5173;" class="headerlink" title="&#x76F8;&#x5173;"></a>&#x76F8;&#x5173;</h2><p>&#x4E00;&#x9053;leecode&#x6570;&#x7EC4;&#x76F8;&#x5173;&#x7684;&#x7B97;&#x6CD5;&#x9898;&#x76EE;&#xFF0C;&#x7ED9;&#x4E00;&#x4E2A;&#x4E8C;&#x7EF4;&#x6570;&#x7EC4;&#xFF0C;&#x8F93;&#x5165;&#x4E00;&#x4E2A;&#x6570;&#x5B57;&#xFF0C;&#x751F;&#x6210;&#x76F8;&#x5E94;&#x9AD8;&#x5EA6;&#x7684;&#x6768;&#x8F89;&#x4E09;&#x89D2;&#x3002;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; generate(<span class="keyword">int</span> numRows){</span><br><span class="line">    <span class="keyword">if</span>(numRows==<span class="number">0</span>){</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">    }</span><br><span class="line">    List&lt;List&lt;Integer&gt;&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    List&lt;Integer&gt;&gt; pre = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    pre.add(<span class="number">1</span>);</span><br><span class="line">    result.add(pre);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>; i &lt;= numRows; i++){</span><br><span class="line">        List&lt;Integer&gt; cur = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">        cur.add(<span class="number">1</span>);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>;j &lt; pre.size()-<span class="number">1</span>; j++){</span><br><span class="line">            <span class="comment">//middle</span></span><br><span class="line">            cur.add(pre.get(j) + pre.get(j+<span class="number">1</span>));</span><br><span class="line">        }</span><br><span class="line">        cur.add(<span class="number">1</span>);</span><br><span class="line">        result.add(cur);</span><br><span class="line">        pre = cur;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+
+
 
     </div>
 
@@ -363,8 +367,8 @@
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-                <a href="/2019/11/04/PlainTasks/" rel="next" title="PlainTasks">
-                  <i class="fa fa-chevron-left"></i> PlainTasks
+                <a href="/2019/11/03/mapOfUtils/" rel="next" title="map of utils">
+                  <i class="fa fa-chevron-left"></i> map of utils
                 </a>
             </div>
 
@@ -427,7 +431,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">49</span>
+          <span class="site-state-item-count">44</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -440,7 +444,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">41</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
