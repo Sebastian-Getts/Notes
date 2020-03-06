@@ -28,6 +28,15 @@ rest: Representational State Transfer
 - 安全性高
 - 客户端浏览器不会对POST请求进行缓存。
 
+```java
+@PostMapping("/addr")
+public String editAddr(@RequesetBody Map<String, String> map){
+    System.out.println(map.get("addr"));
+}
+```
+
+
+
 ## GET
 
 获取
@@ -38,6 +47,15 @@ rest: Representational State Transfer
 - 可以携带的数据量小（因为是在地址栏输入）
 - 数据安全性低
 - 会使用缓存，第一次打开的时候会下载相关信息（css，image…），提高用户体验
+
+```java
+@GetMapping("/homepage/storage/{id}")
+public string getDetails(@PathVariable("id") String id){
+    return id;
+}
+```
+
+
 
 ## PUT
 

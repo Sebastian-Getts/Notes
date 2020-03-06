@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/about/index.html</loc>
+    
+    <lastmod>2020-03-06T17:19:54.040Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/11/28/restful/</loc>
+    
+    <lastmod>2020-03-06T10:52:42.812Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2019/11/23/bootstrap/</loc>
     
     <lastmod>2020-03-05T18:00:49.898Z</lastmod>
@@ -135,13 +149,6 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/11/28/restful/</loc>
-    
-    <lastmod>2020-03-05T17:55:11.733Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/2019/11/13/resolveXML/</loc>
     
     <lastmod>2020-03-05T17:54:59.997Z</lastmod>
@@ -257,13 +264,6 @@
     <loc>http://yoursite.com/2019/12/10/leecode/</loc>
     
     <lastmod>2020-03-05T17:35:50.190Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/about/index.html</loc>
-    
-    <lastmod>2020-03-05T17:22:07.291Z</lastmod>
     
   </url>
   
