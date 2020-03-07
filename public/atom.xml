@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://yoursite.com/"/>
-  <updated>2020-03-05T17:51:24.875Z</updated>
+  <updated>2020-03-07T05:41:37.171Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>leecode2</title>
+    <link href="http://yoursite.com/2020/03/07/leecode2/"/>
+    <id>http://yoursite.com/2020/03/07/leecode2/</id>
+    <published>2020-03-07T03:46:01.000Z</published>
+    <updated>2020-03-07T05:41:37.171Z</updated>
+    
+    <content type="html"><![CDATA[<p>&#x50CF;&#x90A3;&#x79CD;&#x7ED3;&#x679C;&#x8981;&#x8FD4;&#x56DE;&#x6240;&#x6709;&#x7B26;&#x5408;&#x8981;&#x6C42;&#x89E3;&#x7684;&#x9898;&#x5341;&#x6709;&#x516B;&#x4E5D;&#x90FD;&#x662F;&#x8981;&#x5229;&#x7528;&#x9012;&#x5F52;&#x3002;&#x6839;&#x672C;&#x601D;&#x60F3;&#x662F;DFS&#xFF0C;&#x5E38;&#x7528;&#x624B;&#x6BB5;&#x662F;&#x9012;&#x5F52;&#x3002;</p><a id="more"></a><h1 id="LCS"><a href="#LCS" class="headerlink" title="LCS"></a>LCS</h1><p>&#x5148;&#x56DE;&#x987E;&#x4E0B;<code>&#x6700;&#x957F;&#x516C;&#x5171;&#x5B50;&#x4E32;</code>&#x95EE;&#x9898;&#x3002;&#x8FDE;&#x7740;&#x4E24;&#x5929;&#x505A;&#x5230;&#x4E86;&#x76F8;&#x5173;&#x7684;&#x7B97;&#x6CD5;&#x9898;&#xFF0C;&#x6362;&#x6C64;&#x4E0D;&#x6362;&#x836F;&#x7684;&#x3002;</p><p>&#x9898;&#x76EE;&#x63CF;&#x8FF0;&#xFF1A;</p><p>&#x7ED9;&#x5B9A;&#x4E24;&#x4E2A;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x6C42;&#x4E24;&#x4E2A;&#x5B57;&#x7B26;&#x4E32;&#x7684;&#x6700;&#x5927;&#x516C;&#x5171;&#x5B50;&#x4E32;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;&#x201D;abcd&#x201D;, &#x201C;acefd&#x201D;&#x7684;&#x6700;&#x5927;&#x516C;&#x5171;&#x5B50;&#x4E32;&#x662F;&#x201D;acd&#x201D;&#x3002;</p><h2 id="&#x601D;&#x8DEF;"><a href="#&#x601D;&#x8DEF;" class="headerlink" title="&#x601D;&#x8DEF;"></a>&#x601D;&#x8DEF;</h2><p>&#x8981;&#x627E;&#x5230;&#x6700;&#x5927;&#x516C;&#x5B50;&#x4E32;&#xFF0C;&#x8981;&#x76F4;&#x9762;&#x7684;&#x95EE;&#x9898;&#x662F;&#x5BF9;&#x6BD4;&#xFF0C;&#x5BF9;&#x6BD4;&#x5982;&#x679C;&#x51FA;&#x73B0;&#x76F8;&#x540C;&#x7684;&#x5B57;&#x6BCD;&#x8BE5;&#x5982;&#x4F55;&#x5904;&#x7406;&#xFF0C;&#x4E0D;&#x540C;&#x7684;&#x53C8;&#x8981;&#x5982;&#x4F55;&#x5904;&#x7406;&#x3002;</p><p>&#x53EF;&#x4EE5;&#x601D;&#x8003;&#x8FD9;&#x6837;&#x4E00;&#x4E2A;&#x65B9;&#x6848;&#xFF0C;&#x9010;&#x4E2A;&#x6BD4;&#x8F83;&#xFF0C;&#x5982;&#x679C;&#x53D1;&#x73B0;&#x4E86;&#x4E0D;&#x540C;&#x7684;&#x5B57;&#x6BCD;&#xFF0C;&#x53EF;&#x4EE5;&#x4E24;&#x4E2A;&#x5B50;&#x4E32;&#x5176;&#x4E2D;&#x4E00;&#x4E2A;&#x7684;&#x4E0D;&#x540C;&#x5B57;&#x6BCD;&#x53BB;&#x6389;&#xFF0C;&#x5728;&#x6BD4;&#x8F83;&#x4F59;&#x4E0B;&#x7684;&#x8C01;&#x7684;&#x503C;&#x66F4;&#x5927;&#xFF0C;&#x8FD9;&#x91CC;&#x7684;&#x503C;&#x662F;&#x6700;&#x5927;&#x5B50;&#x4E32;&#x7684;&#x957F;&#x5EA6;&#x3002;&#x5982;&#x679C;&#x76F8;&#x540C;&#xFF0C;&#x5C06;&#x76F8;&#x540C;&#x7684;&#x5B57;&#x6BCD;&#x5212;&#x53BB;&#x540E;&#x52A0;&#x4E00;&#xFF0C;&#x518D;&#x6BD4;&#x8F83;&#x5212;&#x53BB;&#x540E;&#x7684;&#x5B50;&#x4E32;&#xFF0C;&#x53C8;&#x56DE;&#x5230;&#x4E00;&#x5F00;&#x59CB;&#x5B57;&#x6BCD;&#x76F8;&#x540C;&#x6216;&#x4E0D;&#x540C;&#x7684;&#x95EE;&#x9898;&#x4E86;&#x3002;</p><div id="flowchart-0" class="flow-chart"></div><p>&#x5982;&#x4E0A;&#x56FE;&#x6240;&#x793A;&#x3002;&#x5982;&#x679C;&#x7528;&#x8868;&#x683C;&#x8BB0;&#x5F55;&#x7684;&#x8BDD;&#xFF0C;&#x5728;&#x5212;&#x53BB;&#x4E0D;&#x540C;&#x7684;&#x5B57;&#x6BCD;&#x540E;&#x5F62;&#x6210;&#x7684;&#x4E24;&#x7EC4;&#x5B50;&#x4E32;&#x4E2D;&#x6700;&#x5927;&#x503C;&#x4EE5;&#x53CA;&#x5212;&#x53BB;&#x76F8;&#x540C;&#x5B57;&#x6BCD;&#x540E;&#x4F59;&#x4E0B;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#x6BD4;&#x8F83;&#x7684;&#x503C;&#x90FD;&#x662F;&#x88AB;&#x4FDD;&#x7559;&#x5728;&#x8868;&#x683C;&#x4E2D;&#x7684;&#xFF0C;&#x4E8E;&#x662F;&#x6574;&#x4F53;&#x7B97;&#x6CD5;&#x601D;&#x8DEF;&#x5C31;&#x5F88;&#x6E05;&#x695A;&#x4E86;&#x3002;</p><table><thead><tr><th align="center"></th><th align="center">&#x201C; &#x201C;</th><th align="center">a</th><th align="center">b</th><th align="center">c</th><th align="center">e</th><th align="center">f</th></tr></thead><tbody><tr><td align="center">&#x201C; &#x201C;</td><td align="center">0</td><td align="center">0</td><td align="center">0</td><td align="center">0</td><td align="center">0</td><td align="center">0</td></tr><tr><td align="center">a</td><td align="center">0</td><td align="center">1</td><td align="center">1</td><td align="center">1</td><td align="center">1</td><td align="center">1</td></tr><tr><td align="center">c</td><td align="center">0</td><td align="center">1</td><td align="center">1</td><td align="center">2</td><td align="center">2</td><td align="center">2</td></tr><tr><td align="center">e</td><td align="center">0</td><td align="center">1</td><td align="center">1</td><td align="center">2</td><td align="center">3</td><td align="center">3</td></tr><tr><td align="center">f</td><td align="center">0</td><td align="center">1</td><td align="center">1</td><td align="center">2</td><td align="center">3</td><td align="center">4</td></tr><tr><td align="center">d</td><td align="center">0</td><td align="center">1</td><td align="center">1</td><td align="center">1</td><td align="center">3</td><td align="center">4</td></tr></tbody></table><p>&#x6211;&#x4EEC;&#x53EF;&#x4EE5;&#x7528;dp&#x8868;&#x793A;&#x4E00;&#x4E2A;&#x4E8C;&#x7EF4;&#x6570;&#x7EC4;&#xFF0C;&#x76F8;&#x5F53;&#x4E8E;&#x4E0A;&#x56FE;&#x4E2D;&#x7684;&#x8868;&#x683C;&#xFF0C;&#x505A;&#x51FA;&#x65B0;&#x7684;&#x6D41;&#x7A0B;&#x56FE;&#xFF1A;</p><div id="flowchart-1" class="flow-chart"></div><h1 id="DFS"><a href="#DFS" class="headerlink" title="DFS"></a>DFS</h1><p>&#x9898;&#x76EE;&#x63CF;&#x8FF0;&#xFF1A;&#x7ED9;&#x5B9A;&#x4E00;&#x4E2A;&#x6570;&#x7EC4;&#x548C;&#x4E00;&#x4E2A;&#x76EE;&#x6807;&#x503C;&#xFF0C;&#x8981;&#x6C42;&#x8FD4;&#x56DE;&#x7531;&#x6570;&#x7EC4;&#x4E2D;&#x6570;&#x5B57;&#x7EC4;&#x5408;&#x6210;&#x76EE;&#x6807;&#x503C;&#x7684;&#x6240;&#x6709;&#x7EC4;&#x5408;&#x3002;</p><p>&#x4F8B;&#x5982;&#xFF1A;&#x3010;2,3,6,7&#x3011;&#x76EE;&#x6807;&#x503C;7. &#x8FD4;&#x56DE;&#x3010;&#x3010;2,2,3&#x3011;&#x3010;7&#x3011;&#x3011;</p><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> List&lt;List&lt;Integer&gt;&gt; combinationSum(<span class="keyword">int</span>[] candidates, <span class="keyword">int</span> target) {</span><br><span class="line">    List&lt;List&lt;Integer&gt;&gt; result = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    List&lt;Integer&gt; temp = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    helper(candidates, <span class="number">0</span>, target, <span class="number">0</span>, temp, result);</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">}</span><br><span class="line"> </span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">helper</span><span class="params">(<span class="keyword">int</span>[] candidates, <span class="keyword">int</span> start, <span class="keyword">int</span> target, <span class="keyword">int</span> sum,</span></span></span><br><span class="line"><span class="function"><span class="params">                    List&lt;Integer&gt; list, List&lt;List&lt;Integer&gt;&gt; result)</span></span>{</span><br><span class="line">    <span class="keyword">if</span>(sum&gt;target){</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span>(sum==target){</span><br><span class="line">        result.add(<span class="keyword">new</span> ArrayList&lt;&gt;(list));</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    }</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=start; i&lt;candidates.length; i++){</span><br><span class="line">        list.add(candidates[i]);</span><br><span class="line">        helper(candidates, i, target, sum+candidates[i], list, result);</span><br><span class="line">        list.remove(list.size()-<span class="number">1</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure><script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">st=&gt;start: two stringsop=&gt;operation: compare two stringscond=&gt;condition: if the letter equalsop1=&gt;operation: &#x5212;&#x53BB;&#x5728;&#x6BD4;&#x8F83;&#x7684;&#x76F8;&#x540C;&#x7684;&#x5B57;&#x6BCD;&#xFF0C;&#x5F62;&#x6210;&#x4E00;&#x7EC4;&#x65B0;&#x7684;&#x5B57;&#x7B26;&#x4E32;&#xFF0C;&#x503C;&#x52A0;&#x4E00;op2=&gt;operation: &#x5212;&#x53BB;&#x4E0D;&#x540C;&#x7684;&#x5B57;&#x6BCD;&#xFF0C;&#x5F62;&#x6210;&#x4E24;&#x7EC4;&#x65B0;&#x7684;&#x5B57;&#x7B26;&#x4E32;,&#x5206;&#x522B;&#x6BD4;&#x8F83;&#x53D6;&#x6700;&#x5927;cond2=&gt;condition: &#x662F;&#x5426;&#x6709;&#x7A7A;&#x4E32;end=&gt;end: endst-&gt;op-&gt;condcond(yes)-&gt;op1-&gt;cond2cond(no)-&gt;op2-&gt;cond2cond2(yes)-&gt;endcond2(no)-&gt;op</textarea><textarea id="flowchart-0-options" style="display: none">{&quot;theme&quot;:&quot;simple&quot;,&quot;scale&quot;:1,&quot;line-width&quot;:2,&quot;line-length&quot;:50,&quot;text-margin&quot;:10,&quot;font-size&quot;:12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script><textarea id="flowchart-1-code" style="display: none">st=&gt;start: two stringsend=&gt;end: endop=&gt;operation: compare two stringscond=&gt;condition: if two string equal?op2=&gt;operation: 1+dp[i][j]op3=&gt;operation: Math.max(dp[i][j+1],dp[i+1][j])st-&gt;op-&gt;condcond(yes)-&gt;op2-&gt;endcond(no)-&gt;op3-&gt;end</textarea><textarea id="flowchart-1-options" style="display: none">{&quot;theme&quot;:&quot;simple&quot;,&quot;scale&quot;:1,&quot;line-width&quot;:2,&quot;line-length&quot;:50,&quot;text-margin&quot;:10,&quot;font-size&quot;:12}</textarea><script>  var code = document.getElementById("flowchart-1-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-1-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-1", options);</script>]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;像那种结果要返回所有符合要求解的题十有八九都是要利用递归。根本思想是DFS，常用手段是递归。&lt;/p&gt;
+    
+    </summary>
+    
+    
+      <category term="Leecode" scheme="http://yoursite.com/categories/Leecode/"/>
+    
+    
+      <category term="lcs" scheme="http://yoursite.com/tags/lcs/"/>
+    
+      <category term="recursion" scheme="http://yoursite.com/tags/recursion/"/>
+    
+  </entry>
   
   <entry>
     <title>graph</title>
@@ -456,29 +481,6 @@
     
     
       <category term="kafka" scheme="http://yoursite.com/tags/kafka/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Junit</title>
-    <link href="http://yoursite.com/2019/12/01/Junit/"/>
-    <id>http://yoursite.com/2019/12/01/Junit/</id>
-    <published>2019-12-01T13:14:41.000Z</published>
-    <updated>2020-03-05T17:52:32.293Z</updated>
-    
-    <content type="html"><![CDATA[<p>&#x5355;&#x5143;&#x6D4B;&#x8BD5;&#xFF0C;&#x63D0;&#x9AD8;&#x5F00;&#x53D1;&#x6548;&#x7387;&#x989D;&#x3002;</p><a id="more"></a><h1 id="&#x5F15;"><a href="#&#x5F15;" class="headerlink" title="&#x5F15;"></a>&#x5F15;</h1><p>@Controller: </p><p>@RestController:</p><p>@ResponseBody:</p>]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;单元测试，提高开发效率额。&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Java" scheme="http://yoursite.com/categories/Java/"/>
-    
-    
-      <category term="Junit" scheme="http://yoursite.com/tags/Junit/"/>
     
   </entry>
   
