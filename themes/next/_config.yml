@@ -925,7 +925,7 @@ canvas_ribbon:
   zIndex: -1 # The display level of the ribbon
 
 # mouse click effect: fireworks | explosion | love | text
-cursor_effect: fireworks
+cursor_effect: love
 
 
 # window woblle

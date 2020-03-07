@@ -298,7 +298,7 @@
 <blockquote>
 <p> RequestHandlerSelectors //&#x914D;&#x7F6E;&#x8981;&#x626B;&#x63CF;&#x63A5;&#x53E3;&#x7684;&#x65B9;&#x5F0F;</p>
 </blockquote>
-<p>&#x6E90;&#x7801;&#x6D89;&#x53CA;<a href="https://www.jb51.net/article/49405.htm" target="_blank" rel="noopener">&#x94FE;&#x5F0F;&#x8C03;&#x7528;</a></p>
+<p>&#x6E90;&#x7801;&#x6D89;&#x53CA;<a href="https://www.jb51.net/article/49405.htm">&#x94FE;&#x5F0F;&#x8C03;&#x7528;</a></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Docket <span class="title">docket</span><span class="params">()</span> </span>{</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2)</span><br><span class="line">        .apiInfo(apiInfo())</span><br><span class="line">        .enable(<span class="keyword">false</span>)</span><br><span class="line">        .select()</span><br><span class="line">        .apis(RequestHandlerSelectors.basePackage(<span class="string">&quot;com.sunday.personal.tuesday.controller&quot;</span>))</span><br><span class="line">        <span class="comment">//                .paths(PathSelectors.ant(&quot;/com/sunday/personal/tuesday/config/*&quot;))</span></span><br><span class="line">        .build(); <span class="comment">//build</span></span><br><span class="line">}</span><br><span class="line"><span class="comment">//basePackage, &#x626B;&#x63CF;&#x8DEF;&#x5F84;&#x4E2D;&#x7684;</span></span><br><span class="line"><span class="comment">//any&#xFF0C;&#x626B;&#x63CF;&#x5168;&#x90E8;</span></span><br><span class="line"><span class="comment">//withClassAnnotation(RestController.class)&#xFF0C;&#x626B;&#x63CF;&#x7C7B;&#x4E0A;&#x6709;&#x2026;&#x7684;&#x7C7B;</span></span><br><span class="line"><span class="comment">//withMethodAnnotation(...)&#xFF0C;&#x626B;&#x63CF;&#x65B9;&#x6CD5;&#x4E0A;&#x6709;&#x2026;&#x7684;&#x7C7B;</span></span><br></pre></td></tr></table></figure>
 
 
@@ -616,7 +616,7 @@ if (document.querySelectorAll('pre.mermaid').length) {
 
   
 
-  <script async src="/js/cursor/fireworks.js"></script>
+  <script async src="/js/cursor/love.min.js"></script>
 
 
 
