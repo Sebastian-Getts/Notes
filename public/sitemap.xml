@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2020/03/14/https/</loc>
+    
+    <lastmod>2020-03-14T05:02:26.007Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/11/02/nginx/</loc>
+    
+    <lastmod>2020-03-14T02:43:12.053Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2020/03/07/leecode2/</loc>
     
     <lastmod>2020-03-07T06:02:33.342Z</lastmod>
@@ -170,13 +184,6 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2019/11/02/nginx/</loc>
-    
-    <lastmod>2020-03-05T17:54:12.581Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/2019/11/03/mapOfUtils/</loc>
     
     <lastmod>2020-03-05T17:53:27.662Z</lastmod>
@@ -208,13 +215,6 @@
     <loc>http://yoursite.com/2020/01/04/javaDataSttructure/</loc>
     
     <lastmod>2020-03-05T17:52:07.375Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/11/06/http/</loc>
-    
-    <lastmod>2020-03-05T17:52:01.107Z</lastmod>
     
   </url>
   

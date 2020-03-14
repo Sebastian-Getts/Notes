@@ -1,7 +1,7 @@
 ---
 title: nginx
 date: 2019-11-02 22:53:32
-categories: Nginx
+categories: Network
 tags: network
 ---
 # NIGNX
