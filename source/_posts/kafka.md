@@ -1,7 +1,7 @@
 ---
 title: kafka
 date: 2019-12-03 22:34:16
-categories: Kafka
+categories: MQ
 tags: kafka
 ---
 

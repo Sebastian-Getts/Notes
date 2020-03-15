@@ -5,7 +5,7 @@ categories: Leecode
 tags: leecode_easy
 ---
 
-坚持刷题吧
+求两数之和是否为目标值；移除元素；移除重复元素；最长无重复字符的子串；
 
 <!-- mroe -->
 

@@ -23,7 +23,7 @@ tags: ['lcs','recursion']
 
 可以思考这样一个方案，逐个比较，如果发现了不同的字母，可以两个子串其中一个的不同字母去掉，在比较余下的谁的值更大，这里的值是最大子串的长度。如果相同，将相同的字母划去后加一，再比较划去后的子串，又回到一开始字母相同或不同的问题了。
 
-```flowchart
+```flow
 st=>start: two strings
 op=>operation: compare two strings
 cond=>condition: if the letter equals
