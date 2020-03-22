@@ -60,3 +60,140 @@ tags: network
 
 [referenct](https://mp.weixin.qq.com/s/PeNWaCDf_6gp2fCQa0Gvng)
 
+# 配置
+
+1. 配置EPEL源
+
+   ```bash
+   sudo yum install -y epel-release
+   sudo yum -y update
+   ```
+
+2. 安装nginx
+
+   ```bash
+   sudo yum instll -y nginx
+   ```
+
+   安装成功后：
+
+   `默认网站目录`：_/usr/share/nginx/html_
+
+   `默认的配置文件为`：_/etc/nginx/nginx.conf_
+
+   `自定义配置文件目录为`：_/etc/nginx/conf.d/_
+
+3. 开启端口80和443
+
+   如果关闭了防火墙，直接略过。
+
+   ```bash
+   sudo firewall-cmd --permanent --zone=public --add-service=http
+   sudo firewall-cmd --permanent --zone=public --add-service=https
+   sudo firewall-cmd --reload
+   ```
+
+4. 命令
+
+   - 启动
+
+     ```bash
+     systemctl start nginx
+     ```
+
+   - 停止
+
+     ```bash
+     systemctl stop nginx
+     ```
+
+   - 重启
+
+     ```bash
+     systemctl restart nginx
+     ```
+
+   - 查看状态
+
+     ```bash
+     systemctl status nginx
+     ```
+
+   - 启用开机启动
+
+     ```bash
+     systemctl enable nginx
+     ```
+
+     测试的时候，直接`nginx`命令即可，方便调试，调试时使用：
+
+     ```bash
+     nginx -t
+     ```
+
+     ```bash
+     nginx -s reload
+     ```
+
+     
+
+   - 禁止开机启动
+
+     ```bash
+     systemctl disbale nginx
+     ```
+
+5. https
+
+   1. 关于https的相关证书，可以从阿里云控制台获取（因为我租用的是阿里云服务器）。
+
+   3. 拷贝证书至nginx
+   
+      domain为个人域名。
+   
+      ```bash
+   mkdir -p /etc/nginx/ssl
+      
+   acme.sh --install-cert -d domain \
+      --key-file       /etc/nginx/ssl/domain.key  \
+      --fullchain-file /etc/nginx/ssl/domain.cer \
+      --reloadcmd     "service nginx force-reload"
+      ```
+   
+6. 配置nginx
+
+   删除**/etc/nginx/nginx.conf**中的server部分代码
+
+   ```markdown
+   server{
+   ...
+   }
+   ```
+
+   在**/etc/nginx/conf.d**创建自定义配置文件夹**default.conf**
+
+   ```properties
+   server {
+       listen 80;
+       listen 443 ssl;
+       server_name  domain www.domain;
+       location / {
+            root /usr/share/nginx/html;
+            index  index.html index.htm;
+        }
+   
+       ssl_certificate /etc/nginx/ssl/domain.crt;
+       ssl_certificate_key /etc/nginx/ssl/domain.key;
+       ssl_session_timeout  5m;
+       ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+       ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4:!DH:!DHE;
+       ssl_prefer_server_ciphers  on;
+   
+       error_page 497  https://$host$uri?$args;
+   }
+   ```
+   
+
+   
+
+   
