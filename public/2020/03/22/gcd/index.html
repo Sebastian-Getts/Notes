@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="Sebastian Getts">
 <meta property="og:description" content="Greatest common divisor, 最大公约数。聊聊辗转相除法以及它的应用。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-22T16:00:12.678Z">
+<meta property="og:updated_time" content="2020-03-28T05:19:07.240Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2020/03/22/gcd/">
@@ -229,7 +229,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-23 00:00:12" itemprop="dateModified" datetime="2020-03-23T00:00:12+08:00">2020-03-23</time>
+                <time title="Modified: 2020-03-28 13:19:07" itemprop="dateModified" datetime="2020-03-28T13:19:07+08:00">2020-03-28</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -308,13 +308,17 @@
 </tr>
 </tbody></table>
 <p>&#x6700;&#x540E;&#x9664;&#x6570;&#x4E3A;8&#x65F6;&#x4F59;&#x6570;&#x4E3A;0&#xFF0C;&#x6240;&#x4EE5;&#x6700;&#x5927;&#x516C;&#x7EA6;&#x6570;&#x4E3A;8.</p>
-<p><strong>&#x8BC1;&#x660E;&#xFF1A;</strong></p>
-<p><strong>&#x8BBE;d|a&#xFF0C;&#x4E14;d|b&#xFF0C;&#x4F59;&#x6570;r=a-bk&#xFF08;k&#x662F;&#x6574;&#x6570;&#xFF09;=&gt; d|r.</strong></p>
-<p>d&#x662F;a&#x7684;&#x7EA6;&#x6570;&#xFF0C;d&#x4E5F;&#x662F;b&#x7684;&#x7EA6;&#x6570;&#xFF0C;&#x8BF4;&#x660E;a&#x3001;b&#x90FD;&#x80FD;&#x6574;&#x9664;&#x4EE5;d&#x5F97;&#x51FA;&#x4E00;&#x4E2A;&#x6574;&#x6570;&#xFF0C;&#x6240;&#x4EE5;d&#x662F;a&#x3001;b&#x7684;&#x516C;&#x7EA6;&#x6570;&#xFF0C;&#x6700;&#x5927;&#x7684;d&#x5C31;&#x662F;&#x8981;&#x6C42;&#x7684;&#x6700;&#x5927;&#x516C;&#x7EA6;&#x6570;&#x3002;&#x53EF;&#x4EE5;&#x5BF9;&#x9664;&#x6CD5;&#x7B49;&#x5F0F;&#x505A;&#x4E2A;&#x53D8;&#x5F62;&#xFF0C;&#x5BF9;&#x4E8E;&#x4E0A;&#x9762;&#x7684;&#x4F59;&#x6570;r&#xFF0C;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A;&#x201C;&#x4F59;&#x6570;24&#x7B49;&#x4E8E;104&#x51CF;&#x53BB;40&#x4E58;&#x4EE5;2&#x201D;&#x3002;&#x800C;a&#x662F;d&#x7684;&#x500D;&#x6570;&#xFF0C;b&#x4E5F;&#x662F;d&#x7684;&#x500D;&#x6570;&#xFF0C;bk&#x4E5F;&#x662F;d&#x7684;&#x500D;&#x6570;&#xFF0C;&#x6240;&#x4EE5;&#xFF08;a-bk&#xFF09;&#x4E5F;&#x662F;d&#x7684;&#x500D;&#x6570;&#xFF0C;&#x90A3;&#x4E48;&#xFF0C;&#x5982;&#x679C;d&#x662F;a&#x3001;b&#x7684;&#x516C;&#x7EA6;&#x6570;&#xFF0C;&#x4E5F;&#x4E00;&#x5B9A;&#x662F;b&#x3001;r&#x7684;&#x516C;&#x7EA6;&#x6570;&#x3002;</p>
-<p>&#x7528;&#xFF08;a&#xFF0C;b&#xFF09;&#x8868;&#x793A;a&#x548C;b&#x7684;&#x6700;&#x5927;&#x516C;&#x7EA6;&#x6570;&#xFF0C;&#x5219;&#x6709;&#xFF1A;&#xFF08;a&#xFF0C;b&#xFF09;=&#xFF08;b&#xFF0C;r&#xFF09;&#x3002;&#x5176;&#x4E2D;a=&#x88AB;&#xFF0C;b=&#x9664;&#xFF0C;r=&#x4F59;&#x3002;</p>
-<p>(104, 40) = (40,24) = (24, 16) = (16, 8) = 8.</p>
-<p><strong>&#x8BBE;d&#x662F;b&#x548C;r&#x7684;&#x516C;&#x56E0;&#x6570;&#xFF0C;&#x5219;d|r&#x4E14;d|b&#xFF0C;&#x4F59;&#x6570;&#xFF0C;d|(bk+r)=&gt;d|a&#x3002;&#x3002;d&#x662F;a&#x3001;b&#x7684;&#x516C;&#x56E0;&#x6570;&#x3002;</strong></p>
-<p>&#x7EFC;&#x4E0A;&#xFF0C;a&#x3001;b&#x7684;&#x6240;&#x6709;&#x516C;&#x56E0;&#x6570;&#x548C;b&#x3001;r&#x7684;&#x6240;&#x6709;&#x516C;&#x56E0;&#x6570;&#x662F;&#x4E00;&#x6837;&#x7684;&#xFF0C;&#x90A3;&#x4E48;&#x6700;&#x5927;&#x516C;&#x56E0;&#x6570;&#x4E5F;&#x76F8;&#x540C;&#x3002;</p>
+<p><strong>&#x8BC1;&#x660E;</strong>:</p>
+<p>&#x6709;a=bk+r</p>
+<ol>
+<li>&#x8BBE;d&#x662F;a&#x548C;b&#x7684;&#x516C;&#x56E0;&#x6570;&#xFF0C;&#x53EF;&#x4EE5;&#x5199;&#x4E3A;<code>d|a&#x4E14;d|b</code>&#xFF0C;a=dx, b=dy&#xFF1B;&#x5E26;&#x5165;&#x4E0A;&#x5F0F;&#xFF0C;&#x6709;dx=dyk+r&#xFF0C;r=d(x-yk)&#xFF0C;&#x6240;&#x4EE5;<code>d|r</code></li>
+<li>&#x8BBE;d&#x662F;b&#x548C;r&#x7684;&#x516C;&#x56E0;&#x6570;&#xFF0C;&#x53EF;&#x4EE5;&#x5199;&#x4E3A;<code>d|r&#x4E14;d|b</code>&#xFF0C;r=dx, b=dy&#xFF1B;&#x5E26;&#x5165;&#x4E0A;&#x5F0F;&#xFF0C;&#x6709;a=dyk+dx&#xFF0C;a=d(yk+x)&#xFF0C;&#x6240;&#x4EE5;<code>d|a</code></li>
+</ol>
+<p>&#x7EFC;&#x4E0A;&#xFF0C;d&#x662F;a&#x3001;b&#x7684;&#x516C;&#x56E0;&#x6570;&#x7684;&#x60C5;&#x51B5;&#xFF0C;&#x53EF;&#x4EE5;&#x63A8;&#x51FA;d&#x662F;r&#x7684;&#x516C;&#x56E0;&#x6570;&#xFF1B;d&#x662F;b&#x3001;r&#x7684;&#x516C;&#x56E0;&#x6570;&#xFF0C;&#x53EF;&#x4EE5;&#x63A8;&#x51FA;d&#x662F;a&#x3001;b&#x7684;&#x516C;&#x56E0;&#x6570;&#xFF0C;&#x6240;&#x4EE5;a&#x3001;b&#x7684;&#x6240;&#x6709;&#x516C;&#x56E0;&#x6570;&#x548C;b&#x3001;r&#x7684;&#x6240;&#x6709;&#x516C;&#x56E0;&#x6570;&#x662F;&#x76F8;&#x540C;&#x7684;&#xFF0C;&#x90A3;&#x4E48;d&#x662F;a&#x3001;b&#x7684;&#x6700;&#x5927;&#x516C;&#x56E0;&#x6570;&#xFF0C;&#x81EA;&#x7136;&#x4E5F;&#x662F;b&#x3001;r&#x7684;&#x6700;&#x5927;&#x516C;&#x56E0;&#x6570;&#x3002;</p>
+<div class="note info">
+            <p>&#x516C;&#x56E0;&#x6570;&#x96C6;&#x76F8;&#x7B49;&#xFF0C;&#x81EA;&#x7136;&#xFF0C;&#x96C6;&#x5408;&#x91CC;&#x7684;&#x6700;&#x5927;&#x503C;&#x4E5F;&#x662F;&#x76F8;&#x7B49;&#x7684;&#x3002;</p>
+          </div>
+
 <h1 id="&#x5927;&#x6570;&#x7684;&#x8D28;&#x56E0;&#x6570;&#x5206;&#x89E3;"><a href="#&#x5927;&#x6570;&#x7684;&#x8D28;&#x56E0;&#x6570;&#x5206;&#x89E3;" class="headerlink" title="&#x5927;&#x6570;&#x7684;&#x8D28;&#x56E0;&#x6570;&#x5206;&#x89E3;"></a>&#x5927;&#x6570;&#x7684;&#x8D28;&#x56E0;&#x6570;&#x5206;&#x89E3;</h1><h2 id="RSA&#x7B97;&#x6CD5;"><a href="#RSA&#x7B97;&#x6CD5;" class="headerlink" title="RSA&#x7B97;&#x6CD5;"></a>RSA&#x7B97;&#x6CD5;</h2>
     </div>
 
@@ -373,6 +377,9 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+                <a href="/2020/03/28/springAOP/" rel="prev" title="springAOP">
+                  springAOP <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
       </footer>
@@ -426,20 +433,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">41</span>
+          <span class="site-state-item-count">40</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">categories</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">39</span>
+        <span class="site-state-item-count">37</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

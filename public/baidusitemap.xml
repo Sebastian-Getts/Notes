@@ -1,8 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://yoursite.com/2020/03/28/springAOP/</loc>
+    <lastmod>2020-03-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2019/12/01/Junit/</loc>
+    <lastmod>2020-03-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2020/01/04/webservice/</loc>
+    <lastmod>2020-03-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2019/10/31/bat/</loc>
+    <lastmod>2020-03-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2020/01/12/uml/</loc>
+    <lastmod>2020-03-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2019/11/13/thymeleaf01/</loc>
+    <lastmod>2020-03-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2020/01/05/vim/</loc>
+    <lastmod>2020-03-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2020/02/23/graph/</loc>
+    <lastmod>2020-03-28</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2020/03/14/https/</loc>
+    <lastmod>2020-03-28</lastmod>
+  </url>  <url>
     <loc>http://yoursite.com/2020/03/22/gcd/</loc>
-    <lastmod>2020-03-22</lastmod>
+    <lastmod>2020-03-28</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2020/03/18/kmp/</loc>
     <lastmod>2020-03-22</lastmod>
@@ -19,16 +46,10 @@
     <loc>http://yoursite.com/2019/12/03/kafka/</loc>
     <lastmod>2020-03-15</lastmod>
   </url>  <url>
-    <loc>http://yoursite.com/2020/03/14/https/</loc>
-    <lastmod>2020-03-14</lastmod>
-  </url>  <url>
     <loc>http://yoursite.com/2019/11/28/restful/</loc>
     <lastmod>2020-03-06</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2019/11/02/messy_code/</loc>
-    <lastmod>2020-03-05</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/2020/01/04/webservice/</loc>
     <lastmod>2020-03-05</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2020/01/19/vue06/</loc>
@@ -49,19 +70,7 @@
     <loc>http://yoursite.com/2020/01/17/vue01/</loc>
     <lastmod>2020-03-05</lastmod>
   </url>  <url>
-    <loc>http://yoursite.com/2020/01/05/vim/</loc>
-    <lastmod>2020-03-05</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/2020/01/11/urlToPage/</loc>
-    <lastmod>2020-03-05</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/2020/01/12/uml/</loc>
-    <lastmod>2020-03-05</lastmod>
-  </url>  <url>
     <loc>http://yoursite.com/2020/02/22/tree/</loc>
-    <lastmod>2020-03-05</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/2019/11/13/thymeleaf01/</loc>
     <lastmod>2020-03-05</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2019/12/08/tensorflow02/</loc>
@@ -88,13 +97,7 @@
     <loc>http://yoursite.com/2020/01/11/lcoaldatetime/</loc>
     <lastmod>2020-03-05</lastmod>
   </url>  <url>
-    <loc>http://yoursite.com/2019/12/01/Junit/</loc>
-    <lastmod>2020-03-05</lastmod>
-  </url>  <url>
     <loc>http://yoursite.com/2020/01/04/javaDataSttructure/</loc>
-    <lastmod>2020-03-05</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/2020/02/23/graph/</loc>
     <lastmod>2020-03-05</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2019/11/09/container/</loc>
@@ -109,17 +112,11 @@
     <loc>http://yoursite.com/2019/11/17/bt03/</loc>
     <lastmod>2020-03-05</lastmod>
   </url>  <url>
-    <loc>http://yoursite.com/2019/10/31/bat/</loc>
-    <lastmod>2020-03-05</lastmod>
-  </url>  <url>
     <loc>http://yoursite.com/2019/11/18/javaFX/</loc>
     <lastmod>2020-03-05</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2019/11/04/Pascal-s-Triangle/</loc>
     <lastmod>2020-02-22</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/2019/11/03/preface/</loc>
-    <lastmod>2019-11-02</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2019/12/13/hello-world/</loc>
     <lastmod>2019-10-29</lastmod>

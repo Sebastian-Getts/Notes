@@ -1,7 +1,7 @@
 ---
 title: thymeleaf01
 date: 2019-11-13 22:25:42
-categories: Thymeleaf
+categories: Utils
 tags:
 - springboot
 - thymeleaf
