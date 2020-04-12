@@ -2,7 +2,9 @@
 title: static_final
 date: 2020-04-12 16:19:56
 categories: Java
-tags:[static][final]
+tags:
+- static
+- final
 ---
 
 Java的关键字static, final，以及部分jvm的内容。
