@@ -11,17 +11,63 @@ associate with juc
 
 # 类加载器
 
-经过javac编译后，形成的xxx.class文件存在电脑硬盘上，通过类加载器装进JVM并初始化为xxx.Class文件。
+经过javac编译后，形成的xxx.class文件存在电脑硬盘上，通过类加载器装进JVM并初始化为xxx.Class文件。只负责加载class文件，将之装载后成为Class文件，放进方法区。
+
+> Car.class -> Class Loader -> Car Class -> car1/car2/car3
+
+Car Class是后面car1、car2、car3的模板，后面的三个car也是实例化的产物。
 
 ## 种类
 
+### 启动类加载器（Bootstrap）
+
+由C++编写，默认加载一些编写程序比用的东西，比如Object, ArrayList, String等。
+
+### 扩展类加载器（Extension）
+
+Java编写，除了启动类加载器加载核心的东西外，还需要Extension加载入javax等java扩展类。
+
+### 应用程序类加载器（AppClassLoader）
+
+我们编写程序时定义的类所用的加载器
+
+### 用户自定义加载器
+
+定制话开发，不走默认的类加载顺序时，可以继承ClassLoader（抽象）。
+
 ## 双亲委派
+
+比如如果需要使用A.java类，需要先去顶部Bootstrap寻找，找不到的话去Extension找，还没有的话去Application中找，还没有的话抛异常。
+
+```java
+public class String{
+    public static void main(String[] args){
+        System.out.println("hello world!");
+    }
+}
+```
+
+> 在类java.lang.String中找不到main方法。因为先从Bootstrap中寻找。
 
 ## 沙箱安全机制
 
-## Native
+**note**: 保证个人编写的代码不污染出厂的jdk代码，并且不同类中使用的Object都是相同的。
 
-只是一个关键字。只有声明，没有实现，调用了底层C语言的实现。
+## 本地方法接口（Native Interface）
+
+融合不同的编程语言为Java所用（即C/C++），在内存中专门开辟了一块区域处理标记为native的代码。目前该方法使用的越来越少了，除非是与硬件相关的应用，如通过java驱动打印机，企业级应用少见。
+
+异构领域间通信发达，Socket通信或webService。
+
+### Native
+
+只是一个关键字。只有声明，没有实现，标记需要调用底层C语言函数库或系统。
+
+### 本地方法栈
+
+装native方法的栈。登记native方法，在Execution Engine执行时加载本地方法库。
+
+## 
 
 # PC寄存器
 
@@ -147,6 +193,39 @@ public static void main(String[] args){
 ```
 
 **note:** 生产中会将最高值与最低值设置的一样大，避免应用程序争抢内存，产生峰谷。
+
+> -XX:MaxTenuringThreshold 设置对象在新生代中存活的次数（java8默认且最高15）
+
+# GC
+
+- minor GC
+- major/full GC
+
+major GC的速度比minor GC慢得多（考虑下young区和old区的大小比）。
+
+## 垃圾回收算法
+
+分代收集，根据各个代来使用
+
+### 引用计数法
+
+每次引用对象时会维护计数器，每次引用的时候会加1,如果是0的话会被回收，但是大量的计数器也会有消耗。最大的弊端还是循环引用。JVM一般不会用这种。
+
+### 复制算法（Copying）
+
+Minor GC使用的就是Copying。不会产生内存碎片，但是会耗费空间。
+
+因为存活率都很低，复制也没啥。
+
+### 标记清除法（Mark-Sweep）
+
+Major GC使用的是Mark-Sweep，或者与下面的Mark-Compact混合实现。分为标记和清除两个阶段，先标记要回收的，然或再统一回收这些对象。对比上面的，没有复制-粘贴-清除，而是标记后清除，但是造成了内存碎片话（内存不连续），也没有Copying速度快（找出标记的需要进行扫描）。JVM为了空闲的内存还需要维持一个内存的空闲列表，又是一种开销。
+
+### 标记压缩（Mark-Compact）
+
+Mark-Sweep-Compact，标记清除压缩算法，比上面的多了一步整理的过程（不会产生内存碎片），显然时间上消耗更多了（慢工出细活），多了移动对象的时间。
+
+也可以派生出另一种：多次GC后才进行压缩，减少移动对象的时间。
 
 # JMM
 

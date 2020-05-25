@@ -256,7 +256,6 @@
       
         <p>summary vim skills from vim official tutor</p>
 <a id="more"></a>
-
 <h1 id="Lesson-1-2"><a href="#Lesson-1-2" class="headerlink" title="Lesson 1, 2"></a>Lesson 1, 2</h1><ul>
 <li><p>to insert or append text type:</p>
 <p>i    type inserted text: insert before the cursor</p>
@@ -268,8 +267,7 @@
 </li>
 <li><p>type <code>d$</code> to delete to the end of the line</p>
 </li>
-<li><p>many commands that change are made from an operator and a motion, a short list of motions:</p>
-<ul>
+<li>many commands that change are made from an operator and a motion, a short list of motions:<ul>
 <li>w - until the start of the next word, EXCLUDING its first character.</li>
 <li>e - to the end of the current word, INCLUDING the last character.</li>
 <li>$ - to the end of the line, INCLUDING the last character.</li>
@@ -310,7 +308,6 @@
 </li>
 <li><p>The format for change is:</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">c  [number]  motion</span><br></pre></td></tr></table></figure>
-
 </li>
 </ol>
 <hr>
@@ -332,10 +329,10 @@
 <li><p>Typing <code>%</code> while the cursor is on a (, ), [, ], {, or } goes to its match.</p>
 </li>
 <li><p>To substitute new for the first old in a line type <code>:s/old/new</code></p>
-<p>To substitute new for all &apos;old&#x2019;s on a line type <code>:s/old/new/g</code></p>
+<p>To substitute new for all \&#x2019;old&#x2019;s on a line type <code>:s/old/new/g</code></p>
 <p>To substitute phrases between two line #&#x2019;s type <code>:s/#,#s/old/new/g</code></p>
 <p>To substitute all occurrences in the file type <code>:%s/old/new/g</code></p>
-<p>To ask for confirmation each time add &apos;c&#x2019; :<code>%s/old/new/gc</code></p>
+<p>To ask for confirmation each time add \&#x2019;c&#x2019; :<code>%s/old/new/gc</code></p>
 <p>note: &#x2018;g&#x2019; means <em>global</em></p>
 <hr>
 </li>

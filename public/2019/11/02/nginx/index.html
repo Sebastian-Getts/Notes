@@ -285,11 +285,10 @@
 </li>
 <li><p>&#x5B89;&#x88C5;nginx</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum instll -y nginx</span><br></pre></td></tr></table></figure>
-
 <p>&#x5B89;&#x88C5;&#x6210;&#x529F;&#x540E;&#xFF1A;</p>
-<p><code>&#x9ED8;&#x8BA4;&#x7F51;&#x7AD9;&#x76EE;&#x5F55;</code>&#xFF1A;<em>/usr/share/nginx/html</em></p>
-<p><code>&#x9ED8;&#x8BA4;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E3A;</code>&#xFF1A;<em>/etc/nginx/nginx.conf</em></p>
-<p><code>&#x81EA;&#x5B9A;&#x4E49;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x76EE;&#x5F55;&#x4E3A;</code>&#xFF1A;<em>/etc/nginx/conf.d/</em></p>
+<p><code>&#x9ED8;&#x8BA4;&#x7F51;&#x7AD9;&#x76EE;&#x5F55;</code>&#xFF1A;_/usr/share/nginx/html_</p>
+<p><code>&#x9ED8;&#x8BA4;&#x7684;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E3A;</code>&#xFF1A;_/etc/nginx/nginx.conf_</p>
+<p><code>&#x81EA;&#x5B9A;&#x4E49;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x76EE;&#x5F55;&#x4E3A;</code>&#xFF1A;_/etc/nginx/conf.d/_</p>
 </li>
 <li><p>&#x5F00;&#x542F;&#x7AEF;&#x53E3;80&#x548C;443</p>
 <p>&#x5982;&#x679C;&#x5173;&#x95ED;&#x4E86;&#x9632;&#x706B;&#x5899;&#xFF0C;&#x76F4;&#x63A5;&#x7565;&#x8FC7;&#x3002;</p>
@@ -311,14 +310,9 @@
 </li>
 <li><p>&#x542F;&#x7528;&#x5F00;&#x673A;&#x542F;&#x52A8;</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> nginx</span><br></pre></td></tr></table></figure>
-
 <p>&#x6D4B;&#x8BD5;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x76F4;&#x63A5;<code>nginx</code>&#x547D;&#x4EE4;&#x5373;&#x53EF;&#xFF0C;&#x65B9;&#x4FBF;&#x8C03;&#x8BD5;&#xFF0C;&#x8C03;&#x8BD5;&#x65F6;&#x4F7F;&#x7528;&#xFF1A;</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -t</span><br></pre></td></tr></table></figure>
-
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -s reload</span><br></pre></td></tr></table></figure>
-
-
-
 </li>
 </ul>
 </li>
@@ -326,10 +320,9 @@
 <ul>
 <li><p>&#x7981;&#x6B62;&#x5F00;&#x673A;&#x542F;&#x52A8;</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl disbale nginx</span><br></pre></td></tr></table></figure>
-
 </li>
 </ul>
-<ol start="5">
+<ol>
 <li><p>https</p>
 <ol>
 <li><p>&#x5173;&#x4E8E;https&#x7684;&#x76F8;&#x5173;&#x8BC1;&#x4E66;&#xFF0C;&#x53EF;&#x4EE5;&#x4ECE;&#x963F;&#x91CC;&#x4E91;&#x63A7;&#x5236;&#x53F0;&#x83B7;&#x53D6;&#xFF08;&#x56E0;&#x4E3A;&#x6211;&#x79DF;&#x7528;&#x7684;&#x662F;&#x963F;&#x91CC;&#x4E91;&#x670D;&#x52A1;&#x5668;&#xFF09;&#x3002;</p>
@@ -343,14 +336,8 @@
 <li><p>&#x914D;&#x7F6E;nginx</p>
 <p>&#x5220;&#x9664;<strong>/etc/nginx/nginx.conf</strong>&#x4E2D;&#x7684;server&#x90E8;&#x5206;&#x4EE3;&#x7801;</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">server{</span><br><span class="line">...</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
-
 <p>&#x5728;<strong>/etc/nginx/conf.d</strong>&#x521B;&#x5EFA;&#x81EA;&#x5B9A;&#x4E49;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x5939;<strong>default.conf</strong></p>
 <figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server</span> <span class="string">{</span></span><br><span class="line">    <span class="attr">listen</span> <span class="string">80;</span></span><br><span class="line">    <span class="attr">listen</span> <span class="string">443 ssl;</span></span><br><span class="line">    <span class="attr">server_name</span>  <span class="string">domain www.domain;</span></span><br><span class="line">    <span class="attr">location</span> <span class="string">/ {</span></span><br><span class="line">         <span class="attr">root</span> <span class="string">/usr/share/nginx/html;</span></span><br><span class="line">         <span class="attr">index</span>  <span class="string">index.html index.htm;</span></span><br><span class="line">     <span class="attr">}</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">ssl_certificate</span> <span class="string">/etc/nginx/ssl/domain.crt;</span></span><br><span class="line">    <span class="attr">ssl_certificate_key</span> <span class="string">/etc/nginx/ssl/domain.key;</span></span><br><span class="line">    <span class="attr">ssl_session_timeout</span>  <span class="string">5m;</span></span><br><span class="line">    <span class="attr">ssl_protocols</span> <span class="string">TLSv1 TLSv1.1 TLSv1.2;</span></span><br><span class="line">    <span class="attr">ssl_ciphers</span> <span class="string">ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4:!DH:!DHE;</span></span><br><span class="line">    <span class="attr">ssl_prefer_server_ciphers</span>  <span class="string">on;</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">error_page</span> <span class="string">497  https://$host$uri?$args;</span></span><br><span class="line"><span class="attr">}</span></span><br></pre></td></tr></table></figure>
-
-
-
-
-
 </li>
 </ol>
 
