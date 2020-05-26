@@ -33,7 +33,7 @@ Java编写，除了启动类加载器加载核心的东西外，还需要Extensi
 
 ### 用户自定义加载器
 
-定制话开发，不走默认的类加载顺序时，可以继承ClassLoader（抽象）。
+定制化开发，不走默认的类加载顺序时，可以继承ClassLoader（抽象）。
 
 ## 双亲委派
 
@@ -66,8 +66,6 @@ public class String{
 ### 本地方法栈
 
 装native方法的栈。登记native方法，在Execution Engine执行时加载本地方法库。
-
-## 
 
 # PC寄存器
 
