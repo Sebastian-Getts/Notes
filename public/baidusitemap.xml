@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://yoursite.com/2020/06/01/regex/</loc>
+    <lastmod>2020-06-01</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2020/06/01/bitwise/</loc>
+    <lastmod>2020-06-01</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2020/03/28/springAOP/</loc>
+    <lastmod>2020-05-31</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2020/05/30/elasticSearch/</loc>
+    <lastmod>2020-05-30</lastmod>
+  </url>  <url>
     <loc>http://yoursite.com/2020/05/27/annotation/</loc>
     <lastmod>2020-05-26</lastmod>
   </url>  <url>
@@ -18,9 +30,6 @@
   </url>  <url>
     <loc>http://yoursite.com/2020/03/29/oAuth2/</loc>
     <lastmod>2020-03-29</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/2020/03/28/springAOP/</loc>
-    <lastmod>2020-03-28</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2019/12/01/Junit/</loc>
     <lastmod>2020-03-28</lastmod>

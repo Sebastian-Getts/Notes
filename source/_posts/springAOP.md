@@ -17,7 +17,7 @@ AOP, 切面。聊聊几个通知。
 
 AOP中的刀不像是切蛋糕那样最终把蛋糕送入口中，它的实际工序会更多。比如送入口中可能是最后一步，在这之前也许会统一撒点肉松、统一加热之类的。虽然有点奇怪。
 
-Spring的命名是让人通俗易懂的，也可以理解为你的英语水平够用。诸如*@Before*, *@After*...之类的一眼扫过去就能知道它的作用。目前用到的有5个：@Before, @After, @AfterReturning, @AfterThrowing和@Around。他们都不是直接标注就可以使用，而是**需要指要作用的方法**。
+Spring的命名是让人通俗易懂的，也可以理解为你的英语水平够用。诸如*@Before*, *@After*...之类的一眼扫过去就能知道它的作用。目前用到的有5个：l@Before, @After, @AfterReturning, @AfterThrowing和@Around。他们都不是直接标注就可以使用，而是**需要指要作用的方法**。
 
 由于作用的目标方法大多相同，因此还可以提取公共的路径。
 
@@ -122,3 +122,5 @@ public Object logAround(ProceedingJoinPoint proceedingJoinPoint) {
 - 在配置类上开启注解的aop模式（ **@EnableAspectJAutoProxy**）。
 
 # 源码
+
+## @EnableAspectJAutoProxy

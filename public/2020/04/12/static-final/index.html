@@ -250,9 +250,9 @@
       
         <p>Java&#x7684;&#x5173;&#x952E;&#x5B57;static, final&#xFF0C;&#x4EE5;&#x53CA;&#x90E8;&#x5206;jvm&#x7684;&#x5185;&#x5BB9;&#x3002;</p>
 <a id="more"></a>
+
 <h1 id="final"><a href="#final" class="headerlink" title="final"></a>final</h1><p>&#x5148;&#x8BF4;&#x8BF4;final&#x7684;&#x4F4D;&#x7F6E;&#xFF0C;&#x5B83;&#x53EF;&#x4EE5;&#x6807;&#x6CE8;&#x5728;<strong>&#x7C7B;</strong>&#x4E0A;&#x3001;<strong>&#x65B9;&#x6CD5;</strong>&#x4E0A;&#x4EE5;&#x53CA;<strong>&#x53D8;&#x91CF;</strong>&#x4E0A;&#xFF0C;&#x4E14;&#x53D8;&#x91CF;&#x90E8;&#x5206;&#x5B9E;&#x4F8B;&#x548C;&#x5C40;&#x90E8;&#x3002;</p>
 <p>&#x7B80;&#x5355;&#x6765;&#x8BF4;&#xFF0C;final&#x7684;&#x4F5C;&#x7528;&#x5C31;&#x662F;&#x4EE4;&#x5176;&#x552F;&#x4E00;&#x3002;</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -260,8 +260,7 @@
 <th>influence</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>&#x7C7B;</td>
 <td>&#x4E0D;&#x80FD;&#x88AB;&#x7EE7;&#x627F;</td>
 </tr>
@@ -273,12 +272,11 @@
 <td>&#x53D8;&#x91CF;</td>
 <td>&#x4E0D;&#x80FD;&#x518D;&#x88AB;&#x66F4;&#x6539;</td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 <h1 id="static"><a href="#static" class="headerlink" title="static"></a>static</h1><p>&#x540C;&#x4E0A;&#xFF0C;&#x4ED6;&#x7684;&#x4F4D;&#x7F6E;&#x4E5F;&#x662F;&#x591A;&#x6837;&#x7684;&#x3002;&#x53EF;&#x4EE5;&#x6807;&#x6CE8;&#x5728;<strong>&#x65B9;&#x6CD5;</strong>&#x4E0A;&#x548C;<strong>&#x53D8;&#x91CF;</strong>&#x4E0A;&#x3002;</p>
 <p>&#x9759;&#x6001;&#xFF0C;&#x4E0D;&#x53D7;&#x5B9E;&#x4F8B;&#x7684;&#x5F71;&#x54CD;&#xFF1A;&#x4F8B;&#x5982; Math.max(a, b)&#xFF0C;&#x8F93;&#x51FA;&#x7684;&#x7ED3;&#x679C;&#x53EA;&#x8DDF;&#x8C03;&#x7528;&#x65B9;&#x4F20;&#x5165;&#x7684;a&#x3001;b&#x7684;&#x503C;&#x6709;&#x5173;&#xFF0C;&#x4E0E;Math&#x7684;&#x5B9E;&#x4F8B;&#x65E0;&#x5173;&#x3002;</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyBook</span></span>{</span><br><span class="line">    <span class="keyword">double</span> price;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>{</span><br><span class="line">        <span class="comment">//&#x4F1A;&#x62A5;&#x544A;&#x5F02;&#x5E38;&#xFF0C;&#x9759;&#x6001;&#x65B9;&#x6CD5;&#x4E2D;&#x4E0D;&#x80FD;&#x4F7F;&#x7528;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#xFF0C;&#x5BF9;&#x4ED6;&#x6765;&#x8BF4;&#x662F;&#x672A;&#x77E5;&#x7684;&#x3002;</span></span><br><span class="line">        System.out.println(price);</span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setPrice</span><span class="params">(<span class="keyword">double</span> price)</span></span>{</span><br><span class="line">        <span class="keyword">this</span>.price = price;</span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">float</span> <span class="title">getPrice</span><span class="params">()</span></span>{</span><br><span class="line">        <span class="keyword">return</span> pricce;</span><br><span class="line">    }</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">float</span> <span class="title">sellingPrice</span><span class="params">()</span></span>{</span><br><span class="line">        <span class="keyword">int</span> bookPrice = <span class="number">2</span>/<span class="number">3</span> * price;</span><br><span class="line">        <span class="keyword">return</span> bookPrice;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
 <p>&#x5982;&#x4E0A;&#x4F8B;&#x6240;&#x793A;&#xFF0C;&#x7531;&#x4E8E;&#x9759;&#x6001;&#x65B9;&#x6CD5;&#x662F;&#x76F4;&#x63A5;&#x7528;&#x7C7B;&#x540D;&#x6765;&#x5F15;&#x7528;&#x7684;&#xFF0C;&#x6240;&#x4EE5;<strong>&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;</strong>&#x5BF9;&#x4E8E;&#x5B83;&#x6765;&#x8BF4;&#x662F;&#x672A;&#x77E5;&#x7684;&#x3002;&#x90A3;&#x4E48;&#xFF0C;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x662F;&#x8C01;&#x53EF;&#x77E5;&#x3001;&#x53C8;&#x5982;&#x4F55;&#x53EF;&#x77E5;&#x7684;&#x5462;&#xFF1F;</p>
 <h2 id="&#x53D8;&#x91CF;"><a href="#&#x53D8;&#x91CF;" class="headerlink" title="&#x53D8;&#x91CF;"></a>&#x53D8;&#x91CF;</h2><p>&#x53D8;&#x91CF;&#x6309;&#x7167;&#x4E0D;&#x540C;&#x7684;&#x5206;&#x7C7B;&#x53EF;&#x4EE5;&#x7528;&#x4E0D;&#x540C;&#x7684;&#x5206;&#x6CD5;&#x3002;</p>
 <p>&#x6309;&#x7167;&#x4F4D;&#x7F6E;&#x5206;&#x7C7B;&#xFF0C;&#x53EF;&#x4EE5;&#x6709;&#x5C40;&#x90E8;&#x53D8;&#x91CF;&#x548C;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#xFF1B;&#x6309;&#x7167;&#x7C7B;&#x578B;&#x53C8;&#x53EF;&#x4EE5;&#x6709;&#x539F;&#x59CB;&#x53D8;&#x91CF;&#x548C;&#x5F15;&#x7528;&#x53D8;&#x91CF;&#x3002;</p>
@@ -410,7 +408,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -423,7 +421,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

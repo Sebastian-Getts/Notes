@@ -2,6 +2,34 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2020/06/01/regex/</loc>
+    
+    <lastmod>2020-06-01T15:45:59.356Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/06/01/bitwise/</loc>
+    
+    <lastmod>2020-06-01T15:39:06.398Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/03/28/springAOP/</loc>
+    
+    <lastmod>2020-05-31T07:08:54.261Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/05/30/elasticSearch/</loc>
+    
+    <lastmod>2020-05-30T12:42:30.705Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2020/05/27/annotation/</loc>
     
     <lastmod>2020-05-26T17:24:38.262Z</lastmod>
@@ -40,13 +68,6 @@
     <loc>http://yoursite.com/2020/03/29/oAuth2/</loc>
     
     <lastmod>2020-03-29T01:32:10.663Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2020/03/28/springAOP/</loc>
-    
-    <lastmod>2020-03-28T09:20:00.267Z</lastmod>
     
   </url>
   

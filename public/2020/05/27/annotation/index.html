@@ -250,6 +250,7 @@
       
         <p>Introduction of Java annotation</p>
 <a id="more"></a>
+
 <h1 id="Reflection"><a href="#Reflection" class="headerlink" title="Reflection"></a>Reflection</h1><p>&#x5728;&#x7A0B;&#x5E8F;&#x6267;&#x884C;&#x671F;&#x95F4;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;Reflection API&#x53D6;&#x5F97;&#x4EFB;&#x4F55;&#x7C7B;&#x7684;&#x5185;&#x90E8;&#x4FE1;&#x606F;&#xFF0C;&#x5E76;&#x80FD;&#x76F4;&#x63A5;&#x64CD;&#x4F5C;&#x4EFB;&#x610F;&#x5BF9;&#x8C61;&#x7684;&#x5185;&#x90E8;&#x5C5E;&#x6027;&#x53CA;&#x65B9;&#x6CD5;&#x3002;</p>
 <p>Normal: class -&gt; new -&gt; object</p>
 <p>Reflect: object -&gt; getClass() -&gt; class</p>
@@ -271,6 +272,7 @@
 <li>@Inherited &#x8BF4;&#x660E;&#x5B50;&#x7C7B;&#x53EF;&#x4EE5;&#x7EE7;&#x627F;&#x7236;&#x7C7B;&#x7684;&#x8BE5;&#x6CE8;&#x89E3;</li>
 </ul>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Target</span>({ElementTYpe.TYPE,ELementType.METHOD})</span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.RUNTIME)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> MyAnnotation(){</span><br><span class="line">    <span class="function">String <span class="title">name</span><span class="params">()</span> <span class="keyword">default</span> &quot;&quot;</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
 
     </div>
 
@@ -329,6 +331,9 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+                <a href="/2020/05/30/elasticSearch/" rel="prev" title="elasticSearch">
+                  elasticSearch <i class="fa fa-chevron-right"></i>
+                </a>
             </div>
           </div>
       </footer>
@@ -382,7 +387,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -395,7 +400,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

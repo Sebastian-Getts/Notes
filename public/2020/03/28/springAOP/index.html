@@ -61,7 +61,7 @@
 <meta property="og:site_name" content="Sebastian Getts">
 <meta property="og:description" content="AOP, 切面。聊聊几个通知。">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-28T09:20:00.267Z">
+<meta property="og:updated_time" content="2020-05-31T07:08:54.261Z">
 <meta name="twitter:card" content="summary">
 
 <link rel="canonical" href="http://yoursite.com/2020/03/28/springAOP/">
@@ -221,10 +221,16 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
-              
 
-              <time title="Created: 2020-03-28 14:43:58 / Modified: 17:20:00" itemprop="dateCreated datePublished" datetime="2020-03-28T14:43:58+08:00">2020-03-28</time>
+              <time title="Created: 2020-03-28 14:43:58" itemprop="dateCreated datePublished" datetime="2020-03-28T14:43:58+08:00">2020-03-28</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2020-05-31 15:08:54" itemprop="dateModified" datetime="2020-05-31T15:08:54+08:00">2020-05-31</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
@@ -250,32 +256,47 @@
       
         <p>AOP, &#x5207;&#x9762;&#x3002;&#x804A;&#x804A;&#x51E0;&#x4E2A;&#x901A;&#x77E5;&#x3002;</p>
 <a id="more"></a>
+
 <h1 id="&#x7528;&#x9014;"><a href="#&#x7528;&#x9014;" class="headerlink" title="&#x7528;&#x9014;"></a>&#x7528;&#x9014;</h1><p>&#x5982;&#x679C;&#x662F;&#x5403;&#x4E2A;&#x86CB;&#x7CD5;&#xFF0C;&#x4F1A;&#x600E;&#x4E48;&#x5403;&#xFF1F;&#x6709;&#x7684;&#x4EBA;&#x4F1A;&#x4E00;&#x5C42;&#x4E00;&#x5C42;&#x5403;&#xFF0C;&#x5F53;&#x7136;&#x6700;&#x4E0A;&#x9762;&#x662F;&#x5976;&#x6CB9;&#x6216;&#x8005;&#x6C34;&#x679C;&#xFF0C;&#x6700;&#x4E0B;&#x65B9;&#x662F;&#x9762;&#x5305;&#xFF0C;&#x4F46;&#x662F;&#x5927;&#x90E8;&#x5206;&#x4EBA;&#x90FD;&#x4E0D;&#x4F1A;&#x8FD9;&#x4E48;&#x5403;&#xFF0C;&#x4F1A;&#x7528;&#x5200;&#x5C06;&#x86CB;&#x7CD5;&#x5207;&#x5F00;&#xFF0C;&#x5C06;&#x7CC5;&#x5408;&#x4E86;&#x591A;&#x5C42;&#x7684;&#x53EF;&#x53E3;&#x86CB;&#x7CD5;&#x4E00;&#x8D77;&#x9001;&#x5165;&#x53E3;&#x4E2D;&#xFF0C;&#x800C;&#x975E;&#x7B2C;&#x4E00;&#x79CD;&#x5403;&#x6CD5;&#x90A3;&#x6837;&#x6709;&#x5148;&#x540E;&#x987A;&#x5E8F;&#x3002;Spring&#x6846;&#x67B6;&#x4E2D;&#x7684;AOP&#x7684;&#x7528;&#x9014;&#x5C31;&#x597D;&#x6BD4;&#x90A3;&#x628A;&#x5200;&#xFF0C;&#x5C06;&#x5BB9;&#x5668;&#x4E2D;&#x7684;bean&#x6709;&#x4E2A;&#x5B89;&#x6392;&#x3002;</p>
 <h1 id="&#x901A;&#x77E5;"><a href="#&#x901A;&#x77E5;" class="headerlink" title="&#x901A;&#x77E5;"></a>&#x901A;&#x77E5;</h1><p>AOP&#x4E2D;&#x7684;&#x5200;&#x4E0D;&#x50CF;&#x662F;&#x5207;&#x86CB;&#x7CD5;&#x90A3;&#x6837;&#x6700;&#x7EC8;&#x628A;&#x86CB;&#x7CD5;&#x9001;&#x5165;&#x53E3;&#x4E2D;&#xFF0C;&#x5B83;&#x7684;&#x5B9E;&#x9645;&#x5DE5;&#x5E8F;&#x4F1A;&#x66F4;&#x591A;&#x3002;&#x6BD4;&#x5982;&#x9001;&#x5165;&#x53E3;&#x4E2D;&#x53EF;&#x80FD;&#x662F;&#x6700;&#x540E;&#x4E00;&#x6B65;&#xFF0C;&#x5728;&#x8FD9;&#x4E4B;&#x524D;&#x4E5F;&#x8BB8;&#x4F1A;&#x7EDF;&#x4E00;&#x6492;&#x70B9;&#x8089;&#x677E;&#x3001;&#x7EDF;&#x4E00;&#x52A0;&#x70ED;&#x4E4B;&#x7C7B;&#x7684;&#x3002;&#x867D;&#x7136;&#x6709;&#x70B9;&#x5947;&#x602A;&#x3002;</p>
-<p>Spring&#x7684;&#x547D;&#x540D;&#x662F;&#x8BA9;&#x4EBA;&#x901A;&#x4FD7;&#x6613;&#x61C2;&#x7684;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A;&#x4F60;&#x7684;&#x82F1;&#x8BED;&#x6C34;&#x5E73;&#x591F;&#x7528;&#x3002;&#x8BF8;&#x5982;<em>@Before</em>, <em>@After</em>&#x2026;&#x4E4B;&#x7C7B;&#x7684;&#x4E00;&#x773C;&#x626B;&#x8FC7;&#x53BB;&#x5C31;&#x80FD;&#x77E5;&#x9053;&#x5B83;&#x7684;&#x4F5C;&#x7528;&#x3002;&#x76EE;&#x524D;&#x7528;&#x5230;&#x7684;&#x6709;5&#x4E2A;&#xFF1A;@Before, @After, @AfterReturning, @AfterThrowing&#x548C;@Around&#x3002;&#x4ED6;&#x4EEC;&#x90FD;&#x4E0D;&#x662F;&#x76F4;&#x63A5;&#x6807;&#x6CE8;&#x5C31;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#xFF0C;&#x800C;&#x662F;<strong>&#x9700;&#x8981;&#x6307;&#x8981;&#x4F5C;&#x7528;&#x7684;&#x65B9;&#x6CD5;</strong>&#x3002;</p>
+<p>Spring&#x7684;&#x547D;&#x540D;&#x662F;&#x8BA9;&#x4EBA;&#x901A;&#x4FD7;&#x6613;&#x61C2;&#x7684;&#xFF0C;&#x4E5F;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A;&#x4F60;&#x7684;&#x82F1;&#x8BED;&#x6C34;&#x5E73;&#x591F;&#x7528;&#x3002;&#x8BF8;&#x5982;<em>@Before</em>, <em>@After</em>&#x2026;&#x4E4B;&#x7C7B;&#x7684;&#x4E00;&#x773C;&#x626B;&#x8FC7;&#x53BB;&#x5C31;&#x80FD;&#x77E5;&#x9053;&#x5B83;&#x7684;&#x4F5C;&#x7528;&#x3002;&#x76EE;&#x524D;&#x7528;&#x5230;&#x7684;&#x6709;5&#x4E2A;&#xFF1A;l@Before, @After, @AfterReturning, @AfterThrowing&#x548C;@Around&#x3002;&#x4ED6;&#x4EEC;&#x90FD;&#x4E0D;&#x662F;&#x76F4;&#x63A5;&#x6807;&#x6CE8;&#x5C31;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#xFF0C;&#x800C;&#x662F;<strong>&#x9700;&#x8981;&#x6307;&#x8981;&#x4F5C;&#x7528;&#x7684;&#x65B9;&#x6CD5;</strong>&#x3002;</p>
 <p>&#x7531;&#x4E8E;&#x4F5C;&#x7528;&#x7684;&#x76EE;&#x6807;&#x65B9;&#x6CD5;&#x5927;&#x591A;&#x76F8;&#x540C;&#xFF0C;&#x56E0;&#x6B64;&#x8FD8;&#x53EF;&#x4EE5;&#x63D0;&#x53D6;&#x516C;&#x5171;&#x7684;&#x8DEF;&#x5F84;&#x3002;</p>
 <p>&#x4E0E;&#x4E4B;&#x76F8;&#x5173;&#x7684;&#x8981;&#x5148;&#x4ECB;&#x7ECD;<code>JointPoint</code>&#xFF0C;&#x6839;&#x636E;&#x8BCD;&#x610F;&#x4E0D;&#x96BE;&#x7406;&#x89E3;&#xFF1A;&#x5207;&#x70B9;&#x3002;&#x5207;&#x9762;&#x4E2D;&#x7684;&#x5207;&#x70B9;&#x53EF;&#x4EE5;&#x8BF4;&#x662F;&#x5F88;&#x7EC6;&#x8282;&#x7684;&#x4E86;&#xFF0C;&#x80FD;&#x7528;&#x4ED6;&#x6765;&#x83B7;&#x53D6;&#x5207;&#x9762;&#x76F8;&#x5173;&#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x53EF;&#x4EE5;&#x7406;&#x89E3;&#x4E3A;&#x201C;&#x5E2E;&#x624B;&#x201D;&#x3002;</p>
 <h2 id="PointCut"><a href="#PointCut" class="headerlink" title="@PointCut"></a>@PointCut</h2><p>&#x516C;&#x7528;&#x5207;&#x5165;&#x70B9;&#x3002;&#x62EC;&#x53F7;&#x540E;&#x52A0;&#x5165;&#x4F5C;&#x7528;&#x8DEF;&#x5F84;&#x3002;</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Pointcut</span>(<span class="string">&quot;execution(public int org.example.aop.MathCalculate.*(..)) &quot;</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">pointCut</span><span class="params">()</span> </span>{</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
 <p>MathCalculate&#x4E3A;&#x7C7B;&#x540D;&#xFF0C;<code>MathCalculate.*</code>&#x8868;&#x793A;&#x4F5C;&#x7528;&#x4E8E;&#x7C7B;&#x4E0B;&#x7684;&#x6240;&#x6709;&#x65B9;&#x6CD5;&#x3002;<code>(..)</code>&#x8868;&#x793A;&#x4EFB;&#x610F;&#x53C2;&#x6570;&#x3002;</p>
 <h2 id="Before"><a href="#Before" class="headerlink" title="@Before"></a>@Before</h2><p>&#x8FD9;&#x4E2A;&#x662F;&#x524D;&#x7F6E;&#x901A;&#x77E5;&#x3002;&#x8868;&#x793A;&#x5728;&#x65B9;&#x6CD5;&#x6267;&#x884C;&#x524D;&#x6267;&#x884C;&#x6807;&#x8BC6;&#x4E86;&#x8FD9;&#x4E2A;&#x6CE8;&#x89E3;&#x7684;&#x65B9;&#x6CD5;&#x3002;</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Before</span>(<span class="string">&quot;pointCut()&quot;</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">logStart</span><span class="params">(JoinPoint joinPoint)</span> </span>{</span><br><span class="line">    System.out.println(joinPoint.getSignature().getName() + <span class="string">&quot;&#xFF0C;logStart()..&#x65B9;&#x6CD5;&#x540D;&#xFF1A;&quot;</span> + <span class="string">&quot;....&#x53C2;&#x6570;&#xFF1A;&quot;</span> + Arrays.asList(joinPoint.getArgs()));</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+
+
 <h2 id="After"><a href="#After" class="headerlink" title="@After"></a>@After</h2><p>&#x540E;&#x7F6E;&#x901A;&#x77E5;&#x3002;&#x65B9;&#x6CD5;&#x7ED3;&#x675F;&#x540E;&#x4F1A;&#x88AB;&#x8C03;&#x7528;&#xFF0C;<strong>&#x65E0;&#x8BBA;&#x65B9;&#x6CD5;&#x6210;&#x529F;&#x8FD8;&#x662F;&#x5931;&#x8D25;</strong>&#xFF0C;&#x7C7B;&#x4F3C;&#x4E8E;<code>finally</code>&#x3002;</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@After</span>(<span class="string">&quot;pointCut()&quot;</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">logEnd</span><span class="params">(JoinPoint joinPoint)</span> </span>{</span><br><span class="line">    System.out.println(joinPoint.getSignature().getName() + <span class="string">&quot;&#xFF0C;@After.&#x65B9;&#x6CD5;&#x540D;&#xFF1A;&quot;</span> + <span class="string">&quot;. &#x4E00;&#x5B9A;&#x4F1A;&#x8FD4;&#x56DE;&#x7684;&#x3002;.&#x53C2;&#x6570;&#xFF1A;&quot;</span> + Arrays.asList(joinPoint.getArgs()));</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+
+
 <h2 id="AfterReturning"><a href="#AfterReturning" class="headerlink" title="@AfterReturning"></a>@AfterReturning</h2><p>&#x8FD4;&#x56DE;&#x901A;&#x77E5;&#x3002;&#x5728;&#x65B9;&#x6CD5;&#x6B63;&#x5E38;&#x7ED3;&#x675F;&#x65F6;&#x7528;&#x3002;&#x56E0;&#x4E3A;&#x662F;&#x6B63;&#x5E38;&#x7ED3;&#x675F;&#xFF0C;&#x4E00;&#x822C;&#x90FD;&#x9700;&#x8981;&#x77E5;&#x9053;&#x8FD4;&#x56DE;&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x6240;&#x4EE5;&#x5165;&#x53C2;&#x76F8;&#x6BD4;&#x4E4B;&#x524D;&#x7684;&#x5C31;&#x591A;&#x4E86;&#x4E00;&#x4E2A;&#x3002;</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@AfterReturning</span>(value = <span class="string">&quot;pointCut()&quot;</span>, returning = <span class="string">&quot;object&quot;</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">logReturn</span><span class="params">(JoinPoint joinPoint, Object object)</span> </span>{</span><br><span class="line">    System.out.println(joinPoint.getSignature().getName() + <span class="string">&quot;&#xFF0C;@AfterReturning..&#x6B63;&#x5E38;&#x8FD4;&#x56DE;&#x3002;.&#x8FD0;&#x884C;&#x7ED3;&#x679C;&#xFF1A;&quot;</span> + object);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+
+
 <h2 id="AfterThrowing"><a href="#AfterThrowing" class="headerlink" title="@AfterThrowing"></a>@AfterThrowing</h2><p>&#x5F02;&#x5E38;&#x901A;&#x77E5;&#x3002;&#x629B;&#x51FA;&#x5F02;&#x5E38;&#x7684;&#x65F6;&#x5019;&#x7528;&#x3002;&#x629B;&#x51FA;&#x7684;&#x5F02;&#x5E38;&#x4E5F;&#x662F;&#x5BF9;&#x8C61;&#xFF0C;&#x9700;&#x8981;&#x544A;&#x8BC9;Spring&#xFF0C;&#x6240;&#x4EE5;&#x8FD9;&#x4E5F;&#x7B97;&#x4E00;&#x4E2A;&#x5165;&#x53C2;&#x3002;</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@AfterThrowing</span>(value = <span class="string">&quot;pointCut()&quot;</span>, throwing = <span class="string">&quot;exception&quot;</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">logException</span><span class="params">(JoinPoint joinPoint, Exception exception)</span> </span>{</span><br><span class="line">    System.out.println(<span class="string">&quot; &#x65B9;&#x6CD5;&#x540D;&#xFF1A;&quot;</span> + joinPoint.getSignature().getName() + <span class="string">&quot;.....&#x5F02;&#x5E38;&#x4FE1;&#x606F;&#xFF1A;&quot;</span> + exception);</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+
+
 <h2 id="Around"><a href="#Around" class="headerlink" title="@Around"></a>@Around</h2><p>&#x73AF;&#x7ED5;&#x901A;&#x77E5;&#x3002;&#x542C;&#x8FD9;&#x4E2A;&#x540D;&#x5B57;&#x6709;&#x6CA1;&#x6709;&#x89C9;&#x5F97;&#x5F88;&#x4ED9;&#x6C14;&#xFF0C;&#x5F88;&#x5389;&#x5BB3;&#x7684;&#x6837;&#x5B50;&#x3002;&#x7684;&#x786E;&#x5389;&#x5BB3;&#xFF0C;&#x4E00;&#x4E2A;&#x9876;&#x56DB;&#x4E2A;&#x3002;&#x3002;</p>
 <p>&#x4ED6;&#x7684;&#x201C;&#x5E2E;&#x624B;&#x201D;&#x4E5F;&#x4E0D;&#x518D;&#x662F;JointPoint&#x4E86;&#xFF0C;&#x800C;&#x662F;&#x5347;&#x7EA7;&#x7248;&#x7684;&#xFF1A;<code>ProceedingJoinPoint</code>&#x3002;</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Around</span>(value = <span class="string">&quot;pointCut()&quot;</span>)</span><br><span class="line"><span class="function"><span class="keyword">public</span> Object <span class="title">logAround</span><span class="params">(ProceedingJoinPoint proceedingJoinPoint)</span> </span>{</span><br><span class="line">    Object result;</span><br><span class="line">    <span class="keyword">try</span> {</span><br><span class="line">        result = proceedingJoinPoint.proceed();</span><br><span class="line">        System.out.println(proceedingJoinPoint.getSignature().getName() + <span class="string">&quot;&#xFF0C;Around ..&#x65B9;&#x6CD5;&#x540D;&#xFF1A;&quot;</span> + <span class="string">&quot;....&#x53C2;&#x6570;&#xFF1A;&quot;</span> + Arrays.asList(proceedingJoinPoint.getArgs()));</span><br><span class="line"></span><br><span class="line">        System.out.println(proceedingJoinPoint.getSignature().getName() + <span class="string">&quot;&#xFF0C;Around..&#x6B63;&#x5E38;&#x8FD4;&#x56DE;&#x3002;.&#x8FD0;&#x884C;&#x7ED3;&#x679C;&#xFF1A;&quot;</span> + result);</span><br><span class="line">    } <span class="keyword">catch</span> (Throwable throwable) {</span><br><span class="line">        System.out.println(<span class="string">&quot; &#x65B9;&#x6CD5;&#x540D;&#xFF1A;&quot;</span> + proceedingJoinPoint.getSignature().getName() + <span class="string">&quot;....Around  .&#x5F02;&#x5E38;&#x4FE1;&#x606F;&#xFF1A;&quot;</span> + throwable);</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(throwable);</span><br><span class="line">    }</span><br><span class="line">    System.out.println(proceedingJoinPoint.getSignature().getName() + <span class="string">&quot;&#xFF0C;Around.&#x65B9;&#x6CD5;&#x540D;&#xFF1A;&quot;</span> + <span class="string">&quot;. &#x4E00;&#x5B9A;&#x4F1A;&#x8FD4;&#x56DE;&#x7684;&#x3002;.&#x53C2;&#x6570;&#xFF1A;&quot;</span> + Arrays.asList(proceedingJoinPoint.getArgs()));</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
 <h2 id="&#x6CE8;&#x610F;&#x4E8B;&#x9879;"><a href="#&#x6CE8;&#x610F;&#x4E8B;&#x9879;" class="headerlink" title="&#x6CE8;&#x610F;&#x4E8B;&#x9879;"></a>&#x6CE8;&#x610F;&#x4E8B;&#x9879;</h2><p>&#x5982;&#x679C;&#x8BA4;&#x4E3A;&#x6807;&#x6CE8;&#x6CE8;&#x89E3;&#x5C31;&#x80FD;&#x751F;&#x6548;&#x5C31;  <em>too young to navie</em> &#x4E86;&#x3002;</p>
 <ul>
 <li>&#x5C06;&#x4E1A;&#x52A1;&#x903B;&#x8F91;&#x4EE3;&#x7801;&#x4EE5;&#x53CA;&#x5207;&#x9762;&#x7C7B;&#xFF08;&#x4F8B;&#x5982;&#x65E5;&#x5FD7;&#x6253;&#x5370;&#x670D;&#x52A1;&#xFF09;&#x90FD;&#x52A0;&#x5165;&#x5230;&#x5BB9;&#x5668;&#x4E2D;&#xFF0C;&#x5E76;&#x4E14;&#x544A;&#x8BC9;Spring&#x54EA;&#x4E2A;&#x662F;&#x5207;&#x9762;&#x7C7B;&#xFF08;&#x5728;&#x7C7B;&#x4E0A;&#x52A0;<strong>@Aspect</strong>&#xFF09;</li>
 <li>&#x5728;&#x5207;&#x9762;&#x7C7B;&#x4E0A;&#x7684;&#x8981;&#x7528;&#x7684;&#x901A;&#x77E5;&#x65B9;&#x6CD5;&#x4E0A;&#x52A0;&#x5165;&#x76F8;&#x5E94;&#x6CE8;&#x89E3;&#xFF08;&#x5982;@Before&#xFF09;&#x3002;</li>
 <li>&#x5728;&#x914D;&#x7F6E;&#x7C7B;&#x4E0A;&#x5F00;&#x542F;&#x6CE8;&#x89E3;&#x7684;aop&#x6A21;&#x5F0F;&#xFF08; <strong>@EnableAspectJAutoProxy</strong>&#xFF09;&#x3002;</li>
 </ul>
-<h1 id="&#x6E90;&#x7801;"><a href="#&#x6E90;&#x7801;" class="headerlink" title="&#x6E90;&#x7801;"></a>&#x6E90;&#x7801;</h1>
+<h1 id="&#x6E90;&#x7801;"><a href="#&#x6E90;&#x7801;" class="headerlink" title="&#x6E90;&#x7801;"></a>&#x6E90;&#x7801;</h1><h2 id="EnableAspectJAutoProxy"><a href="#EnableAspectJAutoProxy" class="headerlink" title="@EnableAspectJAutoProxy"></a>@EnableAspectJAutoProxy</h2>
     </div>
 
     
@@ -389,7 +410,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -402,7 +423,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

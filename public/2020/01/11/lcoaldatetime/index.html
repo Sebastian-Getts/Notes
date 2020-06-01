@@ -256,14 +256,27 @@
       
         <p>Differences between <strong>Date</strong> and <strong>LocalDateTime</strong>, in fact, Date is deprecated.</p>
 <a id="more"></a>
+
 <h1 id="Date"><a href="#Date" class="headerlink" title="Date"></a>Date</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{</span><br><span class="line"></span><br><span class="line">    Date rightNow = <span class="keyword">new</span> Date();</span><br><span class="line">    System.out.println(<span class="string">&quot;now date: &quot;</span>+rightNow);</span><br><span class="line">    System.out.println(<span class="string">&quot;now year: &quot;</span>+rightNow.getYear());</span><br><span class="line">    System.out.println(<span class="string">&quot;now month: &quot;</span>+rightNow.getMonth());</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">now date: Sat Jan 11 16:36:03 CST 2020</span><br><span class="line">now year: 120</span><br><span class="line">now month: 0</span><br></pre></td></tr></table></figure>
+
+
+
 <p>so it&#x2019;s <strong>deprecated</strong>.</p>
 <h2 id="SimpleDateFormat"><a href="#SimpleDateFormat" class="headerlink" title="SimpleDateFormat"></a>SimpleDateFormat</h2><p><strong>Date formats are not synchronized.</strong></p>
 <h1 id="LocalDateTime"><a href="#LocalDateTime" class="headerlink" title="LocalDateTime"></a>LocalDateTime</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{</span><br><span class="line"></span><br><span class="line">    LocalDateTime rightNow = LocalDateTime.now();</span><br><span class="line">    System.out.println(<span class="string">&quot;now date: &quot;</span>+rightNow);</span><br><span class="line">    System.out.println(<span class="string">&quot;now month: &quot;</span>+rightNow.getMonth());</span><br><span class="line">    System.out.println(<span class="string">&quot;now year: &quot;</span>+rightNow.getYear());</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">now date: 2020-01-11T18:45:20.878750</span><br><span class="line">now month: JANUARY</span><br><span class="line">now year: 2020</span><br></pre></td></tr></table></figure>
+
+
+
 <h2 id="DateTimeFormatter"><a href="#DateTimeFormatter" class="headerlink" title="DateTimeFormatter"></a>DateTimeFormatter</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>{</span><br><span class="line"></span><br><span class="line">    LocalDateTime rightNow = LocalDateTime.now();</span><br><span class="line"></span><br><span class="line">    System.out.println(rightNow.format(DateTimeFormatter.ISO_DATE));</span><br><span class="line">    System.out.println(rightNow.format(DateTimeFormatter.BASIC_ISO_DATE));</span><br><span class="line">    System.out.println(rightNow.format(DateTimeFormatter.ofPattern(<span class="string">&quot;yyyy/MM/dd&quot;</span>)));</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2020-01-11</span><br><span class="line">20200111</span><br><span class="line">2020/01/11</span><br></pre></td></tr></table></figure>
+
+
+
 <p>note: most important, <strong>the class is immutable and thread-safe</strong>.</p>
 
     </div>
@@ -379,7 +392,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -392,7 +405,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

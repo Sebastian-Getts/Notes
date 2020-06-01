@@ -256,38 +256,53 @@
       
         <p>&#x4E3A;&#x4E86;&#x80FD;&#x591F;&#x66F4;&#x597D;&#x7684;&#x4E66;&#x5199;&#x6587;&#x6863;&#xFF0C;&#x66F4;&#x65B9;&#x4FBF;&#x5730;&#x4F7F;&#x7528;markdown&#x4EE5;&#x53CA;hexo&#xFF0C;&#x7279;&#x5199;&#x6B64;&#x7BC7;&#x603B;&#x7ED3;&#x8F83;&#x4E3A;&#x5E38;&#x7528;&#x7684;&#x4EE5;&#x53CA;&#x63A2;&#x7D22;&#x4E0D;&#x5E38;&#x7528;&#x7684;&#x8BED;&#x6CD5;&#x3002;&#x3002;&#x3002;</p>
 <a id="more"></a>
+
 <h1 id="&#x5C45;&#x4E2D;"><a href="#&#x5C45;&#x4E2D;" class="headerlink" title="&#x5C45;&#x4E2D;"></a>&#x5C45;&#x4E2D;</h1><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">{% cq %} blah blah blah {% endcq %}</span><br><span class="line">{% centerquote %}blah blah blah{% endcenterquote %}</span><br></pre></td></tr></table></figure>
+
 <blockquote class="blockquote-center"><p>i think it will be center</p>
 </blockquote>
+
 <div class="note info">
             <p>if there is somthing wrong with the grammer,, it will not generate files successfully&#x2026;</p>
           </div>
+
 <h1 id="note&#x6807;&#x7B7E;"><a href="#note&#x6807;&#x7B7E;" class="headerlink" title="note&#x6807;&#x7B7E;"></a>note&#x6807;&#x7B7E;</h1><p>&#x901A;&#x8FC7;note&#x6807;&#x7B7E;&#x53EF;&#x4EE5;&#x4E3A;&#x6BB5;&#x843D;&#x6DFB;&#x52A0;&#x80CC;&#x666F;&#x8272;&#x3002;</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">{% note [class] %}</span><br><span class="line">content</span><br><span class="line">{% endnote %}</span><br></pre></td></tr></table></figure>
+
 <p>&#x5176;&#x4E2D; class &#x53EF;&#x4EE5;&#x4E3A;&#xFF1A;<code>default</code>, <code>primary</code>, <code>success</code>, <code>info</code>, <code>warning</code>, <code>danger</code>&#x3002;</p>
 <div class="note primary">
             <p>this is primary note tag</p>
           </div>
+
 <div class="note success">
             <p>this is success note tag</p>
           </div>
+
 <div class="note info">
             <p>this is info tag</p>
           </div>
+
 <div class="note warning">
             <p>this is warning tag</p>
           </div>
+
 <div class="note danger">
             <p>this is danger tag</p>
           </div>
+
 <div class="note ">
             <p>this is undefined note tag</p>
           </div>
+
 <h1 id="label&#x6807;&#x7B7E;"><a href="#label&#x6807;&#x7B7E;" class="headerlink" title="label&#x6807;&#x7B7E;"></a>label&#x6807;&#x7B7E;</h1><blockquote>
 <p>&#x8BED;&#x6CD5;&#xFF1A; <span class="label [class]">text</span></p>
 </blockquote>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">I heard the echo, {% label default@from the valleys and the heart %}</span><br><span class="line">Open to the lonely soul of {% label info@sickle harvesting %}</span><br><span class="line">Repeat outrightly, but also repeat the well-being of</span><br><span class="line">Eventually {% label warning@swaying in the desert oasis %}</span><br><span class="line">{% label success@I believe %} I am</span><br><span class="line">{% label primary@Born as the bright summer flowers %}</span><br><span class="line">Do not withered undefeated fiery demon rule</span><br><span class="line">Heart rate and breathing to bear {% label danger@the load of the cumbersome %}</span><br><span class="line">Bored</span><br></pre></td></tr></table></figure>
-<p>I heard the echo, <span class="label default">from the valleys and the heart</span><br>Open to the lonely soul of <span class="label info">sickle harvesting</span><br>Repeat outrightly, but also repeat the well-being of<br>Eventually <span class="label warning">swaying in the desert oasis</span><br><span class="label success">I believe</span> I am<br><span class="label primary">Born as the bright summer flowers</span><br>Do not withered undefeated fiery demon rule<br>Heart rate and breathing to bear <span class="label danger">the load of the cumbersome</span><br>Bored</p>
+
+<p>I heard the echo, <span class="label default">from the valleys and the heart</span><br>Open to the lonely soul of <span class="label info">sickle harvesting</span><br>Repeat outrightly, but also repeat the well-being of<br>Eventually <span class="label warning">swaying in the desert oasis</span></p>
+<span class="label success">I believe</span> I am
+<span class="label primary">Born as the bright summer flowers</span>
+<p>Do not withered undefeated fiery demon rule<br>Heart rate and breathing to bear <span class="label danger">the load of the cumbersome</span><br>Bored</p>
 <h1 id="button&#x6309;&#x94AE;"><a href="#button&#x6309;&#x94AE;" class="headerlink" title="button&#x6309;&#x94AE;"></a>button&#x6309;&#x94AE;</h1><p>&#x53EF;&#x4EE5;&#x6DFB;&#x52A0;&#x5E26;&#x6709;&#x4E3B;&#x9898;&#x6837;&#x5F0F;&#x7684;&#x6309;&#x94AE;&#x3002;</p>
 <blockquote>
 <a class="btn" href="/path/to/url/" title="title"><i class="fa fa-icon [class]"></i>text</a>
@@ -298,30 +313,45 @@
 </blockquote>
 <p>e.g.:</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">{% btn #, content %}</span><br><span class="line">{% btn #, content &amp; title, title %}</span><br><span class="line">{% btn #, content &amp; image, home %}</span><br><span class="line">{% btn #, content $ big-imgage, home fa-fw fa-lg %}</span><br></pre></td></tr></table></figure>
+
 <a class="btn" href="#">content</a>
 <a class="btn" href="#"><i class="fa fa-title"></i>content &amp; title</a>
 <a class="btn" href="#"><i class="fa fa-home"></i>content &amp; image</a>
 <a class="btn" href="#"><i class="fa fa-home fa-fw fa-lg"></i>content $ big-imgage</a>
+
 <h1 id="tab&#x6807;&#x7B7E;"><a href="#tab&#x6807;&#x7B7E;" class="headerlink" title="tab&#x6807;&#x7B7E;"></a>tab&#x6807;&#x7B7E;</h1><p>&#x7528;&#x4E8E;&#x521B;&#x5EFA;tab&#x9009;&#x9879;&#x5361;&#x3002;</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">{% tabs [unique name], [index] %}</span><br><span class="line"><span class="code">	&lt;!--tab1--&gt;</span></span><br><span class="line"><span class="code">	content</span></span><br><span class="line"><span class="code">	&lt;!--tab2--&gt;</span></span><br><span class="line"><span class="code">	content</span></span><br><span class="line">{% endtabs %}</span><br></pre></td></tr></table></figure>
+
 <div class="tabs" id="tab&#x6807;&#x7B7E;&#x5217;&#x8868;"><ul class="nav-tabs"></ul><div class="tab-content"></div></div>   
+
 <p>&lt;% note warning %&gt;</p>
 <p>&#x8FD9;&#x4E2A;&#x8C8C;&#x4F3C;&#x4E0D;&#x8D77;&#x4F5C;&#x7528;&#x3002;&#x3002;&#x3002;</p>
 <p>&lt;% endnote %&gt;</p>
 <h1 id="&#x5F15;&#x7528;&#x7AD9;&#x5185;&#x94FE;&#x63A5;"><a href="#&#x5F15;&#x7528;&#x7AD9;&#x5185;&#x94FE;&#x63A5;" class="headerlink" title="&#x5F15;&#x7528;&#x7AD9;&#x5185;&#x94FE;&#x63A5;"></a>&#x5F15;&#x7528;&#x7AD9;&#x5185;&#x94FE;&#x63A5;</h1><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">{% post_link slug [title] %}</span><br></pre></td></tr></table></figure>
+
 <p>slug&#xFF1A;&#x8868;&#x793A;<code>_post</code>&#x4E0B;&#x7684;&#x6587;&#x4EF6;&#x540D;&#x3002;</p>
 <p>&#x5C31;&#x50CF;&#x8FD9;&#x6837;&#xFF1A;&#x8FD9;&#x662F;&#x4E00;&#x7BC7;&#x4ECB;&#x7ECD;&#x6BD4;&#x7279;&#x5E01;&#x7684;<a href="/2019/11/03/bt01/" title="&#x535A;&#x5BA2;">&#x535A;&#x5BA2;</a> =.=</p>
 <h1 id="&#x63D2;&#x5165;swig&#x4EE3;&#x7801;"><a href="#&#x63D2;&#x5165;swig&#x4EE3;&#x7801;" class="headerlink" title="&#x63D2;&#x5165;swig&#x4EE3;&#x7801;"></a>&#x63D2;&#x5165;swig&#x4EE3;&#x7801;</h1><p>&#x60F3;&#x63D2;&#x5165;swig&#x4EE3;&#x7801;&#xFF08;&#x5305;&#x62EC;&#x539F;&#x751F;html&#x3001;js&#x7B49;&#xFF09;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;raw&#x6807;&#x7B7E;<strong>&#x7981;&#x6B62;markdown&#x5F15;&#x64CE;</strong>u&#x5B89;&#x7136;&#x6807;&#x7B7E;&#x5185;&#x7684;&#x5185;&#x5BB9;&#x3002;</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">{% raw %}</span><br><span class="line">content</span><br><span class="line">{% endraw %}</span><br></pre></td></tr></table></figure>
+
 <p>&#x7528;&#x9014;&#xFF1A;&#x5E38;&#x7528;&#x4E8E;&#x5728;&#x9875;&#x9762;&#x5185;&#x5F15;&#x5165;&#x7B2C;&#x4E09;&#x65B9;&#x811A;&#x672C;&#x5B9E;&#x73B0;&#x7279;&#x6B8A;&#x529F;&#x80FD;&#xFF0C;&#x5C24;&#x5176;&#x662F;&#x8BE5;&#x7B2C;&#x4E09;&#x65B9;&#x811A;&#x672C;&#x5C1A;&#x65E0;i&#x76F8;&#x5173;hexo&#x63D2;&#x4EF6;&#x652F;&#x6301;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x53EF;&#x4EE5;&#x901A;&#x8FC7;<strong>&#x5199;&#x539F;&#x751F;Web&#x9875;&#x9762;</strong>&#x7684;&#x5F62;&#x5F0F;&#x5F15;&#x5165;&#x811A;&#x672C;&#x5E76;&#x5B9E;&#x73B0;&#x903B;&#x8F91;&#x3002;</p>
 <div class="note warning">
             <p>What is swig?</p>
           </div>
+
 <h1 id="&#x63D2;&#x5165;Gist"><a href="#&#x63D2;&#x5165;Gist" class="headerlink" title="&#x63D2;&#x5165;Gist"></a>&#x63D2;&#x5165;Gist</h1><div class="note danger">
             <p>What is gist&#x2026;</p>
           </div>
+
+
+
  <blockquote class="blockquote-center"><p><a href="https://theme-next.iissnan.com/tag-plugins.html">reference</a></p>
 </blockquote> 
+
+
+
+
+
 
     </div>
 
@@ -436,7 +466,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">45</span>
+          <span class="site-state-item-count">48</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -449,7 +479,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">42</span>
+        <span class="site-state-item-count">44</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>
