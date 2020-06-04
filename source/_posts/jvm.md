@@ -9,13 +9,22 @@ associate with juc
 
 <!--import-->
 
+# 系统图
+
+![Screenshot from 2020-06-04 20-11-48.png](https://i.loli.net/2020/06/04/UQfq2lrGu9mLc4C.png)
+
+- 灰色代表线程私有，占用的内存非常少，几乎不存在垃圾回收
+- 亮色代表存在垃圾回收
+
 # 类加载器
 
-经过javac编译后，形成的xxx.class文件存在电脑硬盘上，通过类加载器装进JVM并初始化为xxx.Class文件。只负责加载class文件，将之装载后成为Class文件，放进方法区。
+经过javac编译后，形成的xxx.class文件存在电脑硬盘上，通过类加载器装进JVM并初始化为xxx.Class文件（装载进虚拟机）。只负责加载class文件，将之装载后成为Class文件，放进方法区。
 
 > Car.class -> Class Loader -> Car Class -> car1/car2/car3
 
 Car Class是后面car1、car2、car3的模板，后面的三个car也是实例化的产物。
+
+![Screenshot from 2020-06-04 20-33-54.png](https://i.loli.net/2020/06/04/EYRbMN1fgIOuHBk.png)
 
 ## 种类
 
@@ -38,6 +47,8 @@ Java编写，除了启动类加载器加载核心的东西外，还需要Extensi
 ## 双亲委派
 
 比如如果需要使用A.java类，需要先去顶部Bootstrap寻找，找不到的话去Extension找，还没有的话去Application中找，还没有的话抛异常。
+
+**Bootstrap** --> **Extension** --> **Application**
 
 ```java
 public class String{
@@ -65,11 +76,11 @@ public class String{
 
 ### 本地方法栈
 
-装native方法的栈。登记native方法，在Execution Engine执行时加载本地方法库。
+装native方法的栈。在内存中专门开辟了一块区域处理标记为native的代码，登记native方法，在Execution Engine执行时加载本地方法库。
 
 # PC寄存器
 
-记录了方法之间的调用和执行情况，类似排班值日表。用来存储指向下一条指令的地址，即将要执行的指令代码。
+实际是一个指针，线程私有，记录了方法之间的调用和执行情况，类似排班值日表。用来存储指向下一条指令的地址，即将要执行的指令代码。
 
 是当前线程所执行的字节码的行号指示器。
 
@@ -84,21 +95,41 @@ public class String{
 
 在java中的方法装载在虚拟机的栈中叫栈帧。
 
-Local Variables: 输入参数、输出参数以及方法内的变量
+- Local Variables: 输入参数、输出参数以及方法内的变量
 
-Operand Stack: 记录出栈、入栈的操作
+  ```java
+  // 入参为 x, y， 输出为result，方法内变量为result，均在栈中。
+  public int add(int x, int y){
+      int result = 0;
+      result = x + y;
+      return result;
+  }
+  ```
 
-Frame Data: 包括类文件、方法等等
+- Operand Stack: 记录出栈、入栈的操作
+
+- Frame Data: 包括类文件、方法等等
 
 ## 运行
 
 栈中的数据都是以栈帧（Stack Frame）的格式存在，栈帧是一个内存区块，是一个数据集，一个有关方法（Method）和运行期数据的数据集，当一个方法A被调用时就产生了一个栈帧，并被压入到栈中，执行完毕后弹出。
+
+```java
+// 方法深度调用，把栈撑爆了。 Exception: StackOverflowError 属于错误
+public static void m1(){
+    m1();
+}
+```
+
+
 
 每个方法执行的同时都会创建一个栈帧，用于存储局部变量表、操作数栈、动态链接、方法出口等信息，每一个方法从调度直至执行完毕的过程，就对应着一个栈帧在虚拟机入栈到出栈的过程。栈的大小和具体JVM的实现有关，通常在256K～756K之间。
 
 栈管运行，堆管存储。
 
 # 方法区
+
+class文件被ClassLoader装载进JVM称为Class文件，其实是装进了方法区。方法区是规范，在不同的虚拟机里的实现不一样，最典型的是`永久代(PermGen space)`和`元空间(Metaspace)`。
 
 - 所有线程共享
 - 存在垃圾回收
@@ -114,18 +145,32 @@ public class Car{
 }
 ```
 
-例如运行时常量池、字段和方法数据、构造函数和普通方法的字节码内容。方法区是规范，在不同的虚拟机里的实现不一样，最典型的是`永久代(PermGen space)`和`元空间(Metaspace)`。
+例如运行时常量池、字段和方法数据、构造函数和普通方法的字节码内容。
 
 元空间与永久代最大的区别在于：永久代使用的是jvm的堆内存，但是java8以后的元空间并不在虚拟机中而是**本机物理内存**。因此，元空间的大小仅受本地内存限制，类的元数据放入native memory，字符串池和类的静态变量放入java堆中，这样可以加载多少类的元数据就不再由MaxPermSize控制，而由系统的实际可用空间来控制。
 
-实例变量存在堆内存中，与方法区无关。
+实例变量存在堆内存中，与方法区无关。i.e.
 
-## 方法区、栈、堆
+```java
+public class Demo{
+    public void hello(){}
+    public static void main(String[] args){
+        Demo demo = new Demo();
+        demo.hello();
+    }
+}
+```
+
+每次new之后都会产生一个hello方法以及变量demo，此时这个实例变量就存在堆（当然）。
+
+# 方法区、栈、堆
 
 ```java
 Person person1 = new Person();
 Person person2 = new Person();
 ```
+
+左边的引用变量放在栈中，右边new出来的实例存放在堆中。堆中的实例指向方法区（保证两个不同的实例对象有同样的行为）。
 
 要保证person1与person2来自同一个类实例化且保持各自的行为，依靠方法区的“模板”。
 
@@ -238,3 +283,14 @@ java虚拟机提供的轻量级的同步机制，乞丐版syncronized。
 - 保证可见性
 - 不保证原子性
 - 禁止指令重排
+
+# Q&A:
+
+## 请谈谈你对JVM的理解？java8虚拟机有哪些更新？
+
+## 什么是OOM？是么是StackOverFlowError？有哪些方法分析？
+
+## JVM的常用参数调优你知道哪些？
+
+## 谈谈JVM中，对类加载器你的认识？
+
