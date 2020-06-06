@@ -3,6 +3,7 @@ title: leecode2
 date: 2020-03-07 11:46:01
 categories: Leecode
 tags: ['lcs','recursion']
+mathjax: true
 ---
 
 像那种结果要返回所有符合要求解的题十有八九都是要利用递归。根本思想是DFS，常用手段是递归。
@@ -62,6 +63,85 @@ st->op->cond
 cond(yes)->op2->end
 cond(no)->op3->end
 ```
+
+# KNAPSACK
+
+0/1背包问题，这里主要讲解动态规划方法。
+
+i.e. 背包总容量7kg，4件物品，流程如下（横轴0-7为容量）：
+
+| val  | wt   | 0     | 1    | 2    | 3     | 4    | 5    | 6    | 7     |
+| ---- | ---- | ----- | ---- | ---- | ----- | ---- | ---- | ---- | ----- |
+| 0    | 0    | 0     | 0    | 0    | 0     | 0    | 0    | 0    | 0     |
+| 1    | 1    | ==0== | 1    | 1    | 1     | 1    | 1    | 1    | 1     |
+| 4    | 3    | 0     | 1    | 1    | ==4== | 5    | 5    | 5    | 5     |
+| 5    | 4    | 0     | 1    | 1    | 4     | 5    | 6    | 6    | ==9== |
+| 7    | 5    | 0     | 1    | 1    | 4     | 5    | 7    | 8    | ==9== |
+
+## 递推式：
+
+```java
+if(j<wt[i]){
+    dp[i][j] = dp[i-1][j];
+}else{
+    dp[i][j] = Math.max(val[i - 1] + dp[i - 1][j - wt[i - 1]], dp[i - 1][j]);
+} 
+```
+
+
+
+```java
+/**
+ * dynamic programming solution
+ *
+ * @param W   total weight
+ * @param wt  items weight
+ * @param val items value
+ * @param n   items value length
+ * @return max value
+ */
+static int knapSack1(int W, int[] wt, int[] val, int n) {
+    int i, j;
+    int[][] dp = new int[n + 1][W + 1];
+
+    for (i = 0; i <= n; i++) {
+        for (j = 0; j <= W; j++) {
+            if (i == 0 || j == 0) {
+                dp[i][j] = 0;
+            } else if (j < wt[i - 1]) {
+                dp[i][j] = dp[i - 1][j];
+            } else {
+                dp[i][j] = Math.max(val[i - 1] + dp[i - 1][j - wt[i - 1]], dp[i - 1][j]);
+            }
+        }
+    }
+    return dp[n][W];
+}
+```
+
+```java
+/**
+  * recursive solution
+  *
+  * @param W   total weight
+  * @param wt  items weight
+  * @param val items value
+  * @param n   items value length
+  * @return max value
+  */
+static int knapSack(int W, int[] wt, int[] val, int n) {
+    if (n == 0 || W == 0) {
+        return 0;
+    }
+    if (wt[n - 1] > W) {
+        return knapSack(W, wt, val, n - 1);
+    } else {
+        return Math.max(val[n - 1] + knapSack(W - wt[n - 1], wt, val, n - 1), knapSack(W, wt, val, n - 1));
+    }
+}
+```
+
+
 
 # DFS
 

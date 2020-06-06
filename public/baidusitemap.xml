@@ -1,6 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://yoursite.com/2020/03/07/leecode2/</loc>
+    <lastmod>2020-06-06</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2020/06/06/heap/</loc>
+    <lastmod>2020-06-06</lastmod>
+  </url>  <url>
+    <loc>http://yoursite.com/2019/11/28/restful/</loc>
+    <lastmod>2020-06-04</lastmod>
+  </url>  <url>
     <loc>http://yoursite.com/2020/05/24/jvm/</loc>
     <lastmod>2020-06-04</lastmod>
   </url>  <url>
@@ -30,9 +39,6 @@
   </url>  <url>
     <loc>http://yoursite.com/2020/03/29/oAuth2/</loc>
     <lastmod>2020-03-29</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/2019/12/01/Junit/</loc>
-    <lastmod>2020-03-28</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2020/01/04/webservice/</loc>
     <lastmod>2020-03-28</lastmod>
@@ -64,17 +70,11 @@
     <loc>http://yoursite.com/2019/11/02/nginx/</loc>
     <lastmod>2020-03-22</lastmod>
   </url>  <url>
-    <loc>http://yoursite.com/2020/03/07/leecode2/</loc>
-    <lastmod>2020-03-15</lastmod>
-  </url>  <url>
     <loc>http://yoursite.com/2019/12/10/leecode/</loc>
     <lastmod>2020-03-15</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2019/12/03/kafka/</loc>
     <lastmod>2020-03-15</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/2019/11/28/restful/</loc>
-    <lastmod>2020-03-06</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2019/11/02/messy_code/</loc>
     <lastmod>2020-03-05</lastmod>
@@ -122,9 +122,6 @@
     <lastmod>2020-03-05</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2020/01/04/javaDataSttructure/</loc>
-    <lastmod>2020-03-05</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/2019/11/09/container/</loc>
     <lastmod>2020-03-05</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2019/11/17/bt02/</loc>

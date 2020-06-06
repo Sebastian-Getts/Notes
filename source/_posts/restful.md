@@ -63,7 +63,7 @@ public string getDetails(@PathVariable("id") String id){
 
 ## DELETE
 
-删除
+删除，同get请求。
 
 ## Q&A
 

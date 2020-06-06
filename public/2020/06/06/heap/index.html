@@ -53,18 +53,20 @@
   };
 </script>
 
-  <meta name="description" content="单元测试，提高开发效率额。">
-<meta name="keywords" content="Junit">
+  <meta name="description" content="这里的堆是数据结构中的堆，不是JVM中的堆。 关键词：堆，二叉树，优先级队列，排序，topN">
+<meta name="keywords" content="datastructure">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Junit">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;12&#x2F;01&#x2F;Junit&#x2F;index.html">
+<meta property="og:title" content="heap">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;06&#x2F;06&#x2F;heap&#x2F;index.html">
 <meta property="og:site_name" content="Sebastian Getts">
-<meta property="og:description" content="单元测试，提高开发效率额。">
+<meta property="og:description" content="这里的堆是数据结构中的堆，不是JVM中的堆。 关键词：堆，二叉树，优先级队列，排序，topN">
 <meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-03-28T05:29:14.655Z">
+<meta property="og:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;06&#x2F;06&#x2F;JbDlczXVh35sEF1.png">
+<meta property="og:updated_time" content="2020-06-06T09:10:45.033Z">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https:&#x2F;&#x2F;i.loli.net&#x2F;2020&#x2F;06&#x2F;06&#x2F;JbDlczXVh35sEF1.png">
 
-<link rel="canonical" href="http://yoursite.com/2019/12/01/Junit/">
+<link rel="canonical" href="http://yoursite.com/2020/06/06/heap/">
 
 
 <script id="page-configurations">
@@ -78,7 +80,7 @@
   };
 </script>
 
-  <title>Junit | Sebastian Getts</title>
+  <title>heap | Sebastian Getts</title>
   
 
 
@@ -199,7 +201,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/12/01/Junit/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/06/heap/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpg">
@@ -212,7 +214,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Junit
+          heap
         </h1>
 
         <div class="post-meta">
@@ -221,24 +223,18 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">Posted on</span>
+              
 
-              <time title="Created: 2019-12-01 21:14:41" itemprop="dateCreated datePublished" datetime="2019-12-01T21:14:41+08:00">2019-12-01</time>
+              <time title="Created: 2020-06-06 22:54:27 / Modified: 17:10:45" itemprop="dateCreated datePublished" datetime="2020-06-06T22:54:27+08:00">2020-06-06</time>
             </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-03-28 13:29:14" itemprop="dateModified" datetime="2020-03-28T13:29:14+08:00">2020-03-28</time>
-              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">In</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Utils/" itemprop="url" rel="index">
-                    <span itemprop="name">Utils</span>
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
                   </a>
                 </span>
             </span>
@@ -254,12 +250,37 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>&#x5355;&#x5143;&#x6D4B;&#x8BD5;&#xFF0C;&#x63D0;&#x9AD8;&#x5F00;&#x53D1;&#x6548;&#x7387;&#x989D;&#x3002;</p>
+        <p>&#x8FD9;&#x91CC;&#x7684;&#x5806;&#x662F;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x4E2D;&#x7684;&#x5806;&#xFF0C;&#x4E0D;&#x662F;JVM&#x4E2D;&#x7684;&#x5806;&#x3002;</p>
+<p>&#x5173;&#x952E;&#x8BCD;&#xFF1A;&#x5806;&#xFF0C;&#x4E8C;&#x53C9;&#x6811;&#xFF0C;&#x4F18;&#x5148;&#x7EA7;&#x961F;&#x5217;&#xFF0C;&#x6392;&#x5E8F;&#xFF0C;topN</p>
 <a id="more"></a>
 
-<h1 id="&#x5F15;"><a href="#&#x5F15;" class="headerlink" title="&#x5F15;"></a>&#x5F15;</h1><p>@Controller: </p>
-<p>@RestController:</p>
-<p>@ResponseBody:</p>
+<h1 id="&#x7ED3;&#x6784;"><a href="#&#x7ED3;&#x6784;" class="headerlink" title="&#x7ED3;&#x6784;"></a>&#x7ED3;&#x6784;</h1><p>&#x5806;&#x7684;&#x7ED3;&#x6784;&#x662F;&#x5B8C;&#x5168;&#x4E8C;&#x53C9;&#x6811;&#xFF0C;&#x800C;&#x4E14;&#x662F;&#x6709;&#x5E8F;&#x7684;&#xFF0C;&#x5206;&#x5927;&#x9876;&#x5806;&#x548C;&#x5C0F;&#x9876;&#x5806;&#x3002;    </p>
+<h2 id="&#x5B8C;&#x5168;&#x4E8C;&#x53C9;&#x6811;"><a href="#&#x5B8C;&#x5168;&#x4E8C;&#x53C9;&#x6811;" class="headerlink" title="&#x5B8C;&#x5168;&#x4E8C;&#x53C9;&#x6811;"></a>&#x5B8C;&#x5168;&#x4E8C;&#x53C9;&#x6811;</h2><ul>
+<li>&#x8DEF;&#x5F84;&#x957F;&#x5EA6;&#x662F;&#x6307;&#x8DEF;&#x5F84;&#x4E0A;&#x7684;&#x8FB9;&#x6570;</li>
+<li>&#x7ED3;&#x70B9;&#x6DF1;&#x5EA6;&#x662F;&#x6307;&#x4ECE;&#x6839;&#x7ED3;&#x70B9;&#x5230;&#x8BE5;&#x7ED3;&#x70B9;&#x7684;&#x8DEF;&#x5F84;&#x7684;&#x957F;&#x5EA6;</li>
+<li>&#x6BCF;&#x4E00;&#x5C42;&#x90FD;&#x662F;&#x6EE1;&#x7684;&#x6216;&#x8005;&#x6700;&#x540E;&#x4E00;&#x5C42;&#x4E0D;&#x6EE1;&#x4F46;&#x6700;&#x540E;&#x4E00;&#x5C42;&#x7684;&#x53F6;&#x5B50;&#x90FD;&#x662F;&#x9760;&#x5DE6;&#x653E;&#x7F6E;</li>
+</ul>
+<h2 id="&#x4E8C;&#x53C9;&#x5806;"><a href="#&#x4E8C;&#x53C9;&#x5806;" class="headerlink" title="&#x4E8C;&#x53C9;&#x5806;"></a>&#x4E8C;&#x53C9;&#x5806;</h2><ul>
+<li>&#x5B8C;&#x5168;&#x4E8C;&#x53C9;&#x6811;</li>
+<li>&#x6BCF;&#x4E2A;&#x7ED3;&#x70B9;&#x5927;&#x4E8E;&#x6216;&#x7B49;&#x4E8E;&#x5B83;&#x7684;&#x4EFB;&#x610F;&#x4E00;&#x4E2A;&#x5B69;&#x5B50;</li>
+</ul>
+<h1 id="&#x5B58;&#x50A8;"><a href="#&#x5B58;&#x50A8;" class="headerlink" title="&#x5B58;&#x50A8;"></a>&#x5B58;&#x50A8;</h1><p>&#x53EF;&#x4EE5;&#x5C06;&#x4E8C;&#x53C9;&#x5806;&#x7528;&#x6570;&#x7EC4;&#x6765;&#x5B58;&#x50A8;&#x3002;</p>
+<p>&#x4F8B;&#x5982;&#x5982;&#x4E0B;&#x4E00;&#x4E2A;&#x4E8C;&#x53C9;&#x5806;&#xFF1A;</p>
+<p><img src="https://i.loli.net/2020/06/06/JbDlczXVh35sEF1.png" alt="Screenshot from 2020-06-06 15-24-34.png"></p>
+<p>&#x5728;&#x6570;&#x7EC4;&#x4E2D;&#x4FDD;&#x5B58;&#xFF1A;{62,42,59,32,39,44,13,22,29,14,33,30,17,9}</p>
+<p>&#x53EF;&#x4EE5;&#x770B;&#x5230;&#x76F8;&#x5F53;&#x662F;&#x4EE5;&#x5E7F;&#x5EA6;&#x4F18;&#x5148;&#x904D;&#x5386;&#x4E86;&#x8FD9;&#x4E2A;&#x4E8C;&#x53C9;&#x6811;&#xFF0C;&#x5E76;&#x5C06;&#x904D;&#x5386;&#x7684;&#x7ED3;&#x70B9;&#x6309;&#x987A;&#x5E8F;&#x5B58;&#x5165;&#x6570;&#x7EC4;&#x3002;&#x53EF;&#x4EE5;&#x4ECE;&#x4E2D;&#x53D1;&#x73B0;&#x4E00;&#x4E9B;&#x5B58;&#x50A8;&#x7684;&#x89C4;&#x5F8B;&#xFF0C;&#x5BF9;&#x4E8E;&#x4EFB;&#x610F;&#x4E00;&#x4E2A;&#x4F4D;&#x7F6E;<em>i</em>&#xFF0C;&#x4ED6;&#x7684;&#x5DE6;&#x5B50;&#x7ED3;&#x70B9;&#x5728;<em>2i+1_&#x5904;&#xFF0C;&#x53F3;&#x5B50;&#x7ED3;&#x70B9;&#x5728;_2i+2_&#x5904;&#xFF0C;&#x7236;&#x7ED3;&#x70B9;&#x5728;</em>(i-1)/2_&#x5904;&#x3002;&#x4F8B;&#x5982;&#xFF1A;39&#x5728;&#x6570;&#x7EC4;&#x4E2D;&#x7684;&#x4E0B;&#x6807;&#x662F;4&#xFF0C;&#x90A3;&#x4E48;&#x4ED6;&#x7684;&#x5DE6;&#x5B50;&#x7ED3;&#x70B9;&#x5C31;&#x5728;&#xFF08;2&#xD7;4+1&#xFF09;=9&#x5904;&#x3002;</p>
+<h1 id="&#x5E94;&#x7528;"><a href="#&#x5E94;&#x7528;" class="headerlink" title="&#x5E94;&#x7528;"></a>&#x5E94;&#x7528;</h1><h2 id="&#x4F18;&#x5148;&#x7EA7;&#x961F;&#x5217;"><a href="#&#x4F18;&#x5148;&#x7EA7;&#x961F;&#x5217;" class="headerlink" title="&#x4F18;&#x5148;&#x7EA7;&#x961F;&#x5217;"></a>&#x4F18;&#x5148;&#x7EA7;&#x961F;&#x5217;</h2><p>&#x4F18;&#x5148;&#x7EA7;&#x961F;&#x5217;&#x7684;&#x5E95;&#x5C42;&#x5C31;&#x662F;&#x7528;&#x5806;&#x6765;&#x5B9E;&#x73B0;&#x7684;&#x3002;&#x540C;&#x65F6;&#x4E00;&#x9053;&#x6BD4;&#x8F83;&#x7ECF;&#x5178;&#x7684;&#x7B97;&#x6CD5;&#x9898;&#x7528;&#x4F18;&#x5148;&#x7EA7;&#x961F;&#x5217;&#x53EF;&#x4EE5;&#x8F7B;&#x677E;&#x5B9E;&#x73B0;&#xFF1A;top n &#x95EE;&#x9898;</p>
+<h2 id="TOP-N"><a href="#TOP-N" class="headerlink" title="TOP N"></a>TOP N</h2><p>&#x7ED9;&#x4E00;&#x7EC4;&#x6570;&#x636E;&#xFF0C;&#x6C42;&#x5176;&#x4E2D;&#x6700;&#x5927;/&#x5C0F;&#x7684;&#x51E0;&#x4E2A;&#x6570;&#x3002;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// &#x6C42;&#x6700;&#x5C0F;&#x7684;n&#x4E2A;&#x6570;</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] topN(<span class="keyword">int</span>[] array, <span class="keyword">int</span> n) {</span><br><span class="line">    <span class="keyword">if</span> (n == <span class="number">0</span>) {</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">0</span>];</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">// default big heap, lambda make it small heap</span></span><br><span class="line">    Queue&lt;Integer&gt; heap = <span class="keyword">new</span> PriorityQueue&lt;&gt;(n, ((o1, o2) -&gt; Integer.compare(o2, o1)));</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> e : array) {</span><br><span class="line">        <span class="comment">// put the integer in when it smaller than the top of integer</span></span><br><span class="line">        <span class="keyword">if</span> (heap.isEmpty() || heap.size() &lt; n || e &lt; heap.peek()) {</span><br><span class="line">            heap.offer(e);</span><br><span class="line">        }</span><br><span class="line">        <span class="keyword">if</span> (heap.size() &gt; n) {</span><br><span class="line">            <span class="comment">// delete the top of heap integer</span></span><br><span class="line">            heap.poll();</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span>[] res = <span class="keyword">new</span> <span class="keyword">int</span>[heap.size()];</span><br><span class="line">    <span class="keyword">int</span> j = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> e : heap) {</span><br><span class="line">        res[j++] = e;</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<p>&#x4E0A;&#x9762;&#x7528;&#x5230;&#x4E86;&#x5C0F;&#x9876;&#x5806;&#xFF0C;for&#x5FAA;&#x73AF;&#x4E2D;&#x7684;&#x4E24;&#x4E2A;&#x5224;&#x65AD;&#xFF0C;&#x7B26;&#x5408;&#x6761;&#x4EF6;&#x7684;&#x653E;&#x8FDB;&#x5806;&#x4E2D;&#xFF0C;&#x7B2C;&#x4E8C;&#x4E2A;&#x5224;&#x65AD;&#x4E2D;&#xFF0C;&#x5F53;&#x5806;&#x4E2D;&#x7684;&#x5143;&#x7D20;&#x4E2A;&#x6570;&#x5927;&#x4E8E;&#x8981;&#x6C42;&#x7684;&#x4E2A;&#x6570;&#x65F6;&#xFF0C;&#x5220;&#x9664;&#x5806;&#x4E2D;&#x7684;&#x9876;&#x90E8;&#x5143;&#x7D20;&#xFF08;&#x4F18;&#x5148;&#x7EA7;&#x961F;&#x5217;&#x7684;&#x672C;&#x8D28;&#x8FD8;&#x662F;&#x961F;&#x5217;&#xFF0C;&#x8FDB;&#x51FA;&#x6EE1;&#x8BFB;FIFO&#xFF09;&#x3002;</p>
+<p>&#x7A0D;&#x4F5C;&#x4FEE;&#x6539;&#xFF0C;&#x53EF;&#x4EE5;&#x8BA9;&#x4E0A;&#x9762;&#x7684;&#x4EE3;&#x7801;&#x8F93;&#x51FA;&#x6700;&#x5927;&#x7684;n&#x4E2A;&#x6570;&#xFF0C;&#x663E;&#x800C;&#x6613;&#x89C1;&#x7684;&#x662F;&#xFF0C;&#x6211;&#x4EEC;&#x53EA;&#x9700;&#x4FEE;&#x6539;&#x5165;&#x961F;&#x5217;&#x7684;&#x6761;&#x4EF6;&#x4EE5;&#x53CA;&#x4F18;&#x5148;&#x7EA7;&#x961F;&#x5217;&#x7684;&#x5806;&#x6392;&#x5E8F;&#x65B9;&#x5F0F;&#xFF1A;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// &#x9ED8;&#x8BA4;&#x5927;&#x9876;&#x5806;</span></span><br><span class="line">Queue&lt;Integer&gt; heap = <span class="keyword">new</span> PriorityQueue&lt;&gt;(n);</span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> e: array){</span><br><span class="line">    <span class="comment">// &#x5927;&#x4E8E;&#x5806;&#x9876;&#x7684;&#x653E;&#x5165;&#x4F18;&#x5148;&#x7EA7;&#x961F;&#x5217;</span></span><br><span class="line">    <span class="keyword">if</span>(heap.isEmpty() || heap.size() &lt; n || e &gt; heap.peak()){</span><br><span class="line">        heap.offer(e);</span><br><span class="line">    }</span><br><span class="line">    <span class="comment">// &#x8D85;&#x8FC7;&#x8981;&#x6C42;&#x7684;&#x4E2A;&#x6570;&#xFF0C;&#x6E05;&#x9664;&#x5806;&#x9876;&#x5143;&#x7D20;</span></span><br><span class="line">    <span class="keyword">if</span>(heap.size() &gt; n){</span><br><span class="line">        heap.pool();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+
+
+
+
 
     </div>
 
@@ -303,24 +324,21 @@
 
       <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/Junit/" rel="tag"># Junit</a>
+              <a href="/tags/datastructure/" rel="tag"># datastructure</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-                <a href="/2019/11/28/restful/" rel="next" title="restful">
-                  <i class="fa fa-chevron-left"></i> restful
+                <a href="/2020/06/01/regex/" rel="next" title="regex">
+                  <i class="fa fa-chevron-left"></i> regex
                 </a>
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-                <a href="/2019/12/03/kafka/" rel="prev" title="kafka">
-                  kafka <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
       </footer>
@@ -374,7 +392,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">48</span>
+          <span class="site-state-item-count">47</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -387,7 +405,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">44</span>
+        <span class="site-state-item-count">42</span>
         <span class="site-state-item-name">tags</span></a>
       </div>
   </nav>

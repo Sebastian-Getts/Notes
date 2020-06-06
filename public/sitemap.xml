@@ -2,6 +2,27 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2020/03/07/leecode2/</loc>
+    
+    <lastmod>2020-06-06T13:41:42.826Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2020/06/06/heap/</loc>
+    
+    <lastmod>2020-06-06T09:10:45.033Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://yoursite.com/2019/11/28/restful/</loc>
+    
+    <lastmod>2020-06-04T15:16:46.898Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2020/05/24/jvm/</loc>
     
     <lastmod>2020-06-04T14:47:31.206Z</lastmod>
@@ -68,13 +89,6 @@
     <loc>http://yoursite.com/2020/03/29/oAuth2/</loc>
     
     <lastmod>2020-03-29T01:32:10.663Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/12/01/Junit/</loc>
-    
-    <lastmod>2020-03-28T05:29:14.655Z</lastmod>
     
   </url>
   
@@ -149,13 +163,6 @@
   </url>
   
   <url>
-    <loc>http://yoursite.com/2020/03/07/leecode2/</loc>
-    
-    <lastmod>2020-03-15T13:59:52.595Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://yoursite.com/2019/12/10/leecode/</loc>
     
     <lastmod>2020-03-15T13:56:14.451Z</lastmod>
@@ -173,13 +180,6 @@
     <loc>http://yoursite.com/about/index.html</loc>
     
     <lastmod>2020-03-07T05:46:58.281Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/11/28/restful/</loc>
-    
-    <lastmod>2020-03-06T10:52:42.812Z</lastmod>
     
   </url>
   
@@ -292,13 +292,6 @@
     <loc>http://yoursite.com/2020/01/04/javaDataSttructure/</loc>
     
     <lastmod>2020-03-05T17:52:07.375Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://yoursite.com/2019/11/09/container/</loc>
-    
-    <lastmod>2020-03-05T17:51:17.135Z</lastmod>
     
   </url>
   
