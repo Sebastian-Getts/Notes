@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
+    <loc>http://yoursite.com/2020/05/24/jvm/</loc>
+    <lastmod>2020-06-07</lastmod>
+  </url>  <url>
     <loc>http://yoursite.com/2020/03/07/leecode2/</loc>
-    <lastmod>2020-06-06</lastmod>
+    <lastmod>2020-06-07</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2020/06/06/heap/</loc>
     <lastmod>2020-06-06</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2019/11/28/restful/</loc>
-    <lastmod>2020-06-04</lastmod>
-  </url>  <url>
-    <loc>http://yoursite.com/2020/05/24/jvm/</loc>
     <lastmod>2020-06-04</lastmod>
   </url>  <url>
     <loc>http://yoursite.com/2020/06/01/regex/</loc>

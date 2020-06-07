@@ -8,6 +8,8 @@ mathjax: true
 
 像那种结果要返回所有符合要求解的题十有八九都是要利用递归。根本思想是DFS，常用手段是递归。
 
+Here you go, [leetcode discuss](https://leetcode.com/discuss/general-discussion/458695/Dynamic-Programming-Patterns)
+
 <!-- more -->
 
 #  LCS
