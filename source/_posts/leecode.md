@@ -109,6 +109,64 @@ public int[] twoSum(int[] nums, int target) {
 
 ----
 
+# 3Sum
+
+Given an array `nums` of  _n_ integers, are there elements _a_, _b_, _c_ in `nums` suh that _a+b+c=0_? Find all unique triplets in the array which gives the sum of zero.
+
+Example:
+
+```markdown
+Given array nums = [-1, 0, 1, 2, -1, -4],
+
+A solution set is:
+[
+	[-1, 0, 1],
+	[-1, -1, 2]
+]
+```
+
+## Solution
+
+遍历前`nums.length-2`个元素，每个元素对应的目标为`-nums[i]`，再用双向求和的方式找出符目标的两个元素，与`nums[i]` 一同放入列表。
+
+```java
+public static List<List<Integer>> threeSum(int[] num) {
+    Arrays.sort(num);
+    List<List<Integer>> res = new LinkedList<>();
+
+    for (int i = 0; i < num.length - 2; i++) {
+        if (i == 0 || num[i] != num[i - 1]) {
+            // lo = i + 1 因为sum = - num[i], 求的是符合sum的，num[i]中i已经被占用了
+            int lo = i + 1, hi = num.length - 1, sum = -num[i];
+            // a standard bi-directional 2Sum sweep
+            while (lo < hi) {
+                if (num[lo] + num[hi] == sum) {
+                    res.add(Arrays.asList(num[i], num[lo], num[hi]));
+                    // 目前低位和下一个低位相同的话，继续next
+                    while (lo < hi && num[lo] == num[lo + 1]) {
+                        lo++;
+                    }
+                    // 目前高位和下一个高位相同的话，next
+                    while (lo < hi && num[hi] == num[hi - 1]) {
+                        hi--;
+                    }
+                    // 为什么同时减，因为不允许放进重复的值
+                    lo++;
+                    hi--;
+                } else if (num[lo] + num[hi] < sum) {
+                    lo++;
+                } else {
+                    hi--;
+                }
+            }
+        }
+    }
+    return res;
+}
+```
+
+
+
 # Remove Element
 
 Given an array *nums* and a value *val*, remove all instances of that value `in-place` and return the new length.
@@ -397,3 +455,4 @@ public class Solution {
 ```
 
 time complexity: O(n)
+
