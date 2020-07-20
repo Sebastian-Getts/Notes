@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="msvalidate.01" content="541BE591C13D7313C3568E6D172218E2">
+  <meta name="baidu-site-verification" content="3qvcDlCoMv">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: true,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="MQ&amp;#x7684;&amp;#x5F15;&amp;#x5165;&amp;#x6A21;&amp;#x62DF;&amp;#x51E0;&amp;#x4E2A;&amp;#x573A;&amp;#x666F;&amp;#xFF1A; &amp;#x5B66;&amp;#x751F;&amp;#x6A21;&amp;#x5757;&amp;#x548C;&amp;#x8001;&amp;#x5E08;&amp;#x6A21;&amp;#x5757;&amp;#x3002;&amp;#x529F;&amp;#x80FD;&amp;#xFF1A;&amp;#x5B66;&amp;#x75">
+<meta name="keywords" content="activemq">
+<meta property="og:type" content="article">
+<meta property="og:title" content="mq">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;07&#x2F;20&#x2F;mq&#x2F;index.html">
+<meta property="og:site_name" content="Sebastian Getts">
+<meta property="og:description" content="MQ&amp;#x7684;&amp;#x5F15;&amp;#x5165;&amp;#x6A21;&amp;#x62DF;&amp;#x51E0;&amp;#x4E2A;&amp;#x573A;&amp;#x666F;&amp;#xFF1A; &amp;#x5B66;&amp;#x751F;&amp;#x6A21;&amp;#x5757;&amp;#x548C;&amp;#x8001;&amp;#x5E08;&amp;#x6A21;&amp;#x5757;&amp;#x3002;&amp;#x529F;&amp;#x80FD;&amp;#xFF1A;&amp;#x5B66;&amp;#x75">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-07-20T13:33:20.817Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/07/20/mq/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>mq | Sebastian Getts</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sebastian Getts</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">I'm the new one.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-fw fa-video-camera"></i>movies</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/20/mq/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Sebastian">
+      <meta itemprop="description" content="I'm feeling lucky!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sebastian Getts">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          mq
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-07-20 21:04:40 / Modified: 21:33:20" itemprop="dateCreated datePublished" datetime="2020-07-20T21:04:40+08:00">2020-07-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/MiddleWare/" itemprop="url" rel="index">
+                    <span itemprop="name">MiddleWare</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="MQ&#x7684;&#x5F15;&#x5165;"><a href="#MQ&#x7684;&#x5F15;&#x5165;" class="headerlink" title="MQ&#x7684;&#x5F15;&#x5165;"></a>MQ&#x7684;&#x5F15;&#x5165;</h1><p>&#x6A21;&#x62DF;&#x51E0;&#x4E2A;&#x573A;&#x666F;&#xFF1A;</p><ol>
+<li><p><code>&#x5B66;&#x751F;&#x6A21;&#x5757;</code>&#x548C;<code>&#x8001;&#x5E08;&#x6A21;&#x5757;</code>&#x3002;&#x529F;&#x80FD;&#xFF1A;&#x5B66;&#x751F;&#x5411;&#x8001;&#x5E08;&#x629B;&#x51FA;&#x95EE;&#x9898;&#xFF0C;&#x8001;&#x5E08;&#x53CD;&#x9988;&#x7ED9;&#x5B66;&#x751F;&#x7B54;&#x6848;&#x3002;&#x8001;&#x5E08;&#x4E00;&#x6B21;&#x53EA;&#x80FD;&#x7ED9;&#x4E00;&#x4E2A;&#x5B66;&#x751F;&#x89E3;&#x7B54;&#x95EE;&#x9898;&#xFF0C;&#x8FD9;&#x6837;&#x4E00;&#x6765;&#x5B66;&#x751F;&#x6570;&#x91CF;&#x5F88;&#x591A;&#x7684;&#x8BDD;&#x5C31;&#x4F1A;&#x7ED9;&#x540E;&#x7EED;&#x7B49;&#x5F85;&#x7684;&#x5B66;&#x751F;&#x5230;&#x6210;&#x5835;&#x585E;&#x3001;&#x6D6A;&#x8D39;&#x8D44;&#x6E90;&#x3002;&#x540C;&#x65F6;&#xFF0C;&#x4F17;&#x591A;&#x7684;&#x5B66;&#x751F;&#x4E0E;&#x8001;&#x5E08;&#x4E4B;&#x95F4;&#x5F62;&#x6210;&#x4E86;&#x8026;&#x5408;&#x3002;</p>
+<p>&#x89E3;&#x51B3;&#x65B9;&#x5F0F;&#xFF1A;&#x5F15;&#x5165;<code>&#x73ED;&#x957F;&#x6A21;&#x5757;</code>&#xFF0C;&#x5B66;&#x751F;&#x5C06;&#x95EE;&#x9898;&#x90FD;&#x629B;&#x7ED9;&#x73ED;&#x957F;&#xFF08;&#x9700;&#x8981;&#x5B9A;&#x4E49;&#x683C;&#x5F0F;&#xFF09;&#xFF0C;&#x73ED;&#x957F;&#x4E0D;&#x505A;&#x89E3;&#x7B54;&#xFF0C;&#x53EA;&#x505A;&#x95EE;&#x9898;&#x7684;&#x8BB0;&#x5F55;&#xFF0C;&#x8FD9;&#x6837;&#x5B66;&#x751F;&#x5C06;&#x95EE;&#x9898;&#x629B;&#x51FA;&#x540E;&#x4E0D;&#x7528;&#x7B49;&#x5F85;&#x3002;&#x73ED;&#x957F;&#x6536;&#x96C6;&#x95EE;&#x9898;&#x540E;&#xFF0C;&#x5C06;&#x95EE;&#x9898;&#x7ED9;&#x8001;&#x5E08;&#x6A21;&#x5757;&#xFF0C;&#x8001;&#x5E08;&#x4F9D;&#x6B21;&#x89E3;&#x7B54;&#x3002;&#x8FD9;&#x6837;&#x89E3;&#x51B3;&#x4E86;&#x5B66;&#x751F;&#x4E0E;&#x8001;&#x5E08;&#x4E4B;&#x95F4;&#x7684;&#x8026;&#x5408;&#xFF0C;&#x4E5F;&#x907F;&#x514D;&#x4E86;&#x4F17;&#x591A;&#x5B66;&#x751F;&#x7684;&#x7B49;&#x5F85;&#x6D6A;&#x8D39;&#x3002;</p>
+</li>
+<li><p><code>&#x7CFB;&#x7EDF;A</code>&#x9700;&#x8981;&#x53D1;&#x9001;&#x6570;&#x636E;&#x7ED9;&#x5176;&#x4ED6;&#x7CFB;&#x7EDF;&#xFF0C;&#x5DF2;&#x7ECF;&#x5B8C;&#x6210;&#x4E86;&#x7ED9;B&#x3001;C&#x53D1;&#x9001;&#x7684;&#x529F;&#x80FD;&#xFF0C;&#x53D1;&#x9001;&#x7ED9;&#x6BCF;&#x4E2A;&#x7CFB;&#x7EDF;&#x7684;&#x6570;&#x636E;&#x53EF;&#x80FD;&#x6709;&#x5DEE;&#x5F02;&#xFF0C;&#x56E0;&#x6B64;&#x53D1;&#x9001;&#x524D;&#x4F1A;&#x5BF9;&#x6570;&#x636E;&#x8FDB;&#x884C;&#x7EC4;&#x88C5;&#x3002;</p>
+<p>&#x4E0A;&#x7EBF;&#x540E;&#x53C8;&#x65B0;&#x589E;&#x4E86;&#x4E00;&#x4E2A;&#x9700;&#x6C42;&#xFF0C;<code>D</code>&#x4E5F;&#x8981;&#x63A5;&#x6536;<code>A</code>&#x7684;&#x6570;&#x636E;&#xFF0C;<strong>&#x6B64;&#x65F6;&#x5C31;&#x9700;&#x8981;&#x4FEE;&#x6539;A&#x7CFB;&#x7EDF;&#xFF0C;&#x8BA9;&#x4ED6;&#x611F;&#x77E5;&#x5230;D&#x7684;&#x5B58;&#x5728;</strong>&#xFF0C;&#x8FD9;&#x65F6;&#x5C31;&#x66B4;&#x9732;&#x51FA;&#x4E00;&#x4E2A;&#x95EE;&#x9898;&#xFF1A;&#x6BCF;&#x63A5;&#x5165;&#x4E00;&#x4E2A;&#x4E0B;&#x6E38;&#x7CFB;&#x7EDF;&#xFF0C;&#x90FD;&#x9700;&#x8981;&#x5BF9;<code>A</code>&#x8FDB;&#x884C;&#x6539;&#x9020;&#xFF0C;&#x5F00;&#x53D1;&#x3001;&#x8054;&#x8C03;&#x6548;&#x7387;&#x4F4E;&#xFF0C;&#x8026;&#x5408;&#x4E25;&#x91CD;&#xFF0C;&#x589E;&#x52A0;<code>A</code>&#x7684;&#x8D1F;&#x62C5;&#x3002;</p>
+</li>
+</ol><a id="more"></a>
+
+<h2 id="&#x597D;&#x5904;"><a href="#&#x597D;&#x5904;" class="headerlink" title="&#x597D;&#x5904;"></a>&#x597D;&#x5904;</h2><ul>
+<li><p>&#x89E3;&#x51B3;&#x8026;&#x5408;  &#x5F53;&#x65B0;&#x7684;&#x6A21;&#x5757;&#x63A5;&#x8FDB;&#x6765;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x505A;&#x5230;&#x4EE3;&#x7801;&#x6539;&#x52A8;&#x6700;&#x5C0F;</p>
+</li>
+<li><p>&#x5F02;&#x6B65;&#x6A21;&#x578B;  &#x201C;&#x65E9;&#x4E0A;&#x4E0B;&#x5355;&#xFF0C;&#x4E0B;&#x5348;&#x6536;&#x8D27;&#x201C;&#xFF0C;&#x63D0;&#x5347;&#x6574;&#x4F53;&#x7CFB;&#x7EDF;&#x7684;&#x541E;&#x5410;&#x80FD;&#x529B;</p>
+</li>
+<li><p>&#x524A;&#x5CF0;  &#x76F8;&#x5F53;&#x4E8E;&#x6D41;&#x91CF;&#x7F13;&#x51B2;&#x6C60;&#xFF0C;&#x53EF;&#x4EE5;&#x8BA9;&#x540E;&#x7AEF;&#x7CFB;&#x7EDF;&#x6309;&#x7167;&#x81EA;&#x8EAB;&#x541E;&#x5410;&#x80FD;&#x529B;&#x8FDB;&#x884C;&#x6D88;&#x8D39;&#xFF0C;&#x4E0D;&#x88AB;&#x51B2;&#x8DE8;</p>
+</li>
+</ul>
+<h1 id="&#x8BA2;&#x9605;&#x6A21;&#x5F0F;"><a href="#&#x8BA2;&#x9605;&#x6A21;&#x5F0F;" class="headerlink" title="&#x8BA2;&#x9605;&#x6A21;&#x5F0F;"></a>&#x8BA2;&#x9605;&#x6A21;&#x5F0F;</h1><table>
+<thead>
+<tr>
+<th>&#x6BD4;&#x8F83;&#x9879;&#x76EE;</th>
+<th>Topic&#x6A21;&#x5F0F;&#x961F;&#x5217;</th>
+<th>Queue&#x6A21;&#x5F0F;&#x961F;&#x5217;</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x5DE5;&#x4F5C;&#x6A21;&#x5F0F;</td>
+<td>&#x201D;&#x8BA2;&#x9605;-&#x53D1;&#x5E03;&#x201C;&#x6A21;&#x5F0F;&#xFF0C;&#x5982;&#x679C;&#x5F53;&#x524D;&#x6CA1;&#x6709;&#x8BA2;&#x9605;&#x8005;&#xFF0C;&#x6D88;&#x606F;&#x5C06;&#x4F1A;&#x88AB;&#x4E22;&#x5F03;&#xFF0C;&#x5982;&#x679C;&#x6709;&#x591A;&#x4E2A;&#x8BA2;&#x9605;&#x8005;&#xFF0C;&#x90FD;&#x4F1A;&#x88AB;&#x5206;&#x53D1;&#x3002;</td>
+<td>&#x201D;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#x201C;&#x6A21;&#x5F0F;&#x3002;&#x5982;&#x679C;&#x5F53;&#x524D;&#x6CA1;&#x6709;&#x6D88;&#x8D39;&#x8005;&#xFF0C;&#x6D88;&#x606F;&#x4E5F;&#x4E0D;&#x4F1A;&#x88AB;&#x4E22;&#x5F03;&#x3002;&#x5982;&#x679C;&#x6709;&#x591A;&#x4E2A;&#x6D88;&#x8D39;&#x8005;&#xFF0C;&#x90A3;&#x4E48;&#x6D88;&#x606F;&#x4E5F;&#x53EA;&#x4F1A;&#x53D1;&#x9001;&#x7ED9;&#x5176;&#x4E2D;&#x4E00;&#x4E2A;&#x6D88;&#x8D39;&#x8005;&#xFF08;&#x8F6E;&#x5BFB;&#x7740;&#x53D1;&#xFF09;&#x3002;&#x4E00;&#x5BF9;&#x4E00;&#xFF08;&#x7AEF;&#x5BF9;&#x7AEF;&#xFF09;&#x3002;</td>
+</tr>
+<tr>
+<td>&#x6709;&#x65E0;&#x72B6;&#x6001;</td>
+<td>&#x65E0;&#x72B6;&#x6001;</td>
+<td>Queue&#x6570;&#x636E;&#x9ED8;&#x8BA4;&#x4F1A;&#x5728;mq&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x4EE5;&#x6587;&#x4EF6;&#x5F62;&#x5F0F;&#x4FDD;&#x5B58;</td>
+</tr>
+<tr>
+<td>&#x4F20;&#x9012;&#x5B8C;&#x6574;&#x6027;</td>
+<td>&#x5982;&#x679C;&#x6CA1;&#x6709;&#x8BA2;&#x9605;&#x8005;&#xFF0C;&#x6D88;&#x606F;&#x4F1A;&#x88AB;&#x4E22;&#x5F03;&#x3002;&#x4E0D;&#x5B8C;&#x6574;&#x3002;</td>
+<td>&#x6D88;&#x606F;&#x4E0D;&#x4F1A;&#x4E22;&#x5F03;</td>
+</tr>
+<tr>
+<td>&#x5904;&#x7406;&#x6548;&#x7387;</td>
+<td>&#x7531;&#x4E8E;&#x6D88;&#x606F;&#x8981;&#x6309;&#x7167;&#x8BA2;&#x9605;&#x8005;&#x7684;&#x6570;&#x91CF;&#x8FDB;&#x884C;&#x590D;&#x5236;&#xFF0C;&#x6240;&#x4EE5;&#x5904;&#x7406;&#x6027;&#x80FD;&#x4F1A;&#x968F;&#x7740;&#x8BA2;&#x9605;&#x8005;&#x7684;&#x589E;&#x52A0;&#x800C;&#x660E;&#x663E;&#x964D;&#x4F4E;&#xFF0C;&#x5E76;&#x4E14;&#x8FD8;&#x8981;&#x7ED3;&#x5408;&#x4E0D;&#x540C;&#x6D88;&#x606F;&#x534F;&#x8BAE;&#x3001;&#x81EA;&#x8EAB;&#x7684;&#x6027;&#x80FD;&#x5DEE;&#x5F02;</td>
+<td>&#x7531;&#x4E8E;&#x4E00;&#x6761;&#x4FE1;&#x606F;&#x53EA;&#x53D1;&#x9001;&#x7ED9;&#x4E00;&#x4E2A;&#x6D88;&#x8D39;&#x8005;&#xFF0C;&#x6240;&#x4EE5;&#x6027;&#x80FD;&#x4E0E;&#x6D88;&#x8D39;&#x8005;&#x6570;&#x91CF;&#x65E0;&#x5173;&#x3002;&#x4F46;&#x662F;&#x4E0D;&#x540C;&#x6D88;&#x606F;&#x534F;&#x8BAE;&#x7684;&#x5177;&#x4F53;&#x6027;&#x80FD;&#x4E5F;&#x662F;&#x6709;&#x5DEE;&#x5F02;&#x7684;</td>
+</tr>
+</tbody></table>
+<h1 id="JMS"><a href="#JMS" class="headerlink" title="JMS"></a>JMS</h1><p>Java&#x6D88;&#x606F;&#x670D;&#x52A1;&#xFF0C;Java Message Service&#xFF0C;JavaEE&#x4E2D;&#x7684;&#x4E00;&#x5957;&#x89C4;&#x8303;&#xFF0C;&#x6307;&#x7684;&#x662F;&#x4E24;&#x4E2A;&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x4E4B;&#x95F4;&#x8FDB;&#x884C;&#x5F02;&#x6B65;&#x901A;&#x4FE1;&#x7684;API&#xFF0C;&#x5B83;&#x4E3A;&#x6807;&#x51C6;&#x6D88;&#x606F;&#x534F;&#x8BAE;i&#x548C;&#x6D88;&#x606F;&#x670D;&#x52A1;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x7EC4;&#x901A;&#x7528;&#x63A5;&#x53E3;&#xFF0C;&#x5305;&#x62EC;&#x521B;&#x5EFA;&#x3001;&#x53D1;&#x9001;&#x3001;&#x8BFB;&#x53D6;&#x6D88;&#x606F;&#x7B49;&#xFF0C;&#x7528;&#x4E8E;&#x652F;&#x6301;Java&#x5E94;&#x7528;&#x7A0B;&#x5E8F;&#x5F00;&#x53D1;&#x3002;</p>
+<p>&#x5B9E;&#x73B0;JMS&#x63A5;&#x53E3;&#x548C;&#x89C4;&#x8303;&#x7684;&#x6D88;&#x606F;&#x4E2D;&#x95F4;&#x4EF6;&#xFF0C;&#x5373;&#x6211;&#x4EEC;&#x7684;MQ&#x670D;&#x52A1;&#x5668;&#x3002;</p>
+<h2 id="MESSAGE"><a href="#MESSAGE" class="headerlink" title="MESSAGE"></a>MESSAGE</h2><p>JMS message&#x7684;&#x7EC4;&#x6210;&#xFF1A;&#x6D88;&#x606F;&#x5934; + &#x6D88;&#x606F;&#x4F53; + &#x6D88;&#x606F;&#x5C5E;&#x6027;</p>
+<h3 id="&#x6D88;&#x606F;&#x5934;"><a href="#&#x6D88;&#x606F;&#x5934;" class="headerlink" title="&#x6D88;&#x606F;&#x5934;"></a>&#x6D88;&#x606F;&#x5934;</h3><p>&#x8BB0;&#x5F55;&#x5E38;&#x7528;&#x7684;</p>
+<ul>
+<li><p>JMSDestination &#x6D88;&#x606F;&#x53D1;&#x9001;&#x7684;&#x76EE;&#x7684;&#x5730;&#xFF0C;Queue&#x6216;Topic</p>
+</li>
+<li><p>JMSDeliveryMode &#x6301;&#x4E45;&#x6216;&#x975E;&#x6301;&#x4E45;&#xFF08;&#x6D88;&#x606F;&#x7684;&#x6301;&#x4E45;&#x5316;&#xFF09;&#x3002;&#x6301;&#x4E45;&#x8BDD;&#x80FD;&#x8BA9;&#x6570;&#x636E;&#x66F4;&#x53EF;&#x9760;&#xFF0C;&#x5373;JMS&#x51FA;&#x73B0;&#x6545;&#x969C;&#x7684;&#x8BDD;&#x6570;&#x636E;&#x4E5F;&#x4E0D;&#x4F1A;&#x4E22;&#x5931;&#xFF0C;&#x4F1A;&#x5728;&#x670D;&#x52A1;&#x5668;&#x6062;&#x590D;&#x4E4B;&#x540E;&#x518D;&#x6B21;&#x4F20;&#x9012;&#x3002;</p>
+</li>
+<li><p>JMSExpiration &#x8FC7;&#x671F;&#x65F6;&#x95F4;&#xFF0C;&#x8FC7;&#x671F;&#x65F6;&#x95F4;&#x4E4B;&#x540E;&#x6D88;&#x606F;&#x8FD8;&#x6CA1;&#x88AB;&#x53D1;&#x51FA;&#x53BB;&#xFF0C;&#x5C31;&#x6E05;&#x9664;</p>
+</li>
+<li><p>JMSPriority &#x4F18;&#x5148;&#x7EA7;&#xFF0C;0-4&#x666E;&#x901A;&#xFF0C;5-9&#x52A0;&#x6025;&#xFF0C;&#x4E0D;&#x4E25;&#x683C;&#x6309;&#x7167;&#x987A;&#x5E8F;&#xFF0C;&#x4F46;&#x52A0;&#x6025;&#x4E00;&#x5B9A;&#x9AD8;&#x4E8E;&#x666E;&#x901A;</p>
+</li>
+<li><p>JMSMessgeID &#x552F;&#x4E00;ID&#xFF0C;&#x5224;&#x65AD;&#x662F;&#x5426;&#x91CD;&#x590D;&#x6D88;&#x8D39;&#xFF0C;&#x5E42;&#x7B49;&#x6027;</p>
+</li>
+</ul>
+<h3 id="&#x6D88;&#x606F;&#x4F53;"><a href="#&#x6D88;&#x606F;&#x4F53;" class="headerlink" title="&#x6D88;&#x606F;&#x4F53;"></a>&#x6D88;&#x606F;&#x4F53;</h3><p>&#x5C01;&#x88C5;&#x5177;&#x4F53;&#x6D88;&#x606F;&#x6570;&#x636E;&#xFF0C;5&#x79CD;&#x683C;&#x5F0F;&#x3002;&#xFF08;&#x4F7F;&#x7528;&#x9891;&#x7387;&#x9AD8;&#xFF09;</p>
+<ul>
+<li><p>TextMessage &#x666E;&#x901A;&#x5B57;&#x7B26;&#x4E32;&#x6D88;&#x606F; &#xFF08;&#x4F7F;&#x7528;&#x9891;&#x7387;&#x9AD8;&#xFF09;</p>
+</li>
+<li><p>MapMessage map&#x7C7B;&#x578B;&#x6D88;&#x606F;&#xFF0C;key&#x4E3A;String&#x7C7B;&#x578B;&#xFF0C;&#x503C;&#x4E3A;Java&#x57FA;&#x672C;&#x6570;&#x636E;&#x7C7B;&#x578B;</p>
+</li>
+<li><p>BytesMessage &#x4E8C;&#x8FDB;&#x5236;&#x6570;&#x7EC4;&#x6D88;&#x606F;</p>
+</li>
+<li><p>StreamMessage &#x6D41;</p>
+</li>
+<li><p>ObjectMessage &#x53EF;&#x5E8F;&#x5217;&#x5316;&#x7684;Java&#x5BF9;&#x8C61;</p>
+</li>
+</ul>
+<p>&#x53D1;&#x9001;&#x548C;&#x63A5;&#x53D7;&#x7684;&#x6D88;&#x606F;&#x7C7B;&#x578B;&#x5FC5;&#x987B;&#x4E00;&#x81F4;&#x3002;</p>
+<h3 id="&#x6D88;&#x606F;&#x5C5E;&#x6027;"><a href="#&#x6D88;&#x606F;&#x5C5E;&#x6027;" class="headerlink" title="&#x6D88;&#x606F;&#x5C5E;&#x6027;"></a>&#x6D88;&#x606F;&#x5C5E;&#x6027;</h3><p>&#x5982;&#x679C;&#x9700;&#x8981;&#x9664;&#x6D88;&#x606F;&#x5934;&#x5B57;&#x6BB5;&#x4EE5;&#x5916;&#x7684;&#x503C;&#xFF0C;&#x90A3;&#x4E48;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#x6D88;&#x606F;&#x5C5E;&#x6027;&#x3002;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">TextMessage tm = session.createTextMessage(<span class="string">&quot;wa wa&quot;</span>);</span><br><span class="line">tm.setStringProperty(<span class="string">&quot;c01&quot;</span>,<span class="string">&quot;vip&quot;</span>); <span class="comment">// &#x589E;&#x52A0;&#x5C5E;&#x6027;</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">TextMessage tms = (TextMessage) messge;</span><br><span class="line">System.out.println(tms.getStringProperty(<span class="string">&quot;c01&quot;</span>)); <span class="comment">// &#x63A5;&#x6536;</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="&#x53EF;&#x9760;&#x6027;"><a href="#&#x53EF;&#x9760;&#x6027;" class="headerlink" title="&#x53EF;&#x9760;&#x6027;"></a>&#x53EF;&#x9760;&#x6027;</h1><p>MQ&#x6302;&#x4E86;&#xFF0C;&#x6D88;&#x606F;&#x7684;&#x6301;&#x4E45;&#x8BDD;&#x548C;&#x4E22;&#x5931;&#x7684;&#x60C5;&#x51B5;&#x5982;&#x4F55;&#xFF1F;&#x4E00;&#x822C;&#x6709;<strong>&#x4E09;&#x4E2A;&#x7279;&#x5F81;</strong>&#x6765;&#x4FDD;&#x969C;&#xFF1A;&#x6301;&#x4E45;&#x5316;&#x3001;&#x4E8B;&#x52A1;&#x3001;&#x7B7E;&#x6536;&#xFF0C;&#x5176;&#x4E2D;<strong>&#x4E8B;&#x52A1;&#x504F;&#x751F;&#x4EA7;&#x8005;&#xFF0C;&#x7B7E;&#x6536;&#x504F;&#x6D88;&#x8D39;&#x8005;</strong>&#x3002;&#x6B64;&#x5916;&#x5BF9;&#x4E8E;&#x5BF9;&#x4E8E;&#x5B95;&#x673A;&#xFF0C;&#x8FD8;&#x6709;<strong>&#x591A;&#x8282;&#x70B9;&#x96C6;&#x7FA4;</strong>&#x3002;</p>
+<h2 id="&#x6301;&#x4E45;&#x5316;-PERSISTENT"><a href="#&#x6301;&#x4E45;&#x5316;-PERSISTENT" class="headerlink" title="&#x6301;&#x4E45;&#x5316; PERSISTENT"></a>&#x6301;&#x4E45;&#x5316; PERSISTENT</h2><p>&#x53C2;&#x8003;redis&#x7684;&#x6301;&#x4E45;&#x5316;&#xFF08;&#x6709;rdb&#x548C;aof&#xFF09;&#xFF0C;&#x6D88;&#x606F;&#x4E5F;&#x6709;&#x7C7B;&#x4F3C;&#x7684;&#x8F85;&#x52A9;&#x3002;</p>
+<h3 id="QUEUE"><a href="#QUEUE" class="headerlink" title="QUEUE"></a>QUEUE</h3><h4 id="&#x53C2;&#x6570;&#x8BBE;&#x7F6E;"><a href="#&#x53C2;&#x6570;&#x8BBE;&#x7F6E;" class="headerlink" title="&#x53C2;&#x6570;&#x8BBE;&#x7F6E;"></a>&#x53C2;&#x6570;&#x8BBE;&#x7F6E;</h4><ol>
+<li><p>&#x975E;&#x6301;&#x4E45; &#x670D;&#x52A1;&#x5668;&#x5B95;&#x673A;&#xFF0C;&#x6D88;&#x606F;&#x4E0D;&#x5B58;&#x5728;</p>
+<blockquote>
+<p>messaegeProducer.setDeliveryMode(DeliveryMode.<em>NON_PRESISTENT</em>);</p>
+</blockquote>
+</li>
+<li><p>&#x6301;&#x4E45;&#x5316; &#x670D;&#x52A1;&#x5668;&#x5B95;&#x673A;&#x540E;&#x6D88;&#x606F;&#x4F9D;&#x7136;&#x5B58;&#x5728;</p>
+<blockquote>
+<p>messageProducer.setDelieveryMode(DeliveryMode.<em>PRESISTENT</em>);</p>
+</blockquote>
+</li>
+</ol>
+<h4 id="&#x6A21;&#x62DF;&#x573A;&#x666F;"><a href="#&#x6A21;&#x62DF;&#x573A;&#x666F;" class="headerlink" title="&#x6A21;&#x62DF;&#x573A;&#x666F;"></a>&#x6A21;&#x62DF;&#x573A;&#x666F;</h4><p>&#x975E;&#x6301;&#x4E45;&#x5316;&#x65F6;&#xFF0C;&#x5F53;&#x53D1;&#x5E03;&#x8005;&#x5728;&#x961F;&#x5217;&#x53D1;&#x5E03;&#x4E86;&#x6D88;&#x606F;&#xFF0C;&#x4E4B;&#x540E;&#x5C06;activeMQ&#x670D;&#x52A1;&#x5668;&#x91CD;&#x542F;&#xFF0C;MQ&#x670D;&#x52A1;&#x5668;&#x4E2D;&#x7684;&#x6D88;&#x606F;&#x4F1A;&#x4E22;&#x5931;&#x3002;</p>
+<p>&#x6301;&#x4E45;&#x5316;&#x65F6;&#xFF0C;&#x4E0A;&#x8FF0;&#x64CD;&#x4F5C;&#x540E;&#xFF0C;&#x6570;&#x636E;&#x4F9D;&#x7136;&#x5B58;&#x5728;&#x3002;</p>
+<p>&#x5728;&#x961F;&#x5217;&#x4E2D;&#xFF0C;&#x5982;&#x679C;<strong>&#x4E0D;&#x663E;&#x793A;&#x6807;&#x6CE8;&#x6301;&#x4E45;</strong>&#xFF0C;<strong>&#x9ED8;&#x8BA4;&#x6301;&#x4E45;&#x5316;</strong>&#xFF0C;&#x56E0;&#x4E3A;&#x53EF;&#x9760;&#x6027;&#x662F;&#x4F18;&#x5148;&#x8003;&#x8651;&#x7684;&#x56E0;&#x7D20;&#x3002;</p>
+<p>&#x6301;&#x4E45;&#x3001;&#x4E8B;&#x7269;&#x3001;&#x7B7E;&#x6536;</p>
+<h3 id="TOPIC"><a href="#TOPIC" class="headerlink" title="TOPIC"></a>TOPIC</h3><p>&#x5BF9;&#x4E8E;topic&#xFF0C;&#x5148;&#x542F;&#x52A8;&#x8BA2;&#x9605;&#x518D;&#x542F;&#x52A8;&#x751F;&#x4EA7;&#xFF0C;&#x5426;&#x5219;&#x6CA1;&#x6709;&#x610F;&#x4E49;&#xFF08;&#x6CA1;&#x4EBA;&#x8BA2;&#x9605;&#xFF0C;&#x53D1;&#x9001;&#x7684;&#x6D88;&#x606F;&#x90FD;&#x662F;&#x5E9F;&#x6D88;&#x606F;&#xFF09;&#x3002;&#x6301;&#x4E45;&#x5316;topic&#x7C7B;&#x4F3C;&#x4E8E;&#x8BA2;&#x9605;&#x53F7;&#xFF1A;</p>
+<ol>
+<li><p>&#x5148;&#x8FD0;&#x884C;&#x4E00;&#x6B21;&#x6D88;&#x8D39;&#x8005;&#xFF0C;&#x7B49;&#x4E8E;&#x5411;MQ&#x6CE8;&#x518C;</p>
+</li>
+<li><p>&#x7136;&#x540E;&#x518D;&#x8FD0;&#x884C;&#x751F;&#x4EA7;&#x8005;&#x53D1;&#x9001;&#x4FE1;&#x606F;</p>
+</li>
+<li><p>&#x6D88;&#x8D39;&#x8005;&#x4E00;&#x5B9A;&#x4F1A;&#x6536;&#x5230;&#x8BA2;&#x9605;&#x6D88;&#x606F;&#x3002;&#x4E0D;&#x5728;&#x7EBF;&#x7684;&#x8BDD;&#x4E0B;&#x6B21;&#x8FDE;&#x63A5;&#x65F6;&#x4F1A;&#x63A5;&#x6536;&#x3002;</p>
+</li>
+</ol>
+<h2 id="&#x4E8B;&#x52A1;-TRANSACTION"><a href="#&#x4E8B;&#x52A1;-TRANSACTION" class="headerlink" title="&#x4E8B;&#x52A1; TRANSACTION"></a>&#x4E8B;&#x52A1; TRANSACTION</h2><p>&#x6570;&#x636E;&#x5E93;&#x7684;&#x4E8B;&#x52A1;&#x3001;ACID&#x3001;&#x9694;&#x79BB;&#x7EA7;&#x522B;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// &#x521B;&#x5EFA;session&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#x5373; &#x4E8B;&#x52A1;&#x662F;&#x5426;&#x5F00;&#x542F;</span></span><br><span class="line">Session session = connection.createSession(<span class="keyword">false</span>, Session.AUTO_ACKNOWLEDGE);</span><br></pre></td></tr></table></figure>
+
+<h3 id="&#x751F;&#x4EA7;&#x8005;"><a href="#&#x751F;&#x4EA7;&#x8005;" class="headerlink" title="&#x751F;&#x4EA7;&#x8005;"></a>&#x751F;&#x4EA7;&#x8005;</h3><ul>
+<li><p>false &#x5173;&#x95ED;&#x4E8B;&#x52A1;&#xFF0C;&#x53EA;&#x8981;&#x6267;&#x884C;<code>send</code>&#x5C31;&#x8FDB;&#x5165;&#x5230;&#x961F;&#x5217;&#x4E2D;</p>
+</li>
+<li><p>true &#x5F00;&#x542F;&#x4E8B;&#x7269;&#xFF0C;&#x5148;&#x6267;&#x884C;<code>send</code>&#x518D;&#x6267;&#x884C;<code>commit</code>&#xFF0C;&#x6D88;&#x606F;&#x624D;&#x88AB;&#x771F;&#x6B63;&#x63D0;&#x4EA4;&#x5230;&#x961F;&#x5217;&#x4E2D;&#x3002;</p>
+</li>
+</ul>
+<p>&#x5BF9;&#x4E8E;&#x4E8B;&#x7269;&#x7684;true&#xFF0C;&#x4E3A;&#x4F55;&#x591A;&#x6B64;&#x4E00;&#x4E3E;&#xFF1F;&#x4FDD;&#x8BC1;&#x4E8B;&#x52A1;&#x7684;&#x9AD8;&#x53EF;&#x7528;&#x3001;&#x5BB9;&#x9519;&#x6027;&#xFF0C;&#x53EF;&#x4EE5;&#x56DE;&#x6EDA;&#x3002;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span>{</span><br><span class="line">    <span class="comment">// ok session.commit;</span></span><br><span class="line">}<span class="keyword">catch</span> (Exception e){</span><br><span class="line">    <span class="comment">// error</span></span><br><span class="line">    session.rollback();</span><br><span class="line">}<span class="keyword">finally</span>{</span><br><span class="line">    <span class="keyword">if</span>(<span class="keyword">null</span> != session){</span><br><span class="line">        session.close();</span><br><span class="line">&#xA0;&#xA0;&#xA0;&#xA0;}</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<h3 id="&#x6D88;&#x8D39;&#x8005;"><a href="#&#x6D88;&#x8D39;&#x8005;" class="headerlink" title="&#x6D88;&#x8D39;&#x8005;"></a>&#x6D88;&#x8D39;&#x8005;</h3><p>&#x521B;&#x5EFA;session&#x65F6;&#x5C06;&#x4E8B;&#x52A1;&#x6539;&#x4E3A;<code>true</code>&#xFF0C;&#x540C;&#x6837;&#x9700;&#x8981;<code>commit</code>&#xFF0C;&#x5426;&#x5219;&#x4E8B;&#x52A1;&#x4F1A;&#x88AB;&#x91CD;&#x590D;&#x6D88;&#x8D39;&#x3002;</p>
+<h2 id="&#x7B7E;&#x6536;-ACKNOWLEDGE"><a href="#&#x7B7E;&#x6536;-ACKNOWLEDGE" class="headerlink" title="&#x7B7E;&#x6536; ACKNOWLEDGE"></a>&#x7B7E;&#x6536; ACKNOWLEDGE</h2><p>&#x5206;&#x4E3A;&#x4E8B;&#x52A1;&#x548C;&#x975E;&#x4E8B;&#x52A1;&#x4E24;&#x79CD;&#x60C5;&#x51B5;</p>
+<h4 id="&#x975E;&#x4E8B;&#x52A1;"><a href="#&#x975E;&#x4E8B;&#x52A1;" class="headerlink" title="&#x975E;&#x4E8B;&#x52A1;"></a>&#x975E;&#x4E8B;&#x52A1;</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// &#x521B;&#x5EFA;session&#x7684;&#x7B2C;&#x4E2A;&#x53C2;&#x6570;&#x5373; &#x7B7E;&#x6536;&#x7C7B;&#x578B;</span></span><br><span class="line">Session session = connection.createSession(<span class="keyword">false</span>, Session.AUTO_ACKNOWLEDGE);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>&#x81EA;&#x52A8;&#x7B7E;&#x6536;&#xFF08;&#x9ED8;&#x8BA4;&#xFF09;   <strong>AUTO_ACKNOWLEDGE</strong>  &#xFF08;&#x4F7F;&#x7528;&#x9891;&#x7387;&#x9AD8;&#xFF09;</p>
+</li>
+<li><p>&#x624B;&#x52A8;&#x7B7E;&#x6536; <strong>CLIENT_ACKNOWLEDGE</strong> &#xFF08;&#x4F7F;&#x7528;&#x9891;&#x7387;&#x9AD8;&#xFF09;</p>
+</li>
+<li><p>&#x5141;&#x8BB8;&#x91CD;&#x590D;&#x6D88;&#x606F; <strong>DUPS_OK_ACKNOWLEDGE</strong></p>
+</li>
+</ul>
+<p>&#x624B;&#x52A8;&#x7B7E;&#x6536;&#x65F6;&#x9700;&#x8981;&#x624B;&#x52A8;&#x6807;&#x8BB0;&#xFF0C;&#x5426;&#x5219;&#x4F1A;&#x9020;&#x6210;&#x91CD;&#x590D;&#x6D88;&#x8D39;&#xFF1A;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">TextMessage tm = (TextMessage)messageConsumer.receive(<span class="number">4000L</span>);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">null</span> != tm){</span><br><span class="line">    tm.acknowledge();</span><br><span class="line">}<span class="keyword">else</span>{</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">}</span><br><span class="line"><span class="comment">// ...</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="&#x4E8B;&#x52A1;"><a href="#&#x4E8B;&#x52A1;" class="headerlink" title="&#x4E8B;&#x52A1;"></a>&#x4E8B;&#x52A1;</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// &#x521B;&#x5EFA;session&#x7684;&#x7B2C;&#x4E2A;&#x53C2;&#x6570;&#x5373; &#x7B7E;&#x6536;&#x7C7B;&#x578B;</span></span><br><span class="line">Session session = connection.createSession(<span class="keyword">true</span>, Session.AUTO_ACKNOWLEDGE);</span><br></pre></td></tr></table></figure>
+
+<p>&#x6709;&#x4E8B;&#x52A1;&#x5C31;&#x9700;&#x8981;<code>commit</code>&#x3002;</p>
+<h2 id="&#x70B9;&#x5BF9;&#x70B9;"><a href="#&#x70B9;&#x5BF9;&#x70B9;" class="headerlink" title="&#x70B9;&#x5BF9;&#x70B9;"></a>&#x70B9;&#x5BF9;&#x70B9;</h2><p>&#x57FA;&#x4E8E;&#x961F;&#x5217;&#xFF0C;&#x751F;&#x4EA7;&#x8005;&#x53D1;&#x6D88;&#x606F;&#x5230;&#x961F;&#x5217;&#xFF0C;&#x6D88;&#x8D39;&#x8005;&#x4ECE;&#x961F;&#x5217;&#x63A5;&#x6536;&#x6D88;&#x606F;&#xFF0C;&#x961F;&#x5217;&#x7684;&#x5B58;&#x5728;&#x4F7F;&#x5F97;&#x6D88;&#x606F;&#x7684;<strong>&#x5F02;&#x6B65;&#x4F20;&#x8F93;</strong>&#x6210;&#x4E3A;&#x53EF;&#x80FD;&#x3002;&#x7C7B;&#x6BD4;&#x5E73;&#x65F6;&#x7684;&#x5373;&#x65F6;&#x901A;&#x8BAF;&#x5DE5;&#x5177;&#x3002;</p>
+<ul>
+<li><p>&#x5982;&#x679C;&#x5728;<strong>Session</strong>&#x5173;&#x95ED;&#x65F6;&#x6709;&#x90E8;&#x5206;&#x6D88;&#x606F;&#x5DF2;&#x88AB;&#x6536;&#x5230;&#x4F46;&#x8FD8;&#x6CA1;&#x6709;&#x7B7E;&#x6536;&#xFF08;<strong>acknowledge</strong>)&#xFF0C;&#x90A3;&#x5F53;&#x6D88;&#x8D39;&#x8005;&#x4E0B;&#x6B21;&#x8FDE;&#x63A5;&#x5230;&#x540C;&#x6837;&#x7684;&#x961F;&#x5217;&#x65F6;&#xFF0C;&#x6D88;&#x606F;&#x4F1A;&#x88AB;&#x518D;&#x6B21;&#x63A5;&#x6536;&#x3002;&#xFF08;&#x4E0D;&#x4F1A;&#x4E22;&#x5931;&#xFF09;</p>
+</li>
+<li><p>&#x961F;&#x5217;&#x53EF;&#x4EE5;&#x957F;&#x4E45;&#x5730;&#x4FDD;&#x5B58;&#x6D88;&#x606F;&#x76F4;&#x5230;&#x6D88;&#x8D39;&#x8005;&#x6536;&#x5230;&#x6D88;&#x606F;&#x3002;<strong>&#x6D88;&#x8D39;&#x8005;&#x4E0D;&#x9700;&#x8981;&#x56E0;&#x4E3A;&#x518D;&#x6B21;&#x62C5;&#x5FC3;&#x6D88;&#x606F;&#x4E22;&#x5931;&#x800C;&#x65F6;&#x523B;&#x548C;&#x961F;&#x5217;&#x4FDD;&#x6301;&#x6FC0;&#x6D3B;&#x7684;&#x8FDE;&#x63A5;&#x72B6;&#x6001;</strong>&#xFF0C;&#x5145;&#x5206;&#x4F53;&#x73B0;&#x4E86;&#x5F02;&#x6B65;&#x4F20;&#x8F93;&#x6A21;&#x5F0F;&#x7684;&#x4F18;&#x52BF;&#x3002;</p>
+</li>
+</ul>
+<h2 id="&#x53D1;&#x5E03;&#x8BA2;&#x9605;"><a href="#&#x53D1;&#x5E03;&#x8BA2;&#x9605;" class="headerlink" title="&#x53D1;&#x5E03;&#x8BA2;&#x9605;"></a>&#x53D1;&#x5E03;&#x8BA2;&#x9605;</h2><p>JMS Pub/Sub&#x6A21;&#x578B;&#x3002;&#x5B9A;&#x4E49;&#x4E86;&#x5982;&#x4F55;&#x5411;&#x4E00;&#x4E2A;&#x5185;&#x5BB9;&#x8282;&#x70B9;&#x53D1;&#x5E03;&#x548C;&#x8BA2;&#x9605;&#x6D88;&#x606F;&#xFF0C;&#x8FD9;&#x4E9B;&#x8282;&#x70B9;&#x88AB;&#x79F0;&#x4F5C;<strong>topic</strong>&#xFF0C;&#x4E3B;&#x9898;&#x53EF;&#x4EE5;&#x88AB;&#x8BA4;&#x4E3A;&#x662F;&#x6D88;&#x606F;&#x7684;&#x4F20;&#x8F93;&#x4E2D;&#x4ECB;&#xFF0C;publisher&#x53D1;&#x5E03;&#x6D88;&#x606F;&#x5230;&#x4E3B;&#x9898;&#xFF0C;subscribe&#x4ECE;&#x4E3B;&#x9898;&#x8BA2;&#x9605;&#x6D88;&#x606F;&#x3002;&#x4E3B;&#x9898;&#x4F7F;&#x5F97;publisher&#x548C;subscribe&#x4FDD;&#x6301;&#x4E92;&#x76F8;&#x72EC;&#x7ACB;&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x63A5;&#x89E6;&#x5373;&#x53EF;&#x4FDD;&#x8BC1;&#x6D88;&#x606F;&#x7684;&#x4F20;&#x9001;&#x3002;</p>
+<h3 id="&#x975E;&#x6301;&#x4E45;"><a href="#&#x975E;&#x6301;&#x4E45;" class="headerlink" title="&#x975E;&#x6301;&#x4E45;"></a>&#x975E;&#x6301;&#x4E45;</h3><p>&#x5BF9;&#x4E8E;&#x975E;&#x6301;&#x4E45;&#x8BA2;&#x9605;&#xFF0C;&#x53EA;&#x6709;&#x5F53;&#x5BA2;&#x6237;&#x7AEF;&#x5904;&#x4E8E;&#x6FC0;&#x6D3B;&#x72B6;&#x6001;&#xFF0C;&#x4E5F;&#x5C31;&#x662F;&#x548C;MQ&#x4FDD;&#x6301;&#x8FDE;&#x63A5;&#x72B6;&#x6001;&#x624D;&#x80FD;&#x6536;&#x5230;&#x53D1;&#x9001;&#x5230;&#x67D0;&#x4E2A;&#x4E3B;&#x9898;&#x7684;&#x6D88;&#x606F;&#x3002;&#x5982;&#x679C;&#x6D88;&#x8D39;&#x8005;&#x5904;&#x4E8E;&#x79BB;&#x7EBF;&#x72B6;&#x6001;&#xFF0C;&#x751F;&#x4EA7;&#x8005;&#x53D1;&#x751F;&#x53D1;&#x9001;&#x7684;&#x4E3B;&#x9898;&#x6D88;&#x606F;&#x5C06;&#x4F1A;&#x4E22;&#x5931;&#x4F5C;&#x5E9F;&#xFF0C;&#x6D88;&#x8D39;&#x8005;&#x6C38;&#x8FDC;&#x4E0D;&#x4F1A;&#x6536;&#x5230;&#x3002;&#x6240;&#x4EE5;&#x6D88;&#x8D39;&#x8005;&#x8981;&#x5148;&#x6CE8;&#x518C;&#x624D;&#x80FD;&#x63A5;&#x53D7;&#x5230;&#x53D1;&#x5E03;&#x3002;</p>
+<h3 id="&#x6301;&#x4E45;&#x5316;"><a href="#&#x6301;&#x4E45;&#x5316;" class="headerlink" title="&#x6301;&#x4E45;&#x5316;"></a>&#x6301;&#x4E45;&#x5316;</h3><p>&#x5BA2;&#x6237;&#x7AEF;&#x5148;&#x5411;MQ&#x6CE8;&#x518C;&#x4E00;&#x4E2A;&#x81EA;&#x5DF1;&#x7684;&#x8EAB;&#x4EFD;ID&#x8BC6;&#x522B;&#x53F7;&#xFF0C;&#x5F53;&#x8FD9;&#x4E2A;&#x5BA2;&#x6237;&#x7AEF;&#x5904;&#x4E8E;&#x79BB;&#x7EBF;&#x65F6;&#xFF0C;&#x751F;&#x4EA7;&#x8005;&#x4F1A;&#x4E3A;&#x8FD9;&#x4E2A;ID&#x4FDD;&#x5B58;&#x6240;&#x6709;&#x53D1;&#x9001;&#x5230;&#x4E3B;&#x9898;&#x7684;&#x6D88;&#x606F;&#xFF0C;&#x5F53;&#x5BA2;&#x6237;&#x518D;&#x6B21;&#x8FDE;&#x63A5;&#x5230;MQ&#x65F6;&#xFF0C;MQ&#x4F1A;&#x6839;&#x636E;&#x6D88;&#x8D39;&#x8005;&#x7684;ID&#x5F97;&#x5230;&#x6240;&#x6709;&#x5F53;&#x81EA;&#x5DF1;&#x5904;&#x4E8E;&#x79BB;&#x7EBF;&#x65F6;&#x53D1;&#x9001;&#x5230;&#x4E3B;&#x9898;&#x7684;&#x6D88;&#x606F;&#xFF08;&#x5373; &#x53EF;&#x4EE5;&#x6062;&#x590D;&#x3001;&#x6D3E;&#x9001;&#x672A;&#x7B7E;&#x6536;&#x7684;&#x6D88;&#x606F;&#xFF09;&#x3002;</p>
+<h1 id="BROKER"><a href="#BROKER" class="headerlink" title="BROKER"></a>BROKER</h1><p>&#x96C6;&#x7FA4;&#x3001;&#x914D;&#x7F6E;&#x65F6;&#x4F1A;&#x7528;&#x5230;&#x3002;</p>
+<p>&#x76F8;&#x5F53;&#x4E8E;&#x4E00;&#x4E2A;ActiveMQ&#x670D;&#x52A1;&#x5668;<strong>&#x5B9E;&#x4F8B;</strong>&#xFF0C;&#x5B9E;&#x73B0;&#x4E86;&#x7528;&#x4EE3;&#x7801;&#x7684;&#x5F62;&#x5F0F;&#x542F;&#x52A8;ActiveMQ&#x5C06;MQ&#x5D4C;&#x5165;&#x5230;Java&#x4EE3;&#x7801;&#x4E2D;&#xFF0C;&#x4EE5;&#x4FBF;&#x968F;&#x65F6;&#x7528;&#x968F;&#x65F6;&#x542F;&#x52A8;&#xFF08;&#x7528;&#x7684;&#x65F6;&#x5019;&#x518D;&#x542F;&#x52A8;&#xFF0C;&#x8FD9;&#x6837;&#x8282;&#x7701;&#x8D44;&#x6E90;&#x3001;&#x4FDD;&#x8BC1;&#x53EF;&#x9760;&#x6027;&#xFF09;&#x3002;</p>
+<p>&#x4E4B;&#x524D;&#x4F1A;&#x5728;linux&#x670D;&#x52A1;&#x5668;&#x4E0A;&#x542F;&#x52A8;&#xFF0C;&#x800C;&#x5728;&#x8FD9;&#x91CC;&#xFF0C;&#x662F;&#x5C06;MQ&#x88C5;&#x5728;&#x4E86;&#x4EE3;&#x7801;&#x91CC;&#xFF0C;MQ&#x662F;&#x4E00;&#x4E2A;&#x5B9E;&#x4F8B;&#x3002;  &#x7C7B;&#x6BD4;springboot&#x5185;&#x5D4C;tomcat.</p>
+<h2 id="&#x6D88;&#x606F;&#x53D1;&#x9001;&#x6A21;&#x5F0F;"><a href="#&#x6D88;&#x606F;&#x53D1;&#x9001;&#x6A21;&#x5F0F;" class="headerlink" title="&#x6D88;&#x606F;&#x53D1;&#x9001;&#x6A21;&#x5F0F;"></a>&#x6D88;&#x606F;&#x53D1;&#x9001;&#x6A21;&#x5F0F;</h2><p>ActiveMQ&#x652F;&#x6301;&#x540C;&#x6B65;&#x3001;&#x5F02;&#x6B65;&#x4E24;&#x79CD;&#x53D1;&#x9001;&#x7684;&#x6A21;&#x5F0F;&#x5C06;&#x6D88;&#x606F;&#x53D1;&#x9001;&#x5230;broker&#xFF0C;&#x6A21;&#x5F0F;&#x7684;&#x9009;&#x62E9;&#x5BF9;&#x53D1;&#x9001;&#x5EF6;&#x65F6;&#x6709;&#x5DE8;&#x5927;&#x5F71;&#x54CD;&#xFF0C;&#x4F7F;&#x7528;&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x53EF;&#x4EE5;&#x663E;&#x8457;&#x7684;&#x63D0;&#x9AD8;&#x53D1;&#x9001;&#x7684;&#x6027;&#x80FD;&#x3002;</p>
+<p><code>ActiveMQ&#x9ED8;&#x8BA4;&#x4F7F;&#x7528;&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x7684;&#x6A21;&#x5F0F;</code>&#xFF0C;<strong>&#x540C;&#x6B65;&#x53D1;&#x9001;&#x6709;&#x4E24;&#x79CD;&#x60C5;&#x51B5;</strong>&#xFF1A;1. &#x662F;&#x660E;&#x786E;&#x6307;&#x5B9A;&#x4F7F;&#x7528;&#x540C;&#x6B65;&#x53D1;&#x9001;&#x3002;2. &#x5728;&#x672A;&#x4F7F;&#x7528;&#x4E8B;&#x52A1;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x53D1;&#x9001;&#x6301;&#x4E45;&#x5316;&#x7684;&#x6D88;&#x606F;&#x3002;&#x7B2C;&#x4E8C;&#x79CD;&#x60C5;&#x51B5;&#x662F;&#x7279;&#x522B;&#x8981;&#x6CE8;&#x610F;&#x7684;&#xFF0C;&#x6BCF;&#x6B21;&#x53D1;&#x9001;&#x90FD;&#x4F1A;&#x963B;&#x585E;producer&#x76F4;&#x5230;broker&#x8FD4;&#x56DE;&#x4E00;&#x4E2A;&#x786E;&#x8BA4;&#xFF0C;&#x8868;&#x793A;&#x6D88;&#x606F;&#x5DF2;&#x7ECF;&#x88AB;&#x5B89;&#x5168;&#x5730;&#x6301;&#x4E45;&#x5316;&#x5230;&#x78C1;&#x76D8;&#xFF0C;&#x786E;&#x8BA4;&#x673A;&#x5236;&#x63D0;&#x4F9B;&#x4E86;&#x6D88;&#x606F;&#x5B89;&#x5168;&#x7684;&#x4FDD;&#x969C;&#xFF0C;&#x540C;&#x65F6;&#x963B;&#x585E;&#x5BA2;&#x6237;&#x7AEF;&#x5E26;&#x6765;&#x4E86;&#x5F88;&#x5927;&#x7684;&#x5EF6;&#x65F6;&#x3002;</p>
+<p>&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x53EF;&#x4EE5;&#x6700;&#x5927;&#x5316;producer&#x7AEF;&#x7684;&#x53D1;&#x9001;&#x6548;&#x7387;&#xFF0C;&#x9002;&#x5408;&#x53D1;&#x9001;&#x6D88;&#x606F;&#x6BD4;&#x8F83;&#x5BC6;&#x96C6;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x4F7F;&#x7528;&#xFF0C;&#x63D0;&#x5347;producer&#x6027;&#x80FD;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x4E5F;&#x6709;&#x4E00;&#x5B9A;&#x7684;&#x5F0A;&#x7AEF;&#xFF0C;&#x5C31;&#x662F;&#x6D88;&#x8017;&#x8F83;&#x591A;client&#x7AEF;&#x5185;&#x5B58;&#x540C;&#x65F6;&#xFF0C;&#x4E5F;&#x4F1A;&#x5BFC;&#x81F4;broker&#x7AEF;&#x6027;&#x80FD;&#x6D88;&#x8017;&#x589E;&#x52A0;&#xFF08;&#x4E0D;&#x505C;&#x5730;&#x53D1;&#x6D88;&#x606F;&#xFF0C;&#x80FD;&#x4E0D;&#x7D2F;&#x4E48;&#xFF09;&#xFF1B;&#x6B64;&#x5916;&#xFF0C;&#x5B83;&#x4E5F;&#x4E0D;&#x80FD;&#x4FDD;&#x8BC1;&#x6D88;&#x606F;100%&#x5730;&#x53D1;&#x9001;&#x6210;&#x529F;&#xFF0C;&#x9700;&#x8981;&#x5BB9;&#x5FCD;&#x6D88;&#x606F;&#x4E22;&#x5931;&#x7684;&#x53EF;&#x80FD;&#x3002;&#x5F88;&#x591A;&#x9AD8;&#x6027;&#x80FD;&#x7684;&#x5E94;&#x7528;&#xFF0C;<code>&#x5141;&#x8BB8;&#x5728;&#x5931;&#x8D25;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x6709;&#x5C11;&#x91CF;&#x7684;&#x6570;&#x636E;&#x4E22;&#x5931;</code>&#x3002;</p>
+<h1 id="ACTIVEMQ&#x7684;&#x4F20;&#x8F93;&#x534F;&#x8BAE;"><a href="#ACTIVEMQ&#x7684;&#x4F20;&#x8F93;&#x534F;&#x8BAE;" class="headerlink" title="ACTIVEMQ&#x7684;&#x4F20;&#x8F93;&#x534F;&#x8BAE;"></a>ACTIVEMQ&#x7684;&#x4F20;&#x8F93;&#x534F;&#x8BAE;</h1><p>Q: &#x9ED8;&#x8BA4;&#x7684;61616&#x7AEF;&#x53E3;&#x5982;&#x4F55;&#x66F4;&#x6539;&#xFF1F;&#x751F;&#x4EA7;&#x4E0A;&#x7684;&#x94FE;&#x63A5;&#x534F;&#x8BAE;&#x5982;&#x4F55;&#x914D;&#x7F6E;&#x7684;&#xFF0C;&#x4F7F;&#x7528;tcp&#x4E48;&#xFF1F;</p>
+<p>&#x8C03;&#x4F18;&#xFF1A;&#x4F7F;&#x7528;NIO&#x4F20;&#x8F93;&#x534F;&#x8BAE;</p>
+<p>&#x652F;&#x6301;&#x7684;&#x901A;&#x8BAF;&#x534F;&#x8BAE;&#xFF1A;TCP, NIO, UDP, SSL, VM&#x2026;&#x2026;&#xFF08;&#x5BF9;&#x4E8E;java&#xFF0C;&#x4E3B;&#x8981;&#x4F7F;&#x7528;&#x524D;&#x4E24;&#x4E2A;&#xFF09;</p>
+<table>
+<thead>
+<tr>
+<th>&#x534F;&#x8BAE;</th>
+<th>&#x63CF;&#x8FF0;</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>TCP</td>
+<td>&#x9ED8;&#x8BA4;&#x7684;&#x534F;&#x8BAE;&#xFF0C;&#x6027;&#x80FD;&#x76F8;&#x5BF9;&#x53EF;&#x4EE5;</td>
+</tr>
+<tr>
+<td>NIO</td>
+<td>&#x57FA;&#x4E8E;TCP&#x534F;&#x8BAE;&#x4E4B;&#x4E0A;&#x7684;&#xFF0C;&#x8FDB;&#x884C;&#x4E86;&#x6269;&#x5C55;&#x548C;&#x4F18;&#x5316;</td>
+</tr>
+<tr>
+<td>HTP(s)</td>
+<td>&#x57FA;&#x4E8E;HTTP(s)</td>
+</tr>
+</tbody></table>
+<h2 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a>NIO</h2><p>&#x8981;&#x6362;&#x4E3A;NIO&#xFF0C;&#x9700;&#x8981;&#x4FEE;&#x6539;<code>activemq.xml</code>&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x3002;</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">broker</span>&gt;</span></span><br><span class="line">&#xA0;&#xA0;&#xA0;&#xA0;...</span><br><span class="line">    &#xA0;&#xA0;&#xA0;&#xA0;<span class="tag">&lt;<span class="name">transportConnectors</span>&gt;</span></span><br><span class="line">        &#xA0;&#xA0;&#xA0;&#xA0;<span class="tag">&lt;<span class="name">transportConnector</span> <span class="attr">name</span>=<span class="string">&quot;nio&quot;</span> <span class="attr">uri</span>=<span class="string">&quot;nio://192.168.111.136&quot;</span>/&gt;</span></span><br><span class="line">    &#xA0;&#xA0;&#xA0;&#xA0;<span class="tag">&lt;/<span class="name">transportConnectors</span>&gt;</span></span><br><span class="line">&#xA0;&#xA0;&#xA0;&#xA0;...</span><br><span class="line"><span class="tag">&lt;/<span class="name">broker</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>&#x5728;&#x6D88;&#x8D39;&#x8005;&#x3001;&#x751F;&#x4EA7;&#x8005;&#x4FEE;&#x6539;&#x4EE3;&#x7801;&#xFF0C;&#x6307;&#x5B9A;&#x4F20;&#x8F93;&#x534F;&#x8BAE;&#xFF1A;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> stati <span class="keyword">final</span> String ACTIVEMQ_URL = <span class="string">&quot;nio://192.168.111.136&quot;</span>;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span></span>{</span><br><span class="line">    ActiveMQConnectionFactory af = <span class="keyword">new</span> ActiveMQConnectionFactory(ACTIVEMQ_URL);</span><br><span class="line">    ......</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<h3 id="&#x589E;&#x5F3A;"><a href="#&#x589E;&#x5F3A;" class="headerlink" title="&#x589E;&#x5F3A;"></a>&#x589E;&#x5F3A;</h3><p>Q: uri&#x4EE5;&#x201D;nio&#x201C;&#x5F00;&#x5934;&#xFF0C;&#x8868;&#x793A;&#x8FD9;&#x4E2A;&#x7AEF;&#x53E3;&#x4F7F;&#x7528;&#x4EE5;TCP&#x534F;&#x8BAE;&#x4E3A;&#x57FA;&#x7840;&#x7684;NIO&#x7F51;&#x7EDC;IO&#x6A21;&#x578B;&#xFF0C;&#x4F46;&#x662F;&#x8FD9;&#x6837;&#x7684;&#x8BBE;&#x7F6E;&#x65B9;&#x5F0F;&#xFF0C;&#x53EA;&#x80FD;&#x4F7F;&#x8FD9;&#x4E2A;&#x7AEF;&#x53E3;&#x652F;&#x6301;<code>openwire&#xFF08;TCP&#xFF09;</code>&#xFF0C;&#x5982;&#x4F55;&#x8BA9;&#x8FD9;&#x4E2A;&#x7AEF;&#x53E3;&#x652F;&#x6301;NIO&#xFF0C;&#x53C8;&#x652F;&#x6301;&#x591A;&#x4E2A;&#x534F;&#x8BAE;&#x5462;&#xFF1F;</p>
+<p>&#x9ED8;&#x8BA4;&#x662F;<code>BIO+TCP</code>&#xFF0C;&#x76EE;&#x524D;&#x662F;<code>NIO+TCP</code>&#xFF0C;&#x90A3;&#x4E48;&#x5982;&#x4F55;&#x505A;&#x5230;<code>NIO+TCP/Mqtt/stomp</code>&#x3002;</p>
+<p>A: &#x5F00;&#x542F;&#x591A;&#x534F;&#x8BAE;&#x652F;&#x6301;&#xFF0C;&#x7528;<code>auto</code>&#x5173;&#x952E;&#x5B57;&#xFF0C;<a href="https://activemq.apache.org/auto">reference</a>&#x3002;</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">transportConnector</span> <span class="attr">name</span>=<span class="string">&quot;auto&quot;</span> <span class="attr">uri</span>=<span class="string">&quot;auto://localhost:5761&quot;</span>/&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>note:</strong> &#x5728;activeMQ&#x540E;&#x53F0;&#x914D;&#x7F6E;&#x9762;&#x677F;&#x7684;<code>Network</code>&#x53EF;&#x4EE5;&#x67E5;&#x770B;&#x5F00;&#x542F;&#x7684;&#x7F51;&#x7EDC;&#x534F;&#x8BAE;&#x3002;</p>
+<h1 id="ACTIVEMQ&#x7684;&#x5B58;&#x50A8;&#x548C;&#x53EF;&#x6301;&#x4E45;&#x5316;"><a href="#ACTIVEMQ&#x7684;&#x5B58;&#x50A8;&#x548C;&#x53EF;&#x6301;&#x4E45;&#x5316;" class="headerlink" title="ACTIVEMQ&#x7684;&#x5B58;&#x50A8;&#x548C;&#x53EF;&#x6301;&#x4E45;&#x5316;"></a>ACTIVEMQ&#x7684;&#x5B58;&#x50A8;&#x548C;&#x53EF;&#x6301;&#x4E45;&#x5316;</h1><p>&#x5BF9;&#x4E8E;&#x4E0A;&#x9762;&#x7684;&#x63D0;&#x5230;&#x7684;&#x8282;&#x70B9;&#xFF08;&#x4E8B;&#x52A1;&#x3001;&#x6301;&#x4E45;&#x3001;&#x7B7E;&#x6536;&#xFF09;&#xFF0C;&#x4ED6;&#x4EEC;&#x90FD;&#x662F;MQ&#x81EA;&#x5E26;&#x7684;&#xFF0C;&#x4E0D;&#x80FD;&#x4FDD;&#x8BC1;&#x81EA;&#x8EAB;&#x6545;&#x969C;&#x65F6;&#x7684;&#x6301;&#x4E45;&#xFF0C;&#x8FD9;&#x91CC;&#x63D0;&#x5230;&#x7684;&#x53EF;&#x6301;&#x4E45;&#x5316;&#x7684;&#x76EE;&#x7684;&#x662F;&#x5C06;&#x6570;&#x636E;&#x4FDD;&#x5B58;&#x5728;&#x53E6;&#x5916;&#x4E00;&#x53F0;&#x673A;&#x5668;&#x505A;&#x5907;&#x4EFD;&#xFF0C;&#x8FBE;&#x5230;&#x7269;&#x7406;&#x9694;&#x79BB;&#xFF0C;&#x5B8C;&#x6210;&#x9AD8;&#x53EF;&#x7528;&#x3002;&#x6240;&#x4EE5;&#x4E3A;&#x4E86;&#x907F;&#x514D;&#x610F;&#x5916;&#x5B95;&#x673A;&#x540E;&#x4E22;&#x5931;&#x4FE1;&#x606F;&#xFF0C;&#x9700;&#x8981;&#x505A;&#x5230;&#x91CD;&#x542F;&#x540E;&#x53EF;&#x4EE5;&#x6062;&#x590D;&#x6D88;&#x606F;&#x961F;&#x5217;&#xFF0C;&#x6D88;&#x606F;&#x7CFB;&#x7EDF;&#x4E00;&#x822C;&#x90FD;&#x4F1A;<code>&#x91C7;&#x7528;&#x6301;&#x4E45;&#x5316;&#x673A;&#x5236;</code>&#xFF08;&#x6240;&#x6709;MQ&#x90FD;&#x4F1A;&#x8FD9;&#x6837;&#xFF09;&#xFF1A;&#x5728;&#x53D1;&#x9001;&#x8005;&#x5C06;&#x6D88;&#x606F;&#x53D1;&#x9001;&#x51FA;&#x53BB;&#x540E;&#xFF0C;&#x6D88;&#x606F;&#x4E2D;&#x5FC3;&#x9996;&#x5148;&#x5C06;&#x6D88;&#x606F;&#x5B58;&#x50A8;&#x5230;&#x672C;&#x5730;&#x6570;&#x636E;&#x6587;&#x4EF6;&#x3001;&#x5185;&#x5B58;&#x6570;&#x636E;&#x5E93;&#x6216;&#x8005;&#x8FDC;&#x7A0B;&#x6570;&#x636E;&#x5E93;&#x7B49;&#xFF0C;&#x518D;&#x8BD5;&#x56FE;&#x5C06;&#x6D88;&#x606F;&#x53D1;&#x9001;&#x7ED9;&#x63A5;&#x6536;&#x8005;&#xFF0C;&#x6210;&#x529F;&#x5219;&#x5C06;&#x6D88;&#x606F;&#x4ECE;&#x5B58;&#x50A8;&#x4E2D;&#x5220;&#x9664;&#xFF0C;&#x5931;&#x8D25;i&#x5219;&#x7EE7;&#x7EED;&#x5C1D;&#x8BD5;&#x53D1;&#x9001;&#xFF1B;&#x5982;&#x679C;&#x662F;&#x91CD;&#x542F;&#xFF0C;&#x6D88;&#x606F;&#x4E2D;&#x5FC3;&#x542F;&#x52A8;&#x540E;&#x9996;&#x5148;&#x68C0;&#x67E5;&#x6307;&#x5B9A;&#x7684;&#x5B58;&#x50A8;&#x4F4D;&#x7F6E;&#xFF0C;&#x5982;&#x679C;&#x6709;&#x672A;&#x53D1;&#x9001;&#x6210;&#x529F;&#x7684;&#x6D88;&#x606F;&#xFF0C;&#x5219;&#x9700;&#x8981;&#x628A;&#x6D88;&#x606F;&#x53D1;&#x9001;&#x51FA;&#x53BB;&#x3002;</p>
+<p>&#x4E3B;&#x8981;&#x4ECB;&#x7ECD;&#x4E24;&#x4E2A;DB&#xFF1A;<code>KahaDB</code>, <code>LevelDB</code>, <code>JDBC</code></p>
+<p>Q: AMQ&#x6301;&#x4E45;&#x5316;&#x673A;&#x5236;</p>
+<h2 id="KahaDB"><a href="#KahaDB" class="headerlink" title="KahaDB"></a>KahaDB</h2><p>&#x57FA;&#x4E8E;&#x65E5;&#x5FD7;&#x6587;&#x4EF6;&#xFF0C;&#x4ECE;ActiveMQ5.4&#x5F00;&#x59CB;&#x4F5C;&#x4E3A;&#x9ED8;&#x8BA4;&#x7684;&#x6301;&#x4E45;&#x5316;&#x63D2;&#x4EF6;&#xFF08;&#x76F8;&#x5F53;&#x4E8E;Redis&#x7684;aof&#xFF09;&#xFF0C;&#x8BB0;&#x5F55;&#x505A;&#x4E86;&#x54EA;&#x4E9B;&#x64CD;&#x4F5C;&#x3002;</p>
+<p>&#x5728;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x4E2D;&#xFF0C;&#x6709;&#xFF1A;</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">persistenceAdapter</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">kahaDB</span> <span class="attr">directory</span>=<span class="string">&quot;${activemq.data}/kahadb&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">persistenceAdpter</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="&#x5B58;&#x50A8;&#x539F;&#x7406;"><a href="#&#x5B58;&#x50A8;&#x539F;&#x7406;" class="headerlink" title="&#x5B58;&#x50A8;&#x539F;&#x7406;"></a>&#x5B58;&#x50A8;&#x539F;&#x7406;</h3><p>reference <a href="https:/activemq.apache.org/kahadb">here</a></p>
+<p>&#x53EF;&#x7528;&#x4E8E;&#x4EFB;&#x4F55;&#x573A;&#x5408;&#xFF0C;&#x63D0;&#x9AD8;&#x4E86;&#x6027;&#x80FD;&#x548C;&#x6062;&#x590D;&#x80FD;&#x529B;&#x3002;&#x6D88;&#x606F;&#x5B58;&#x50A8;&#x4F7F;&#x7528;&#x4E00;&#x4E2A;<strong>&#x4E8B;&#x52A1;&#x65E5;&#x5FD7;</strong>&#x548C;&#x4E00;&#x4E2A;<strong>&#x7D22;&#x5F15;&#x6587;&#x4EF6;</strong>&#xFF08;&#x5B58;&#x50A8;&#x6240;&#x6709;&#x5730;&#x5740;&#xFF09;&#x3002;</p>
+<p>Kahadb&#x5728;&#x6D88;&#x606F;&#x4FDD;&#x5B58;&#x76EE;&#x5F55;&#x4E2D;&#x53EA;&#x6709;4&#x7C7B;&#x6587;&#x4EF6;&#x548C;&#x4E00;&#x4E2A;lock&#xFF1A;db-1.log, db.data, db.free, db.redo, lock. &#xFF08;4&#x4E2A;&#x6587;&#x4EF6;1&#x628A;&#x9501;&#xFF09;</p>
+<h4 id="db-lt-Number-gt-log"><a href="#db-lt-Number-gt-log" class="headerlink" title="db&lt;Number&gt;.log"></a>db&lt;Number&gt;.log</h4><p>&#x5B58;&#x50A8;&#x6D88;&#x606F;&#x5230;&#x9884;&#x5B9A;&#x4E49;&#x5927;&#x5C0F;&#x7684;&#x6570;&#x636E;&#x8BB0;&#x5F55;&#x6587;&#x4EF6;&#x4E2D;&#xFF0C;Number&#x521D;&#x59CB;&#x4E3A;1&#xFF0C;&#x3002;&#x5F53;&#x6570;&#x636E;&#x6587;&#x4EF6;&#x5DF2;&#x6EE1;&#x65F6;&#xFF0C;&#x4E00;&#x4E2A;&#x65B0;&#x7684;&#x6587;&#x4EF6;&#x4F1A;&#x968F;&#x4E4B;&#x521B;&#x5EFA;&#x3002;&#x5F53;&#x4E0D;&#x518D;&#x6709;&#x5F15;&#x7528;&#x5230;&#x6570;&#x636E;&#x6587;&#x4EF6;&#x4E2D;&#x7684;&#x4EFB;&#x4F55;&#x6D88;&#x606F;&#x65F6;&#xFF0C;&#x6587;&#x4EF6;&#x4F1A;&#x88AB;&#x5220;&#x9664;&#x6216;&#x5F52;&#x6863;&#xFF08;&#x81EA;&#x6211;&#x7A7A;&#x95F4;&#x6E05;&#x7406;&#xFF09;&#x3002;</p>
+<h4 id="db-data"><a href="#db-data" class="headerlink" title="db.data"></a>db.data</h4><p>&#x5305;&#x542B;&#x4E86;&#x6301;&#x4E45;&#x5316;&#x7684;<code>BTree&#x7D22;&#x5F15;</code>&#xFF0C;&#x7D22;&#x5F15;&#x4E86;&#x6D88;&#x606F;&#x6570;&#x636E;&#x8BB0;&#x5F55;&#x4E2D;&#x7684;&#x6D88;&#x606F;&#xFF0C;&#x5B83;&#x662F;&#x6D88;&#x606F;&#x7684;&#x7D22;&#x5F15;&#x6587;&#x4EF6;&#xFF0C;&#x672C;&#x8D28;&#x4E0A;&#x662F;B-Tree&#xFF0C;&#x4F7F;&#x7528;B-Tree&#x4F5C;&#x4E3A;&#x7D22;&#x5F15;&#x6307;&#x5411;<code>db-\&lt;Number&gt;.log</code>&#x91CC;&#x9762;&#x5B58;&#x50A8;&#x7684;&#x6D88;&#x606F;&#x3002;</p>
+<h4 id="db-free"><a href="#db-free" class="headerlink" title="db.free"></a>db.free</h4><p>&#x5F53;&#x524D;<code>db.data</code>&#x6587;&#x4EF6;&#x91CC;&#x54EA;&#x4E9B;&#x9875;&#x9762;&#x662F;&#x7A7A;&#x95F2;&#x7684;&#xFF0C;&#x6587;&#x4EF6;&#x5177;&#x4F53;&#x5185;&#x5BB9;&#x662F;&#x6240;&#x6709;&#x7A7A;&#x95F2;&#x9875;&#x7684;<strong>ID</strong>. &#x7C7B;&#x6BD4;linux&#x7684;bash&#x547D;&#x4EE4;<code>free</code>&#x3002;</p>
+<h4 id="db-redo"><a href="#db-redo" class="headerlink" title="db.redo"></a>db.redo</h4><p>&#x7528;&#x6765;&#x8FDB;&#x884C;&#x6D88;&#x606F;&#x6062;&#x590D;&#xFF0C;&#x5982;&#x679C;KahaDB&#x6D88;&#x606F;&#x5B58;&#x50A8;&#x5728;&#x5F3A;&#x5236;&#x9000;&#x51FA;&#x540E;&#x542F;&#x52A8;&#xFF0C;&#x7528;&#x4E8E;&#x6062;&#x590D;BTree&#x7D22;&#x5F15;&#x3002;</p>
+<h4 id="lock"><a href="#lock" class="headerlink" title="lock"></a>lock</h4><p>&#x76F8;&#x5F53;&#x4E8E;mysql&#x4E2D;&#x7684;&#x60B2;&#x89C2;&#x9501;&#x3002;&#x8868;&#x793A;&#x5F53;&#x524D;&#x83B7;&#x5F97;kahadb&#x8BFB;&#x5199;&#x6743;&#x9650;&#x7684;broker&#x3002;</p>
+<h2 id="JDBC"><a href="#JDBC" class="headerlink" title="JDBC"></a>JDBC</h2><p>&#x4E3B;&#x8981;&#x3002;&#x5C06;&#x6570;&#x636E;&#x653E;&#x5165;mysql/oracle&#x4E2D;&#xFF0C;&#x8FD9;&#x662F;&#x5BF9;&#x4E8E;&#x957F;&#x65F6;&#x95F4;&#x6301;&#x4E45;&#x5316;&#x5B58;&#x50A8;&#xFF0C;&#x63A8;&#x8350;&#x7528;jdbc&#xFF0C;&#x7279;&#x522B;&#x662F;&#x5E26;&#x4E86;Journal&#x7684;&#x3002;&#x7F3A;&#x70B9;&#x662F;&#x6709;&#x70B9;&#x6162;&#x3002;kahaDB&#x662F;&#x5C06;&#x670D;&#x52A1;&#x5668;&#x505A;&#x672C;&#x5730;&#x6570;&#x636E;&#x5E93;&#xFF0C;JDBC&#x662F;&#x5C06;&#x4ED6;&#x653E;&#x5165;&#x53E6;&#x5916;&#x4E00;&#x4E2A;&#x78C1;&#x76D8;&#xFF08;&#x7C7B;&#x4F3C;&#x4E91;&#x76D8;&#xFF09;&#xFF0C;&#x76F8;&#x5BF9;&#x6765;&#x8BF4;&#x66F4;&#x5B89;&#x5168;&#x3002;</p>
+<h2 id="LevelDB"><a href="#LevelDB" class="headerlink" title="LevelDB"></a>LevelDB</h2><h2 id="JDBC-Message-store-with-ActiveMQ-Journal"><a href="#JDBC-Message-store-with-ActiveMQ-Journal" class="headerlink" title="JDBC Message store with ActiveMQ Journal"></a>JDBC Message store with ActiveMQ Journal</h2><p>&#x4E3B;&#x8981;&#x3002;</p>
+<h1 id="Q-amp-A"><a href="#Q-amp-A" class="headerlink" title="Q&amp;A"></a>Q&amp;A</h1><ol>
+<li><p>&#x5F15;&#x5165;&#x6D88;&#x606F;&#x961F;&#x5217;&#x540E;&#x8BE5;&#x5982;&#x4F55;&#x4FDD;&#x8BC1;&#x5176;&#x9AD8;&#x53EF;&#x7528;&#x6027;</p>
+</li>
+<li><p>&#x5F02;&#x6B65;&#x6295;&#x9012;Async Sends</p>
+</li>
+<li><p>&#x5EF6;&#x8FDF;&#x6295;&#x9012;&#x548C;&#x5B9A;&#x65F6;&#x6295;&#x9012;</p>
+</li>
+<li><p>&#x5206;&#x53D1;&#x7B56;&#x7565;</p>
+</li>
+<li><p>ActiveMQ&#x6D88;&#x8D39;&#x91CD;&#x8BD5;&#x673A;&#x5236;</p>
+</li>
+<li><p>&#x6B7B;&#x4FE1;&#x961F;&#x5217;</p>
+</li>
+<li><p>&#x5982;&#x4F55;&#x4FDD;&#x8BC1;&#x6D88;&#x606F;&#x4E0D;&#x88AB;&#x91CD;&#x590D;&#x6D88;&#x8D39;&#x5462;&#xFF1F;&#x8C08;&#x8C08;&#x5E42;&#x7B49;&#x6027;&#x95EE;&#x9898;</p>
+</li>
+</ol>
+<h2 id="&#x9AD8;&#x53EF;&#x7528;"><a href="#&#x9AD8;&#x53EF;&#x7528;" class="headerlink" title="&#x9AD8;&#x53EF;&#x7528;"></a>&#x9AD8;&#x53EF;&#x7528;</h2><p>zookeeper + (replicated-leveldb-store)&#x7684;&#x4E3B;&#x4ECE;&#x96C6;&#x7FA4;&#xFF0C;&#x8D77;&#x7801;&#x975E;&#x5355;&#x673A;&#x7248;&#xFF0C;&#x662F;&#x96C6;&#x7FA4;&#x7684;&#x3002;</p>
+<h2 id="&#x5F02;&#x6B65;&#x6295;&#x9012;"><a href="#&#x5F02;&#x6B65;&#x6295;&#x9012;" class="headerlink" title="&#x5F02;&#x6B65;&#x6295;&#x9012;"></a>&#x5F02;&#x6B65;&#x6295;&#x9012;</h2><p>&#x5982;&#x4F55;&#x786E;&#x8BA4;&#x53D1;&#x9001;&#x6210;&#x529F;&#xFF1F; </p>
+<p>&#x5728;&#x6D88;&#x606F;&#x53D1;&#x9001;&#x5B8C;&#x540E;&#x63A5;&#x6536;&#x56DE;&#x8C03;&#x3002;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">ActiveMQConnectionFacotry acf = <span class="keyword">new</span> ActiveMQConnectionFactory(URL);</span><br><span class="line"><span class="comment">// &#x8BBE;&#x7F6E;&#x4E3A;&#x5F02;&#x6B65;&#x53D1;&#x9001;&#x6D88;&#x606F;</span></span><br><span class="line">acf.setUseAsyncSend(<span class="keyword">true</span>);</span><br><span class="line">ActiveMQMessageProducer amp = (ActiveMQMessageProducer)session.createProducer(queue);</span><br><span class="line">...</span><br><span class="line">TextMessage message = session.createTextMessage();</span><br><span class="line"><span class="comment">// &#x672A;message&#x8BBE;&#x7F6E;&#x5C5E;&#x6027;</span></span><br><span class="line">message.setJMSMessageID(UUID.randomUUID().toString());</span><br><span class="line"></span><br><span class="line"><span class="comment">// &#x4F7F;&#x7528;&#x5E26;&#x6709;&#x56DE;&#x8C03;&#x7684;send&#x65B9;&#x6CD5;&#x6765;&#x53D1;&#x9001;</span></span><br><span class="line">amp.send(message, <span class="keyword">new</span> AsyncCallback(){</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSucces</span><span class="params">()</span></span>{</span><br><span class="line"></span><br><span class="line">        System.out.println(message.getJMSmessageID+<span class="string">&quot; succeed&quot;</span>)</span><br><span class="line">    }</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onException</span><span class="params">(JMSException exception)</span></span>{</span><br><span class="line">        <span class="comment">// &#x62FF;&#x5230;&#x5C5E;&#x6027;&#x6765;&#x786E;&#x8BA4;&#x53D1;&#x9001;&#x5931;&#x8D25;&#x7684;&#x6D88;&#x606F;</span></span><br><span class="line">        System.out.println(message.getJMSmessageID+<span class="string">&quot; fail&quot;</span>)</span><br><span class="line">    }</span><br><span class="line">})</span><br></pre></td></tr></table></figure>
+
+<h2 id="&#x5EF6;&#x8FDF;&#x6295;&#x9012;&#x548C;&#x5B9A;&#x65F6;&#x6295;&#x9012;"><a href="#&#x5EF6;&#x8FDF;&#x6295;&#x9012;&#x548C;&#x5B9A;&#x65F6;&#x6295;&#x9012;" class="headerlink" title="&#x5EF6;&#x8FDF;&#x6295;&#x9012;&#x548C;&#x5B9A;&#x65F6;&#x6295;&#x9012;"></a>&#x5EF6;&#x8FDF;&#x6295;&#x9012;&#x548C;&#x5B9A;&#x65F6;&#x6295;&#x9012;</h2><p>&#x53C2;&#x8003;<a href="http://activemq.apache.org/delay-and-schedule-message-delivery.html">&#x5B98;&#x7F51;&#x8BF4;&#x660E;</a></p>
+<table>
+<thead>
+<tr>
+<th>Property name</th>
+<th>type</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>AMQ_SCHEDULED_DELAY</td>
+<td>long</td>
+<td>&#x5EF6;&#x8FDF;&#x6295;&#x9012;&#x7684;&#x65F6;&#x95F4;</td>
+</tr>
+<tr>
+<td>AMQ_SCHEDULED_PERIOD</td>
+<td>long</td>
+<td>&#x91CD;&#x590D;&#x6295;&#x9012;&#x7684;&#x65F6;&#x95F4;&#x95F4;&#x9694;</td>
+</tr>
+<tr>
+<td>AMQ_SCHEDULED_REPEAT</td>
+<td>int</td>
+<td>&#x91CD;&#x590D;&#x6295;&#x9012;&#x6B21;&#x6570;</td>
+</tr>
+<tr>
+<td>AMQ_SCHEDULED_CRON</td>
+<td>String</td>
+<td>Cron&#x8868;&#x8FBE;&#x5F0F;</td>
+</tr>
+</tbody></table>
+<p>&#x5728;<code>activemq.xml</code>&#x4E2D;&#x914D;&#x7F6E;<em>schedulerSupport</em>&#x5C5E;&#x6027;&#x4E3A;<em>true</em>&#x4E14;Java&#x4EE3;&#x7801;&#x4E2D;&#x5C01;&#x88C5;&#x7684;&#x8F85;&#x52A9;&#x6D88;&#x606F;&#x7C7B;&#x578B;&#x4E3A;<em>ScheduledMessage</em>&#x5373;&#x53EF;&#x3002;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">long</span> delay = <span class="number">3</span> * <span class="number">1000</span>; <span class="comment">//&#x5EF6;&#x8FDF;&#x6295;&#x9012;&#x7684;&#x65F6;&#x95F4;&#xFF0C;&#x6BCF;3&#x79D2;</span></span><br><span class="line"><span class="keyword">long</span> period = <span class="number">4</span> * <span class="number">1000</span>;</span><br><span class="line"><span class="keyword">int</span> repeat = <span class="number">5</span>;</span><br><span class="line"></span><br><span class="line">TextMessage message = session.createTextMessage();</span><br><span class="line">message.setLongProperty(ScheduledMessage.AMQ_SCHEDULED_DELAY, delay);</span><br><span class="line">message.setLongProperty(ScheduledMessage.AMQ_SCHEDULED_PERIOD, delay);</span><br><span class="line">message.setIntProperty(ScheduledMessage.AMQ_SCHEDULED_REPEAT, delay);</span><br><span class="line"></span><br><span class="line">messageProducer.send(mesage);</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="ActiveMQ&#x6D88;&#x8D39;&#x91CD;&#x8BD5;&#x673A;&#x5236;"><a href="#ActiveMQ&#x6D88;&#x8D39;&#x91CD;&#x8BD5;&#x673A;&#x5236;" class="headerlink" title="ActiveMQ&#x6D88;&#x8D39;&#x91CD;&#x8BD5;&#x673A;&#x5236;"></a>ActiveMQ&#x6D88;&#x8D39;&#x91CD;&#x8BD5;&#x673A;&#x5236;</h2><ul>
+<li><p>&#x54EA;&#x4E9B;&#x60C5;&#x51B5;&#x4F1A;&#x5F15;&#x8D77;&#x6D88;&#x606F;&#x91CD;&#x53D1;&#xFF1F;</p>
+</li>
+<li><p>&#x6D88;&#x606F;&#x91CD;&#x53D1;&#x65F6;&#x95F4;&#x95F4;&#x9694;&#x548C;&#x91CD;&#x53D1;&#x6B21;&#x6570;</p>
+</li>
+<li><p>&#x6709;&#x6BD2;&#x6D88;&#x606F;Posion ACK</p>
+</li>
+</ul>
+<p>reference <a href="activemq.apache.org/redelivery-policy">here</a></p>
+<p>&#x91CD;&#x53D1;&#xFF1A;&#x5728;&#x8BBE;&#x7F6E;&#x4E8B;&#x52A1;&#x540E;&#x6CA1;&#x6709;&#x8FDB;&#x884C;&#x63D0;&#x4EA4;&#xFF08;commit&#xFF09;&#xFF0C;&#x6D88;&#x606F;&#x5C31;&#x4F1A;&#x88AB;&#x91CD;&#x590D;&#x6D88;&#x8D39;&#xFF0C;&#x8FD9;&#x65F6;&#x4F1A;&#x89E6;&#x53D1;&#x91CD;&#x53D1;&#x673A;&#x5236;&#xFF0C;&#x9ED8;&#x8BA4;&#x88AB;&#x91CD;&#x590D;&#x6D88;&#x8D39;6&#x6B21;&#x540E;MQ&#x4F1A;&#x628A;&#x8FD9;&#x4E2A;&#x6D88;&#x606F;&#x653E;&#x5165;DLQ&#xFF08;Dead Letter Queue&#xFF09;&#x6B7B;&#x4FE1;&#x961F;&#x5217;&#x4F9B;&#x5F00;&#x53D1;&#x67E5;&#x770B;&#xFF0C;&#x4E0D;&#x4F1A;&#x518D;&#x88AB;&#x6D88;&#x8D39;&#x3002;</p>
+<h2 id="&#x5982;&#x4F55;&#x4FDD;&#x8BC1;&#x6D88;&#x606F;&#x4E0D;&#x88AB;&#x91CD;&#x590D;&#x6D88;&#x8D39;&#xFF08;&#x5E42;&#x7B49;&#x6027;&#xFF09;"><a href="#&#x5982;&#x4F55;&#x4FDD;&#x8BC1;&#x6D88;&#x606F;&#x4E0D;&#x88AB;&#x91CD;&#x590D;&#x6D88;&#x8D39;&#xFF08;&#x5E42;&#x7B49;&#x6027;&#xFF09;" class="headerlink" title="&#x5982;&#x4F55;&#x4FDD;&#x8BC1;&#x6D88;&#x606F;&#x4E0D;&#x88AB;&#x91CD;&#x590D;&#x6D88;&#x8D39;&#xFF08;&#x5E42;&#x7B49;&#x6027;&#xFF09;"></a>&#x5982;&#x4F55;&#x4FDD;&#x8BC1;&#x6D88;&#x606F;&#x4E0D;&#x88AB;&#x91CD;&#x590D;&#x6D88;&#x8D39;&#xFF08;&#x5E42;&#x7B49;&#x6027;&#xFF09;</h2><p><strong>note</strong>: &#x4F55;&#x65F6;&#x4F1A;&#x91CD;&#x590D;&#x6D88;&#x8D39;&#xFF1F;&#x7F51;&#x7EDC;&#x5EF6;&#x8FDF;&#x9020;&#x6210;MQ&#x91CD;&#x8BD5;&#xFF0C;&#x8FDB;&#x800C;&#x91CD;&#x590D;&#x6D88;&#x8D39;&#x3002;</p>
+<ul>
+<li><p>&#x5982;&#x679C;&#x662F;&#x505A;&#x6570;&#x636E;&#x5E93;&#x7684;&#x63D2;&#x5165;&#x64CD;&#x4F5C;&#xFF0C;&#x53EF;&#x4EE5;&#x7ED9;&#x6D88;&#x606F;&#x505A;&#x4E00;&#x4E2A;&#x552F;&#x4E00;&#x4E3B;&#x952E;&#xFF0C;&#x91CD;&#x590D;&#x6D88;&#x8D39;&#x65F6;&#x4F1A;&#x5BFC;&#x81F4;&#x4E3B;&#x952E;&#x51B2;&#x7A81;</p>
+</li>
+<li><p>&#x4F7F;&#x7528;&#x7B2C;&#x4E09;&#x65B9;&#x670D;&#x52A1;&#x6765;&#x505A;&#x6D88;&#x8D39;&#x8BB0;&#x5F55;&#x3002;&#x4EE5;redis&#x4E3A;&#x4F8B;&#xFF0C;&#x7ED9;&#x6D88;&#x606F;&#x5206;&#x914D;&#x4E00;&#x4E2A;<strong>&#x5168;&#x5C40;id</strong>&#xFF0C;&#x53EA;&#x8981;&#x6D88;&#x8D39;&#x8FC7;&#x8BE5;&#x6D88;&#x606F;&#xFF0C;&#x5C06;&lt;id, message&gt;&#x4EE5;K-V&#x5F62;&#x5F0F;&#x5199;&#x5165;redis&#xFF0C;&#x6D88;&#x8D39;&#x8005;&#x6D88;&#x8D39;&#x524D;&#x5148;&#x53BB;redis&#x4E2D;&#x67E5;&#x8BE2;&#x6709;&#x6CA1;&#x6709;&#x6D88;&#x8D39;&#x8BB0;&#x5F55;&#x5373;&#x53EF;&#x3002;</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+<div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 感谢阅读 --------</span>
+    </div>
+  
+</div>
+      </div>
+    
+      
+        <div class="reward-container">
+  <div>Donate comment here.</div>
+  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    Donate
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="Sebastian WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Sebastian Alipay">
+        <p>Alipay</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/activemq/" rel="tag"># activemq</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/07/20/hello-world/" rel="next" title="Hello World">
+                  <i class="fa fa-chevron-left"></i> Hello World
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+                <a href="/2020/07/20/volatile/" rel="prev" title="volatile">
+                  volatile <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Sebastian"
+    src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Sebastian</p>
+  <div class="site-description" itemprop="description">I'm feeling lucky!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">56</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Sebastian-Getts" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Sebastian-Getts" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:zzzqsw@gmail.com" title="E-Mail &amp;rarr; mailto:zzzqsw@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/mchin6" title="Instagram &amp;rarr; https:&#x2F;&#x2F;instagram.com&#x2F;mchin6" rel="noopener" target="_blank"><i class="fa fa-fw fa-instagram"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sebastian</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a>
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.4.2
+  </div>
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      element.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script pjax>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/mermaid/8.2.0/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme: 'forest',
+      logLevel: 3,
+      flowchart: { curve: 'linear' },
+      gantt: { axisFormat: '%m/%d/%Y' },
+      sequence: { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+    <div id="pjax">
+
+  
+
+  
+
+  
+
+  
+
+  <script async src="/js/cursor/love.min.js"></script>
+
+
+
+
+  <script src="/js/wobblewindow.js"></script>
+  <script>
+    //只在桌面版网页启用特效
+    if( window.innerWidth > 768  ){
+      $(document).ready(function () {
+        
+          $('#header').wobbleWindow({
+            radius: 50,
+            movementTop: false,
+            movementLeft: false,
+            movementRight: false,
+            debug: false,
+          });
+        
+
+        
+          $('#sidebar').wobbleWindow({
+            radius: 50,
+            movementLeft: false,
+            movementTop: false,
+            movementBottom: false,
+            position: 'fixed',
+            debug: false,
+          });
+        
+
+        
+          $('#footer').wobbleWindow({
+            radius: 50,
+            movementBottom: false,
+            movementLeft: false,
+            movementRight: false,
+            offsetX: ,
+            position: 'absolute',
+            debug: false,
+          });
+        
+      });
+    }
+  </script>
+
+
+
+
+
+
+
+
+    </div>
+</body>
+</html>

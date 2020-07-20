@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.0.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+  <meta name="msvalidate.01" content="541BE591C13D7313C3568E6D172218E2">
+  <meta name="baidu-site-verification" content="3qvcDlCoMv">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '7.4.2',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
+    fancybox: true,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: true,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
+  };
+</script>
+
+  <meta name="description" content="这个关键字用于将Java变量标记为being stored in main memory，意味着每次对volatile变量的读取都将从计算机内存中读取，而不是从CPU缓存中读取，并且对volatile变量的写入都将被写入主存而不是CPU缓存。">
+<meta name="keywords" content="lock">
+<meta property="og:type" content="article">
+<meta property="og:title" content="volatile">
+<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;07&#x2F;20&#x2F;volatile&#x2F;index.html">
+<meta property="og:site_name" content="Sebastian Getts">
+<meta property="og:description" content="这个关键字用于将Java变量标记为being stored in main memory，意味着每次对volatile变量的读取都将从计算机内存中读取，而不是从CPU缓存中读取，并且对volatile变量的写入都将被写入主存而不是CPU缓存。">
+<meta property="og:locale" content="en">
+<meta property="og:updated_time" content="2020-07-20T13:26:07.636Z">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://yoursite.com/2020/07/20/volatile/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
+</script>
+
+  <title>volatile | Sebastian Getts</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Sebastian Getts</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">I'm the new one.</p>
+  </div>
+
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
+
+  </li>
+        <li class="menu-item menu-item-movies">
+
+    <a href="/movies/" rel="section"><i class="fa fa-fw fa-video-camera"></i>movies</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+  <div class="reading-progress-bar"></div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/07/20/volatile/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="Sebastian">
+      <meta itemprop="description" content="I'm feeling lucky!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Sebastian Getts">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          volatile
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+              
+
+              <time title="Created: 2020-07-20 21:23:51 / Modified: 21:26:07" itemprop="dateCreated datePublished" datetime="2020-07-20T21:23:51+08:00">2020-07-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <p>&#x8FD9;&#x4E2A;&#x5173;&#x952E;&#x5B57;&#x7528;&#x4E8E;&#x5C06;Java&#x53D8;&#x91CF;&#x6807;&#x8BB0;&#x4E3A;<code>being stored in main memory</code>&#xFF0C;&#x610F;&#x5473;&#x7740;&#x6BCF;&#x6B21;&#x5BF9;volatile&#x53D8;&#x91CF;&#x7684;&#x8BFB;&#x53D6;&#x90FD;&#x5C06;&#x4ECE;&#x8BA1;&#x7B97;&#x673A;&#x5185;&#x5B58;&#x4E2D;&#x8BFB;&#x53D6;&#xFF0C;&#x800C;&#x4E0D;&#x662F;&#x4ECE;CPU&#x7F13;&#x5B58;&#x4E2D;&#x8BFB;&#x53D6;&#xFF0C;&#x5E76;&#x4E14;&#x5BF9;volatile&#x53D8;&#x91CF;&#x7684;&#x5199;&#x5165;&#x90FD;&#x5C06;&#x88AB;&#x5199;&#x5165;&#x4E3B;&#x5B58;&#x800C;&#x4E0D;&#x662F;CPU&#x7F13;&#x5B58;&#x3002;</p>
+<a id="more"></a>
+
+<h1 id="Visibility-problems"><a href="#Visibility-problems" class="headerlink" title="Visibility problems"></a>Visibility problems</h1><p>&#x4E3B;&#x8981;&#x662F;&#x591A;&#x7EBF;&#x7A0B;&#x4E2D;&#x7684;&#x95EE;&#x9898;&#x3002;&#x7EBF;&#x7A0B;&#x5728;&#x64CD;&#x4F5C;<code>&#x975E;volatile</code>&#x7684;&#x53D8;&#x91CF;&#x65F6;&#xFF0C;&#x51FA;&#x4E8E;&#x6027;&#x80FD;&#x539F;&#x56E0;&#xFF0C;&#x90FD;&#x4F1A;&#x5C06;&#x53D8;&#x91CF;&#x4ECE;&#x4E3B;&#x5B58;&#x590D;&#x5236;&#x5230;CPU&#x7F13;&#x5B58;&#x4E2D;&#xFF0C;&#x5982;&#x679C;&#x8BA1;&#x7B97;&#x673A;&#x4E0A;&#x6709;&#x591A;&#x4E2A;CPU&#xFF0C;&#x90A3;&#x4E48;&#x6BCF;&#x4E2A;&#x7EBF;&#x7A0B;&#x53EF;&#x80FD;&#x5728;&#x4E0D;&#x540C;&#x7684;CPU&#x4E0A;&#x8FD0;&#x884C;&#xFF0C;&#x6BCF;&#x4E2A;&#x7EBF;&#x7A0B;&#x53EF;&#x4EE5;&#x5C06;&#x53D8;&#x91CF;&#x590D;&#x5236;&#x5230;&#x4E0D;&#x540C;&#x7684;CPU&#x7F13;&#x5B58;&#x4E2D;&#x3002;</p>
+<p>&#x90A3;&#x4E48;&#x95EE;&#x9898;&#x6765;&#x4E86;&#xFF0C;&#x5BF9;&#x4E8E;<code>&#x975E;volatile</code>&#x7684;&#x53D8;&#x91CF;&#xFF0C;&#x65E0;&#x6CD5;&#x4FDD;&#x8BC1;Java&#x865A;&#x62DF;&#x673A;&#x4F55;&#x65F6;&#x5C06;&#x6570;&#x636E;&#x4ECE;&#x4E3B;&#x5B58;&#x50A8;&#x5668;&#x8BFB;&#x53D6;&#x5230;CPU&#x7F13;&#x5B58;&#x4E2D;&#xFF0C;&#x6216;&#x8005;&#x4F55;&#x65F6;&#x5C06;&#x6570;&#x636E;&#x4ECE;CPU&#x7F13;&#x5B58;&#x5199;&#x5165;&#x5230;&#x4E3B;&#x5B58;&#x50A8;&#x5668;&#x4E2D;&#xFF0C;&#x8BBE;&#x60F3;&#x4E00;&#x79CD;&#x60C5;&#x51B5;&#xFF1A;&#x591A;&#x4E2A;&#x7EBF;&#x7A0B;&#x8BBF;&#x95EE;&#x4E00;&#x4E2A;&#x5171;&#x4EAB;&#x5BF9;&#x8C61;&#xFF0C;&#x8BE5;&#x5BF9;&#x8C61;&#x5305;&#x542B;&#x4E00;&#x4E2A;&#x8BA1;&#x6570;&#x5668;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ShareObject</span></span>{</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">int</span> counter = <span class="number">0</span>;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<p>&#x5047;&#x8BBE;&#x53EA;&#x6709;&#x7EBF;&#x7A0B;1&#x4F1A;&#x5C06;&#x8BA1;&#x6570;&#x5668;&#x9012;&#x589E;&#xFF0C;&#x540C;&#x65F6;&#x7EBF;&#x7A0B;1&#x548C;&#x7EBF;&#x7A0B;2&#x90FD;&#x4F1A;&#x4E0D;&#x65F6;&#x5730;&#x8BBF;&#x95EE;&#x5B83;&#x3002;</p>
+<p>&#x5982;&#x679C;counter&#x4E0D;&#x58F0;&#x660E;&#x4E3A;<code>volatile</code>&#xFF0C;&#x5C31;&#x65E0;&#x6CD5;&#x4FDD;&#x8BC1;&#x8BA1;&#x6570;&#x5668;&#x7684;&#x503C;&#x4ECE;CPU&#x7F13;&#x5B58;&#x91CD;&#x5199;&#x56DE;&#x4E3B;&#x5B58;&#xFF0C;&#x8FD9;&#x5C31;&#x610F;&#x5473;&#x7740;&#x4E3B;&#x5B58;&#x7684;counter&#x4E0E;CPU&#x7F13;&#x5B58;&#x7684;&#x503C;&#x53EF;&#x80FD;&#x4E0D;&#x540C;&#xFF01;&#xFF08;JVM&#x5185;&#x5B58;&#x6A21;&#x578B;&#x6709;&#x6CA1;&#x6709;&#xFF09;&#x3002;&#x8FD9;&#x79CD;&#x56E0;&#x4E3A;&#x6CA1;&#x6709;&#x88AB;&#x53E6;&#x4E00;&#x4E2A;&#x7EBF;&#x7A0B;&#x56DE;&#x5199;&#x5230;&#x4E3B;&#x5B58;&#x5BFC;&#x81F4;&#x65E0;&#x6CD5;&#x540C;&#x6B65;&#x503C;&#x7684;&#x95EE;&#x9898;&#x5C31;&#x53EB;&#x505A;&#x201C;Visibility problem&#x201D;&#xFF0C;<strong>&#x4E00;&#x4E2A;&#x7EBF;&#x7A0B;&#x7684;&#x66F4;&#x65B0;&#x5BF9;&#x5176;&#x4ED6;&#x7EBF;&#x7A0B;&#x662F;&#x4E0D;&#x53EF;&#x89C1;&#x7684;</strong>&#x3002;</p>
+<h1 id="Visibility-Guarantee"><a href="#Visibility-Guarantee" class="headerlink" title="Visibility Guarantee"></a>Visibility Guarantee</h1><p>&#x5173;&#x952E;&#x5B57;<code>volatile</code>&#x7684;&#x8BBE;&#x5B9A;&#x5C31;&#x662F;&#x89E3;&#x51B3;&#x4E0A;&#x9762;&#x63D0;&#x5230;&#x7684;&#x53EF;&#x89C1;&#x6027;&#x95EE;&#x9898;&#x3002;&#x901A;&#x8FC7;&#x58F0;&#x660E;counter&#x53D8;&#x91CF;&#x4E3A;<code>volatile</code>&#x7684;&#xFF0C;&#x6240;&#x6709;&#x5BF9;&#x8BE5;&#x53D8;&#x91CF;&#x66F4;&#x6539;&#x90FD;&#x5C06;&#x7ACB;&#x5373;&#x56DE;&#x5199;&#x5230;&#x4E3B;&#x5B58;&#xFF0C;&#x540C;&#x65F6;&#x6240;&#x6709;&#x5BF9;&#x8BE5;&#x53D8;&#x91CF;&#x7684;&#x8BFB;&#x64CD;&#x4F5C;&#x4E5F;&#x90FD;&#x4F1A;&#x4ECE;&#x4E3B;&#x5B58;&#x4E2D;&#x8BFB;&#x53D6;&#x3002;&#x4E0B;&#x9762;&#x662F;&#x52A0;&#x4E86;&#x5173;&#x952E;&#x5B57;<code>volatile</code>&#x7684;&#x4F8B;&#x5B50;&#xFF1A;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ShareObject</span></span>{</span><br><span class="line">    <span class="comment">// &#x7531;&#x4E8E;&#x58F0;&#x660E;&#x4E3A;volatile&#xFF0C;&#x56E0;&#x6B64;&#x66F4;&#x6539;&#x53D8;&#x91CF;&#x5BF9;&#x4E8E;&#x5176;&#x4ED6;&#x7EBF;&#x7A0B;&#x7684;&#x662F;&#x53EF;&#x89C1;&#x7684;</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">volatile</span> <span class="keyword">int</span> counter = <span class="number">0</span> ;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<p>&#x4F46;&#x662F;&#xFF0C;&#x76EE;&#x524D;&#x4EC5;&#x662F;&#x7EBF;&#x7A0B;1&#x66F4;&#x6539;&#xFF0C;&#x5BF9;&#x7EBF;&#x7A0B;2&#x53EF;&#x89C1;&#xFF0C;&#x8981;&#x60F3;&#x7EBF;&#x7A0B;1&#x3001;2&#x90FD;&#x66F4;&#x6539;&#xFF0C;&#x90A3;&#x4E48;&#x4EC5;&#x4EC5;&#x58F0;&#x660E;&#x4E3A;<code>volatile</code>&#x662F;&#x4E0D;&#x591F;&#x7684;&#x3002;</p>
+<h2 id="Full-Visibility-Guarantee"><a href="#Full-Visibility-Guarantee" class="headerlink" title="Full Visibility Guarantee"></a>Full Visibility Guarantee</h2><p>&#x5B9E;&#x9645;&#x4E0A;&#xFF0C;&#x5173;&#x952E;&#x5B57;<code>volatile</code>&#x7684;&#x53EF;&#x89C1;&#x4FDD;&#x8BC1;&#x6027;&#x8D85;&#x8D8A;&#x4E86;<code>volatile</code>&#x53D8;&#x91CF;&#x672C;&#x8EAB;&#x3002;&#x6709;&#x70B9;&#x7ED5;&#x5427;&#xFF0C;&#x53EF;&#x89C1;&#x4FDD;&#x8BC1;&#x6027;&#x5982;&#x4E0B;&#xFF1A;</p>
+<ul>
+<li><p>&#x5982;&#x679C;&#x7EBF;&#x7A0B;A&#x66F4;&#x6539;&#x4E86;<code>volatile</code>&#x53D8;&#x91CF;&#xFF0C;&#x5E76;&#x4E14;&#x7EBF;&#x7A0B;B&#x968F;&#x540E;&#x8BFB;&#x53D6;&#x4E86;&#x5B83;&#xFF0C;&#x5219;&#x5728;&#x5199;&#x5165;<code>volatile</code>&#x53D8;&#x91CF;&#x4E4B;&#x524D;&#x7EBF;&#x7A0B;A&#x53EF;&#x89C1;&#x7684;&#x6240;&#x6709;&#x53D8;&#x91CF;&#x5728;&#x7EBF;&#x7A0B;B&#x8BFB;&#x53D6;<code>volatile</code>&#x53D8;&#x91CF;&#x540E;&#x4E5F;&#x5C06;&#x53EF;&#x89C1;&#x3002;</p>
+</li>
+<li><p>&#x5982;&#x679C;&#x7EBF;&#x7A0B;A&#x8BFB;&#x53D6;&#x4E86;&#x4E00;&#x4E2A;<code>volatile</code>&#x53D8;&#x91CF;&#xFF0C;&#x5219;&#x5728;&#x8BFB;&#x53D6;&#x90A3;&#x4E2A;&#x53D8;&#x91CF;&#x65F6;&#x7EBF;&#x7A0B;A&#x53EF;&#x89C1;&#x7684;&#x6240;&#x6709;&#x53D8;&#x91CF;&#x4E5F;&#x5C06;&#x4ECE;&#x4E3B;&#x5B58;&#x4E2D;&#x91CD;&#x65B0;&#x8BFB;&#x53D6;&#x3002;</p>
+</li>
+</ul>
+<p>&#x770B;&#x4E2A;&#x4EE3;&#x7801;&#x4F8B;&#x5B50;&#xFF1A;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span>{</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> years;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> months;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">int</span> days;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// &#x66F4;&#x6539;&#x4E86;&#x4E09;&#x4E2A;&#x53D8;&#x91CF;&#xFF0C;&#x53EA;&#x6709;days&#x662F;volatile&#x7684;</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> years, <span class="keyword">int</span> months, <span class="keyword">int</span> days)</span></span>{</span><br><span class="line">        <span class="keyword">this</span>.years = year;</span><br><span class="line">        <span class="keyword">this</span>.months = months;</span><br><span class="line">        <span class="keyword">this</span>.days = days;    </span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<p>&#x201D;Full Visibility Guarantee&#x201C;&#x610F;&#x5473;&#x7740;&#xFF0C;&#x5F53;&#x4E00;&#x4E2A;&#x503C;&#x88AB;&#x5199;&#x5165;days&#xFF0C;&#x90A3;&#x4E48;&#x7EBF;&#x7A0B;&#x6240;&#x6709;&#x7684;&#x53EF;&#x89C1;&#x7684;&#x53D8;&#x91CF;&#x90FD;&#x4F1A;&#x88AB;&#x5199;&#x5165;&#x4E3B;&#x5B58;&#xFF0C;&#x5BF9;&#x4E8E;&#x4E0A;&#x9762;&#x7684;&#x4F8B;&#x5B50;&#x6765;&#x8BF4;&#xFF0C;months&#x548C;years&#x4E5F;&#x4F1A;&#x88AB;&#x5199;&#x5165;&#x4E3B;&#x5B58;&#x3002;&#x8BFB;&#x53D6;&#x4ED6;&#x4EEC;&#x7684;&#x503C;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x8FD9;&#x6837;&#xFF1A;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span>{</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> years;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> months;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">int</span> days;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">totalDays</span><span class="params">()</span></span>{</span><br><span class="line">        <span class="keyword">int</span> total = <span class="keyword">this</span>.days;</span><br><span class="line">        total += months * <span class="number">30</span>;</span><br><span class="line">        total += years * <span class="number">365</span>;</span><br><span class="line">        <span class="keyword">return</span> total;   </span><br><span class="line">    }</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> years, <span class="keyword">int</span> months, <span class="keyword">int</span> days)</span></span>{</span><br><span class="line">        <span class="keyword">this</span>.years = years;</span><br><span class="line">        <span class="keyword">this</span>.months = months;</span><br><span class="line">        <span class="keyword">this</span>.days = days;</span><br><span class="line">&#xA0;&#xA0;&#xA0;&#xA0;}</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<p>&#x7740;&#x91CD;&#x89C2;&#x5BDF;<em>totalDays()</em>&#xFF0C;&#x4ED6;&#x4E00;&#x5F00;&#x59CB;&#x4F1A;&#x5C06;<code>days</code>&#x7684;&#x503C;&#x8D4B;&#x7ED9;&#x53D8;&#x91CF;<code>total</code> ,&#x7531;&#x4E8E;<code>days</code>&#x7684;&#x7C7B;&#x578B;&#x662F;<code>volatile</code>&#xFF0C;&#x6240;&#x4EE5;&#xFF0C;&#x8BFB;&#x53D6;<code>days</code>&#x7684;&#x540C;&#x65F6;&#xFF0C;&#x5176;&#x4ED6;&#x53D8;&#x91CF;&#xFF08;months&#x3001;years&#xFF09;&#x4E5F;&#x90FD;&#x4F1A;&#x4ECE;&#x4E3B;&#x5B58;&#x4E2D;&#x8BFB;&#x53D6;&#xFF0C;&#x56E0;&#x6B64;&#xFF0C;&#x8FD9;&#x5C31;&#x662F;&#x4E3A;&#x4EC0;&#x4E48;&#x53EF;&#x89C1;&#x4FDD;&#x8BC1;&#x6027;&#x8D85;&#x8FC7;&#x4E86;<code>volatile</code>&#x4ED6;&#x672C;&#x8EAB;&#xFF0C;&#x6240;&#x4EE5;&#xFF0C;&#x5BF9;&#x4E8E;&#x672C;&#x4F8B;&#x751A;&#x81F3;&#x5176;&#x4ED6;&#x7528;&#x5230;&#x8FD9;&#x4E2A;&#x5173;&#x952E;&#x5B57;&#x7684;&#xFF0C;&#x90FD;&#x53EF;&#x4EE5;&#x6309;&#x7167;&#x4E0A;&#x9762;&#x7684;&#x987A;&#x5E8F;&#x6765;&#x4FDD;&#x8BC1;&#x8BFB;&#x53D6;&#x5230;&#x6700;&#x65B0;&#x503C;&#xFF08;&#x53EA;&#x7ED9;&#x4E00;&#x4E2A;&#x53D8;&#x91CF;&#x58F0;&#x660E;&#x4E3A;<code>volatile</code>&#xFF0C;&#x8BFB;&#x53D6;&#x65F6;&#x5FC5;&#x987B;<strong>&#x6700;&#x540E;</strong>&#x8BFB;&#x53D6;&#x5E26;&#x6709;<code>volatile</code>&#x5C5E;&#x6027;&#x7684;&#x503C;&#xFF09;&#x3002;</p>
+<h1 id="Instruction-Reordering"><a href="#Instruction-Reordering" class="headerlink" title="Instruction Reordering"></a>Instruction Reordering</h1><p>&#x6307;&#x4EE4;&#x91CD;&#x6392;&#xFF01;&#xFF01;&#xFF01;&#x51FA;&#x4E8E;&#x6027;&#x80FD;&#x539F;&#x56E0;&#xFF0C;JVM&#x548C;CPU&#x662F;&#x5141;&#x8BB8;&#x5BF9;&#x7A0B;&#x5E8F;&#x4E2D;&#x7684;&#x6307;&#x4EE4;&#x8FDB;&#x884C;&#x91CD;&#x65B0;&#x6392;&#x5E8F;&#xFF0C;&#x53EA;&#x8981;&#x6307;&#x4EE4;&#x7684;&#x8BED;&#x4E49;&#x542B;&#x4E49;&#x4FDD;&#x6301;&#x4E0D;&#x53D8;&#x5373;&#x53EF;&#x3002;&#x4F8B;&#x5982;&#xFF1A;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a = <span class="number">1</span>;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">2</span>;</span><br><span class="line">a++;</span><br><span class="line">b++;</span><br></pre></td></tr></table></figure>
+
+<p>&#x8FD9;&#x4E9B;&#x6307;&#x4EE4;&#x53EF;&#x4EE5;&#x91CD;&#x65B0;&#x6392;&#x5E8F;&#x4E3A;&#x4E0B;&#x5217;&#x7684;&#x987A;&#x5E8F;&#xFF0C;&#x4E14;&#x4E0D;&#x4F1A;&#x4E22;&#x5931;&#x539F;&#x6709;&#x7A0B;&#x5E8F;&#x7684;&#x8BED;&#x4E49;&#xFF1A;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> a  = <span class="number">1</span>;</span><br><span class="line">a++;</span><br><span class="line"><span class="keyword">int</span> b = <span class="number">2</span>;</span><br><span class="line">b++</span><br></pre></td></tr></table></figure>
+
+<p>&#x7136;&#x800C;&#xFF0C;&#x5F53;&#x53D8;&#x91CF;&#x5C5E;&#x4E8E;<code>volatile</code>&#x65F6;&#xFF0C;&#x6307;&#x4EE4;&#x6392;&#x5E8F;&#x5C31;&#x9700;&#x8981;&#x5C0F;&#x5FC3;&#x4E86;&#xFF0C;&#x770B;&#x770B;&#x4E0B;&#x9762;&#x7684;&#x4F8B;&#x5B50;&#xFF1A;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyClass</span></span>{</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> years;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">int</span> months;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">int</span> days;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> years, <span class="keyword">int</span> months, <span class="keyword">int</span> days)</span></span>{</span><br><span class="line">        <span class="keyword">this</span>.years = years;</span><br><span class="line">        <span class="keyword">this</span>.months = months;</span><br><span class="line">        <span class="keyword">this</span>.days = days;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<p>&#x5982;&#x679C;JVM&#x91CD;&#x6392;&#x6307;&#x4EE4;&#xFF0C;&#x50CF;&#x4E0B;&#x9762;&#x8FD9;&#x6837;&#xFF1A;</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">update</span><span class="params">(<span class="keyword">int</span> years, <span class="keyword">int</span> months, <span class="keyword">int</span> days)</span></span>{</span><br><span class="line">    <span class="comment">// &#x8FD9;&#x91CC;&#x5C06;days&#x8D4B;&#x503C;&#x52A8;&#x4F5C;&#x653E;&#x5230;&#x4E86;&#x7B2C;&#x4E00;&#x4F4D;</span></span><br><span class="line">    <span class="keyword">this</span>.days = days;</span><br><span class="line">    <span class="keyword">this</span>.years = years;</span><br><span class="line">    <span class="keyword">this</span>.months = months;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+
+<p>&#x5F53;days&#x7684;&#x987A;&#x5E8F;&#x53D8;&#x4E86;&#xFF0C;months&#x548C;years&#x7684;&#x503C;&#x5C31;&#x65E0;&#x6CD5;&#x6B63;&#x786E;&#x5730;&#x5C55;&#x73B0;&#x7ED9;&#x5176;&#x4ED6;&#x7EBF;&#x7A0B;&#x3002;&#x63A5;&#x4E0B;&#x6765;&#x662F;&#x5982;&#x4F55;&#x89E3;&#x51B3;&#x8FD9;&#x4E2A;&#x95EE;&#x9898;&#x3002;</p>
+<h2 id="Volatile-Happens-Before-Guarantee"><a href="#Volatile-Happens-Before-Guarantee" class="headerlink" title="Volatile Happens-Before Guarantee"></a>Volatile Happens-Before Guarantee</h2><p><code>volatile</code>&#x5173;&#x952E;&#x5B57;&#x63D0;&#x4F9B;&#x4E86;&#x4E00;&#x4E9B;&#x201C;&#x4FDD;&#x8BC1;&#x201D;&#xFF0C;&#x5373;&#x4E0D;&#x4F1A;&#x53BB;&#x505A;&#x7684;&#x4E00;&#x4E9B;&#x64CD;&#x4F5C;&#xFF0C;&#x4EE5;&#x514D;&#x51FA;&#x73B0;&#x610F;&#x5916;&#x3002;</p>
+<ul>
+<li>&#x5982;&#x679C;&#x8BFB;/&#x5199;&#x5176;&#x4ED6;&#x53D8;&#x91CF;&#x51FA;&#x73B0;&#x5728;&#x5199;<code>volatile&#x53D8;&#x91CF;</code>&#x4E4B;&#x524D;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x4E0D;&#x80FD;&#x91CD;&#x6392;&#x4E3A;&#x51FA;&#x73B0;&#x5728;&#x5B83;&#x4E4B;&#x540E;&#x3002;&#x5F53;&#x7136;&#x8FD4;&#x56DE;&#x8FC7;&#x662F;&#x5141;&#x8BB8;&#x7684;&#x3002;</li>
+<li>&#x5982;&#x679C;&#x8BFB;/&#x5199;&#x5176;&#x4ED6;&#x53D8;&#x91CF;&#x51FA;&#x73B0;&#x5728;&#x8BFB;<code>volatile&#x53D8;&#x91CF;</code>&#x4E4B;&#x540E;&#xFF0C;&#x90A3;&#x4E48;&#x5C31;&#x4E0D;&#x80FD;&#x91CD;&#x6392;&#x4E3A;&#x51FA;&#x73B0;&#x5728;&#x5B83;&#x4E4B;&#x524D;&#x3002;</li>
+</ul>
+<h1 id="Volatile-is-Not-Always-Enough"><a href="#Volatile-is-Not-Always-Enough" class="headerlink" title="Volatile is Not Always Enough"></a>Volatile is Not Always Enough</h1><p>&#x5F88;&#x660E;&#x663E;&#xFF0C;&#x5728;&#x4E00;&#x5F00;&#x59CB;counter&#x7684;&#x4F8B;&#x5B50;&#x4E2D;&#x5B58;&#x5728;&#x8FD9;&#x79CD;&#x60C5;&#x51B5;&#xFF0C;&#x8BFB;&#x53D6;counter&#x5E76;&#x8D4B;&#x503C;&#x671F;&#x95F4;&#xFF0C;&#x5B58;&#x5728;&#x591A;&#x4E2A;&#x7EBF;&#x7A0B;&#x7684;&#x7ADE;&#x4E89;&#x72B6;&#x6001;&#xFF0C;&#x90FD;&#x8D4B;&#x503C;&#x7684;&#x8BDD;&#x4F1A;&#x8986;&#x76D6;&#x5F7C;&#x6B64;&#xFF08;&#x5F80;&#x4E3B;&#x5B58;&#x4E2D;&#xFF09;&#xFF0C;&#x8FD9;&#x65F6;&#x5C31;&#x5F97;&#x91C7;&#x7528;&#x80FD;&#x4FDD;&#x8BC1;<code>&#x539F;&#x5B50;&#x6027;</code>&#x7684;&#x64CD;&#x4F5C;&#x4E86;&#xFF0C;&#x5982;<strong>syncronized</strong>&#x6216;&#x8005;&#x6BD4;&#x5E76;&#x53D1;&#x5305;&#x4E0B;&#x7684;<code>lock</code>&#x4E86;&#x3002;</p>
+
+    </div>
+
+    
+    
+    
+
+    
+      <div>
+        
+<div>
+  
+    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
+      <span>-------- 本文结束 感谢阅读 --------</span>
+    </div>
+  
+</div>
+      </div>
+    
+      
+        <div class="reward-container">
+  <div>Donate comment here.</div>
+  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    Donate
+  </button>
+  <div id="qr" style="display: none;">
+      
+      <div style="display: inline-block;">
+        <img src="/images/wechatpay.jpg" alt="Sebastian WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+      
+      <div style="display: inline-block;">
+        <img src="/images/alipay.jpg" alt="Sebastian Alipay">
+        <p>Alipay</p>
+      </div>
+
+  </div>
+</div>
+
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/lock/" rel="tag"># lock</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+                <a href="/2020/07/20/mq/" rel="next" title="mq">
+                  <i class="fa fa-chevron-left"></i> mq
+                </a>
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+            </div>
+          </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <img class="site-author-image" itemprop="image" alt="Sebastian"
+    src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">Sebastian</p>
+  <div class="site-description" itemprop="description">I'm feeling lucky!</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">56</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">50</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/Sebastian-Getts" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Sebastian-Getts" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:zzzqsw@gmail.com" title="E-Mail &amp;rarr; mailto:zzzqsw@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="https://instagram.com/mchin6" title="Instagram &amp;rarr; https:&#x2F;&#x2F;instagram.com&#x2F;mchin6" rel="noopener" target="_blank"><i class="fa fa-fw fa-instagram"></i>Instagram</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Sebastian</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a>
+  </div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.4.2
+  </div>
+
+
+        
+
+
+
+
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+  </div>
+
+  
+  
+  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+  <script>
+var pjax = new Pjax({
+  selectors: [
+    'head title',
+    '#page-configurations',
+    '.content-wrap',
+    '.post-toc-wrap',
+    '#pjax'
+  ],
+  switches: {
+    '.post-toc-wrap': Pjax.switches.innerHTML
+  },
+  analytics: false,
+  cacheBust: false,
+  scrollTo : !CONFIG.bookmark.enable
+});
+
+window.addEventListener('pjax:success', () => {
+  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
+    var code = element.text || element.textContent || element.innerHTML || '';
+    var parent = element.parentNode;
+    parent.removeChild(element);
+    var script = document.createElement('script');
+    if (element.id) {
+      script.id = element.id;
+    }
+    if (element.className) {
+      script.className = element.className;
+    }
+    if (element.type) {
+      script.type = element.type;
+    }
+    if (element.src) {
+      script.src = element.src;
+      // Force synchronous loading of peripheral JS.
+      script.async = false;
+    }
+    if (element.getAttribute('pjax') !== null) {
+      element.setAttribute('pjax', '');
+    }
+    if (code !== '') {
+      script.appendChild(document.createTextNode(code));
+    }
+    parent.appendChild(script);
+  });
+  NexT.boot.refresh();
+  // Define Motion Sequence & Bootstrap Motion.
+  if (CONFIG.motion.enable) {
+    NexT.motion.integrator
+      .init()
+      .add(NexT.motion.middleWares.postList)
+      .bootstrap();
+  }
+  NexT.utils.updateSidebarPosition();
+});
+</script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script pjax>
+if (document.querySelectorAll('pre.mermaid').length) {
+  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/mermaid/8.2.0/mermaid.min.js', () => {
+    mermaid.initialize({
+      theme: 'forest',
+      logLevel: 3,
+      flowchart: { curve: 'linear' },
+      gantt: { axisFormat: '%m/%d/%Y' },
+      sequence: { actorMargin: 50 }
+    });
+  }, window.mermaid);
+}
+</script>
+
+
+    <div id="pjax">
+
+  
+
+  
+
+  
+
+  
+
+  <script async src="/js/cursor/love.min.js"></script>
+
+
+
+
+  <script src="/js/wobblewindow.js"></script>
+  <script>
+    //只在桌面版网页启用特效
+    if( window.innerWidth > 768  ){
+      $(document).ready(function () {
+        
+          $('#header').wobbleWindow({
+            radius: 50,
+            movementTop: false,
+            movementLeft: false,
+            movementRight: false,
+            debug: false,
+          });
+        
+
+        
+          $('#sidebar').wobbleWindow({
+            radius: 50,
+            movementLeft: false,
+            movementTop: false,
+            movementBottom: false,
+            position: 'fixed',
+            debug: false,
+          });
+        
+
+        
+          $('#footer').wobbleWindow({
+            radius: 50,
+            movementBottom: false,
+            movementLeft: false,
+            movementRight: false,
+            offsetX: ,
+            position: 'absolute',
+            debug: false,
+          });
+        
+      });
+    }
+  </script>
+
+
+
+
+
+
+
+
+    </div>
+</body>
+</html>

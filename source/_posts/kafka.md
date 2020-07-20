@@ -1,11 +1,12 @@
 ---
 title: kafka
 date: 2019-12-03 22:34:16
-categories: MQ
+categories: MiddleWare
 tags: kafka
 ---
 
-一直听说卡夫卡，一直没搞明白过，，要把它撸顺咯，属于**大数据**的技术。
+卡夫卡，消息中间件，注意同类型的异同。
+
 <!-- mroe -->
 
 # 序
