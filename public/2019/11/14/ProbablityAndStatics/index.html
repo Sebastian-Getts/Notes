@@ -1,735 +1,694 @@
+
 <!DOCTYPE html>
 <html lang="en">
+    
 <head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.jpg">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.jpg">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-  <meta name="msvalidate.01" content="541BE591C13D7313C3568E6D172218E2">
-  <meta name="baidu-site-verification" content="3qvcDlCoMv">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
-
-
-<script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.4.2',
-    exturl: false,
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    },
-    sidebarPadding: 40
-  };
-</script>
-
-  <meta name="description" content="概率论与数理统计的温习。。。">
-<meta name="keywords" content="parobablity&amp;Statics">
-<meta property="og:type" content="article">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hola">
+    <title>事件的概率 - Hola</title>
+    <meta name="author" content="Sebastian Getts">
+    
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sebastian Getts","sameAs":["https://github.com/sebastian-getts/","mailto"],"image":"avatar.jpg"},"articleBody":"概率论与数理统计的温习。。。\n\n\n事件的概率几个专有名词记了忘，忘了记。。。\n事件：是指某种情况的陈述，他可能发生，也可能不发生。发生与否要等试验过后才知道结果。。（这个好像是常识，虽然跟实际生活中的“事件”概念不一样）\n古典概率：设一个试验有N个等可能的结果，而事件E恰包含其中的M个结果，则事件E的概率，记为P(E)*，定义为$$P(E)=\\frac{M}{N}$$*古典概率的计算主要基于排列组合**，下面聊聊关于排列组合的几个简单公式：\n根据古典概率公式可以看出，他的计算归结为计算两个数M和N，这种计算大多涉及排列组合，二者的区别在于：排列要计较次序而组合不计较（ab和ba是不同的排列，但是是相同的组合）。\n\nn个不同的物件中取r（r大于1小于n）个的不同排列总数$$P^n_r=n(n-1)(n-2)…(n-r+1)$$从n个物件中取出一个排在队列第一位的取法有n种，再取一个排在第二位的取法有n-1种……直到取一个排在第r位的取法为n-r+1种。（think over n-r+1，取完1个以后就变成了n-r，合题)\n特别，若r=n，由上式可得：$$P^n_r=n(n-1)(n-2)…1=n!$$\n\n\n*0!*为1，负数的阶乘没有意义。\n\nn个不同物件中取r（r大于1小于n）个的不同组合数$$C^n_r=\\frac{P^n_r}{r!}=\\frac{n!}{r!(n-r)!}$$因为，每一个包含r个物件的组合，可以产生*r!个不同的排列，所以排列数应为组合数的r!*倍。组合数公式也常称为组合系数。\n以后会采用更为常用的组合的写法：$$C^n_r=\\tbinom{n}{r}$$\n\n约定1，0！=1$$\\tbinom{n}{0}=\\frac{n!}{0!(n-0)!}=1$$\n\n只要r为非负整数，n无论为何实数，都有意义。$$\\tbinom{n}{r}=\\frac{P^n_r}{r!}=\\frac{n(n-1)(n-2)…(n-r+1)}{r!}$$所以可不比限制为自然数。$$\\tbinom{-1}{r}=\\frac{(-1)(-2)(-3)…(-r)}{r!}=(-1)^r\n\n\n\n与二项式展开的关系组合系数又称为二项式系数:$$ (a+b)^n=\\sum_{i=0}^n \\binom{n}{i} a^i b^{n-i}$$\n\n\n证明：为了产生$a^ib^{n-i}$这一项，在n个(a+b)中，要从其中的i个取出a，另n-i个取出b。从n个中取出i个的不同取法为$\\tbinom{n}{i}$，也就是$a^ib^{n-i}$的系数。\n   利用二项式系数的公式还可以推出更多有趣的组合公式：\n\na=b=1$$ 2^n=\\binom{n}{0}+\\binom{n}{1}+\\binom{n}{2}+…\\binom{n}{n}$$\n\na=-1, b=1$$0=\\binom{n}{0}-\\binom{n}{1}+\\binom{n}{2}-…(-1)^n\\binom{n}{n}$$\n\n另一个有用的公式，由恒等式$$(1+x)^{m+n}=(1+x)^m (1+x)^n$$即：$$\\sum_{j=0}^{m+n}\\binom{m+n}{j}x^j=\\sum_{j=0}^m\\binom{m}{j} \\sum_{j=0}^n\\binom{n}{j}$$\n比较两边系数x^k得到的（。。不晓得哪里有用 目前来说）\n\n\n $$\n \\binom&#123;m+n&#125;&#123;k&#125; = \\sum_&#123;i=0&#125;^k \\binom&#123;m&#125;&#123;i&#125; \\binom&#123;n&#125;&#123;k-i&#125;\n $$\n\nn个不同物件分成k堆，各堆物件数分别为r1,r2…rk的分法$$\\frac{n!}{r_1!..r_k!}$$此处的r都是非负整数，且分成的堆要计较堆的次序，这个式子常被称为多项式系数，因为他是$$(x_1+x_2+..+x_k)^n$$中的$$x_1^{r_1}…x_k^{r_k}$$的系数。。。。（有啥用嘞？）\n\n\n证明也不难：\n   先从n个中取出r1个作为第一堆，取法为$$   \\binom{n}{r_1}$$   在余下的n-1中取出r2个作为第二堆，取法为$$   \\binom{n-r_1}{r_2}$$   以此类推，得到全部的不同的分法：$$   \\binom{n}{r_1}\\binom{n-r_1}{r_2}\\binom{n-r_1-r_2}{r3}…\\binom{n-r_1-r_2-…r_{k-1}}{r_k}$$   note: n-r1-r2-..r(k-1)=rk 化简后即可得到。\n事件的运算、条件概率与独立性事件的互斥与对立互斥包含对立，对立是互斥的诸多情况中的一种。\n条件概率设有两事件A，B，而P(B)不为0，则在给定B发生的条件下A的条件概率，记为P(A|B)，定义为$$P(A|B)=\\frac{P(AB)}{P(B)}$$\n全概率公式与贝叶斯贴一些小题\n一批产品共N个，其中废品有M个，从中随机取出n个，其中恰好m个废品的概率是？\nn双相异的鞋共2n只，随机地分成n堆，每堆2只，各堆都自成一双鞋的概率是？\nn个男孩，m个女孩（m&lt;=n+1)随机地排成一列，任意两个女孩都不相邻的概率是？\n口袋里有两盒火柴，每盒n支，每次用火柴时从口袋里随机拿出一盒并用掉一支，到某次会发现取出的那一盒已经空了，此时，另一盒恰好有m支火柴的概率是？\n\nP=N/M，有利于事件发生的概率除以事件发生的总概率\n解\n总概率为所有人排成一排，共有排法：$$(n+m)!$$有利于事件发生的排法：\n\n所有男生排成一排，排法为 n!， 排好之后女生可以站的位置就是n+1个，为了不相邻，将女生安排在这些位置中，则排法为$$\\binom{n+1}{m}$$\n\n安排好女生的站位后，女生之间可以随意调换位置，排法有*m!*种，所以有利于事件发生的排列：$$M=n!\\binom{n+1}{m}m!$$事件发生的概率为：$$P(E)=\\frac{n!\\binom{n+1}{m}m!}{(m+n)!}$$\n\n\n\n\n\n2n只鞋子，随机分成n堆，每堆2只，分法为：$$\\binom{2n}{r_1}\\binom{2n-r_1}{r_2}…\\binom{2n-r_1-r_2-…r_{k-1}}{r_k}=\\frac{(2n)!}{2^n}$$有利于事件的分法：将每双成对的鞋子绑在一起看作一个物件，一共有n个，分成n堆每堆1个的分法：$$P_1^n=n!$$则P(E)为两个事件的概率相除：$$P(E)=\\frac{M}{N}=\\frac{n!}{\\frac{(2n)!}{2_n}}=\\frac{(n!)2^n}{(2n)!}$$\n\n","dateCreated":"2019-11-14T12:52:44+08:00","dateModified":"2020-08-15T19:23:39+08:00","datePublished":"2019-11-14T12:52:44+08:00","description":"概率论与数理统计的温习。。。","headline":"事件的概率","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://github.com/sebastian/about/2019/11/14/ProbablityAndStatics/"},"publisher":{"@type":"Organization","name":"Sebastian Getts","sameAs":["https://github.com/sebastian-getts/","mailto"],"image":"avatar.jpg","logo":{"@type":"ImageObject","url":"avatar.jpg"}},"url":"http://github.com/sebastian/about/2019/11/14/ProbablityAndStatics/","keywords":"parobablity&Statics"}</script>
+    <meta name="description" content="概率论与数理统计的温习。。。">
+<meta property="og:type" content="blog">
 <meta property="og:title" content="事件的概率">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;14&#x2F;ProbablityAndStatics&#x2F;index.html">
-<meta property="og:site_name" content="Sebastian Getts">
+<meta property="og:url" content="http://github.com/sebastian/about/2019/11/14/ProbablityAndStatics/index.html">
+<meta property="og:site_name" content="Hola">
 <meta property="og:description" content="概率论与数理统计的温习。。。">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-07-19T17:29:13.366Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-11-14T04:52:44.000Z">
+<meta property="article:modified_time" content="2020-08-15T11:23:39.651Z">
+<meta property="article:author" content="Sebastian Getts">
+<meta property="article:tag" content="parobablity&amp;Statics">
 <meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://github.com/sebastian/about/assets/images/avatar.jpg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-spzjrm9no8kcbknku5bsn1dr9dpp94iq1g86qdztxtoqwlgtrnwyi2tucypv.min.css">
 
-<link rel="canonical" href="http://yoursite.com/2019/11/14/ProbablityAndStatics/">
+    <!--STYLES END-->
+    
+
+    
+    <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?3e3b025a15329c47fcc47a83f6160356";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
 
 
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
-  };
-</script>
-
-  <title>事件的概率 | Sebastian Getts</title>
-  
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
+    
+        
+    
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
 
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-meta">
-
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Sebastian Getts</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-        <p class="site-subtitle">I'm the new one.</p>
-  </div>
-
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-</div>
-
-
-<nav class="site-nav">
-  
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
-
-  </li>
-        <li class="menu-item menu-item-movies">
-
-    <a href="/movies/" rel="section"><i class="fa fa-fw fa-video-camera"></i>movies</a>
-
-  </li>
-  </ul>
-
-</nav>
-</div>
-    </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-  <div class="reading-progress-bar"></div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content">
+        
             
+        
+    
 
-  <div class="posts-expand">
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/14/ProbablityAndStatics/">
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/%20"
+            aria-label=""
+        >
+            Hola
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Sebastian">
-      <meta itemprop="description" content="I'm feeling lucky!">
-    </span>
+            <!-- Define author's picture -->
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sebastian Getts">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          事件的概率
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Sebastian Getts</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>I write code to enrich and ease life of others. 0 errors, 0 warnings.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link open-algolia-search"
+                            href="#search"
+                            
+                            rel="noopener"
+                            title="Search"
+                        >
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Search</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/sebastian-getts/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/mailto"
+                            
+                            rel="noopener"
+                            title="Mail"
+                        >
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            事件的概率
         </h1>
-
+    
+    
         <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+    <time datetime="2019-11-14T12:52:44+08:00">
+	
+		    Nov 14, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Math/">Math</a>
 
-              <time title="Created: 2019-11-14 12:52:44" itemprop="dateCreated datePublished" datetime="2019-11-14T12:52:44+08:00">2019-11-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-20 01:29:13" itemprop="dateModified" datetime="2020-07-20T01:29:13+08:00">2020-07-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Math/" itemprop="url" rel="index">
-                    <span itemprop="name">Math</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
 
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
+</div>
 
-      
-        <p>&#x6982;&#x7387;&#x8BBA;&#x4E0E;&#x6570;&#x7406;&#x7EDF;&#x8BA1;&#x7684;&#x6E29;&#x4E60;&#x3002;&#x3002;&#x3002;</p>
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>概率论与数理统计的温习。。。</p>
 <a id="more"></a>
 
-<h1 id="&#x4E8B;&#x4EF6;&#x7684;&#x6982;&#x7387;"><a href="#&#x4E8B;&#x4EF6;&#x7684;&#x6982;&#x7387;" class="headerlink" title="&#x4E8B;&#x4EF6;&#x7684;&#x6982;&#x7387;"></a>&#x4E8B;&#x4EF6;&#x7684;&#x6982;&#x7387;</h1><p>&#x51E0;&#x4E2A;&#x4E13;&#x6709;&#x540D;&#x8BCD;&#x8BB0;&#x4E86;&#x5FD8;&#xFF0C;&#x5FD8;&#x4E86;&#x8BB0;&#x3002;&#x3002;&#x3002;</p>
-<p><strong>&#x4E8B;&#x4EF6;</strong>&#xFF1A;&#x662F;&#x6307;&#x67D0;&#x79CD;&#x60C5;&#x51B5;&#x7684;&#x9648;&#x8FF0;&#xFF0C;&#x4ED6;&#x53EF;&#x80FD;&#x53D1;&#x751F;&#xFF0C;&#x4E5F;&#x53EF;&#x80FD;&#x4E0D;&#x53D1;&#x751F;&#x3002;&#x53D1;&#x751F;&#x4E0E;&#x5426;&#x8981;&#x7B49;&#x8BD5;&#x9A8C;&#x8FC7;&#x540E;&#x624D;&#x77E5;&#x9053;&#x7ED3;&#x679C;&#x3002;&#x3002;&#xFF08;&#x8FD9;&#x4E2A;&#x597D;&#x50CF;&#x662F;&#x5E38;&#x8BC6;&#xFF0C;&#x867D;&#x7136;&#x8DDF;&#x5B9E;&#x9645;&#x751F;&#x6D3B;&#x4E2D;&#x7684;&#x201C;&#x4E8B;&#x4EF6;&#x201D;&#x6982;&#x5FF5;&#x4E0D;&#x4E00;&#x6837;&#xFF09;</p>
-<p><strong>&#x53E4;&#x5178;&#x6982;&#x7387;</strong>&#xFF1A;&#x8BBE;&#x4E00;&#x4E2A;&#x8BD5;&#x9A8C;&#x6709;<em>N</em>&#x4E2A;<strong>&#x7B49;&#x53EF;&#x80FD;</strong>&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x800C;&#x4E8B;&#x4EF6;<em>E</em>&#x6070;&#x5305;&#x542B;&#x5176;&#x4E2D;&#x7684;M&#x4E2A;&#x7ED3;&#x679C;&#xFF0C;&#x5219;&#x4E8B;&#x4EF6;<em>E</em>&#x7684;&#x6982;&#x7387;&#xFF0C;&#x8BB0;&#x4E3A;<em>P(E)</em>&#xFF0C;&#x5B9A;&#x4E49;&#x4E3A;<br>$$<br>P(E)=\frac{M}{N}<br>$$<br><strong>&#x53E4;&#x5178;&#x6982;&#x7387;&#x7684;&#x8BA1;&#x7B97;&#x4E3B;&#x8981;&#x57FA;&#x4E8E;&#x6392;&#x5217;&#x7EC4;&#x5408;</strong>&#xFF0C;&#x4E0B;&#x9762;&#x804A;&#x804A;&#x5173;&#x4E8E;&#x6392;&#x5217;&#x7EC4;&#x5408;&#x7684;&#x51E0;&#x4E2A;&#x7B80;&#x5355;&#x516C;&#x5F0F;&#xFF1A;</p>
-<p>&#x6839;&#x636E;&#x53E4;&#x5178;&#x6982;&#x7387;&#x516C;&#x5F0F;&#x53EF;&#x4EE5;&#x770B;&#x51FA;&#xFF0C;&#x4ED6;&#x7684;&#x8BA1;&#x7B97;&#x5F52;&#x7ED3;&#x4E3A;&#x8BA1;&#x7B97;&#x4E24;&#x4E2A;&#x6570;M&#x548C;N&#xFF0C;&#x8FD9;&#x79CD;&#x8BA1;&#x7B97;&#x5927;&#x591A;&#x6D89;&#x53CA;&#x6392;&#x5217;&#x7EC4;&#x5408;&#xFF0C;&#x4E8C;&#x8005;&#x7684;&#x533A;&#x522B;&#x5728;&#x4E8E;&#xFF1A;&#x6392;&#x5217;&#x8981;&#x8BA1;&#x8F83;&#x6B21;&#x5E8F;&#x800C;&#x7EC4;&#x5408;&#x4E0D;&#x8BA1;&#x8F83;&#xFF08;ab&#x548C;ba&#x662F;&#x4E0D;&#x540C;&#x7684;&#x6392;&#x5217;&#xFF0C;&#x4F46;&#x662F;&#x662F;&#x76F8;&#x540C;&#x7684;&#x7EC4;&#x5408;&#xFF09;&#x3002;</p>
+<h1 id="事件的概率"><a href="#事件的概率" class="headerlink" title="事件的概率"></a>事件的概率</h1><p>几个专有名词记了忘，忘了记。。。</p>
+<p><strong>事件</strong>：是指某种情况的陈述，他可能发生，也可能不发生。发生与否要等试验过后才知道结果。。（这个好像是常识，虽然跟实际生活中的“事件”概念不一样）</p>
+<p><strong>古典概率</strong>：设一个试验有<em>N</em>个<strong>等可能</strong>的结果，而事件<em>E</em>恰包含其中的M个结果，则事件<em>E</em>的概率，记为<em>P(E)*，定义为<br>$$<br>P(E)=\frac{M}{N}<br>$$<br>*</em>古典概率的计算主要基于排列组合**，下面聊聊关于排列组合的几个简单公式：</p>
+<p>根据古典概率公式可以看出，他的计算归结为计算两个数M和N，这种计算大多涉及排列组合，二者的区别在于：排列要计较次序而组合不计较（ab和ba是不同的排列，但是是相同的组合）。</p>
 <ol>
-<li><h3 id="n&#x4E2A;&#x4E0D;&#x540C;&#x7684;&#x7269;&#x4EF6;&#x4E2D;&#x53D6;r&#xFF08;r&#x5927;&#x4E8E;1&#x5C0F;&#x4E8E;n&#xFF09;&#x4E2A;&#x7684;&#x4E0D;&#x540C;&#x6392;&#x5217;&#x603B;&#x6570;"><a href="#n&#x4E2A;&#x4E0D;&#x540C;&#x7684;&#x7269;&#x4EF6;&#x4E2D;&#x53D6;r&#xFF08;r&#x5927;&#x4E8E;1&#x5C0F;&#x4E8E;n&#xFF09;&#x4E2A;&#x7684;&#x4E0D;&#x540C;&#x6392;&#x5217;&#x603B;&#x6570;" class="headerlink" title="n&#x4E2A;&#x4E0D;&#x540C;&#x7684;&#x7269;&#x4EF6;&#x4E2D;&#x53D6;r&#xFF08;r&#x5927;&#x4E8E;1&#x5C0F;&#x4E8E;n&#xFF09;&#x4E2A;&#x7684;&#x4E0D;&#x540C;&#x6392;&#x5217;&#x603B;&#x6570;"></a>n&#x4E2A;&#x4E0D;&#x540C;&#x7684;&#x7269;&#x4EF6;&#x4E2D;&#x53D6;r&#xFF08;r&#x5927;&#x4E8E;1&#x5C0F;&#x4E8E;n&#xFF09;&#x4E2A;&#x7684;&#x4E0D;&#x540C;&#x6392;&#x5217;&#x603B;&#x6570;</h3><p>$$<br>P^n_r=n(n-1)(n-2)&#x2026;(n-r+1)<br>$$<br>&#x4ECE;n&#x4E2A;&#x7269;&#x4EF6;&#x4E2D;&#x53D6;&#x51FA;&#x4E00;&#x4E2A;&#x6392;&#x5728;&#x961F;&#x5217;&#x7B2C;&#x4E00;&#x4F4D;&#x7684;&#x53D6;&#x6CD5;&#x6709;<em>n</em>&#x79CD;&#xFF0C;&#x518D;&#x53D6;&#x4E00;&#x4E2A;&#x6392;&#x5728;&#x7B2C;&#x4E8C;&#x4F4D;&#x7684;&#x53D6;&#x6CD5;&#x6709;<em>n-1</em>&#x79CD;&#x2026;&#x2026;&#x76F4;&#x5230;&#x53D6;&#x4E00;&#x4E2A;&#x6392;&#x5728;&#x7B2C;<em>r</em>&#x4F4D;&#x7684;&#x53D6;&#x6CD5;&#x4E3A;<em>n-r+1</em>&#x79CD;&#x3002;&#xFF08;think over n-r+1&#xFF0C;&#x53D6;&#x5B8C;1&#x4E2A;&#x4EE5;&#x540E;&#x5C31;&#x53D8;&#x6210;&#x4E86;n-r&#xFF0C;&#x5408;&#x9898;)</p>
-<p>&#x7279;&#x522B;&#xFF0C;&#x82E5;<em>r=n</em>&#xFF0C;&#x7531;&#x4E0A;&#x5F0F;&#x53EF;&#x5F97;&#xFF1A;<br>$$<br>P^n_r=n(n-1)(n-2)&#x2026;1=n!<br>$$</p>
+<li><h3 id="n个不同的物件中取r（r大于1小于n）个的不同排列总数"><a href="#n个不同的物件中取r（r大于1小于n）个的不同排列总数" class="headerlink" title="n个不同的物件中取r（r大于1小于n）个的不同排列总数"></a>n个不同的物件中取r（r大于1小于n）个的不同排列总数</h3><p>$$<br>P^n_r=n(n-1)(n-2)…(n-r+1)<br>$$<br>从n个物件中取出一个排在队列第一位的取法有<em>n</em>种，再取一个排在第二位的取法有<em>n-1</em>种……直到取一个排在第<em>r</em>位的取法为<em>n-r+1</em>种。（think over n-r+1，取完1个以后就变成了n-r，合题)</p>
+<p>特别，若<em>r=n</em>，由上式可得：<br>$$<br>P^n_r=n(n-1)(n-2)…1=n!<br>$$</p>
 </li>
 </ol>
-<p><em>0!</em>&#x4E3A;1&#xFF0C;&#x8D1F;&#x6570;&#x7684;&#x9636;&#x4E58;&#x6CA1;&#x6709;&#x610F;&#x4E49;&#x3002;</p>
+<p>*0!*为1，负数的阶乘没有意义。</p>
 <ol start="2">
-<li><h3 id="n&#x4E2A;&#x4E0D;&#x540C;&#x7269;&#x4EF6;&#x4E2D;&#x53D6;r&#xFF08;r&#x5927;&#x4E8E;1&#x5C0F;&#x4E8E;n&#xFF09;&#x4E2A;&#x7684;&#x4E0D;&#x540C;&#x7EC4;&#x5408;&#x6570;"><a href="#n&#x4E2A;&#x4E0D;&#x540C;&#x7269;&#x4EF6;&#x4E2D;&#x53D6;r&#xFF08;r&#x5927;&#x4E8E;1&#x5C0F;&#x4E8E;n&#xFF09;&#x4E2A;&#x7684;&#x4E0D;&#x540C;&#x7EC4;&#x5408;&#x6570;" class="headerlink" title="n&#x4E2A;&#x4E0D;&#x540C;&#x7269;&#x4EF6;&#x4E2D;&#x53D6;r&#xFF08;r&#x5927;&#x4E8E;1&#x5C0F;&#x4E8E;n&#xFF09;&#x4E2A;&#x7684;&#x4E0D;&#x540C;&#x7EC4;&#x5408;&#x6570;"></a>n&#x4E2A;&#x4E0D;&#x540C;&#x7269;&#x4EF6;&#x4E2D;&#x53D6;r&#xFF08;r&#x5927;&#x4E8E;1&#x5C0F;&#x4E8E;n&#xFF09;&#x4E2A;&#x7684;&#x4E0D;&#x540C;&#x7EC4;&#x5408;&#x6570;</h3><p>$$<br>C^n_r=\frac{P^n_r}{r!}=\frac{n!}{r!(n-r)!}<br>$$<br>&#x56E0;&#x4E3A;&#xFF0C;&#x6BCF;&#x4E00;&#x4E2A;&#x5305;&#x542B;<em>r</em>&#x4E2A;&#x7269;&#x4EF6;&#x7684;&#x7EC4;&#x5408;&#xFF0C;&#x53EF;&#x4EE5;&#x4EA7;&#x751F;<em>r!</em>&#x4E2A;&#x4E0D;&#x540C;&#x7684;&#x6392;&#x5217;&#xFF0C;&#x6240;&#x4EE5;&#x6392;&#x5217;&#x6570;&#x5E94;&#x4E3A;&#x7EC4;&#x5408;&#x6570;&#x7684;<em>r!</em>&#x500D;&#x3002;&#x7EC4;&#x5408;&#x6570;&#x516C;&#x5F0F;&#x4E5F;&#x5E38;&#x79F0;&#x4E3A;&#x7EC4;&#x5408;&#x7CFB;&#x6570;&#x3002;</p>
-<p>&#x4EE5;&#x540E;&#x4F1A;&#x91C7;&#x7528;&#x66F4;&#x4E3A;&#x5E38;&#x7528;&#x7684;&#x7EC4;&#x5408;&#x7684;&#x5199;&#x6CD5;&#xFF1A;<br>$$<br>C^n_r=\tbinom{n}{r}<br>$$</p>
+<li><h3 id="n个不同物件中取r（r大于1小于n）个的不同组合数"><a href="#n个不同物件中取r（r大于1小于n）个的不同组合数" class="headerlink" title="n个不同物件中取r（r大于1小于n）个的不同组合数"></a>n个不同物件中取r（r大于1小于n）个的不同组合数</h3><p>$$<br>C^n_r=\frac{P^n_r}{r!}=\frac{n!}{r!(n-r)!}<br>$$<br>因为，每一个包含<em>r</em>个物件的组合，可以产生*r!<em>个不同的排列，所以排列数应为组合数的</em>r!*倍。组合数公式也常称为组合系数。</p>
+<p>以后会采用更为常用的组合的写法：<br>$$<br>C^n_r=\tbinom{n}{r}<br>$$</p>
 <ul>
-<li><p>&#x7EA6;&#x5B9A;1&#xFF0C;0&#xFF01;=1<br>$$<br>\tbinom{n}{0}=\frac{n!}{0!(n-0)!}=1<br>$$</p>
+<li><p>约定1，0！=1<br>$$<br>\tbinom{n}{0}=\frac{n!}{0!(n-0)!}=1<br>$$</p>
 </li>
-<li><p>&#x53EA;&#x8981;<em>r</em>&#x4E3A;&#x975E;&#x8D1F;&#x6574;&#x6570;&#xFF0C;<em>n</em>&#x65E0;&#x8BBA;&#x4E3A;&#x4F55;&#x5B9E;&#x6570;&#xFF0C;&#x90FD;&#x6709;&#x610F;&#x4E49;&#x3002;<br>$$<br>\tbinom{n}{r}=\frac{P^n_r}{r!}=\frac{n(n-1)(n-2)&#x2026;(n-r+1)}{r!}<br>$$<br>&#x6240;&#x4EE5;&#x53EF;&#x4E0D;&#x6BD4;&#x9650;&#x5236;&#x4E3A;&#x81EA;&#x7136;&#x6570;&#x3002;<br>$$<br>\tbinom{-1}{r}=\frac{(-1)(-2)(-3)&#x2026;(-r)}{r!}=(-1)^r</p>
+<li><p>只要<em>r</em>为非负整数，<em>n</em>无论为何实数，都有意义。<br>$$<br>\tbinom{n}{r}=\frac{P^n_r}{r!}=\frac{n(n-1)(n-2)…(n-r+1)}{r!}<br>$$<br>所以可不比限制为自然数。<br>$$<br>\tbinom{-1}{r}=\frac{(-1)(-2)(-3)…(-r)}{r!}=(-1)^r</p>
 </li>
 </ul>
 </li>
-<li><h3 id="&#x4E0E;&#x4E8C;&#x9879;&#x5F0F;&#x5C55;&#x5F00;&#x7684;&#x5173;&#x7CFB;"><a href="#&#x4E0E;&#x4E8C;&#x9879;&#x5F0F;&#x5C55;&#x5F00;&#x7684;&#x5173;&#x7CFB;" class="headerlink" title="&#x4E0E;&#x4E8C;&#x9879;&#x5F0F;&#x5C55;&#x5F00;&#x7684;&#x5173;&#x7CFB;"></a>&#x4E0E;&#x4E8C;&#x9879;&#x5F0F;&#x5C55;&#x5F00;&#x7684;&#x5173;&#x7CFB;</h3><p>&#x7EC4;&#x5408;&#x7CFB;&#x6570;&#x53C8;&#x79F0;&#x4E3A;&#x4E8C;&#x9879;&#x5F0F;&#x7CFB;&#x6570;:<br>$$<br> (a+b)^n=\sum_{i=0}^n \binom{n}{i} a^i b^{n-i}<br>$$</p>
+<li><h3 id="与二项式展开的关系"><a href="#与二项式展开的关系" class="headerlink" title="与二项式展开的关系"></a>与二项式展开的关系</h3><p>组合系数又称为二项式系数:<br>$$<br> (a+b)^n=\sum_{i=0}^n \binom{n}{i} a^i b^{n-i}<br>$$</p>
 </li>
 </ol>
-<p>&#x8BC1;&#x660E;&#xFF1A;&#x4E3A;&#x4E86;&#x4EA7;&#x751F;$a^ib^{n-i}$&#x8FD9;&#x4E00;&#x9879;&#xFF0C;&#x5728;n&#x4E2A;(a+b)&#x4E2D;&#xFF0C;&#x8981;&#x4ECE;&#x5176;&#x4E2D;&#x7684;i&#x4E2A;&#x53D6;&#x51FA;a&#xFF0C;&#x53E6;n-i&#x4E2A;&#x53D6;&#x51FA;b&#x3002;&#x4ECE;n&#x4E2A;&#x4E2D;&#x53D6;&#x51FA;i&#x4E2A;&#x7684;&#x4E0D;&#x540C;&#x53D6;&#x6CD5;&#x4E3A;$\tbinom{n}{i}$&#xFF0C;&#x4E5F;&#x5C31;&#x662F;$a^ib^{n-i}$&#x7684;&#x7CFB;&#x6570;&#x3002;</p>
-<p>   &#x5229;&#x7528;&#x4E8C;&#x9879;&#x5F0F;&#x7CFB;&#x6570;&#x7684;&#x516C;&#x5F0F;&#x8FD8;&#x53EF;&#x4EE5;&#x63A8;&#x51FA;&#x66F4;&#x591A;&#x6709;&#x8DA3;&#x7684;&#x7EC4;&#x5408;&#x516C;&#x5F0F;&#xFF1A;</p>
+<p>证明：为了产生$a^ib^{n-i}$这一项，在n个(a+b)中，要从其中的i个取出a，另n-i个取出b。从n个中取出i个的不同取法为$\tbinom{n}{i}$，也就是$a^ib^{n-i}$的系数。</p>
+<p>   利用二项式系数的公式还可以推出更多有趣的组合公式：</p>
 <ul>
-<li><p>a=b=1<br>$$<br> 2^n=\binom{n}{0}+\binom{n}{1}+\binom{n}{2}+&#x2026;\binom{n}{n}<br>$$</p>
+<li><p>a=b=1<br>$$<br> 2^n=\binom{n}{0}+\binom{n}{1}+\binom{n}{2}+…\binom{n}{n}<br>$$</p>
 </li>
-<li><p>a=-1, b=1<br>$$<br>0=\binom{n}{0}-\binom{n}{1}+\binom{n}{2}-&#x2026;(-1)^n\binom{n}{n}<br>$$</p>
+<li><p>a=-1, b=1<br>$$<br>0=\binom{n}{0}-\binom{n}{1}+\binom{n}{2}-…(-1)^n\binom{n}{n}<br>$$</p>
 </li>
-<li><p>&#x53E6;&#x4E00;&#x4E2A;&#x6709;&#x7528;&#x7684;&#x516C;&#x5F0F;&#xFF0C;&#x7531;&#x6052;&#x7B49;&#x5F0F;<br>$$<br>(1+x)^{m+n}=(1+x)^m (1+x)^n<br>$$<br>&#x5373;&#xFF1A;<br>$$<br>\sum_{j=0}^{m+n}\binom{m+n}{j}x^j=\sum_{j=0}^m\binom{m}{j} \sum_{j=0}^n\binom{n}{j}<br>$$</p>
-<p>&#x6BD4;&#x8F83;&#x4E24;&#x8FB9;&#x7CFB;&#x6570;x^k&#x5F97;&#x5230;&#x7684;&#xFF08;&#x3002;&#x3002;&#x4E0D;&#x6653;&#x5F97;&#x54EA;&#x91CC;&#x6709;&#x7528; &#x76EE;&#x524D;&#x6765;&#x8BF4;&#xFF09;</p>
+<li><p>另一个有用的公式，由恒等式<br>$$<br>(1+x)^{m+n}=(1+x)^m (1+x)^n<br>$$<br>即：<br>$$<br>\sum_{j=0}^{m+n}\binom{m+n}{j}x^j=\sum_{j=0}^m\binom{m}{j} \sum_{j=0}^n\binom{n}{j}<br>$$</p>
+<p>比较两边系数x^k得到的（。。不晓得哪里有用 目前来说）</p>
 </li>
 </ul>
-<pre><code>$$
-\binom{m+n}{k} = \sum_{i=0}^k \binom{m}{i} \binom{n}{k-i}
-$$</code></pre><ol start="4">
-<li><h3 id="n&#x4E2A;&#x4E0D;&#x540C;&#x7269;&#x4EF6;&#x5206;&#x6210;k&#x5806;&#xFF0C;&#x5404;&#x5806;&#x7269;&#x4EF6;&#x6570;&#x5206;&#x522B;&#x4E3A;r1-r2&#x2026;rk&#x7684;&#x5206;&#x6CD5;"><a href="#n&#x4E2A;&#x4E0D;&#x540C;&#x7269;&#x4EF6;&#x5206;&#x6210;k&#x5806;&#xFF0C;&#x5404;&#x5806;&#x7269;&#x4EF6;&#x6570;&#x5206;&#x522B;&#x4E3A;r1-r2&#x2026;rk&#x7684;&#x5206;&#x6CD5;" class="headerlink" title="n&#x4E2A;&#x4E0D;&#x540C;&#x7269;&#x4EF6;&#x5206;&#x6210;k&#x5806;&#xFF0C;&#x5404;&#x5806;&#x7269;&#x4EF6;&#x6570;&#x5206;&#x522B;&#x4E3A;r1,r2&#x2026;rk&#x7684;&#x5206;&#x6CD5;"></a><em>n</em>&#x4E2A;&#x4E0D;&#x540C;&#x7269;&#x4EF6;&#x5206;&#x6210;<em>k</em>&#x5806;&#xFF0C;&#x5404;&#x5806;&#x7269;&#x4EF6;&#x6570;&#x5206;&#x522B;&#x4E3A;r1,r2&#x2026;rk&#x7684;&#x5206;&#x6CD5;</h3><p>$$<br>\frac{n!}{r_1!..r_k!}<br>$$<br>&#x6B64;&#x5904;&#x7684;r&#x90FD;&#x662F;&#x975E;&#x8D1F;&#x6574;&#x6570;&#xFF0C;&#x4E14;<strong>&#x5206;&#x6210;&#x7684;&#x5806;&#x8981;&#x8BA1;&#x8F83;&#x5806;&#x7684;&#x6B21;&#x5E8F;</strong>&#xFF0C;&#x8FD9;&#x4E2A;&#x5F0F;&#x5B50;&#x5E38;&#x88AB;&#x79F0;&#x4E3A;<strong>&#x591A;&#x9879;&#x5F0F;&#x7CFB;&#x6570;</strong>&#xFF0C;&#x56E0;&#x4E3A;&#x4ED6;&#x662F;<br>$$<br>(x_1+x_2+..+x_k)^n<br>$$<br>&#x4E2D;&#x7684;<br>$$<br>x_1^{r_1}&#x2026;x_k^{r_k}<br>$$<br>&#x7684;&#x7CFB;&#x6570;&#x3002;&#x3002;&#x3002;&#x3002;&#xFF08;&#x6709;&#x5565;&#x7528;&#x561E;&#xFF1F;&#xFF09;</p>
+<pre><code> $$
+ \binom&#123;m+n&#125;&#123;k&#125; = \sum_&#123;i=0&#125;^k \binom&#123;m&#125;&#123;i&#125; \binom&#123;n&#125;&#123;k-i&#125;
+ $$</code></pre>
+<ol start="4">
+<li><h3 id="n个不同物件分成k堆，各堆物件数分别为r1-r2…rk的分法"><a href="#n个不同物件分成k堆，各堆物件数分别为r1-r2…rk的分法" class="headerlink" title="n个不同物件分成k堆，各堆物件数分别为r1,r2…rk的分法"></a><em>n</em>个不同物件分成<em>k</em>堆，各堆物件数分别为r1,r2…rk的分法</h3><p>$$<br>\frac{n!}{r_1!..r_k!}<br>$$<br>此处的r都是非负整数，且<strong>分成的堆要计较堆的次序</strong>，这个式子常被称为<strong>多项式系数</strong>，因为他是<br>$$<br>(x_1+x_2+..+x_k)^n<br>$$<br>中的<br>$$<br>x_1^{r_1}…x_k^{r_k}<br>$$<br>的系数。。。。（有啥用嘞？）</p>
 </li>
 </ol>
-<p>&#x8BC1;&#x660E;&#x4E5F;&#x4E0D;&#x96BE;&#xFF1A;</p>
-<p>   &#x5148;&#x4ECE;n&#x4E2A;&#x4E2D;&#x53D6;&#x51FA;r1&#x4E2A;&#x4F5C;&#x4E3A;&#x7B2C;&#x4E00;&#x5806;&#xFF0C;&#x53D6;&#x6CD5;&#x4E3A;<br>$$<br>   \binom{n}{r_1}<br>$$<br>   &#x5728;&#x4F59;&#x4E0B;&#x7684;n-1&#x4E2D;&#x53D6;&#x51FA;r2&#x4E2A;&#x4F5C;&#x4E3A;&#x7B2C;&#x4E8C;&#x5806;&#xFF0C;&#x53D6;&#x6CD5;&#x4E3A;<br>$$<br>   \binom{n-r_1}{r_2}<br>$$<br>   &#x4EE5;&#x6B64;&#x7C7B;&#x63A8;&#xFF0C;&#x5F97;&#x5230;&#x5168;&#x90E8;&#x7684;&#x4E0D;&#x540C;&#x7684;&#x5206;&#x6CD5;&#xFF1A;<br>$$<br>   \binom{n}{r_1}\binom{n-r_1}{r_2}\binom{n-r_1-r_2}{r3}&#x2026;\binom{n-r_1-r_2-&#x2026;r_{k-1}}{r_k}<br>$$<br>   note: n-r1-r2-..r(k-1)=rk &#x5316;&#x7B80;&#x540E;&#x5373;&#x53EF;&#x5F97;&#x5230;&#x3002;</p>
-<h2 id="&#x4E8B;&#x4EF6;&#x7684;&#x8FD0;&#x7B97;&#x3001;&#x6761;&#x4EF6;&#x6982;&#x7387;&#x4E0E;&#x72EC;&#x7ACB;&#x6027;"><a href="#&#x4E8B;&#x4EF6;&#x7684;&#x8FD0;&#x7B97;&#x3001;&#x6761;&#x4EF6;&#x6982;&#x7387;&#x4E0E;&#x72EC;&#x7ACB;&#x6027;" class="headerlink" title="&#x4E8B;&#x4EF6;&#x7684;&#x8FD0;&#x7B97;&#x3001;&#x6761;&#x4EF6;&#x6982;&#x7387;&#x4E0E;&#x72EC;&#x7ACB;&#x6027;"></a>&#x4E8B;&#x4EF6;&#x7684;&#x8FD0;&#x7B97;&#x3001;&#x6761;&#x4EF6;&#x6982;&#x7387;&#x4E0E;&#x72EC;&#x7ACB;&#x6027;</h2><h3 id="&#x4E8B;&#x4EF6;&#x7684;&#x4E92;&#x65A5;&#x4E0E;&#x5BF9;&#x7ACB;"><a href="#&#x4E8B;&#x4EF6;&#x7684;&#x4E92;&#x65A5;&#x4E0E;&#x5BF9;&#x7ACB;" class="headerlink" title="&#x4E8B;&#x4EF6;&#x7684;&#x4E92;&#x65A5;&#x4E0E;&#x5BF9;&#x7ACB;"></a>&#x4E8B;&#x4EF6;&#x7684;&#x4E92;&#x65A5;&#x4E0E;&#x5BF9;&#x7ACB;</h3><p>&#x4E92;&#x65A5;&#x5305;&#x542B;&#x5BF9;&#x7ACB;&#xFF0C;&#x5BF9;&#x7ACB;&#x662F;&#x4E92;&#x65A5;&#x7684;&#x8BF8;&#x591A;&#x60C5;&#x51B5;&#x4E2D;&#x7684;&#x4E00;&#x79CD;&#x3002;</p>
-<h3 id="&#x6761;&#x4EF6;&#x6982;&#x7387;"><a href="#&#x6761;&#x4EF6;&#x6982;&#x7387;" class="headerlink" title="&#x6761;&#x4EF6;&#x6982;&#x7387;"></a>&#x6761;&#x4EF6;&#x6982;&#x7387;</h3><p>&#x8BBE;&#x6709;&#x4E24;&#x4E8B;&#x4EF6;A&#xFF0C;B&#xFF0C;&#x800C;P(B)&#x4E0D;&#x4E3A;0&#xFF0C;&#x5219;&#x5728;&#x7ED9;&#x5B9A;B&#x53D1;&#x751F;&#x7684;&#x6761;&#x4EF6;&#x4E0B;A&#x7684;&#x6761;&#x4EF6;&#x6982;&#x7387;&#xFF0C;&#x8BB0;&#x4E3A;P(A|B)&#xFF0C;&#x5B9A;&#x4E49;&#x4E3A;<br>$$<br>P(A|B)=\frac{P(AB)}{P(B)}<br>$$</p>
-<h3 id="&#x5168;&#x6982;&#x7387;&#x516C;&#x5F0F;&#x4E0E;&#x8D1D;&#x53F6;&#x65AF;"><a href="#&#x5168;&#x6982;&#x7387;&#x516C;&#x5F0F;&#x4E0E;&#x8D1D;&#x53F6;&#x65AF;" class="headerlink" title="&#x5168;&#x6982;&#x7387;&#x516C;&#x5F0F;&#x4E0E;&#x8D1D;&#x53F6;&#x65AF;"></a>&#x5168;&#x6982;&#x7387;&#x516C;&#x5F0F;&#x4E0E;&#x8D1D;&#x53F6;&#x65AF;</h3><h3 id="&#x8D34;&#x4E00;&#x4E9B;&#x5C0F;&#x9898;"><a href="#&#x8D34;&#x4E00;&#x4E9B;&#x5C0F;&#x9898;" class="headerlink" title="&#x8D34;&#x4E00;&#x4E9B;&#x5C0F;&#x9898;"></a>&#x8D34;&#x4E00;&#x4E9B;&#x5C0F;&#x9898;</h3><ol>
-<li>&#x4E00;&#x6279;&#x4EA7;&#x54C1;&#x5171;N&#x4E2A;&#xFF0C;&#x5176;&#x4E2D;&#x5E9F;&#x54C1;&#x6709;M&#x4E2A;&#xFF0C;&#x4ECE;&#x4E2D;&#x968F;&#x673A;&#x53D6;&#x51FA;n&#x4E2A;&#xFF0C;&#x5176;&#x4E2D;&#x6070;&#x597D;m&#x4E2A;&#x5E9F;&#x54C1;&#x7684;&#x6982;&#x7387;&#x662F;&#xFF1F;</li>
-<li>n&#x53CC;&#x76F8;&#x5F02;&#x7684;&#x978B;&#x5171;2n&#x53EA;&#xFF0C;&#x968F;&#x673A;&#x5730;&#x5206;&#x6210;n&#x5806;&#xFF0C;&#x6BCF;&#x5806;2&#x53EA;&#xFF0C;&#x5404;&#x5806;&#x90FD;&#x81EA;&#x6210;&#x4E00;&#x53CC;&#x978B;&#x7684;&#x6982;&#x7387;&#x662F;&#xFF1F;</li>
-<li>n&#x4E2A;&#x7537;&#x5B69;&#xFF0C;m&#x4E2A;&#x5973;&#x5B69;&#xFF08;m&lt;=n+1)&#x968F;&#x673A;&#x5730;&#x6392;&#x6210;&#x4E00;&#x5217;&#xFF0C;&#x4EFB;&#x610F;&#x4E24;&#x4E2A;&#x5973;&#x5B69;&#x90FD;&#x4E0D;&#x76F8;&#x90BB;&#x7684;&#x6982;&#x7387;&#x662F;&#xFF1F;</li>
-<li>&#x53E3;&#x888B;&#x91CC;&#x6709;&#x4E24;&#x76D2;&#x706B;&#x67F4;&#xFF0C;&#x6BCF;&#x76D2;n&#x652F;&#xFF0C;&#x6BCF;&#x6B21;&#x7528;&#x706B;&#x67F4;&#x65F6;&#x4ECE;&#x53E3;&#x888B;&#x91CC;&#x968F;&#x673A;&#x62FF;&#x51FA;&#x4E00;&#x76D2;&#x5E76;&#x7528;&#x6389;&#x4E00;&#x652F;&#xFF0C;&#x5230;&#x67D0;&#x6B21;&#x4F1A;&#x53D1;&#x73B0;&#x53D6;&#x51FA;&#x7684;&#x90A3;&#x4E00;&#x76D2;&#x5DF2;&#x7ECF;&#x7A7A;&#x4E86;&#xFF0C;&#x6B64;&#x65F6;&#xFF0C;&#x53E6;&#x4E00;&#x76D2;&#x6070;&#x597D;&#x6709;m&#x652F;&#x706B;&#x67F4;&#x7684;&#x6982;&#x7387;&#x662F;&#xFF1F;</li>
+<p>证明也不难：</p>
+<p>   先从n个中取出r1个作为第一堆，取法为<br>$$<br>   \binom{n}{r_1}<br>$$<br>   在余下的n-1中取出r2个作为第二堆，取法为<br>$$<br>   \binom{n-r_1}{r_2}<br>$$<br>   以此类推，得到全部的不同的分法：<br>$$<br>   \binom{n}{r_1}\binom{n-r_1}{r_2}\binom{n-r_1-r_2}{r3}…\binom{n-r_1-r_2-…r_{k-1}}{r_k}<br>$$<br>   note: n-r1-r2-..r(k-1)=rk 化简后即可得到。</p>
+<h2 id="事件的运算、条件概率与独立性"><a href="#事件的运算、条件概率与独立性" class="headerlink" title="事件的运算、条件概率与独立性"></a>事件的运算、条件概率与独立性</h2><h3 id="事件的互斥与对立"><a href="#事件的互斥与对立" class="headerlink" title="事件的互斥与对立"></a>事件的互斥与对立</h3><p>互斥包含对立，对立是互斥的诸多情况中的一种。</p>
+<h3 id="条件概率"><a href="#条件概率" class="headerlink" title="条件概率"></a>条件概率</h3><p>设有两事件A，B，而P(B)不为0，则在给定B发生的条件下A的条件概率，记为P(A|B)，定义为<br>$$<br>P(A|B)=\frac{P(AB)}{P(B)}<br>$$</p>
+<h3 id="全概率公式与贝叶斯"><a href="#全概率公式与贝叶斯" class="headerlink" title="全概率公式与贝叶斯"></a>全概率公式与贝叶斯</h3><h3 id="贴一些小题"><a href="#贴一些小题" class="headerlink" title="贴一些小题"></a>贴一些小题</h3><ol>
+<li>一批产品共N个，其中废品有M个，从中随机取出n个，其中恰好m个废品的概率是？</li>
+<li>n双相异的鞋共2n只，随机地分成n堆，每堆2只，各堆都自成一双鞋的概率是？</li>
+<li>n个男孩，m个女孩（m&lt;=n+1)随机地排成一列，任意两个女孩都不相邻的概率是？</li>
+<li>口袋里有两盒火柴，每盒n支，每次用火柴时从口袋里随机拿出一盒并用掉一支，到某次会发现取出的那一盒已经空了，此时，另一盒恰好有m支火柴的概率是？</li>
 </ol>
-<p>&lt;% note info %&gt;</p>
-<p>P=N/M&#xFF0C;&#x6709;&#x5229;&#x4E8E;&#x4E8B;&#x4EF6;&#x53D1;&#x751F;&#x7684;&#x6982;&#x7387;&#x9664;&#x4EE5;&#x4E8B;&#x4EF6;&#x53D1;&#x751F;&#x7684;&#x603B;&#x6982;&#x7387;</p>
-<p>&lt;% endnote %&gt;</p>
-<h3 id="&#x89E3;"><a href="#&#x89E3;" class="headerlink" title="&#x89E3;"></a>&#x89E3;</h3><ol start="3">
-<li><p>&#x603B;&#x6982;&#x7387;&#x4E3A;&#x6240;&#x6709;&#x4EBA;&#x6392;&#x6210;&#x4E00;&#x6392;&#xFF0C;&#x5171;&#x6709;&#x6392;&#x6CD5;&#xFF1A;<br>$$<br>(n+m)!<br>$$<br>&#x6709;&#x5229;&#x4E8E;&#x4E8B;&#x4EF6;&#x53D1;&#x751F;&#x7684;&#x6392;&#x6CD5;&#xFF1A;</p>
+<p>P=N/M，有利于事件发生的概率除以事件发生的总概率</p>
+<h3 id="解"><a href="#解" class="headerlink" title="解"></a>解</h3><ol start="3">
+<li><p>总概率为所有人排成一排，共有排法：<br>$$<br>(n+m)!<br>$$<br>有利于事件发生的排法：</p>
 <ul>
-<li><p>&#x6240;&#x6709;&#x7537;&#x751F;&#x6392;&#x6210;&#x4E00;&#x6392;&#xFF0C;&#x6392;&#x6CD5;&#x4E3A; <em>n!</em>&#xFF0C; &#x6392;&#x597D;&#x4E4B;&#x540E;&#x5973;&#x751F;&#x53EF;&#x4EE5;&#x7AD9;&#x7684;&#x4F4D;&#x7F6E;&#x5C31;&#x662F;<em>n+1</em>&#x4E2A;&#xFF0C;&#x4E3A;&#x4E86;&#x4E0D;&#x76F8;&#x90BB;&#xFF0C;&#x5C06;&#x5973;&#x751F;&#x5B89;&#x6392;&#x5728;&#x8FD9;&#x4E9B;&#x4F4D;&#x7F6E;&#x4E2D;&#xFF0C;&#x5219;&#x6392;&#x6CD5;&#x4E3A;<br>$$<br>\binom{n+1}{m}<br>$$</p>
+<li><p>所有男生排成一排，排法为 <em>n!<em>， 排好之后女生可以站的位置就是</em>n+1</em>个，为了不相邻，将女生安排在这些位置中，则排法为<br>$$<br>\binom{n+1}{m}<br>$$</p>
 </li>
-<li><p>&#x5B89;&#x6392;&#x597D;&#x5973;&#x751F;&#x7684;&#x7AD9;&#x4F4D;&#x540E;&#xFF0C;&#x5973;&#x751F;&#x4E4B;&#x95F4;&#x53EF;&#x4EE5;&#x968F;&#x610F;&#x8C03;&#x6362;&#x4F4D;&#x7F6E;&#xFF0C;&#x6392;&#x6CD5;&#x6709;<em>m!</em>&#x79CD;&#xFF0C;&#x6240;&#x4EE5;&#x6709;&#x5229;&#x4E8E;&#x4E8B;&#x4EF6;&#x53D1;&#x751F;&#x7684;&#x6392;&#x5217;&#xFF1A;<br>$$<br>M=n!\binom{n+1}{m}m!<br>$$<br>&#x4E8B;&#x4EF6;&#x53D1;&#x751F;&#x7684;&#x6982;&#x7387;&#x4E3A;&#xFF1A;<br>$$<br>P(E)=\frac{n!\binom{n+1}{m}m!}{(m+n)!}<br>$$</p>
+<li><p>安排好女生的站位后，女生之间可以随意调换位置，排法有*m!*种，所以有利于事件发生的排列：<br>$$<br>M=n!\binom{n+1}{m}m!<br>$$<br>事件发生的概率为：<br>$$<br>P(E)=\frac{n!\binom{n+1}{m}m!}{(m+n)!}<br>$$</p>
 </li>
 </ul>
 </li>
 </ol>
 <ol start="2">
-<li>2n&#x53EA;&#x978B;&#x5B50;&#xFF0C;&#x968F;&#x673A;&#x5206;&#x6210;n&#x5806;&#xFF0C;&#x6BCF;&#x5806;2&#x53EA;&#xFF0C;&#x5206;&#x6CD5;&#x4E3A;&#xFF1A;<br>$$<br>\binom{2n}{r_1}\binom{2n-r_1}{r_2}&#x2026;\binom{2n-r_1-r_2-&#x2026;r_{k-1}}{r_k}=\frac{(2n)!}{2^n}<br>$$<br>&#x6709;&#x5229;&#x4E8E;&#x4E8B;&#x4EF6;&#x7684;&#x5206;&#x6CD5;&#xFF1A;&#x5C06;&#x6BCF;&#x53CC;&#x6210;&#x5BF9;&#x7684;&#x978B;&#x5B50;&#x7ED1;&#x5728;&#x4E00;&#x8D77;&#x770B;&#x4F5C;&#x4E00;&#x4E2A;&#x7269;&#x4EF6;&#xFF0C;&#x4E00;&#x5171;&#x6709;n&#x4E2A;&#xFF0C;&#x5206;&#x6210;n&#x5806;&#x6BCF;&#x5806;1&#x4E2A;&#x7684;&#x5206;&#x6CD5;&#xFF1A;<br>$$<br>P_1^n=n!<br>$$<br>&#x5219;P(E)&#x4E3A;&#x4E24;&#x4E2A;&#x4E8B;&#x4EF6;&#x7684;&#x6982;&#x7387;&#x76F8;&#x9664;&#xFF1A;<br>$$<br>P(E)=\frac{M}{N}=\frac{n!}{\frac{(2n)!}{2_n}}=\frac{(n!)2^n}{(2n)!}<br>$$</li>
+<li>2n只鞋子，随机分成n堆，每堆2只，分法为：<br>$$<br>\binom{2n}{r_1}\binom{2n-r_1}{r_2}…\binom{2n-r_1-r_2-…r_{k-1}}{r_k}=\frac{(2n)!}{2^n}<br>$$<br>有利于事件的分法：将每双成对的鞋子绑在一起看作一个物件，一共有n个，分成n堆每堆1个的分法：<br>$$<br>P_1^n=n!<br>$$<br>则P(E)为两个事件的概率相除：<br>$$<br>P(E)=\frac{M}{N}=\frac{n!}{\frac{(2n)!}{2_n}}=\frac{(n!)2^n}{(2n)!}<br>$$</li>
 </ol>
 
-    </div>
+            
 
-    
-    
-    
-
-    
-      <div>
-        
-<div>
-  
-    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
-      <span>-------- 本文结束 感谢阅读 --------</span>
-    </div>
-  
-</div>
-      </div>
-    
-      
-        <div class="reward-container">
-  <div>Donate comment here.</div>
-  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
-    Donate
-  </button>
-  <div id="qr" style="display: none;">
-      
-      <div style="display: inline-block;">
-        <img src="/images/wechatpay.jpg" alt="Sebastian WeChat Pay">
-        <p>WeChat Pay</p>
-      </div>
-      
-      <div style="display: inline-block;">
-        <img src="/images/alipay.jpg" alt="Sebastian Alipay">
-        <p>Alipay</p>
-      </div>
-
-  </div>
-</div>
-
-
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/parobablity-Statics/" rel="tag"># parobablity&Statics</a>
-          </div>
-
-        
-
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/2019/11/13/resolveXML/" rel="next" title="resolveXML">
-                  <i class="fa fa-chevron-left"></i> resolveXML
-                </a>
-            </div>
-
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/2019/11/17/bt02/" rel="prev" title="bt02">
-                  bt02 <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
-      </footer>
-    
-  </article>
-  
-  
-  
-
-  </div>
-
-
-          </div>
-          
 
         </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="Sebastian"
-    src="/images/avatar.jpg">
-  <p class="site-author-name" itemprop="name">Sebastian</p>
-  <div class="site-description" itemprop="description">I'm feeling lucky!</div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">59</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
-        <span class="site-state-item-count">16</span>
-        <span class="site-state-item-name">categories</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
-        <span class="site-state-item-count">52</span>
-        <span class="site-state-item-name">tags</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/Sebastian-Getts" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Sebastian-Getts" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:zzzqsw@gmail.com" title="E-Mail &amp;rarr; mailto:zzzqsw@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://instagram.com/mchin6" title="Instagram &amp;rarr; https:&#x2F;&#x2F;instagram.com&#x2F;mchin6" rel="noopener" target="_blank"><i class="fa fa-fw fa-instagram"></i>Instagram</a>
-      </span>
-  </div>
-
-
-
-      </div>
-
     </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
+    <div id="post-footer" class="post-footer main-content-wrap">
         
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/parobablity-Statics/" rel="tag">parobablity&Statics</a>
 
-<div class="copyright">
-  
-  &copy; 2019 – 
-  <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Sebastian</span>
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2019/11/17/bt02/"
+                    data-tooltip="bt02"
+                    aria-label="PREVIOUS: bt02"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2019/11/13/thymeleaf01/"
+                    data-tooltip="thymeleaf01"
+                    aria-label="NEXT: thymeleaf01"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://github.com/sebastian/about/2019/11/14/ProbablityAndStatics/"
+                    title="Share on Weibo"
+                    aria-label="Share on Weibo"
+                >
+                    <i class="fab fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://github.com/sebastian/about/2019/11/14/ProbablityAndStatics/&amp;title=事件的概率"
+                    title="Share on QQ"
+                    aria-label="Share on QQ"
+                >
+                    <i class="fab fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://widget.renren.com/dialog/share?resourceUrl=http://github.com/sebastian/about/2019/11/14/ProbablityAndStatics/"
+                    title="Share on Renren"
+                    aria-label="Share on Renren"
+                >
+                    <i class="fab fa-renren" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a>
-  </div>
-  <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.4.2
-  </div>
 
 
         
+        
+            
+        
+    </div>
+</article>
 
 
 
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Sebastian Getts. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2019/11/17/bt02/"
+                    data-tooltip="bt02"
+                    aria-label="PREVIOUS: bt02"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2019/11/13/thymeleaf01/"
+                    data-tooltip="thymeleaf01"
+                    aria-label="NEXT: thymeleaf01"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://github.com/sebastian/about/2019/11/14/ProbablityAndStatics/"
+                    title="Share on Weibo"
+                    aria-label="Share on Weibo"
+                >
+                    <i class="fab fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://github.com/sebastian/about/2019/11/14/ProbablityAndStatics/&amp;title=事件的概率"
+                    title="Share on QQ"
+                    aria-label="Share on QQ"
+                >
+                    <i class="fab fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://widget.renren.com/dialog/share?resourceUrl=http://github.com/sebastian/about/2019/11/14/ProbablityAndStatics/"
+                    title="Share on Renren"
+                    aria-label="Share on Renren"
+                >
+                    <i class="fab fa-renren" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
 
 
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="http://service.weibo.com/share/share.php?&amp;title=http://github.com/sebastian/about/2019/11/14/ProbablityAndStatics/"
+                        aria-label="Share on Weibo"
+                    >
+                        <i class="fab fa-weibo" aria-hidden="true"></i><span>Share on Weibo</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="http://connect.qq.com/widget/shareqq/index.html?url=http://github.com/sebastian/about/2019/11/14/ProbablityAndStatics/&amp;title=事件的概率"
+                        aria-label="Share on QQ"
+                    >
+                        <i class="fab fa-qq" aria-hidden="true"></i><span>Share on QQ</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="http://widget.renren.com/dialog/share?resourceUrl=http://github.com/sebastian/about/2019/11/14/ProbablityAndStatics/"
+                        aria-label="Share on Renren"
+                    >
+                        <i class="fab fa-renren" aria-hidden="true"></i><span>Share on Renren</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
 
 
+            
+        </div>
+        
 
 
+    
+        
+    
 
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Sebastian Getts</h4>
+        
+            <div id="about-card-bio"><p>I write code to enrich and ease life of others. 0 errors, 0 warnings.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Software Developer</p>
 
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Shenzhen
+            </div>
+        
+    </div>
+</div>
 
         
-      </div>
-    </footer>
-  </div>
+        
+<div id="cover" style="background-image:url('/assets/images/cover-v1.2.0.jpg');"></div>
+        <!--SCRIPTS-->
 
-  
-  
-  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
-  <script src="/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
-<script src="/js/schemes/muse.js"></script>
-<script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
+<script src="/assets/js/script-karbquxnkadaf4yf1hq6g6fyv6nvvrwpv3vf2u1wz8k7osddfqtxf5wbfcfg.min.js"></script>
 
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
+<!--SCRIPTS END-->
 
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script pjax>
-if (document.querySelectorAll('pre.mermaid').length) {
-  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/mermaid/8.2.0/mermaid.min.js', () => {
-    mermaid.initialize({
-      theme: 'forest',
-      logLevel: 3,
-      flowchart: { curve: 'linear' },
-      gantt: { axisFormat: '%m/%d/%Y' },
-      sequence: { actorMargin: 50 }
-    });
-  }, window.mermaid);
-}
-</script>
-
-
-    <div id="pjax">
-
-  
-
-  
-      
-<script type="text/x-mathjax-config">
-
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
-      processEscapes: true,
-      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-    },
-    TeX: {
-      equationNumbers: {
-        autoNumber: 'AMS'
-      }
-    }
-  });
-
-  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
-    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
-      if (data.display) {
-        var next = data.script.nextSibling;
-        while (next && next.nodeName.toLowerCase() === '#text') {
-          next = next.nextSibling;
-        }
-        if (next && next.nodeName.toLowerCase() === 'br') {
-          next.parentNode.removeChild(next);
-        }
-      }
-    });
-  });
-
-  MathJax.Hub.Queue(function() {
-    var all = MathJax.Hub.getAllJax(), i;
-    for (i = 0; i < all.length; i += 1) {
-      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
-      if (element.nodeName.toLowerCase() == 'li') {
-        element = element.parentNode;
-      }
-      element.classList.add('has-jax');
-    }
-  });
-</script>
-<script>
-  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-MML-AM_CHTML', () => {
-    MathJax.Hub.Typeset();
-  }, window.MathJax);
-</script>
 
     
 
-  
-
-  
-
-  <script async src="/js/cursor/love.min.js"></script>
 
 
 
-
-  <script src="/js/wobblewindow.js"></script>
-  <script>
-    //只在桌面版网页启用特效
-    if( window.innerWidth > 768  ){
-      $(document).ready(function () {
-        
-          $('#header').wobbleWindow({
-            radius: 50,
-            movementTop: false,
-            movementLeft: false,
-            movementRight: false,
-            debug: false,
-          });
-        
-
-        
-          $('#sidebar').wobbleWindow({
-            radius: 50,
-            movementLeft: false,
-            movementTop: false,
-            movementBottom: false,
-            position: 'fixed',
-            debug: false,
-          });
-        
-
-        
-          $('#footer').wobbleWindow({
-            radius: 50,
-            movementBottom: false,
-            movementLeft: false,
-            movementRight: false,
-            offsetX: ,
-            position: 'absolute',
-            debug: false,
-          });
-        
-      });
-    }
-  </script>
-
-
-
-
-
-
-
-
-    </div>
-</body>
+    </body>
 </html>

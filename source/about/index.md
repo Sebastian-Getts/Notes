@@ -12,11 +12,9 @@ type: about
 
 ----
 
-{% note primary %}
 
 I'm finding a good job.
 
-{% endnote %}
 
 稀里糊涂地过完了大学，初入社会。
 

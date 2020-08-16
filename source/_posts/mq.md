@@ -5,6 +5,10 @@ categories: MiddleWare
 tags: activemq
 ---
 
+mq的出现是大势所趋，也一定是为了解决某方面的问题，从这里入手，可以综合的了解所有mq的异同。
+
+<!--more-->
+
 # MQ的引入
 
 模拟几个场景：

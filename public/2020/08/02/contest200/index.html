@@ -1,254 +1,296 @@
+
 <!DOCTYPE html>
 <html lang="en">
+    
 <head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.jpg">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.jpg">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-  <meta name="msvalidate.01" content="541BE591C13D7313C3568E6D172218E2">
-  <meta name="baidu-site-verification" content="3qvcDlCoMv">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
-
-
-<script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.4.2',
-    exturl: false,
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    },
-    sidebarPadding: 40
-  };
-</script>
-
-  <meta name="description" content="Record Leetcode contest 200.">
-<meta name="keywords" content="algorithm">
-<meta property="og:type" content="article">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hola">
+    <title>contest200 - Hola</title>
+    <meta name="author" content="Sebastian Getts">
+    
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sebastian Getts","sameAs":["https://github.com/sebastian-getts/","mailto"],"image":"avatar.jpg"},"articleBody":"Record Leetcode contest 200.\n\n\nQ1passed.\nQ2Find the winner of an Array Game.\nGiven an integer array arr of distinct integers and an integer k.\nA game will be played between the first two elements of the array (i.e. arr[0] and arr[1]). In each round of the game, we compare arr[0] with arr[1], the larger integer wins and remains at position 0 and the smaller integer moves to the end of the array. The game ends when an integer wins k consecutive rounds.\nReturn the integer which will win the game.\nIt is guaranteed that there will be a winner of the game.\nExample 1:\n123456789Input: arr = [2,1,3,5,4,6,7], k = 2Output: 5Explanation: Let&#x27;s see the rounds of the game:Round |       arr       | winner | win_count  1   | [2,1,3,5,4,6,7] | 2      | 1  2   | [2,3,5,4,6,7,1] | 3      | 1  3   | [3,5,4,6,7,1,2] | 5      | 1  4   | [5,4,6,7,1,2,3] | 5      | 2So we can see that 4 rounds will be played and 5 is the winner because it wins 2 consecutive games.\n\nExample 2:\n123Input: arr = [3,2,1], k = 10Output: 3Explanation: 3 will win the first 10 rounds consecutively.\n\nExample 3:\n12Input: arr = [1,9,8,2,3,7,6,4,5], k = 7Output: 9\n\nExample 4:\n12Input: arr = [1,11,22,33,44,55,66,77,88,99], k = 1000000000Output: 99\n\nMy Solution看到这题，首先我认为这题清晰明了，用__迭代__去完成全部流程，用k去做结束的标志，是一道从头到尾很明确的题。但是:joy:\n贴上我稚嫩的代码：\n12345678910111213141516171819202122232425262728293031public int getWinner(int[] arr, int k) &#123;    int res = -1;    int zero = k-1;    int solution = 0;    while(k&gt;0)&#123;        int currMax = Math.max(arr[0],arr[1]);        int currMin = Math.min(arr[0], arr[1]);        helper(currMax, currMin, arr);        if(res == -1)&#123;            // initial, no compare            res = currMax;        &#125;else&#123;            if(currMax == res)&#123;                k--;                solution = currMax;            &#125;else&#123;                k = zero;                res = currMax;            &#125;        &#125;    &#125;    return solution;&#125;private void helper(int max, int min, int[] arr)&#123;    arr[0] = max;    for (int i = 1; i &lt; arr.length - 1; i++) &#123;        arr[i] = arr[i + 1];    &#125;    arr[arr.length-1] = min;&#125;\n\n没通过，因为Time Limited，跑得太慢了！\nNiubility Solution123456789101112131415161718192021222324public int getWinner(int[] arr, int k) &#123;    // 数组长度    int n = arr.length;    // 数组长度与k之间取最小的。    k = Math.min(k, n);    int A = arr[0];    // 标志位，记录相同次数    int rep = 0;    // 从第二个开始iterate，无终结条件    for(int i = 1;;i++)&#123;        // “i%n“ 取余数，逻辑变换数组。由于for循环无终结条件，所以i会无限增加超过n。        int B = arr[i%n];        if(A &gt;= B)&#123;            rep++;        &#125;else&#123;            A = B;            rep = 1;        &#125;        // 终结条件在这里，rep等于k时结束。        if(rep == k)&#123;            return A;        &#125;    &#125;&#125;\n\n通过对比可以发现，我耗时的原因在于： \n\n我是真的挪了数组！物理上的挪动，实际上，逻辑移动数组即可！我的程序算例4要6秒，这个只需要0秒。\nMath.min(k, n)，如果题目给的k为10000000,数组长度为8,那么最后也是按8 来算，那么多循环无意义，一遍遍历即可获取最大（这样也行？）\n\n况且，逻辑i上也没有去变换位置，题目的本质还是挨个遍历！\ni.e. arr = [2,1,3,5,4,6,7], k = 2\n","dateCreated":"2020-08-02T12:56:29+08:00","dateModified":"2020-08-02T14:03:42+08:00","datePublished":"2020-08-02T12:56:29+08:00","description":"Record Leetcode contest 200.","headline":"contest200","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://github.com/sebastian/about/2020/08/02/contest200/"},"publisher":{"@type":"Organization","name":"Sebastian Getts","sameAs":["https://github.com/sebastian-getts/","mailto"],"image":"avatar.jpg","logo":{"@type":"ImageObject","url":"avatar.jpg"}},"url":"http://github.com/sebastian/about/2020/08/02/contest200/","keywords":"algorithm"}</script>
+    <meta name="description" content="Record Leetcode contest 200.">
+<meta property="og:type" content="blog">
 <meta property="og:title" content="contest200">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;08&#x2F;02&#x2F;contest200&#x2F;index.html">
-<meta property="og:site_name" content="Sebastian Getts">
+<meta property="og:url" content="http://github.com/sebastian/about/2020/08/02/contest200/index.html">
+<meta property="og:site_name" content="Hola">
 <meta property="og:description" content="Record Leetcode contest 200.">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-08-02T06:03:42.348Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-08-02T04:56:29.000Z">
+<meta property="article:modified_time" content="2020-08-02T06:03:42.348Z">
+<meta property="article:author" content="Sebastian Getts">
+<meta property="article:tag" content="algorithm">
 <meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://github.com/sebastian/about/assets/images/avatar.jpg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-spzjrm9no8kcbknku5bsn1dr9dpp94iq1g86qdztxtoqwlgtrnwyi2tucypv.min.css">
 
-<link rel="canonical" href="http://yoursite.com/2020/08/02/contest200/">
+    <!--STYLES END-->
+    
+
+    
+    <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?3e3b025a15329c47fcc47a83f6160356";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
 
 
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
-  };
-</script>
-
-  <title>contest200 | Sebastian Getts</title>
-  
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
+    
+        
+    
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
 
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-meta">
-
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Sebastian Getts</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-        <p class="site-subtitle">I'm the new one.</p>
-  </div>
-
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-</div>
-
-
-<nav class="site-nav">
-  
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
-
-  </li>
-        <li class="menu-item menu-item-movies">
-
-    <a href="/movies/" rel="section"><i class="fa fa-fw fa-video-camera"></i>movies</a>
-
-  </li>
-  </ul>
-
-</nav>
-</div>
-    </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-  <div class="reading-progress-bar"></div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content">
+        
             
+        
+    
 
-  <div class="posts-expand">
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/02/contest200/">
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/%20"
+            aria-label=""
+        >
+            Hola
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Sebastian">
-      <meta itemprop="description" content="I'm feeling lucky!">
-    </span>
+            <!-- Define author's picture -->
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sebastian Getts">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          contest200
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Sebastian Getts</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>I write code to enrich and ease life of others. 0 errors, 0 warnings.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link open-algolia-search"
+                            href="#search"
+                            
+                            rel="noopener"
+                            title="Search"
+                        >
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Search</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/sebastian-getts/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/mailto"
+                            
+                            rel="noopener"
+                            title="Mail"
+                        >
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            contest200
         </h1>
-
+    
+    
         <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-              
+    <time datetime="2020-08-02T12:56:29+08:00">
+	
+		    Aug 02, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Leetcode/">Leetcode</a>
 
-              <time title="Created: 2020-08-02 12:56:29 / Modified: 14:03:42" itemprop="dateCreated datePublished" datetime="2020-08-02T12:56:29+08:00">2020-08-02</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Leetcode/" itemprop="url" rel="index">
-                    <span itemprop="name">Leetcode</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
 
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
+</div>
 
-      
-        <p>Record Leetcode contest 200.</p>
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>Record Leetcode contest 200.</p>
 <a id="more"></a>
 
 <h1 id="Q1"><a href="#Q1" class="headerlink" title="Q1"></a>Q1</h1><p>passed.</p>
@@ -258,7 +300,7 @@
 <p>Return <em>the integer which will win the game</em>.</p>
 <p>It is <strong>guaranteed</strong> that there will be a winner of the game.</p>
 <p><strong>Example 1:</strong></p>
-<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Input: arr = [2,1,3,5,4,6,7], k = 2</span><br><span class="line">Output: 5</span><br><span class="line">Explanation: Let&apos;s see the rounds of the game:</span><br><span class="line">Round |       arr       | winner | win_count</span><br><span class="line">  1   | [2,1,3,5,4,6,7] | 2      | 1</span><br><span class="line">  2   | [2,3,5,4,6,7,1] | 3      | 1</span><br><span class="line">  3   | [3,5,4,6,7,1,2] | 5      | 1</span><br><span class="line">  4   | [5,4,6,7,1,2,3] | 5      | 2</span><br><span class="line">So we can see that 4 rounds will be played and 5 is the winner because it wins 2 consecutive games.</span><br></pre></td></tr></table></figure>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Input: arr = [2,1,3,5,4,6,7], k = 2</span><br><span class="line">Output: 5</span><br><span class="line">Explanation: Let&#x27;s see the rounds of the game:</span><br><span class="line">Round |       arr       | winner | win<span class="emphasis">_count</span></span><br><span class="line"><span class="emphasis">  1   | [2,1,3,5,4,6,7] | 2      | 1</span></span><br><span class="line"><span class="emphasis">  2   | [2,3,5,4,6,7,1] | 3      | 1</span></span><br><span class="line"><span class="emphasis">  3   | [3,5,4,6,7,1,2] | 5      | 1</span></span><br><span class="line"><span class="emphasis">  4   | [5,4,6,7,1,2,3] | 5      | 2</span></span><br><span class="line"><span class="emphasis">So we can see that 4 rounds will be played and 5 is the winner because it wins 2 consecutive games.</span></span><br></pre></td></tr></table></figure>
 
 <p><strong>Example 2:</strong></p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Input: arr = [3,2,1], k = 10</span><br><span class="line">Output: 3</span><br><span class="line">Explanation: 3 will win the first 10 rounds consecutively.</span><br></pre></td></tr></table></figure>
@@ -269,379 +311,351 @@
 <p><strong>Example 4:</strong></p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Input: arr = [1,11,22,33,44,55,66,77,88,99], k = 1000000000</span><br><span class="line">Output: 99</span><br></pre></td></tr></table></figure>
 
-<h2 id="My-Solution"><a href="#My-Solution" class="headerlink" title="My Solution"></a>My Solution</h2><p>&#x770B;&#x5230;&#x8FD9;&#x9898;&#xFF0C;&#x9996;&#x5148;&#x6211;&#x8BA4;&#x4E3A;&#x8FD9;&#x9898;&#x6E05;&#x6670;&#x660E;&#x4E86;&#xFF0C;&#x7528;<strong>&#x8FED;&#x4EE3;</strong>&#x53BB;&#x5B8C;&#x6210;&#x5168;&#x90E8;&#x6D41;&#x7A0B;&#xFF0C;&#x7528;<strong>k</strong>&#x53BB;&#x505A;&#x7ED3;&#x675F;&#x7684;&#x6807;&#x5FD7;&#xFF0C;&#x662F;&#x4E00;&#x9053;&#x4ECE;&#x5934;&#x5230;&#x5C3E;&#x5F88;&#x660E;&#x786E;&#x7684;&#x9898;&#x3002;&#x4F46;&#x662F;:joy:</p>
-<p>&#x8D34;&#x4E0A;&#x6211;&#x7A1A;&#x5AE9;&#x7684;&#x4EE3;&#x7801;&#xFF1A;</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getWinner</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> k)</span> </span>{</span><br><span class="line">    <span class="keyword">int</span> res = -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> zero = k-<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> solution = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(k&gt;<span class="number">0</span>){</span><br><span class="line">        <span class="keyword">int</span> currMax = Math.max(arr[<span class="number">0</span>],arr[<span class="number">1</span>]);</span><br><span class="line">        <span class="keyword">int</span> currMin = Math.min(arr[<span class="number">0</span>], arr[<span class="number">1</span>]);</span><br><span class="line">        helper(currMax, currMin, arr);</span><br><span class="line">        <span class="keyword">if</span>(res == -<span class="number">1</span>){</span><br><span class="line">            <span class="comment">// initial, no compare</span></span><br><span class="line">            res = currMax;</span><br><span class="line">        }<span class="keyword">else</span>{</span><br><span class="line">            <span class="keyword">if</span>(currMax == res){</span><br><span class="line">                k--;</span><br><span class="line">                solution = currMax;</span><br><span class="line">            }<span class="keyword">else</span>{</span><br><span class="line">                k = zero;</span><br><span class="line">                res = currMax;</span><br><span class="line">            }</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">    <span class="keyword">return</span> solution;</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">helper</span><span class="params">(<span class="keyword">int</span> max, <span class="keyword">int</span> min, <span class="keyword">int</span>[] arr)</span></span>{</span><br><span class="line">    arr[<span class="number">0</span>] = max;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; arr.length - <span class="number">1</span>; i++) {</span><br><span class="line">        arr[i] = arr[i + <span class="number">1</span>];</span><br><span class="line">    }</span><br><span class="line">    arr[arr.length-<span class="number">1</span>] = min;</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h2 id="My-Solution"><a href="#My-Solution" class="headerlink" title="My Solution"></a>My Solution</h2><p>看到这题，首先我认为这题清晰明了，用__迭代__去完成全部流程，用<strong>k</strong>去做结束的标志，是一道从头到尾很明确的题。但是:joy:</p>
+<p>贴上我稚嫩的代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getWinner</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> res = -<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> zero = k-<span class="number">1</span>;</span><br><span class="line">    <span class="keyword">int</span> solution = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">while</span>(k&gt;<span class="number">0</span>)&#123;</span><br><span class="line">        <span class="keyword">int</span> currMax = Math.max(arr[<span class="number">0</span>],arr[<span class="number">1</span>]);</span><br><span class="line">        <span class="keyword">int</span> currMin = Math.min(arr[<span class="number">0</span>], arr[<span class="number">1</span>]);</span><br><span class="line">        helper(currMax, currMin, arr);</span><br><span class="line">        <span class="keyword">if</span>(res == -<span class="number">1</span>)&#123;</span><br><span class="line">            <span class="comment">// initial, no compare</span></span><br><span class="line">            res = currMax;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            <span class="keyword">if</span>(currMax == res)&#123;</span><br><span class="line">                k--;</span><br><span class="line">                solution = currMax;</span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                k = zero;</span><br><span class="line">                res = currMax;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> solution;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">helper</span><span class="params">(<span class="keyword">int</span> max, <span class="keyword">int</span> min, <span class="keyword">int</span>[] arr)</span></span>&#123;</span><br><span class="line">    arr[<span class="number">0</span>] = max;</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; arr.length - <span class="number">1</span>; i++) &#123;</span><br><span class="line">        arr[i] = arr[i + <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    arr[arr.length-<span class="number">1</span>] = min;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>&#x6CA1;&#x901A;&#x8FC7;&#xFF0C;&#x56E0;&#x4E3A;<code>Time Limited</code>&#xFF0C;&#x8DD1;&#x5F97;&#x592A;&#x6162;&#x4E86;&#xFF01;</p>
-<h2 id="Niubility-Solution"><a href="#Niubility-Solution" class="headerlink" title="Niubility Solution"></a>Niubility Solution</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getWinner</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> k)</span> </span>{</span><br><span class="line">    <span class="comment">// &#x6570;&#x7EC4;&#x957F;&#x5EA6;</span></span><br><span class="line">    <span class="keyword">int</span> n = arr.length;</span><br><span class="line">    <span class="comment">// &#x6570;&#x7EC4;&#x957F;&#x5EA6;&#x4E0E;k&#x4E4B;&#x95F4;&#x53D6;&#x6700;&#x5C0F;&#x7684;&#x3002;</span></span><br><span class="line">    k = Math.min(k, n);</span><br><span class="line">    <span class="keyword">int</span> A = arr[<span class="number">0</span>];</span><br><span class="line">    <span class="comment">// &#x6807;&#x5FD7;&#x4F4D;&#xFF0C;&#x8BB0;&#x5F55;&#x76F8;&#x540C;&#x6B21;&#x6570;</span></span><br><span class="line">    <span class="keyword">int</span> rep = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// &#x4ECE;&#x7B2C;&#x4E8C;&#x4E2A;&#x5F00;&#x59CB;iterate&#xFF0C;&#x65E0;&#x7EC8;&#x7ED3;&#x6761;&#x4EF6;</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;;i++){</span><br><span class="line">        <span class="comment">// &#x201C;i%n&#x201C; &#x53D6;&#x4F59;&#x6570;&#xFF0C;&#x903B;&#x8F91;&#x53D8;&#x6362;&#x6570;&#x7EC4;&#x3002;&#x7531;&#x4E8E;for&#x5FAA;&#x73AF;&#x65E0;&#x7EC8;&#x7ED3;&#x6761;&#x4EF6;&#xFF0C;&#x6240;&#x4EE5;i&#x4F1A;&#x65E0;&#x9650;&#x589E;&#x52A0;&#x8D85;&#x8FC7;n&#x3002;</span></span><br><span class="line">        <span class="keyword">int</span> B = arr[i%n];</span><br><span class="line">        <span class="keyword">if</span>(A &gt;= B){</span><br><span class="line">            rep++;</span><br><span class="line">        }<span class="keyword">else</span>{</span><br><span class="line">            A = B;</span><br><span class="line">            rep = <span class="number">1</span>;</span><br><span class="line">        }</span><br><span class="line">        <span class="comment">// &#x7EC8;&#x7ED3;&#x6761;&#x4EF6;&#x5728;&#x8FD9;&#x91CC;&#xFF0C;rep&#x7B49;&#x4E8E;k&#x65F6;&#x7ED3;&#x675F;&#x3002;</span></span><br><span class="line">        <span class="keyword">if</span>(rep == k){</span><br><span class="line">            <span class="keyword">return</span> A;</span><br><span class="line">        }</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>没通过，因为<code>Time Limited</code>，跑得太慢了！</p>
+<h2 id="Niubility-Solution"><a href="#Niubility-Solution" class="headerlink" title="Niubility Solution"></a>Niubility Solution</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getWinner</span><span class="params">(<span class="keyword">int</span>[] arr, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 数组长度</span></span><br><span class="line">    <span class="keyword">int</span> n = arr.length;</span><br><span class="line">    <span class="comment">// 数组长度与k之间取最小的。</span></span><br><span class="line">    k = Math.min(k, n);</span><br><span class="line">    <span class="keyword">int</span> A = arr[<span class="number">0</span>];</span><br><span class="line">    <span class="comment">// 标志位，记录相同次数</span></span><br><span class="line">    <span class="keyword">int</span> rep = <span class="number">0</span>;</span><br><span class="line">    <span class="comment">// 从第二个开始iterate，无终结条件</span></span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">1</span>;;i++)&#123;</span><br><span class="line">        <span class="comment">// “i%n“ 取余数，逻辑变换数组。由于for循环无终结条件，所以i会无限增加超过n。</span></span><br><span class="line">        <span class="keyword">int</span> B = arr[i%n];</span><br><span class="line">        <span class="keyword">if</span>(A &gt;= B)&#123;</span><br><span class="line">            rep++;</span><br><span class="line">        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">            A = B;</span><br><span class="line">            rep = <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="comment">// 终结条件在这里，rep等于k时结束。</span></span><br><span class="line">        <span class="keyword">if</span>(rep == k)&#123;</span><br><span class="line">            <span class="keyword">return</span> A;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p><strong>&#x901A;&#x8FC7;&#x5BF9;&#x6BD4;&#x53EF;&#x4EE5;&#x53D1;&#x73B0;&#xFF0C;&#x6211;&#x8017;&#x65F6;&#x7684;&#x539F;&#x56E0;&#x5728;&#x4E8E;&#xFF1A;</strong> </p>
+<p><strong>通过对比可以发现，我耗时的原因在于：</strong> </p>
 <ol>
-<li>&#x6211;&#x662F;&#x771F;&#x7684;&#x632A;&#x4E86;&#x6570;&#x7EC4;&#xFF01;&#x7269;&#x7406;&#x4E0A;&#x7684;&#x632A;&#x52A8;&#xFF0C;&#x5B9E;&#x9645;&#x4E0A;&#xFF0C;&#x903B;&#x8F91;&#x79FB;&#x52A8;&#x6570;&#x7EC4;&#x5373;&#x53EF;&#xFF01;&#x6211;&#x7684;&#x7A0B;&#x5E8F;&#x7B97;&#x4F8B;4&#x8981;6&#x79D2;&#xFF0C;&#x8FD9;&#x4E2A;&#x53EA;&#x9700;&#x8981;0&#x79D2;&#x3002;</li>
-<li><code>Math.min(k, n)</code>&#xFF0C;&#x5982;&#x679C;&#x9898;&#x76EE;&#x7ED9;&#x7684;k&#x4E3A;<code>10000000</code>,&#x6570;&#x7EC4;&#x957F;&#x5EA6;&#x4E3A;<code>8</code>,&#x90A3;&#x4E48;&#x6700;&#x540E;&#x4E5F;&#x662F;&#x6309;<code>8</code> &#x6765;&#x7B97;&#xFF0C;&#x90A3;&#x4E48;&#x591A;&#x5FAA;&#x73AF;&#x65E0;&#x610F;&#x4E49;&#xFF0C;&#x4E00;&#x904D;&#x904D;&#x5386;&#x5373;&#x53EF;&#x83B7;&#x53D6;&#x6700;&#x5927;&#xFF08;&#x8FD9;&#x6837;&#x4E5F;&#x884C;&#xFF1F;&#xFF09;</li>
+<li>我是真的挪了数组！物理上的挪动，实际上，逻辑移动数组即可！我的程序算例4要6秒，这个只需要0秒。</li>
+<li><code>Math.min(k, n)</code>，如果题目给的k为<code>10000000</code>,数组长度为<code>8</code>,那么最后也是按<code>8</code> 来算，那么多循环无意义，一遍遍历即可获取最大（这样也行？）</li>
 </ol>
-<p>&#x51B5;&#x4E14;&#xFF0C;&#x903B;&#x8F91;i&#x4E0A;&#x4E5F;&#x6CA1;&#x6709;&#x53BB;&#x53D8;&#x6362;&#x4F4D;&#x7F6E;&#xFF0C;&#x9898;&#x76EE;&#x7684;&#x672C;&#x8D28;&#x8FD8;&#x662F;&#x6328;&#x4E2A;&#x904D;&#x5386;&#xFF01;</p>
+<p>况且，逻辑i上也没有去变换位置，题目的本质还是挨个遍历！</p>
 <p>i.e. arr = [2,1,3,5,4,6,7], k = 2</p>
 
-    </div>
+            
 
-    
-    
-    
-
-    
-      <div>
-        
-<div>
-  
-    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
-      <span>-------- 本文结束 感谢阅读 --------</span>
-    </div>
-  
-</div>
-      </div>
-    
-      
-        <div class="reward-container">
-  <div>Donate comment here.</div>
-  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
-    Donate
-  </button>
-  <div id="qr" style="display: none;">
-      
-      <div style="display: inline-block;">
-        <img src="/images/wechatpay.jpg" alt="Sebastian WeChat Pay">
-        <p>WeChat Pay</p>
-      </div>
-      
-      <div style="display: inline-block;">
-        <img src="/images/alipay.jpg" alt="Sebastian Alipay">
-        <p>Alipay</p>
-      </div>
-
-  </div>
-</div>
-
-
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/algorithm/" rel="tag"># algorithm</a>
-          </div>
-
-        
-
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/2020/07/20/lock/" rel="next" title="lock">
-                  <i class="fa fa-chevron-left"></i> lock
-                </a>
-            </div>
-
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/2020/08/05/mybatis/" rel="prev" title="mybatis">
-                  mybatis <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
-      </footer>
-    
-  </article>
-  
-  
-  
-
-  </div>
-
-
-          </div>
-          
 
         </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="Sebastian"
-    src="/images/avatar.jpg">
-  <p class="site-author-name" itemprop="name">Sebastian</p>
-  <div class="site-description" itemprop="description">I'm feeling lucky!</div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">59</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
-        <span class="site-state-item-count">16</span>
-        <span class="site-state-item-name">categories</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
-        <span class="site-state-item-count">52</span>
-        <span class="site-state-item-name">tags</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/Sebastian-Getts" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Sebastian-Getts" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:zzzqsw@gmail.com" title="E-Mail &amp;rarr; mailto:zzzqsw@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://instagram.com/mchin6" title="Instagram &amp;rarr; https:&#x2F;&#x2F;instagram.com&#x2F;mchin6" rel="noopener" target="_blank"><i class="fa fa-fw fa-instagram"></i>Instagram</a>
-      </span>
-  </div>
-
-
-
-      </div>
-
     </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
+    <div id="post-footer" class="post-footer main-content-wrap">
         
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/algorithm/" rel="tag">algorithm</a>
 
-<div class="copyright">
-  
-  &copy; 2019 – 
-  <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Sebastian</span>
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/08/05/mybatis/"
+                    data-tooltip="mybatis"
+                    aria-label="PREVIOUS: mybatis"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/07/20/lock/"
+                    data-tooltip="lock"
+                    aria-label="NEXT: lock"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://github.com/sebastian/about/2020/08/02/contest200/"
+                    title="Share on Weibo"
+                    aria-label="Share on Weibo"
+                >
+                    <i class="fab fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://github.com/sebastian/about/2020/08/02/contest200/&amp;title=contest200"
+                    title="Share on QQ"
+                    aria-label="Share on QQ"
+                >
+                    <i class="fab fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://widget.renren.com/dialog/share?resourceUrl=http://github.com/sebastian/about/2020/08/02/contest200/"
+                    title="Share on Renren"
+                    aria-label="Share on Renren"
+                >
+                    <i class="fab fa-renren" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a>
-  </div>
-  <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.4.2
-  </div>
 
 
         
-
-
-
-
-
-
-
-
-
-
-
-
         
-      </div>
-    </footer>
-  </div>
-
-  
-  
-  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
-  <script src="/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
-<script src="/js/schemes/muse.js"></script>
-<script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script pjax>
-if (document.querySelectorAll('pre.mermaid').length) {
-  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/mermaid/8.2.0/mermaid.min.js', () => {
-    mermaid.initialize({
-      theme: 'forest',
-      logLevel: 3,
-      flowchart: { curve: 'linear' },
-      gantt: { axisFormat: '%m/%d/%Y' },
-      sequence: { actorMargin: 50 }
-    });
-  }, window.mermaid);
-}
-</script>
-
-
-    <div id="pjax">
-
-  
-
-  
-
-  
-
-  
-
-  <script async src="/js/cursor/love.min.js"></script>
-
-
-
-
-  <script src="/js/wobblewindow.js"></script>
-  <script>
-    //只在桌面版网页启用特效
-    if( window.innerWidth > 768  ){
-      $(document).ready(function () {
+            
         
-          $('#header').wobbleWindow({
-            radius: 50,
-            movementTop: false,
-            movementLeft: false,
-            movementRight: false,
-            debug: false,
-          });
-        
-
-        
-          $('#sidebar').wobbleWindow({
-            radius: 50,
-            movementLeft: false,
-            movementTop: false,
-            movementBottom: false,
-            position: 'fixed',
-            debug: false,
-          });
-        
-
-        
-          $('#footer').wobbleWindow({
-            radius: 50,
-            movementBottom: false,
-            movementLeft: false,
-            movementRight: false,
-            offsetX: ,
-            position: 'absolute',
-            debug: false,
-          });
-        
-      });
-    }
-  </script>
-
-
-
-
-
-
-
-
     </div>
-</body>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Sebastian Getts. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/08/05/mybatis/"
+                    data-tooltip="mybatis"
+                    aria-label="PREVIOUS: mybatis"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/07/20/lock/"
+                    data-tooltip="lock"
+                    aria-label="NEXT: lock"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://github.com/sebastian/about/2020/08/02/contest200/"
+                    title="Share on Weibo"
+                    aria-label="Share on Weibo"
+                >
+                    <i class="fab fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://github.com/sebastian/about/2020/08/02/contest200/&amp;title=contest200"
+                    title="Share on QQ"
+                    aria-label="Share on QQ"
+                >
+                    <i class="fab fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://widget.renren.com/dialog/share?resourceUrl=http://github.com/sebastian/about/2020/08/02/contest200/"
+                    title="Share on Renren"
+                    aria-label="Share on Renren"
+                >
+                    <i class="fab fa-renren" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="http://service.weibo.com/share/share.php?&amp;title=http://github.com/sebastian/about/2020/08/02/contest200/"
+                        aria-label="Share on Weibo"
+                    >
+                        <i class="fab fa-weibo" aria-hidden="true"></i><span>Share on Weibo</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="http://connect.qq.com/widget/shareqq/index.html?url=http://github.com/sebastian/about/2020/08/02/contest200/&amp;title=contest200"
+                        aria-label="Share on QQ"
+                    >
+                        <i class="fab fa-qq" aria-hidden="true"></i><span>Share on QQ</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="http://widget.renren.com/dialog/share?resourceUrl=http://github.com/sebastian/about/2020/08/02/contest200/"
+                        aria-label="Share on Renren"
+                    >
+                        <i class="fab fa-renren" aria-hidden="true"></i><span>Share on Renren</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Sebastian Getts</h4>
+        
+            <div id="about-card-bio"><p>I write code to enrich and ease life of others. 0 errors, 0 warnings.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Software Developer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Shenzhen
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover-v1.2.0.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-karbquxnkadaf4yf1hq6g6fyv6nvvrwpv3vf2u1wz8k7osddfqtxf5wbfcfg.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
 </html>

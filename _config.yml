@@ -3,22 +3,23 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Sebastian Getts
-subtitle: I'm the new one.
-description: I'm feeling lucky!
-keywords: Python, Java, Go
-author: Sebastian
+title: Hola 
+subtitle: ''
+description: ''
+keywords:  
+author: Sebastian Getts
 language: en
-timezone:
+timezone: ''
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: http://github.com/sebastian/about
 root: /
 permalink: :year/:month/:day/:title/
 permalink_defaults:
 pretty_urls:
-  trailing_index: true # Set to false to remove trailing index.html from permalinks
+  trailing_index: true # Set to false to remove trailing 'index.html' from permalinks
+  trailing_html: true # Set to false to remove trailing '.html' from permalinks
 
 # Directory
 source_dir: source
@@ -35,9 +36,9 @@ new_post_name: :title.md # File name of new posts
 default_layout: post
 titlecase: false # Transform title into titlecase
 external_link:
-  enable: false # Open external links in new tab
+  enable: true # Open external links in new tab
   field: site # Apply to the whole site
-  exclude:
+  exclude: ''
 filename_case: 0
 render_drafts: false
 post_asset_folder: false
@@ -47,7 +48,14 @@ highlight:
   enable: true
   line_number: true
   auto_detect: false
-  tab_replace:
+  tab_replace: ''
+  wrap: true
+  hljs: false
+prismjs:
+  enable: false
+  preprocess: true
+  line_number: true
+  tab_replace: ''
 
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
@@ -73,8 +81,8 @@ meta_generator: true
 ## http://momentjs.com/docs/#/displaying/format/
 date_format: YYYY-MM-DD
 time_format: HH:mm:ss
-## Use post's date for updated date unless set in front-matter
-use_date_for_updated: false
+## updated_option supports 'mtime', 'date', 'empty'
+updated_option: 'mtime'
 
 # Pagination
 ## Set per_page to 0 to disable pagination
@@ -90,7 +98,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: next
+theme: tranquilpeak 
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
@@ -98,20 +106,3 @@ deploy:
   type: git
   repo: git@github.com:Sebastian-Getts/sebastian-getts.github.io.git
   branch: master
-
-# 文章结尾提示语
-post_end_tag:
-  enabled: true  # 是否开启文末的本文结束标记
-  icon: paw # 结束标记之间的图标
-
-# --------------------------------------------------------------
-# douban settings
-# --------------------------------------------------------------
-douban:
-  user: 140146774
-  builtin: false
-  movie:
-    title: 'This is my movie title'
-    quote: 'This is my movie quote'
-  timeout: 10000
-

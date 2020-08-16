@@ -1,401 +1,437 @@
+
 <!DOCTYPE html>
 <html lang="en">
+    
 <head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.jpg">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.jpg">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-  <meta name="msvalidate.01" content="541BE591C13D7313C3568E6D172218E2">
-  <meta name="baidu-site-verification" content="3qvcDlCoMv">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
-
-
-<script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.4.2',
-    exturl: false,
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    },
-    sidebarPadding: 40
-  };
-</script>
-
-  <meta name="description" content="vue learning… 渐进式JavaScript框架, reference">
-<meta name="keywords" content="vue">
-<meta property="og:type" content="article">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hola">
+    <title>vue01 - Hola</title>
+    <meta name="author" content="Sebastian Getts">
+    
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sebastian Getts","sameAs":["https://github.com/sebastian-getts/","mailto"],"image":"avatar.jpg"},"articleBody":"vue learning… 渐进式JavaScript框架, reference\n\n\n序渐进：声明式渲染-&gt;组件系统-&gt;客户端路由-&gt;集中式状态管理-&gt;项目构建\n使用原生JS：123456&lt;div id=&quot;msg&quot;&gt;&lt;/div&gt;&lt;script type=&quot;text/javacript&quot;&gt;    var msg = &#x27;Hello World&#x27;;    var div = document.getElementById(&#x27;msg&#x27;);    div.innerHTML = msg;&lt;/script&gt;\n\n\njQuery：123456&lt;div id=&quot;msg&quot;&gt;&lt;/div&gt;&lt;script type=&quot;text&quot;/javascript&quot; src=&quot;js/jquery.js&quot;&gt;&lt;/srcipt&gt;&lt;script type=&quot;text/javascript&quot;&gt;    var msg = &#x27;Hello World&#x27;;    $(&#x27;#msg&#x27;).html(msg);&lt;/script&gt;\n\njQuery对原生进行封装。\n\nVue.js:1234567891011&lt;div id=&quot;app&quot;&gt;    &lt;div&gt;&#123;&#123;msg&#125;&#125;&lt;/div&gt;&lt;/div&gt;&lt;script type=&quot;text/javascript&quot; src=&quot;js/vue.js&quot;&gt;&lt;/script&gt;&lt;script type=&quot;text/javascript&quot;&gt;    new Vue(&#123;        el: &#x27;#app&#x27;,        data:&#123;            msg: &#x27;Hello world&#x27;        &#125;&#125;)\n\n步骤：\n需要提供标签用于填充数据\n引入vue.js库文件\n可以使用vue的语法做功能了\n把vue提供的数据填充到标签里面\n\n不再涉及底层的DOM操作。\n实例参数：\nel：元素的挂载位置（一般是css选择器）\ndata：模型数据（值是一个对象）\n\n差值表达式：\n将数据填充到html标签中\n差值表达式支持基本的计算操作（花括号中可是js运算）\n\n编译：vue代码-&gt;vue框架-&gt;原生js代码\n\n模板语法前端渲染：\n把数据填充到HTML标签中。\n\n原生js拼接字符串\n使用前段模板引擎\n使用vue特有的模板引擎\n\n语法概览：\n\n差值表达式\n指令\n事件绑定\n属性绑定\n样式绑定\n分支循环结构\n\n指令本质就是自定义属性，格式：以v-开始（比如：v-cloak）\nv-cloak\n差值表达式存在的问题：闪动\n使用该指令可以解决\n原理：先隐藏，替换好值之后再显示最终的值\n\nreference\n\n提供样式\n在差值表达式所在标签中添加v-cloak指令\n\n1234567891011&lt;style type=&quot;text/css&quot;&gt;    [v-cloak]&#123;        display: none;    &#125;&lt;/style&gt;...&lt;body&gt;    &lt;div id=&quot;app&quot;&gt;        &lt;div v-cloak&gt;&#123;&#123;msg&#125;&#125;&lt;/div&gt;    &lt;/div&gt;&lt;/body&gt;\n\nv-text1&lt;div v-texxt=&#x27;msg&#x27;&gt;&lt;div&gt;\n\n效果跟差值表达式一样，但是没有差值表达式的闪动问题，用户体验更好。\nv-html填充HTML的片段。会解析。但是会有一定的危险性，容易导致XSS（跨站脚本攻击）。本网站内部数据可以使用，第三方的数据不可以用。\n12345&lt;div v-html=&#x27;msg1&#x27;&gt;&lt;/div&gt;data:&#123;    msg1:&#x27;&lt;h1&gt;HTML&lt;/h1&gt;&#x27;&#125;\n\nv-pre填充原始信息。例如：不解析花括号。跳过编译。\n1&lt;div v-pre&gt;&#123;&#123;msgg&#125;&#125;&lt;/div&gt;\n\n数据响应式\n如何理解\nhtml5中的响应式（屏幕尺寸变化导致样式的变化）\n数据的响应式（数据的变化导致页面内容的变化）\n\n\n数据绑定：将数据填充到标签中\nv-once：只编译一次，显示内容之后不再具有响应式功能\n\n响应式：f12后在控制台也可以修改数据，，例如：vm.msg，vm.msg=123。数据变化后页面也会跟着变化，数据驱动。\nv-once就是为了防止在控制台修改数据，这样可以提高性能。\n双向数据绑定双向：数据-&gt;页面，用户修改内容-&gt;影响模型数据\nv-model123&lt;div&gt;    &lt;input type=&quot;text&quot; v-model=&#x27;msg&#x27;&gt;&lt;/div&gt;\n\nMVVMM(model) : data中的数据，本质是plain javascript objects\nV(view) ： 视图，模板，本质是dom元素\nVM(View-Model)： 是两者的结合，控制能力。两者本不能直接交互，所以有了vue进封装（底层是DOM Listen, Data Bindings）。\n事件绑定v-on123&lt;input type=&#x27;button&#x27; v-on:click=&#x27;num++&#x27;/&gt;&lt;input type=&#x27;button&#x27; @click=&#x27;nunm++&#x27;/&gt;\n\n12345678&lt;div&gt;&#123;&#123;num&#125;&#125;&lt;/div&gt;&lt;div&gt;    &lt;button v-on:click=&#x27;num++&#x27;&gt;click&lt;/button&gt;&lt;/div&gt;data:&#123;    num:0&#125;\n\n方法methods用来写方法，抽取“num++”放在方法中，增加可读性。\n12345methods:&#123;    handle: function()&#123;        this.num++; //this means vue object vm.    &#125;&#125;\n\n\n\n调用方式有两种\n\n直接绑定函数名称\n1&lt;button v-on:click=&#x27;say&#x27;&gt;Hello&lt;/button&gt;\n\n\n\n\n\n\n调用函数\n1&lt;button v-on:click=&#x27;say()&#x27;&gt;Say hi&lt;/button&gt;\n\n\n\n\n\n事件函数传参普通参数和事件对象（event）\n1&lt;button v-on:click=&#x27;say(&quot;hi&quot;, $event)&#x27;&gt;Say hi&lt;/button&gt;\n\n$event为固定写法。\n\n如果事件直接绑定函数名称，那么会默认船体事件对象作为事件函数的第一个参数\n如果事件绑定函数调用（没加括号），那么事件对象必须作为最后一个参数显示传递，并且事件对象的名称必须是$event。\n\n事件修饰符\nstop 阻止冒泡\n1&lt;a v-on:click.stop=&quot;handle&quot;&gt;jump&lt;/a&gt;\n\n\n\n\n\n\nprevent 阻止默认行为\n1&lt;a v-on:click.prevent=&quot;handle&quot;&gt;jump&lt;/a&gt;\n\n\n\n冒泡\n123456789101112131415161718&lt;div v-on:click=&#x27;handle0&#x27;&gt;    &lt;button v-on:click=&#x27;handle1&#x27;&gt;click&lt;/button&gt;&lt;/div&gt;&lt;div&gt;    &lt;a href=&quot;http://www.google.com&quot; v-on:click=&#x27;handle2&#x27;&gt;google&lt;/a&gt;&lt;/div&gt;methods:&#123;    handle0: function()&#123;        this.num++;    &#125;,    handle1:function(event)&#123;        event.stopPropagation(); //traditional    &#125;,    handle2:function(event)&#123;        event.preventDefault();    &#125;&#125;\n\n点击button后会冒泡，触发父元素的div中的handle0.\n传统的形式是event.stopPropagation()，在vue中可以使用v-on:click.stop。\n按键修饰符用在键盘事件中进行过滤（指定），按键触发函数。\n\n.enter\n1&lt;input v-on:keyup.enter=&#x27;submit&#x27;&gt;\n\n\n\n\n\n\n.delete\n1&lt;input v-on:keyup.delete=&#x27;handle&#x27;&gt;\n\n\n\n…\n自定义按键修饰符1Vue.config.keyCodes.f1 = 112\n\n12345678910&lt;input type=&#x27;text&#x27; v-on:keyup=&#x27;handle&#x27;&gt;methods:&#123;    handle:function(event)&#123;        console.log(event.keyCode)//利用keyCode自定义    &#125;&#125;&lt;input type=&#x27;text&#x27; v-on.keyup.65=&#x27;handle&#x27;&gt;    \n\n\n\n计算器\n通过v-model指令实现数值之间的绑定\n给计算按钮绑定事件，实现计算逻辑\n将计算结果绑定对应位置\n\n123456789101112131415161718192021222324252627282930313233343536373839404142434445464748&lt;!DOCTYPE html&gt;&lt;html lang=&quot;en&quot;&gt;    &lt;head&gt;        &lt;meta charset=&quot;UTF-8&quot;&gt;        &lt;title&gt;Document&lt;/title&gt;    &lt;/head&gt;    &lt;body&gt;        &lt;div id=&quot;app&quot;&gt;            &lt;h1&gt;Simple Calculator&lt;/h1&gt;            &lt;div&gt;                &lt;span&gt;NUM A: &lt;/span&gt;                &lt;span&gt;                    &lt;input type=&quot;text&quot; v-model=&#x27;a&#x27;&gt;                &lt;/span&gt;            &lt;/div&gt;            &lt;div&gt;                &lt;span&gt;NUM B: &lt;/span&gt;                &lt;span&gt;                    &lt;input type=&quot;text&quot; v-model=&#x27;b&#x27;&gt;                &lt;/span&gt;            &lt;/div&gt;            &lt;div&gt;                &lt;button v-on:click=&#x27;handle&#x27;&gt;CALCULATE&lt;/button&gt;            &lt;/div&gt;            &lt;div&gt;                &lt;span&gt;SOLUTION:&lt;/span&gt;                &lt;span v-text=&#x27;result&#x27;&gt;&lt;/span&gt;            &lt;/div&gt;        &lt;/div&gt;        &lt;script type=&quot;text/javascript&quot; src=&quot;js/vue.js&quot;&gt;&lt;/script&gt;        &lt;script type=&quot;text/javascript&quot;&gt;            var vm = new Vue(&#123;                el: &#x27;#app&#x27;,                data: &#123;                    a: &#x27;&#x27;,                    b: &#x27;&#x27;,                    result: &#x27;&#x27;                &#125;,                methods: &#123;                    handle: function()&#123;                        this.result = parseInt(this.a) + parseInt(this.b);                    &#125;                &#125;            &#125;);        &lt;/script&gt;    &lt;/body&gt;&lt;/html&gt;\n\n属性绑定v-bind12&lt;a v-bind:hreff=&#x27;url&#x27;&gt;jump&lt;/a&gt;&lt;a :href=&#x27;url&#x27;&gt;jump&lt;/a&gt;\n\n对比一下使用前后，\n使用前：\n1&lt;a href=&quot;www.google.com&quot;&gt;Google&lt;/a&gt;\n\n使用后：\n12345&lt;a v-bind:href=&quot;url&quot;&gt;Google&lt;/a&gt;data:&#123;    url: &#x27;www.google.com&#x27;&#125;\n\n双向绑定原理v-model的底层用到了v-bind.\n1&lt;input v-bind:value=&quot;msg&quot; v-on:input=&quot;msg=$event.target.value&quot;&gt;\n\n12345678910&lt;input type=&quot;text&quot; v-bind:value=&quot;msg&quot; v-on:input=&#x27;handle&#x27;&gt;    data:&#123;    msg: &#x27;hello&#x27;&#125;,methods: &#123;    handle: function(event)&#123;        this.msg = event.target.value;    &#125;&#125;\n\n\n\n样式绑定class样式处理对象语法：\n1&lt;div v-bind:class=&quot;&#123;active: isActive&#125;&quot;&gt;&lt;/div&gt;\n\n数组语法：\n1&lt;div v-bidn:class=&quot;[activeClass, errorClass]&quot;&gt;&lt;/div&gt;\n\n简化class绑定的值：\n12345&lt;div v-bind:class=&#x27;arrClasses&#x27;&gt;&lt;/div&gt;data:&#123;    arrClasses:[&#x27;active&#x27;,&#x27;error&#x27;]&#125;\n\n12345678910111213&lt;div v-bind:class=&#x27;obejctClasses&#x27;&gt;&lt;/div&gt;data:&#123;    objectClasses:&#123;        active: true,        error: true    &#125;&#125;methods: &#123;    handle: function()&#123;        this.objectClasses.error = false;    &#125;&#125;\n\n全局定义的默认class会被保留，新绑定会和默认的结合在一起。\nstyle样式处理对象语法：\n1&lt;div v-bind:style=&quot;&#123;color:activeColor, fontSize:fontsize&#125;&quot;&gt;&lt;/div&gt;\n\n数组语法：\n1&lt;div v-bind:style=&quot;[basestyles, overridignstyles]&quot;&gt;&lt;/div&gt;\n\n分支结构\nv-if 控制元素是否渲染到页面\nv-else-if 同上\nv-else 同上\nv-show：控制元素样式是否显示 display:none。已经渲染到页面\n\n频繁的显示或隐藏：v-show\n循环结构v-for遍历数组\n1&lt;li v-for=&#x27;item in list&#x27;&gt;&#123;&#123;item&#125;&#125;&lt;/li&gt;\n\n1&lt;li v-for=&#x27;(item, index) in list&#x27;&gt;&#123;&#123;item&#125;&#125; + &#x27;---&#x27;+&#123;&#123;index&#125;&#125;&lt;/li&gt;\n\nkey来帮助Vue区分不同元素，从而提高性能。\n1&lt;li :key=&#x27;item.id&#x27; v-for=&#x27;(item, index) in list&#x27;&gt;&#123;&#123;item&#125;&#125;+&#x27;--&#x27;+&#123;&#123;index&#125;&#125;&lt;/li&gt;\n\ne.g.\n123456&lt;li v-for=&#x27;item in frutits&#x27;&gt;&#123;&#123;item&#125;&#125;&lt;/li&gt;&lt;li v-for=&#x27;(item,index) in fruits&#x27;&gt;&#123;&#123;item+&#x27;---&#x27;+index&#125;&#125;&lt;/li&gt;data:&#123;    fruits:[&#x27;apple&#x27;,&#x27;orange&#x27;,&#x27;banana&#x27;]&#125;\n\n1234567891011&lt;li v-for=&#x27;item in my fruits&#x27;&gt;    &lt;span&gt;&#123;&#123;item.ename&#125;&#125;&lt;/span&gt;    &lt;span&gt;&#123;&#123;item.cname&#125;&#125;&lt;/span&gt;&lt;/li&gt;data:&#123;    myfrutis:[&#123;        ename:&#x27;apple&#x27;,        cname:&#x27;苹果&#x27;    &#125;]&#125;\n\nv-for遍历对象：\n1&lt;div v-for=&#x27;(value, key, index) in object&#x27;&gt;&lt;/div&gt;\n\n与v-if结合使用：\n1&lt;div v-if=&#x27;value==12&#x27; v-for=&#x27;(value, key, index) in object&#x27;&gt;&lt;/div&gt;\n\n\n\n\n\n\n\n\n\n\n\n\n\n","dateCreated":"2020-01-17T12:55:47+08:00","dateModified":"2020-07-20T01:29:13+08:00","datePublished":"2020-01-17T12:55:47+08:00","description":"vue learning… 渐进式JavaScript框架, reference","headline":"vue01","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://github.com/sebastian/about/2020/01/17/vue01/"},"publisher":{"@type":"Organization","name":"Sebastian Getts","sameAs":["https://github.com/sebastian-getts/","mailto"],"image":"avatar.jpg","logo":{"@type":"ImageObject","url":"avatar.jpg"}},"url":"http://github.com/sebastian/about/2020/01/17/vue01/","keywords":"vue"}</script>
+    <meta name="description" content="vue learning… 渐进式JavaScript框架, reference">
+<meta property="og:type" content="blog">
 <meta property="og:title" content="vue01">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;17&#x2F;vue01&#x2F;index.html">
-<meta property="og:site_name" content="Sebastian Getts">
+<meta property="og:url" content="http://github.com/sebastian/about/2020/01/17/vue01/index.html">
+<meta property="og:site_name" content="Hola">
 <meta property="og:description" content="vue learning… 渐进式JavaScript框架, reference">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-07-19T17:29:13.366Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-01-17T04:55:47.000Z">
+<meta property="article:modified_time" content="2020-07-19T17:29:13.366Z">
+<meta property="article:author" content="Sebastian Getts">
+<meta property="article:tag" content="vue">
 <meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://github.com/sebastian/about/assets/images/avatar.jpg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-spzjrm9no8kcbknku5bsn1dr9dpp94iq1g86qdztxtoqwlgtrnwyi2tucypv.min.css">
 
-<link rel="canonical" href="http://yoursite.com/2020/01/17/vue01/">
+    <!--STYLES END-->
+    
+
+    
+    <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?3e3b025a15329c47fcc47a83f6160356";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
 
 
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
-  };
-</script>
-
-  <title>vue01 | Sebastian Getts</title>
-  
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
+    
+        
+    
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
 
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-meta">
-
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Sebastian Getts</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-        <p class="site-subtitle">I'm the new one.</p>
-  </div>
-
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-</div>
-
-
-<nav class="site-nav">
-  
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
-
-  </li>
-        <li class="menu-item menu-item-movies">
-
-    <a href="/movies/" rel="section"><i class="fa fa-fw fa-video-camera"></i>movies</a>
-
-  </li>
-  </ul>
-
-</nav>
-</div>
-    </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-  <div class="reading-progress-bar"></div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content">
+        
             
+        
+    
 
-  <div class="posts-expand">
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/17/vue01/">
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/%20"
+            aria-label=""
+        >
+            Hola
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Sebastian">
-      <meta itemprop="description" content="I'm feeling lucky!">
-    </span>
+            <!-- Define author's picture -->
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sebastian Getts">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          vue01
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Sebastian Getts</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>I write code to enrich and ease life of others. 0 errors, 0 warnings.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link open-algolia-search"
+                            href="#search"
+                            
+                            rel="noopener"
+                            title="Search"
+                        >
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Search</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/sebastian-getts/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/mailto"
+                            
+                            rel="noopener"
+                            title="Mail"
+                        >
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            vue01
         </h1>
-
+    
+    
         <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+    <time datetime="2020-01-17T12:55:47+08:00">
+	
+		    Jan 17, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Vue/">Vue</a>
 
-              <time title="Created: 2020-01-17 12:55:47" itemprop="dateCreated datePublished" datetime="2020-01-17T12:55:47+08:00">2020-01-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-20 01:29:13" itemprop="dateModified" datetime="2020-07-20T01:29:13+08:00">2020-07-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Vue/" itemprop="url" rel="index">
-                    <span itemprop="name">Vue</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
 
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
+</div>
 
-      
-        <p>vue learning&#x2026; &#x6E10;&#x8FDB;&#x5F0F;JavaScript&#x6846;&#x67B6;, <a href="https://cn.vuejs.org/v2/guide">reference</a></p>
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>vue learning… 渐进式JavaScript框架, <a target="_blank" rel="noopener" href="https://cn.vuejs.org/v2/guide">reference</a></p>
 <a id="more"></a>
 
-<h1 id="&#x5E8F;"><a href="#&#x5E8F;" class="headerlink" title="&#x5E8F;"></a>&#x5E8F;</h1><p>&#x6E10;&#x8FDB;&#xFF1A;&#x58F0;&#x660E;&#x5F0F;&#x6E32;&#x67D3;-&gt;&#x7EC4;&#x4EF6;&#x7CFB;&#x7EDF;-&gt;&#x5BA2;&#x6237;&#x7AEF;&#x8DEF;&#x7531;-&gt;&#x96C6;&#x4E2D;&#x5F0F;&#x72B6;&#x6001;&#x7BA1;&#x7406;-&gt;&#x9879;&#x76EE;&#x6784;&#x5EFA;</p>
-<h1 id="&#x4F7F;&#x7528;"><a href="#&#x4F7F;&#x7528;" class="headerlink" title="&#x4F7F;&#x7528;"></a>&#x4F7F;&#x7528;</h1><h3 id="&#x539F;&#x751F;JS&#xFF1A;"><a href="#&#x539F;&#x751F;JS&#xFF1A;" class="headerlink" title="&#x539F;&#x751F;JS&#xFF1A;"></a>&#x539F;&#x751F;JS&#xFF1A;</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">&quot;msg&quot;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;script type=<span class="string">&quot;text/javacript&quot;</span>&gt;</span><br><span class="line">    <span class="keyword">var</span> msg = <span class="string">&apos;Hello World&apos;</span>;</span><br><span class="line">	<span class="keyword">var</span> div = <span class="built_in">document</span>.getElementById(<span class="string">&apos;msg&apos;</span>);</span><br><span class="line">	div.innerHTML = msg;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="序"><a href="#序" class="headerlink" title="序"></a>序</h1><p>渐进：声明式渲染-&gt;组件系统-&gt;客户端路由-&gt;集中式状态管理-&gt;项目构建</p>
+<h1 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h1><h3 id="原生JS："><a href="#原生JS：" class="headerlink" title="原生JS："></a>原生JS：</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">&quot;msg&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">&lt;script type=<span class="string">&quot;text/javacript&quot;</span>&gt;</span><br><span class="line">    <span class="keyword">var</span> msg = <span class="string">&#x27;Hello World&#x27;</span>;</span><br><span class="line">    <span class="keyword">var</span> div = <span class="built_in">document</span>.getElementById(<span class="string">&#x27;msg&#x27;</span>);</span><br><span class="line">    div.innerHTML = msg;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
 
 <hr>
-<h3 id="jQuery&#xFF1A;"><a href="#jQuery&#xFF1A;" class="headerlink" title="jQuery&#xFF1A;"></a>jQuery&#xFF1A;</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">&quot;msg&quot;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;script type=<span class="string">&quot;text&quot;</span>/javascript<span class="string">&quot; src=&quot;</span>js/jquery.js<span class="string">&quot;&gt;&lt;/srcipt&gt;</span></span><br><span class="line"><span class="string">&lt;script type=&quot;</span>text/javascript<span class="string">&quot;&gt;</span></span><br><span class="line"><span class="string">    var msg = &apos;Hello World&apos;;</span></span><br><span class="line"><span class="string">	$(&apos;#msg&apos;).html(msg);</span></span><br><span class="line"><span class="string">&lt;/script&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="jQuery："><a href="#jQuery：" class="headerlink" title="jQuery："></a>jQuery：</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">&quot;msg&quot;</span>&gt;&lt;/div&gt;</span><br><span class="line">&lt;script type=<span class="string">&quot;text&quot;</span>/javascript<span class="string">&quot; src=&quot;</span>js/jquery.js<span class="string">&quot;&gt;&lt;/srcipt&gt;</span></span><br><span class="line"><span class="string">&lt;script type=&quot;</span>text/javascript<span class="string">&quot;&gt;</span></span><br><span class="line"><span class="string">    var msg = &#x27;Hello World&#x27;;</span></span><br><span class="line"><span class="string">    $(&#x27;#msg&#x27;).html(msg);</span></span><br><span class="line"><span class="string">&lt;/script&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>jQuery&#x5BF9;&#x539F;&#x751F;&#x8FDB;&#x884C;&#x5C01;&#x88C5;&#x3002;</p>
+<p>jQuery对原生进行封装。</p>
 <hr>
-<h3 id="Vue-js"><a href="#Vue-js" class="headerlink" title="Vue.js:"></a>Vue.js:</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">    &lt;div&gt;{{msg}}&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>div&gt;</span><br><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span> src=<span class="string">&quot;js/vue.js&quot;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">    <span class="keyword">new</span> Vue({</span><br><span class="line">    	el: <span class="string">&apos;#app&apos;</span>,</span><br><span class="line">    	data:{</span><br><span class="line">            msg: <span class="string">&apos;Hello world&apos;</span></span><br><span class="line">        }</span><br><span class="line">})</span><br></pre></td></tr></table></figure>
+<h3 id="Vue-js"><a href="#Vue-js" class="headerlink" title="Vue.js:"></a>Vue.js:</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">    &lt;div&gt;&#123;&#123;msg&#125;&#125;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span> src=<span class="string">&quot;js/vue.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">    <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">        el: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">        data:&#123;</span><br><span class="line">            msg: <span class="string">&#x27;Hello world&#x27;</span></span><br><span class="line">        &#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
-<h4 id="&#x6B65;&#x9AA4;&#xFF1A;"><a href="#&#x6B65;&#x9AA4;&#xFF1A;" class="headerlink" title="&#x6B65;&#x9AA4;&#xFF1A;"></a>&#x6B65;&#x9AA4;&#xFF1A;</h4><ol>
-<li>&#x9700;&#x8981;&#x63D0;&#x4F9B;&#x6807;&#x7B7E;&#x7528;&#x4E8E;&#x586B;&#x5145;&#x6570;&#x636E;</li>
-<li>&#x5F15;&#x5165;vue.js&#x5E93;&#x6587;&#x4EF6;</li>
-<li>&#x53EF;&#x4EE5;&#x4F7F;&#x7528;vue&#x7684;&#x8BED;&#x6CD5;&#x505A;&#x529F;&#x80FD;&#x4E86;</li>
-<li>&#x628A;vue&#x63D0;&#x4F9B;&#x7684;&#x6570;&#x636E;&#x586B;&#x5145;&#x5230;&#x6807;&#x7B7E;&#x91CC;&#x9762;</li>
+<h4 id="步骤："><a href="#步骤：" class="headerlink" title="步骤："></a>步骤：</h4><ol>
+<li>需要提供标签用于填充数据</li>
+<li>引入vue.js库文件</li>
+<li>可以使用vue的语法做功能了</li>
+<li>把vue提供的数据填充到标签里面</li>
 </ol>
-<p>&#x4E0D;&#x518D;&#x6D89;&#x53CA;&#x5E95;&#x5C42;&#x7684;DOM&#x64CD;&#x4F5C;&#x3002;</p>
-<h4 id="&#x5B9E;&#x4F8B;&#x53C2;&#x6570;&#xFF1A;"><a href="#&#x5B9E;&#x4F8B;&#x53C2;&#x6570;&#xFF1A;" class="headerlink" title="&#x5B9E;&#x4F8B;&#x53C2;&#x6570;&#xFF1A;"></a>&#x5B9E;&#x4F8B;&#x53C2;&#x6570;&#xFF1A;</h4><ul>
-<li>el&#xFF1A;&#x5143;&#x7D20;&#x7684;&#x6302;&#x8F7D;&#x4F4D;&#x7F6E;&#xFF08;&#x4E00;&#x822C;&#x662F;css&#x9009;&#x62E9;&#x5668;&#xFF09;</li>
-<li>data&#xFF1A;&#x6A21;&#x578B;&#x6570;&#x636E;&#xFF08;&#x503C;&#x662F;&#x4E00;&#x4E2A;&#x5BF9;&#x8C61;&#xFF09;</li>
+<p>不再涉及底层的DOM操作。</p>
+<h4 id="实例参数："><a href="#实例参数：" class="headerlink" title="实例参数："></a>实例参数：</h4><ul>
+<li>el：元素的挂载位置（一般是css选择器）</li>
+<li>data：模型数据（值是一个对象）</li>
 </ul>
-<h4 id="&#x5DEE;&#x503C;&#x8868;&#x8FBE;&#x5F0F;&#xFF1A;"><a href="#&#x5DEE;&#x503C;&#x8868;&#x8FBE;&#x5F0F;&#xFF1A;" class="headerlink" title="&#x5DEE;&#x503C;&#x8868;&#x8FBE;&#x5F0F;&#xFF1A;"></a>&#x5DEE;&#x503C;&#x8868;&#x8FBE;&#x5F0F;&#xFF1A;</h4><ul>
-<li>&#x5C06;&#x6570;&#x636E;&#x586B;&#x5145;&#x5230;html&#x6807;&#x7B7E;&#x4E2D;</li>
-<li>&#x5DEE;&#x503C;&#x8868;&#x8FBE;&#x5F0F;&#x652F;&#x6301;&#x57FA;&#x672C;&#x7684;&#x8BA1;&#x7B97;&#x64CD;&#x4F5C;&#xFF08;&#x82B1;&#x62EC;&#x53F7;&#x4E2D;&#x53EF;&#x662F;js&#x8FD0;&#x7B97;&#xFF09;</li>
+<h4 id="差值表达式："><a href="#差值表达式：" class="headerlink" title="差值表达式："></a>差值表达式：</h4><ul>
+<li>将数据填充到html标签中</li>
+<li>差值表达式支持基本的计算操作（花括号中可是js运算）</li>
 </ul>
-<h4 id="&#x7F16;&#x8BD1;&#xFF1A;"><a href="#&#x7F16;&#x8BD1;&#xFF1A;" class="headerlink" title="&#x7F16;&#x8BD1;&#xFF1A;"></a>&#x7F16;&#x8BD1;&#xFF1A;</h4><p>vue&#x4EE3;&#x7801;-&gt;vue&#x6846;&#x67B6;-&gt;&#x539F;&#x751F;js&#x4EE3;&#x7801;</p>
+<h4 id="编译："><a href="#编译：" class="headerlink" title="编译："></a>编译：</h4><p>vue代码-&gt;vue框架-&gt;原生js代码</p>
 <hr>
-<h2 id="&#x6A21;&#x677F;&#x8BED;&#x6CD5;"><a href="#&#x6A21;&#x677F;&#x8BED;&#x6CD5;" class="headerlink" title="&#x6A21;&#x677F;&#x8BED;&#x6CD5;"></a>&#x6A21;&#x677F;&#x8BED;&#x6CD5;</h2><p>&#x524D;&#x7AEF;&#x6E32;&#x67D3;&#xFF1A;</p>
-<p>&#x628A;&#x6570;&#x636E;&#x586B;&#x5145;&#x5230;HTML&#x6807;&#x7B7E;&#x4E2D;&#x3002;</p>
+<h2 id="模板语法"><a href="#模板语法" class="headerlink" title="模板语法"></a>模板语法</h2><p>前端渲染：</p>
+<p>把数据填充到HTML标签中。</p>
 <ul>
-<li>&#x539F;&#x751F;js&#x62FC;&#x63A5;&#x5B57;&#x7B26;&#x4E32;</li>
-<li>&#x4F7F;&#x7528;&#x524D;&#x6BB5;&#x6A21;&#x677F;&#x5F15;&#x64CE;</li>
-<li>&#x4F7F;&#x7528;vue&#x7279;&#x6709;&#x7684;&#x6A21;&#x677F;&#x5F15;&#x64CE;</li>
+<li>原生js拼接字符串</li>
+<li>使用前段模板引擎</li>
+<li>使用vue特有的模板引擎</li>
 </ul>
-<p>&#x8BED;&#x6CD5;&#x6982;&#x89C8;&#xFF1A;</p>
+<p>语法概览：</p>
 <ul>
-<li>&#x5DEE;&#x503C;&#x8868;&#x8FBE;&#x5F0F;</li>
-<li>&#x6307;&#x4EE4;</li>
-<li>&#x4E8B;&#x4EF6;&#x7ED1;&#x5B9A;</li>
-<li>&#x5C5E;&#x6027;&#x7ED1;&#x5B9A;</li>
-<li>&#x6837;&#x5F0F;&#x7ED1;&#x5B9A;</li>
-<li>&#x5206;&#x652F;&#x5FAA;&#x73AF;&#x7ED3;&#x6784;</li>
+<li>差值表达式</li>
+<li>指令</li>
+<li>事件绑定</li>
+<li>属性绑定</li>
+<li>样式绑定</li>
+<li>分支循环结构</li>
 </ul>
-<h3 id="&#x6307;&#x4EE4;"><a href="#&#x6307;&#x4EE4;" class="headerlink" title="&#x6307;&#x4EE4;"></a>&#x6307;&#x4EE4;</h3><p>&#x672C;&#x8D28;&#x5C31;&#x662F;&#x81EA;&#x5B9A;&#x4E49;&#x5C5E;&#x6027;&#xFF0C;&#x683C;&#x5F0F;&#xFF1A;&#x4EE5;v-&#x5F00;&#x59CB;&#xFF08;&#x6BD4;&#x5982;&#xFF1A;v-cloak&#xFF09;</p>
+<h3 id="指令"><a href="#指令" class="headerlink" title="指令"></a>指令</h3><p>本质就是自定义属性，格式：以v-开始（比如：v-cloak）</p>
 <h4 id="v-cloak"><a href="#v-cloak" class="headerlink" title="v-cloak"></a>v-cloak</h4><ul>
-<li>&#x5DEE;&#x503C;&#x8868;&#x8FBE;&#x5F0F;&#x5B58;&#x5728;&#x7684;&#x95EE;&#x9898;&#xFF1A;&#x95EA;&#x52A8;</li>
-<li>&#x4F7F;&#x7528;&#x8BE5;&#x6307;&#x4EE4;&#x53EF;&#x4EE5;&#x89E3;&#x51B3;</li>
-<li>&#x539F;&#x7406;&#xFF1A;&#x5148;&#x9690;&#x85CF;&#xFF0C;&#x66FF;&#x6362;&#x597D;&#x503C;&#x4E4B;&#x540E;&#x518D;&#x663E;&#x793A;&#x6700;&#x7EC8;&#x7684;&#x503C;</li>
+<li>差值表达式存在的问题：闪动</li>
+<li>使用该指令可以解决</li>
+<li>原理：先隐藏，替换好值之后再显示最终的值</li>
 </ul>
-<p><a href="https://cn.vuejs.org/v2/api/#v-cloak">reference</a></p>
+<p><a target="_blank" rel="noopener" href="https://cn.vuejs.org/v2/api/#v-cloak">reference</a></p>
 <ol>
-<li>&#x63D0;&#x4F9B;&#x6837;&#x5F0F;</li>
-<li>&#x5728;&#x5DEE;&#x503C;&#x8868;&#x8FBE;&#x5F0F;&#x6240;&#x5728;&#x6807;&#x7B7E;&#x4E2D;&#x6DFB;&#x52A0;v-cloak&#x6307;&#x4EE4;</li>
+<li>提供样式</li>
+<li>在差值表达式所在标签中添加v-cloak指令</li>
 </ol>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=<span class="string">&quot;text/css&quot;</span>&gt;</span><br><span class="line">    [v-cloak]{</span><br><span class="line">        display: none;</span><br><span class="line">    }</span><br><span class="line">&lt;<span class="regexp">/style&gt;</span></span><br><span class="line"><span class="regexp">...</span></span><br><span class="line"><span class="regexp">&lt;body&gt;</span></span><br><span class="line"><span class="regexp">    &lt;div id=&quot;app&quot;&gt;</span></span><br><span class="line"><span class="regexp">        &lt;div v-cloak&gt;{{msg}}&lt;/</span>div&gt;</span><br><span class="line">	&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>body&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;style type=<span class="string">&quot;text/css&quot;</span>&gt;</span><br><span class="line">    [v-cloak]&#123;</span><br><span class="line">        display: none;</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/style&gt;</span><br><span class="line">...</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">        &lt;div v-cloak&gt;&#123;&#123;msg&#125;&#125;&lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
 
-<h4 id="v-text"><a href="#v-text" class="headerlink" title="v-text"></a>v-text</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-texxt=<span class="string">&apos;msg&apos;</span>&gt;<span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h4 id="v-text"><a href="#v-text" class="headerlink" title="v-text"></a>v-text</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-texxt=<span class="string">&#x27;msg&#x27;</span>&gt;<span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
 
-<p>&#x6548;&#x679C;&#x8DDF;&#x5DEE;&#x503C;&#x8868;&#x8FBE;&#x5F0F;&#x4E00;&#x6837;&#xFF0C;&#x4F46;&#x662F;&#x6CA1;&#x6709;&#x5DEE;&#x503C;&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x95EA;&#x52A8;&#x95EE;&#x9898;&#xFF0C;&#x7528;&#x6237;&#x4F53;&#x9A8C;&#x66F4;&#x597D;&#x3002;</p>
-<h4 id="v-html"><a href="#v-html" class="headerlink" title="v-html"></a>v-html</h4><p>&#x586B;&#x5145;HTML&#x7684;&#x7247;&#x6BB5;&#x3002;&#x4F1A;&#x89E3;&#x6790;&#x3002;&#x4F46;&#x662F;&#x4F1A;&#x6709;&#x4E00;&#x5B9A;&#x7684;&#x5371;&#x9669;&#x6027;&#xFF0C;&#x5BB9;&#x6613;&#x5BFC;&#x81F4;<code>XSS</code>&#xFF08;&#x8DE8;&#x7AD9;&#x811A;&#x672C;&#x653B;&#x51FB;&#xFF09;&#x3002;&#x672C;&#x7F51;&#x7AD9;&#x5185;&#x90E8;&#x6570;&#x636E;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;&#xFF0C;&#x7B2C;&#x4E09;&#x65B9;&#x7684;&#x6570;&#x636E;&#x4E0D;&#x53EF;&#x4EE5;&#x7528;&#x3002;</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-html=<span class="string">&apos;msg1&apos;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line">data:{</span><br><span class="line">    msg1:<span class="string">&apos;&lt;h1&gt;HTML&lt;/h1&gt;&apos;</span></span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>效果跟差值表达式一样，但是没有差值表达式的闪动问题，用户体验更好。</p>
+<h4 id="v-html"><a href="#v-html" class="headerlink" title="v-html"></a>v-html</h4><p>填充HTML的片段。会解析。但是会有一定的危险性，容易导致<code>XSS</code>（跨站脚本攻击）。本网站内部数据可以使用，第三方的数据不可以用。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-html=<span class="string">&#x27;msg1&#x27;</span>&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">data:&#123;</span><br><span class="line">    msg1:<span class="string">&#x27;&lt;h1&gt;HTML&lt;/h1&gt;&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="v-pre"><a href="#v-pre" class="headerlink" title="v-pre"></a>v-pre</h4><p>&#x586B;&#x5145;&#x539F;&#x59CB;&#x4FE1;&#x606F;&#x3002;&#x4F8B;&#x5982;&#xFF1A;&#x4E0D;&#x89E3;&#x6790;&#x82B1;&#x62EC;&#x53F7;&#x3002;&#x8DF3;&#x8FC7;&#x7F16;&#x8BD1;&#x3002;</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-pre&gt;{{msgg}}&lt;<span class="regexp">/div&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="v-pre"><a href="#v-pre" class="headerlink" title="v-pre"></a>v-pre</h4><p>填充原始信息。例如：不解析花括号。跳过编译。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-pre&gt;&#123;&#123;msgg&#125;&#125;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
 
-<h4 id="&#x6570;&#x636E;&#x54CD;&#x5E94;&#x5F0F;"><a href="#&#x6570;&#x636E;&#x54CD;&#x5E94;&#x5F0F;" class="headerlink" title="&#x6570;&#x636E;&#x54CD;&#x5E94;&#x5F0F;"></a>&#x6570;&#x636E;&#x54CD;&#x5E94;&#x5F0F;</h4><ul>
-<li>&#x5982;&#x4F55;&#x7406;&#x89E3;<ul>
-<li>html5&#x4E2D;&#x7684;&#x54CD;&#x5E94;&#x5F0F;&#xFF08;&#x5C4F;&#x5E55;&#x5C3A;&#x5BF8;&#x53D8;&#x5316;&#x5BFC;&#x81F4;&#x6837;&#x5F0F;&#x7684;&#x53D8;&#x5316;&#xFF09;</li>
-<li>&#x6570;&#x636E;&#x7684;&#x54CD;&#x5E94;&#x5F0F;&#xFF08;&#x6570;&#x636E;&#x7684;&#x53D8;&#x5316;&#x5BFC;&#x81F4;&#x9875;&#x9762;&#x5185;&#x5BB9;&#x7684;&#x53D8;&#x5316;&#xFF09;</li>
+<h4 id="数据响应式"><a href="#数据响应式" class="headerlink" title="数据响应式"></a>数据响应式</h4><ul>
+<li>如何理解<ul>
+<li>html5中的响应式（屏幕尺寸变化导致样式的变化）</li>
+<li>数据的响应式（数据的变化导致页面内容的变化）</li>
 </ul>
 </li>
-<li>&#x6570;&#x636E;&#x7ED1;&#x5B9A;&#xFF1A;&#x5C06;&#x6570;&#x636E;&#x586B;&#x5145;&#x5230;&#x6807;&#x7B7E;&#x4E2D;</li>
-<li>v-once&#xFF1A;&#x53EA;&#x7F16;&#x8BD1;&#x4E00;&#x6B21;&#xFF0C;&#x663E;&#x793A;&#x5185;&#x5BB9;&#x4E4B;&#x540E;&#x4E0D;&#x518D;&#x5177;&#x6709;&#x54CD;&#x5E94;&#x5F0F;&#x529F;&#x80FD;</li>
+<li>数据绑定：将数据填充到标签中</li>
+<li>v-once：只编译一次，显示内容之后不再具有响应式功能</li>
 </ul>
-<p>&#x54CD;&#x5E94;&#x5F0F;&#xFF1A;f12&#x540E;&#x5728;&#x63A7;&#x5236;&#x53F0;&#x4E5F;&#x53EF;&#x4EE5;&#x4FEE;&#x6539;&#x6570;&#x636E;&#xFF0C;&#xFF0C;&#x4F8B;&#x5982;&#xFF1A;<code>vm.msg</code>&#xFF0C;<code>vm.msg=123</code>&#x3002;&#x6570;&#x636E;&#x53D8;&#x5316;&#x540E;&#x9875;&#x9762;&#x4E5F;&#x4F1A;&#x8DDF;&#x7740;&#x53D8;&#x5316;&#xFF0C;&#x6570;&#x636E;&#x9A71;&#x52A8;&#x3002;</p>
-<p>v-once&#x5C31;&#x662F;&#x4E3A;&#x4E86;&#x9632;&#x6B62;&#x5728;&#x63A7;&#x5236;&#x53F0;&#x4FEE;&#x6539;&#x6570;&#x636E;&#xFF0C;&#x8FD9;&#x6837;&#x53EF;&#x4EE5;&#x63D0;&#x9AD8;&#x6027;&#x80FD;&#x3002;</p>
-<h3 id="&#x53CC;&#x5411;&#x6570;&#x636E;&#x7ED1;&#x5B9A;"><a href="#&#x53CC;&#x5411;&#x6570;&#x636E;&#x7ED1;&#x5B9A;" class="headerlink" title="&#x53CC;&#x5411;&#x6570;&#x636E;&#x7ED1;&#x5B9A;"></a>&#x53CC;&#x5411;&#x6570;&#x636E;&#x7ED1;&#x5B9A;</h3><p>&#x53CC;&#x5411;&#xFF1A;&#x6570;&#x636E;-&gt;&#x9875;&#x9762;&#xFF0C;&#x7528;&#x6237;&#x4FEE;&#x6539;&#x5185;&#x5BB9;-&gt;&#x5F71;&#x54CD;&#x6A21;&#x578B;&#x6570;&#x636E;</p>
-<h4 id="v-model"><a href="#v-model" class="headerlink" title="v-model"></a>v-model</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;input type=<span class="string">&quot;text&quot;</span> v-model=<span class="string">&apos;msg&apos;</span>&gt;</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br></pre></td></tr></table></figure>
+<p>响应式：f12后在控制台也可以修改数据，，例如：<code>vm.msg</code>，<code>vm.msg=123</code>。数据变化后页面也会跟着变化，数据驱动。</p>
+<p>v-once就是为了防止在控制台修改数据，这样可以提高性能。</p>
+<h3 id="双向数据绑定"><a href="#双向数据绑定" class="headerlink" title="双向数据绑定"></a>双向数据绑定</h3><p>双向：数据-&gt;页面，用户修改内容-&gt;影响模型数据</p>
+<h4 id="v-model"><a href="#v-model" class="headerlink" title="v-model"></a>v-model</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;input type=<span class="string">&quot;text&quot;</span> v-model=<span class="string">&#x27;msg&#x27;</span>&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
 
-<h4 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h4><p>M(model) : data&#x4E2D;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x672C;&#x8D28;&#x662F;plain javascript objects</p>
-<p>V(view) &#xFF1A; &#x89C6;&#x56FE;&#xFF0C;&#x6A21;&#x677F;&#xFF0C;&#x672C;&#x8D28;&#x662F;dom&#x5143;&#x7D20;</p>
-<p>VM(View-Model)&#xFF1A; &#x662F;&#x4E24;&#x8005;&#x7684;&#x7ED3;&#x5408;&#xFF0C;&#x63A7;&#x5236;&#x80FD;&#x529B;&#x3002;&#x4E24;&#x8005;&#x672C;&#x4E0D;&#x80FD;&#x76F4;&#x63A5;&#x4EA4;&#x4E92;&#xFF0C;&#x6240;&#x4EE5;&#x6709;&#x4E86;vue&#x8FDB;&#x5C01;&#x88C5;&#xFF08;&#x5E95;&#x5C42;&#x662F;DOM Listen, Data Bindings&#xFF09;&#x3002;</p>
-<h3 id="&#x4E8B;&#x4EF6;&#x7ED1;&#x5B9A;"><a href="#&#x4E8B;&#x4EF6;&#x7ED1;&#x5B9A;" class="headerlink" title="&#x4E8B;&#x4EF6;&#x7ED1;&#x5B9A;"></a>&#x4E8B;&#x4EF6;&#x7ED1;&#x5B9A;</h3><h4 id="v-on"><a href="#v-on" class="headerlink" title="v-on"></a>v-on</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&apos;button&apos;</span> v-on:click=<span class="string">&apos;num++&apos;</span>/&gt;</span><br><span class="line"></span><br><span class="line">&lt;input type=<span class="string">&apos;button&apos;</span> @click=<span class="string">&apos;nunm++&apos;</span>/&gt;</span><br></pre></td></tr></table></figure>
+<h4 id="MVVM"><a href="#MVVM" class="headerlink" title="MVVM"></a>MVVM</h4><p>M(model) : data中的数据，本质是plain javascript objects</p>
+<p>V(view) ： 视图，模板，本质是dom元素</p>
+<p>VM(View-Model)： 是两者的结合，控制能力。两者本不能直接交互，所以有了vue进封装（底层是DOM Listen, Data Bindings）。</p>
+<h3 id="事件绑定"><a href="#事件绑定" class="headerlink" title="事件绑定"></a>事件绑定</h3><h4 id="v-on"><a href="#v-on" class="headerlink" title="v-on"></a>v-on</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&#x27;button&#x27;</span> v-on:click=<span class="string">&#x27;num++&#x27;</span>/&gt;</span><br><span class="line"></span><br><span class="line">&lt;input type=<span class="string">&#x27;button&#x27;</span> @click=<span class="string">&#x27;nunm++&#x27;</span>/&gt;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;{{num}}&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;div&gt;</span></span><br><span class="line"><span class="regexp">    &lt;button v-on:click=&apos;num++&apos;&gt;click&lt;/</span>button&gt;</span><br><span class="line">&lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">data:{</span></span><br><span class="line"><span class="regexp">    num:0</span></span><br><span class="line"><span class="regexp">}</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;&#123;&#123;num&#125;&#125;&lt;/div&gt;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;button v-on:click=<span class="string">&#x27;num++&#x27;</span>&gt;click&lt;/button&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">data:&#123;</span><br><span class="line">    num:<span class="number">0</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="&#x65B9;&#x6CD5;"><a href="#&#x65B9;&#x6CD5;" class="headerlink" title="&#x65B9;&#x6CD5;"></a>&#x65B9;&#x6CD5;</h4><p><strong>methods</strong>&#x7528;&#x6765;&#x5199;&#x65B9;&#x6CD5;&#xFF0C;&#x62BD;&#x53D6;&#x201C;num++&#x201D;&#x653E;&#x5728;&#x65B9;&#x6CD5;&#x4E2D;&#xFF0C;&#x589E;&#x52A0;&#x53EF;&#x8BFB;&#x6027;&#x3002;</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">methods:{</span><br><span class="line">    handle: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{</span><br><span class="line">        <span class="keyword">this</span>.num++; <span class="comment">//this means vue object vm.</span></span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h4 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h4><p><strong>methods</strong>用来写方法，抽取“num++”放在方法中，增加可读性。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">methods:&#123;</span><br><span class="line">    handle: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.num++; <span class="comment">//this means vue object vm.</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
-<p>&#x8C03;&#x7528;&#x65B9;&#x5F0F;&#x6709;&#x4E24;&#x79CD;</p>
+<p>调用方式有两种</p>
 <ul>
-<li><p>&#x76F4;&#x63A5;&#x7ED1;&#x5B9A;&#x51FD;&#x6570;&#x540D;&#x79F0;</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;button v-on:click=<span class="string">&apos;say&apos;</span>&gt;Hello&lt;<span class="regexp">/button&gt;</span></span><br></pre></td></tr></table></figure>
+<li><p>直接绑定函数名称</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;button v-on:click=<span class="string">&#x27;say&#x27;</span>&gt;Hello&lt;/button&gt;</span><br></pre></td></tr></table></figure>
 
 
 
 </li>
 </ul>
 <ul>
-<li><p>&#x8C03;&#x7528;&#x51FD;&#x6570;</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;button v-on:click=<span class="string">&apos;say()&apos;</span>&gt;Say hi&lt;<span class="regexp">/button&gt;</span></span><br></pre></td></tr></table></figure>
+<li><p>调用函数</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;button v-on:click=<span class="string">&#x27;say()&#x27;</span>&gt;Say hi&lt;/button&gt;</span><br></pre></td></tr></table></figure>
 
 
 
 </li>
 </ul>
-<h4 id="&#x4E8B;&#x4EF6;&#x51FD;&#x6570;&#x4F20;&#x53C2;"><a href="#&#x4E8B;&#x4EF6;&#x51FD;&#x6570;&#x4F20;&#x53C2;" class="headerlink" title="&#x4E8B;&#x4EF6;&#x51FD;&#x6570;&#x4F20;&#x53C2;"></a>&#x4E8B;&#x4EF6;&#x51FD;&#x6570;&#x4F20;&#x53C2;</h4><p>&#x666E;&#x901A;&#x53C2;&#x6570;&#x548C;&#x4E8B;&#x4EF6;&#x5BF9;&#x8C61;&#xFF08;event&#xFF09;</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;button v-on:click=<span class="string">&apos;say(&quot;hi&quot;, $event)&apos;</span>&gt;Say hi&lt;<span class="regexp">/button&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="事件函数传参"><a href="#事件函数传参" class="headerlink" title="事件函数传参"></a>事件函数传参</h4><p>普通参数和事件对象（event）</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;button v-on:click=<span class="string">&#x27;say(&quot;hi&quot;, $event)&#x27;</span>&gt;Say hi&lt;/button&gt;</span><br></pre></td></tr></table></figure>
 
-<p><code>$event</code>&#x4E3A;&#x56FA;&#x5B9A;&#x5199;&#x6CD5;&#x3002;</p>
+<p><code>$event</code>为固定写法。</p>
 <ol>
-<li>&#x5982;&#x679C;&#x4E8B;&#x4EF6;&#x76F4;&#x63A5;&#x7ED1;&#x5B9A;&#x51FD;&#x6570;&#x540D;&#x79F0;&#xFF0C;&#x90A3;&#x4E48;&#x4F1A;&#x9ED8;&#x8BA4;&#x8239;&#x4F53;&#x4E8B;&#x4EF6;&#x5BF9;&#x8C61;&#x4F5C;&#x4E3A;&#x4E8B;&#x4EF6;&#x51FD;&#x6570;&#x7684;&#x7B2C;&#x4E00;&#x4E2A;&#x53C2;&#x6570;</li>
-<li>&#x5982;&#x679C;&#x4E8B;&#x4EF6;&#x7ED1;&#x5B9A;&#x51FD;&#x6570;&#x8C03;&#x7528;&#xFF08;&#x6CA1;&#x52A0;&#x62EC;&#x53F7;&#xFF09;&#xFF0C;&#x90A3;&#x4E48;&#x4E8B;&#x4EF6;&#x5BF9;&#x8C61;&#x5FC5;&#x987B;&#x4F5C;&#x4E3A;&#x6700;&#x540E;&#x4E00;&#x4E2A;&#x53C2;&#x6570;&#x663E;&#x793A;&#x4F20;&#x9012;&#xFF0C;&#x5E76;&#x4E14;&#x4E8B;&#x4EF6;&#x5BF9;&#x8C61;&#x7684;&#x540D;&#x79F0;&#x5FC5;&#x987B;&#x662F;<code>$event</code>&#x3002;</li>
+<li>如果事件直接绑定函数名称，那么会默认船体事件对象作为事件函数的第一个参数</li>
+<li>如果事件绑定函数调用（没加括号），那么事件对象必须作为最后一个参数显示传递，并且事件对象的名称必须是<code>$event</code>。</li>
 </ol>
-<h4 id="&#x4E8B;&#x4EF6;&#x4FEE;&#x9970;&#x7B26;"><a href="#&#x4E8B;&#x4EF6;&#x4FEE;&#x9970;&#x7B26;" class="headerlink" title="&#x4E8B;&#x4EF6;&#x4FEE;&#x9970;&#x7B26;"></a>&#x4E8B;&#x4EF6;&#x4FEE;&#x9970;&#x7B26;</h4><ul>
-<li><p>stop &#x963B;&#x6B62;&#x5192;&#x6CE1;</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a v-on:click.stop=<span class="string">&quot;handle&quot;</span>&gt;jump&lt;<span class="regexp">/a&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="事件修饰符"><a href="#事件修饰符" class="headerlink" title="事件修饰符"></a>事件修饰符</h4><ul>
+<li><p>stop 阻止冒泡</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a v-on:click.stop=<span class="string">&quot;handle&quot;</span>&gt;jump&lt;/a&gt;</span><br></pre></td></tr></table></figure>
 
 
 
 </li>
 </ul>
 <ul>
-<li><p>prevent &#x963B;&#x6B62;&#x9ED8;&#x8BA4;&#x884C;&#x4E3A;</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a v-on:click.prevent=<span class="string">&quot;handle&quot;</span>&gt;jump&lt;<span class="regexp">/a&gt;</span></span><br></pre></td></tr></table></figure>
+<li><p>prevent 阻止默认行为</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a v-on:click.prevent=<span class="string">&quot;handle&quot;</span>&gt;jump&lt;/a&gt;</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
-<p>&#x5192;&#x6CE1;</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-on:click=<span class="string">&apos;handle0&apos;</span>&gt;</span><br><span class="line">    &lt;button v-on:click=<span class="string">&apos;handle1&apos;</span>&gt;click&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>div&gt;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;a href=<span class="string">&quot;http://www.google.com&quot;</span> v-on:click=<span class="string">&apos;handle2&apos;</span>&gt;google&lt;<span class="regexp">/a&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>div&gt;</span><br><span class="line"></span><br><span class="line">methods:{</span><br><span class="line">    handle0: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{</span><br><span class="line">        <span class="keyword">this</span>.num++;</span><br><span class="line">    },</span><br><span class="line">    handle1:<span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>{</span><br><span class="line">        event.stopPropagation(); <span class="comment">//traditional</span></span><br><span class="line">    },</span><br><span class="line">    handle2:<span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>{</span><br><span class="line">        event.preventDefault();</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>冒泡</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-on:click=<span class="string">&#x27;handle0&#x27;</span>&gt;</span><br><span class="line">    &lt;button v-on:click=<span class="string">&#x27;handle1&#x27;</span>&gt;click&lt;/button&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;div&gt;</span><br><span class="line">    &lt;a href=<span class="string">&quot;http://www.google.com&quot;</span> v-on:click=<span class="string">&#x27;handle2&#x27;</span>&gt;google&lt;/a&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">methods:&#123;</span><br><span class="line">    handle0: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.num++;</span><br><span class="line">    &#125;,</span><br><span class="line">    handle1:<span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">        event.stopPropagation(); <span class="comment">//traditional</span></span><br><span class="line">    &#125;,</span><br><span class="line">    handle2:<span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">        event.preventDefault();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>&#x70B9;&#x51FB;button&#x540E;&#x4F1A;&#x5192;&#x6CE1;&#xFF0C;&#x89E6;&#x53D1;&#x7236;&#x5143;&#x7D20;&#x7684;div&#x4E2D;&#x7684;<code>handle0</code>.</p>
-<p>&#x4F20;&#x7EDF;&#x7684;&#x5F62;&#x5F0F;&#x662F;<code>event.stopPropagation()</code>&#xFF0C;&#x5728;vue&#x4E2D;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<code>v-on:click.stop</code>&#x3002;</p>
-<h4 id="&#x6309;&#x952E;&#x4FEE;&#x9970;&#x7B26;"><a href="#&#x6309;&#x952E;&#x4FEE;&#x9970;&#x7B26;" class="headerlink" title="&#x6309;&#x952E;&#x4FEE;&#x9970;&#x7B26;"></a>&#x6309;&#x952E;&#x4FEE;&#x9970;&#x7B26;</h4><p>&#x7528;&#x5728;&#x952E;&#x76D8;&#x4E8B;&#x4EF6;&#x4E2D;&#x8FDB;&#x884C;&#x8FC7;&#x6EE4;&#xFF08;&#x6307;&#x5B9A;&#xFF09;&#xFF0C;&#x6309;&#x952E;&#x89E6;&#x53D1;&#x51FD;&#x6570;&#x3002;</p>
+<p>点击button后会冒泡，触发父元素的div中的<code>handle0</code>.</p>
+<p>传统的形式是<code>event.stopPropagation()</code>，在vue中可以使用<code>v-on:click.stop</code>。</p>
+<h4 id="按键修饰符"><a href="#按键修饰符" class="headerlink" title="按键修饰符"></a>按键修饰符</h4><p>用在键盘事件中进行过滤（指定），按键触发函数。</p>
 <ul>
 <li><p>.enter</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input v-on:keyup.enter=<span class="string">&apos;submit&apos;</span>&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input v-on:keyup.enter=<span class="string">&#x27;submit&#x27;</span>&gt;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -403,85 +439,83 @@
 </ul>
 <ul>
 <li><p>.delete</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input v-on:keyup.delete=<span class="string">&apos;handle&apos;</span>&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input v-on:keyup.delete=<span class="string">&#x27;handle&#x27;</span>&gt;</span><br></pre></td></tr></table></figure>
 
 </li>
 </ul>
-<p>&#x2026;</p>
-<h4 id="&#x81EA;&#x5B9A;&#x4E49;&#x6309;&#x952E;&#x4FEE;&#x9970;&#x7B26;"><a href="#&#x81EA;&#x5B9A;&#x4E49;&#x6309;&#x952E;&#x4FEE;&#x9970;&#x7B26;" class="headerlink" title="&#x81EA;&#x5B9A;&#x4E49;&#x6309;&#x952E;&#x4FEE;&#x9970;&#x7B26;"></a>&#x81EA;&#x5B9A;&#x4E49;&#x6309;&#x952E;&#x4FEE;&#x9970;&#x7B26;</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Vue.config.keyCodes.f1 = <span class="number">112</span></span><br></pre></td></tr></table></figure>
+<p>…</p>
+<h4 id="自定义按键修饰符"><a href="#自定义按键修饰符" class="headerlink" title="自定义按键修饰符"></a>自定义按键修饰符</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Vue.config.keyCodes.f1 = <span class="number">112</span></span><br></pre></td></tr></table></figure>
 
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&apos;text&apos;</span> v-on:keyup=<span class="string">&apos;handle&apos;</span>&gt;</span><br><span class="line"></span><br><span class="line">methods:{</span><br><span class="line">    handle:<span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>{</span><br><span class="line">        <span class="built_in">console</span>.log(event.keyCode)<span class="comment">//&#x5229;&#x7528;keyCode&#x81EA;&#x5B9A;&#x4E49;</span></span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line"></span><br><span class="line">&lt;input type=<span class="string">&apos;text&apos;</span> v-on.keyup<span class="number">.65</span>=<span class="string">&apos;handle&apos;</span>&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&#x27;text&#x27;</span> v-on:keyup=<span class="string">&#x27;handle&#x27;</span>&gt;</span><br><span class="line"></span><br><span class="line">methods:&#123;</span><br><span class="line">    handle:<span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(event.keyCode)<span class="comment">//利用keyCode自定义</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;input type=<span class="string">&#x27;text&#x27;</span> v-on.keyup<span class="number">.65</span>=<span class="string">&#x27;handle&#x27;</span>&gt;</span><br><span class="line">    </span><br></pre></td></tr></table></figure>
 
 
 
-<h3 id="&#x8BA1;&#x7B97;&#x5668;"><a href="#&#x8BA1;&#x7B97;&#x5668;" class="headerlink" title="&#x8BA1;&#x7B97;&#x5668;"></a>&#x8BA1;&#x7B97;&#x5668;</h3><ul>
-<li>&#x901A;&#x8FC7;<code>v-model</code>&#x6307;&#x4EE4;&#x5B9E;&#x73B0;&#x6570;&#x503C;&#x4E4B;&#x95F4;&#x7684;&#x7ED1;&#x5B9A;</li>
-<li>&#x7ED9;&#x8BA1;&#x7B97;&#x6309;&#x94AE;&#x7ED1;&#x5B9A;&#x4E8B;&#x4EF6;&#xFF0C;&#x5B9E;&#x73B0;&#x8BA1;&#x7B97;&#x903B;&#x8F91;</li>
-<li>&#x5C06;&#x8BA1;&#x7B97;&#x7ED3;&#x679C;&#x7ED1;&#x5B9A;&#x5BF9;&#x5E94;&#x4F4D;&#x7F6E;</li>
+<h3 id="计算器"><a href="#计算器" class="headerlink" title="计算器"></a>计算器</h3><ul>
+<li>通过<code>v-model</code>指令实现数值之间的绑定</li>
+<li>给计算按钮绑定事件，实现计算逻辑</li>
+<li>将计算结果绑定对应位置</li>
 </ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">        &lt;title&gt;Document&lt;<span class="regexp">/title&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        &lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">            &lt;h1&gt;Simple Calculator&lt;<span class="regexp">/h1&gt;</span></span><br><span class="line"><span class="regexp">            &lt;div&gt;</span></span><br><span class="line"><span class="regexp">                &lt;span&gt;NUM A: &lt;/</span>span&gt;</span><br><span class="line">                &lt;span&gt;</span><br><span class="line">                    &lt;input type=<span class="string">&quot;text&quot;</span> v-model=<span class="string">&apos;a&apos;</span>&gt;</span><br><span class="line">                &lt;<span class="regexp">/span&gt;</span></span><br><span class="line"><span class="regexp">            &lt;/</span>div&gt;</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;span&gt;NUM B: <span class="xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line">                &lt;span&gt;</span><br><span class="line">                    &lt;input type=<span class="string">&quot;text&quot;</span> v-model=<span class="string">&apos;b&apos;</span>&gt;</span><br><span class="line">                &lt;<span class="regexp">/span&gt;</span></span><br><span class="line"><span class="regexp">            &lt;/</span>div&gt;</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;button v-on:click=<span class="string">&apos;handle&apos;</span>&gt;CALCULATE&lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">            &lt;/</span>div&gt;</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;span&gt;SOLUTION:<span class="xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line">                &lt;span v-text=<span class="string">&apos;result&apos;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line">            &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">        &lt;/</span>div&gt;</span><br><span class="line">        &lt;script type=<span class="string">&quot;text/javascript&quot;</span> src=<span class="string">&quot;js/vue.js&quot;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">        &lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">            <span class="keyword">var</span> vm = <span class="keyword">new</span> Vue({</span><br><span class="line">                el: <span class="string">&apos;#app&apos;</span>,</span><br><span class="line">                data: {</span><br><span class="line">                    a: <span class="string">&apos;&apos;</span>,</span><br><span class="line">                    b: <span class="string">&apos;&apos;</span>,</span><br><span class="line">                    result: <span class="string">&apos;&apos;</span></span><br><span class="line">                },</span><br><span class="line">                methods: {</span><br><span class="line">                    handle: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{</span><br><span class="line"></span><br><span class="line">                        <span class="keyword">this</span>.result = <span class="built_in">parseInt</span>(<span class="keyword">this</span>.a) + <span class="built_in">parseInt</span>(<span class="keyword">this</span>.b);</span><br><span class="line">                    }</span><br><span class="line">                }</span><br><span class="line">            });</span><br><span class="line">        &lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>body&gt;</span><br><span class="line">&lt;<span class="regexp">/html&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">        &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">    &lt;/head&gt;</span><br><span class="line">    &lt;body&gt;</span><br><span class="line">        &lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">            &lt;h1&gt;Simple Calculator&lt;/h1&gt;</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;span&gt;NUM A: &lt;/span&gt;</span><br><span class="line">                &lt;span&gt;</span><br><span class="line">                    &lt;input type=<span class="string">&quot;text&quot;</span> v-model=<span class="string">&#x27;a&#x27;</span>&gt;</span><br><span class="line">                &lt;/span&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;span&gt;NUM B: &lt;/span&gt;</span><br><span class="line">                &lt;span&gt;</span><br><span class="line">                    &lt;input type=<span class="string">&quot;text&quot;</span> v-model=<span class="string">&#x27;b&#x27;</span>&gt;</span><br><span class="line">                &lt;/span&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;button v-on:click=<span class="string">&#x27;handle&#x27;</span>&gt;CALCULATE&lt;/button&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;span&gt;SOLUTION:&lt;/span&gt;</span><br><span class="line">                &lt;span v-text=<span class="string">&#x27;result&#x27;</span>&gt;&lt;/span&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">        &lt;script type=<span class="string">&quot;text/javascript&quot;</span> src=<span class="string">&quot;js/vue.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">        &lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line">            <span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">                el: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">                data: &#123;</span><br><span class="line">                    a: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">                    b: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">                    result: <span class="string">&#x27;&#x27;</span></span><br><span class="line">                &#125;,</span><br><span class="line">                methods: &#123;</span><br><span class="line">                    handle: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line"></span><br><span class="line">                        <span class="built_in">this</span>.result = <span class="built_in">parseInt</span>(<span class="built_in">this</span>.a) + <span class="built_in">parseInt</span>(<span class="built_in">this</span>.b);</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line">        &lt;/script&gt;</span><br><span class="line">    &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
 
-<h3 id="&#x5C5E;&#x6027;&#x7ED1;&#x5B9A;"><a href="#&#x5C5E;&#x6027;&#x7ED1;&#x5B9A;" class="headerlink" title="&#x5C5E;&#x6027;&#x7ED1;&#x5B9A;"></a>&#x5C5E;&#x6027;&#x7ED1;&#x5B9A;</h3><h4 id="v-bind"><a href="#v-bind" class="headerlink" title="v-bind"></a>v-bind</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;a v-bind:hreff=<span class="string">&apos;url&apos;</span>&gt;jump&lt;<span class="regexp">/a&gt;</span></span><br><span class="line"><span class="regexp">&lt;a :href=&apos;url&apos;&gt;jump&lt;/</span>a&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="属性绑定"><a href="#属性绑定" class="headerlink" title="属性绑定"></a>属性绑定</h3><h4 id="v-bind"><a href="#v-bind" class="headerlink" title="v-bind"></a>v-bind</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&lt;a v-bind:hreff=<span class="string">&#x27;url&#x27;</span>&gt;jump&lt;/a&gt;</span><br><span class="line">&lt;a :href=<span class="string">&#x27;url&#x27;</span>&gt;jump&lt;/a&gt;</span><br></pre></td></tr></table></figure>
 
-<p>&#x5BF9;&#x6BD4;&#x4E00;&#x4E0B;&#x4F7F;&#x7528;&#x524D;&#x540E;&#xFF0C;</p>
-<p>&#x4F7F;&#x7528;&#x524D;&#xFF1A;</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=<span class="string">&quot;www.google.com&quot;</span>&gt;Google&lt;<span class="regexp">/a&gt;</span></span><br></pre></td></tr></table></figure>
+<p>对比一下使用前后，</p>
+<p>使用前：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href=<span class="string">&quot;www.google.com&quot;</span>&gt;Google&lt;/a&gt;</span><br></pre></td></tr></table></figure>
 
-<p>&#x4F7F;&#x7528;&#x540E;&#xFF1A;</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;a v-bind:href=<span class="string">&quot;url&quot;</span>&gt;Google&lt;<span class="regexp">/a&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">data:{</span></span><br><span class="line"><span class="regexp">    url: &apos;www.google.com&apos;</span></span><br><span class="line"><span class="regexp">}</span></span><br></pre></td></tr></table></figure>
+<p>使用后：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;a v-bind:href=<span class="string">&quot;url&quot;</span>&gt;Google&lt;/a&gt;</span><br><span class="line"></span><br><span class="line">data:&#123;</span><br><span class="line">    url: <span class="string">&#x27;www.google.com&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="&#x53CC;&#x5411;&#x7ED1;&#x5B9A;&#x539F;&#x7406;"><a href="#&#x53CC;&#x5411;&#x7ED1;&#x5B9A;&#x539F;&#x7406;" class="headerlink" title="&#x53CC;&#x5411;&#x7ED1;&#x5B9A;&#x539F;&#x7406;"></a>&#x53CC;&#x5411;&#x7ED1;&#x5B9A;&#x539F;&#x7406;</h4><p>v-model&#x7684;&#x5E95;&#x5C42;&#x7528;&#x5230;&#x4E86;<code>v-bind</code>.</p>
+<h4 id="双向绑定原理"><a href="#双向绑定原理" class="headerlink" title="双向绑定原理"></a>双向绑定原理</h4><p>v-model的底层用到了<code>v-bind</code>.</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input v-bind:value=<span class="string">&quot;msg&quot;</span> v-on:input=<span class="string">&quot;msg=$event.target.value&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&quot;text&quot;</span> v-bind:value=<span class="string">&quot;msg&quot;</span> v-on:input=<span class="string">&apos;handle&apos;</span>&gt;</span><br><span class="line">    </span><br><span class="line">data:{</span><br><span class="line">    msg: <span class="string">&apos;hello&apos;</span></span><br><span class="line">},</span><br><span class="line">methods: {</span><br><span class="line">    handle: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>{</span><br><span class="line">        <span class="keyword">this</span>.msg = event.target.value;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&quot;text&quot;</span> v-bind:value=<span class="string">&quot;msg&quot;</span> v-on:input=<span class="string">&#x27;handle&#x27;</span>&gt;</span><br><span class="line">    </span><br><span class="line">data:&#123;</span><br><span class="line">    msg: <span class="string">&#x27;hello&#x27;</span></span><br><span class="line">&#125;,</span><br><span class="line">methods: &#123;</span><br><span class="line">    handle: <span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.msg = event.target.value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 
 
-<h3 id="&#x6837;&#x5F0F;&#x7ED1;&#x5B9A;"><a href="#&#x6837;&#x5F0F;&#x7ED1;&#x5B9A;" class="headerlink" title="&#x6837;&#x5F0F;&#x7ED1;&#x5B9A;"></a>&#x6837;&#x5F0F;&#x7ED1;&#x5B9A;</h3><h4 id="class&#x6837;&#x5F0F;&#x5904;&#x7406;"><a href="#class&#x6837;&#x5F0F;&#x5904;&#x7406;" class="headerlink" title="class&#x6837;&#x5F0F;&#x5904;&#x7406;"></a>class&#x6837;&#x5F0F;&#x5904;&#x7406;</h4><p>&#x5BF9;&#x8C61;&#x8BED;&#x6CD5;&#xFF1A;</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-bind:<span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;{active: isActive}&quot;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h3 id="样式绑定"><a href="#样式绑定" class="headerlink" title="样式绑定"></a>样式绑定</h3><h4 id="class样式处理"><a href="#class样式处理" class="headerlink" title="class样式处理"></a>class样式处理</h4><p>对象语法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-bind:<span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;&#123;active: isActive&#125;&quot;</span>&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
 
-<p>&#x6570;&#x7EC4;&#x8BED;&#x6CD5;&#xFF1A;</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-bidn:<span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;[activeClass, errorClass]&quot;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>数组语法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-bidn:<span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;[activeClass, errorClass]&quot;</span>&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
 
-<p>&#x7B80;&#x5316;class&#x7ED1;&#x5B9A;&#x7684;&#x503C;&#xFF1A;</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-bind:<span class="class"><span class="keyword">class</span></span>=<span class="string">&apos;arrClasses&apos;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line">data:{</span><br><span class="line">    arrClasses:[<span class="string">&apos;active&apos;</span>,<span class="string">&apos;error&apos;</span>]</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>简化class绑定的值：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-bind:<span class="class"><span class="keyword">class</span></span>=<span class="string">&#x27;arrClasses&#x27;</span>&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">data:&#123;</span><br><span class="line">    arrClasses:[<span class="string">&#x27;active&#x27;</span>,<span class="string">&#x27;error&#x27;</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-bind:<span class="class"><span class="keyword">class</span></span>=<span class="string">&apos;obejctClasses&apos;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line">data:{</span><br><span class="line">    objectClasses:{</span><br><span class="line">        active: <span class="literal">true</span>,</span><br><span class="line">        error: <span class="literal">true</span></span><br><span class="line">    }</span><br><span class="line">}</span><br><span class="line">methods: {</span><br><span class="line">    handle: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{</span><br><span class="line">        <span class="keyword">this</span>.objectClasses.error = <span class="literal">false</span>;</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-bind:<span class="class"><span class="keyword">class</span></span>=<span class="string">&#x27;obejctClasses&#x27;</span>&gt;&lt;/div&gt;</span><br><span class="line"></span><br><span class="line">data:&#123;</span><br><span class="line">    objectClasses:&#123;</span><br><span class="line">        active: <span class="literal">true</span>,</span><br><span class="line">        error: <span class="literal">true</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">methods: &#123;</span><br><span class="line">    handle: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.objectClasses.error = <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>&#x5168;&#x5C40;&#x5B9A;&#x4E49;&#x7684;&#x9ED8;&#x8BA4;class&#x4F1A;&#x88AB;&#x4FDD;&#x7559;&#xFF0C;&#x65B0;&#x7ED1;&#x5B9A;&#x4F1A;&#x548C;&#x9ED8;&#x8BA4;&#x7684;&#x7ED3;&#x5408;&#x5728;&#x4E00;&#x8D77;&#x3002;</p>
-<h4 id="style&#x6837;&#x5F0F;&#x5904;&#x7406;"><a href="#style&#x6837;&#x5F0F;&#x5904;&#x7406;" class="headerlink" title="style&#x6837;&#x5F0F;&#x5904;&#x7406;"></a>style&#x6837;&#x5F0F;&#x5904;&#x7406;</h4><p>&#x5BF9;&#x8C61;&#x8BED;&#x6CD5;&#xFF1A;</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-bind:style=<span class="string">&quot;{color:activeColor, fontSize:fontsize}&quot;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>全局定义的默认class会被保留，新绑定会和默认的结合在一起。</p>
+<h4 id="style样式处理"><a href="#style样式处理" class="headerlink" title="style样式处理"></a>style样式处理</h4><p>对象语法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-bind:style=<span class="string">&quot;&#123;color:activeColor, fontSize:fontsize&#125;&quot;</span>&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
 
-<p>&#x6570;&#x7EC4;&#x8BED;&#x6CD5;&#xFF1A;</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-bind:style=<span class="string">&quot;[basestyles, overridignstyles]&quot;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>数组语法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-bind:style=<span class="string">&quot;[basestyles, overridignstyles]&quot;</span>&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
 
-<h3 id="&#x5206;&#x652F;&#x7ED3;&#x6784;"><a href="#&#x5206;&#x652F;&#x7ED3;&#x6784;" class="headerlink" title="&#x5206;&#x652F;&#x7ED3;&#x6784;"></a>&#x5206;&#x652F;&#x7ED3;&#x6784;</h3><ul>
-<li>v-if &#x63A7;&#x5236;&#x5143;&#x7D20;&#x662F;&#x5426;&#x6E32;&#x67D3;&#x5230;&#x9875;&#x9762;</li>
-<li>v-else-if &#x540C;&#x4E0A;</li>
-<li>v-else &#x540C;&#x4E0A;</li>
-<li>v-show&#xFF1A;&#x63A7;&#x5236;&#x5143;&#x7D20;&#x6837;&#x5F0F;&#x662F;&#x5426;&#x663E;&#x793A; display:none&#x3002;&#x5DF2;&#x7ECF;&#x6E32;&#x67D3;&#x5230;&#x9875;&#x9762;</li>
+<h3 id="分支结构"><a href="#分支结构" class="headerlink" title="分支结构"></a>分支结构</h3><ul>
+<li>v-if 控制元素是否渲染到页面</li>
+<li>v-else-if 同上</li>
+<li>v-else 同上</li>
+<li>v-show：控制元素样式是否显示 display:none。已经渲染到页面</li>
 </ul>
-<p>&#x9891;&#x7E41;&#x7684;&#x663E;&#x793A;&#x6216;&#x9690;&#x85CF;&#xFF1A;<code>v-show</code></p>
-<h3 id="&#x5FAA;&#x73AF;&#x7ED3;&#x6784;"><a href="#&#x5FAA;&#x73AF;&#x7ED3;&#x6784;" class="headerlink" title="&#x5FAA;&#x73AF;&#x7ED3;&#x6784;"></a>&#x5FAA;&#x73AF;&#x7ED3;&#x6784;</h3><p>v-for&#x904D;&#x5386;&#x6570;&#x7EC4;</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;li v-<span class="keyword">for</span>=<span class="string">&apos;item in list&apos;</span>&gt;{{item}}&lt;<span class="regexp">/li&gt;</span></span><br></pre></td></tr></table></figure>
+<p>频繁的显示或隐藏：<code>v-show</code></p>
+<h3 id="循环结构"><a href="#循环结构" class="headerlink" title="循环结构"></a>循环结构</h3><p>v-for遍历数组</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;li v-<span class="keyword">for</span>=<span class="string">&#x27;item in list&#x27;</span>&gt;&#123;&#123;item&#125;&#125;&lt;/li&gt;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;li v-<span class="keyword">for</span>=<span class="string">&apos;(item, index) in list&apos;</span>&gt;{{item}} + <span class="string">&apos;---&apos;</span>+{{index}}&lt;<span class="regexp">/li&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;li v-<span class="keyword">for</span>=<span class="string">&#x27;(item, index) in list&#x27;</span>&gt;&#123;&#123;item&#125;&#125; + <span class="string">&#x27;---&#x27;</span>+&#123;&#123;index&#125;&#125;&lt;/li&gt;</span><br></pre></td></tr></table></figure>
 
-<p>key&#x6765;&#x5E2E;&#x52A9;Vue&#x533A;&#x5206;&#x4E0D;&#x540C;&#x5143;&#x7D20;&#xFF0C;&#x4ECE;&#x800C;&#x63D0;&#x9AD8;&#x6027;&#x80FD;&#x3002;</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;li :key=<span class="string">&apos;item.id&apos;</span> v-<span class="keyword">for</span>=<span class="string">&apos;(item, index) in list&apos;</span>&gt;{{item}}+<span class="string">&apos;--&apos;</span>+{{index}}&lt;<span class="regexp">/li&gt;</span></span><br></pre></td></tr></table></figure>
+<p>key来帮助Vue区分不同元素，从而提高性能。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;li :key=<span class="string">&#x27;item.id&#x27;</span> v-<span class="keyword">for</span>=<span class="string">&#x27;(item, index) in list&#x27;</span>&gt;&#123;&#123;item&#125;&#125;+<span class="string">&#x27;--&#x27;</span>+&#123;&#123;index&#125;&#125;&lt;/li&gt;</span><br></pre></td></tr></table></figure>
 
 <p>e.g.</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;li v-<span class="keyword">for</span>=<span class="string">&apos;item in frutits&apos;</span>&gt;{{item}}&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp">&lt;li v-for=&apos;(item,index) in fruits&apos;&gt;{{item+&apos;---&apos;+index}}&lt;/</span>li&gt;</span><br><span class="line"></span><br><span class="line">data:{</span><br><span class="line">    fruits:[<span class="string">&apos;apple&apos;</span>,<span class="string">&apos;orange&apos;</span>,<span class="string">&apos;banana&apos;</span>]</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&lt;li v-<span class="keyword">for</span>=<span class="string">&#x27;item in frutits&#x27;</span>&gt;&#123;&#123;item&#125;&#125;&lt;/li&gt;</span><br><span class="line">&lt;li v-<span class="keyword">for</span>=<span class="string">&#x27;(item,index) in fruits&#x27;</span>&gt;&#123;&#123;item+<span class="string">&#x27;---&#x27;</span>+index&#125;&#125;&lt;/li&gt;</span><br><span class="line"></span><br><span class="line">data:&#123;</span><br><span class="line">    fruits:[<span class="string">&#x27;apple&#x27;</span>,<span class="string">&#x27;orange&#x27;</span>,<span class="string">&#x27;banana&#x27;</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;li v-<span class="keyword">for</span>=<span class="string">&apos;item in my fruits&apos;</span>&gt;</span><br><span class="line">    &lt;span&gt;{{item.ename}}&lt;<span class="regexp">/span&gt;</span></span><br><span class="line"><span class="regexp">	&lt;span&gt;{{item.cname}}&lt;/</span>span&gt;</span><br><span class="line">&lt;<span class="regexp">/li&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">data:{</span></span><br><span class="line"><span class="regexp">    myfrutis:[{</span></span><br><span class="line"><span class="regexp">        ename:&apos;apple&apos;,</span></span><br><span class="line"><span class="regexp">        cname:&apos;&#x82F9;&#x679C;&apos;</span></span><br><span class="line"><span class="regexp">    }]</span></span><br><span class="line"><span class="regexp">}</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&lt;li v-<span class="keyword">for</span>=<span class="string">&#x27;item in my fruits&#x27;</span>&gt;</span><br><span class="line">    &lt;span&gt;&#123;&#123;item.ename&#125;&#125;&lt;/span&gt;</span><br><span class="line">    &lt;span&gt;&#123;&#123;item.cname&#125;&#125;&lt;/span&gt;</span><br><span class="line">&lt;/li&gt;</span><br><span class="line"></span><br><span class="line">data:&#123;</span><br><span class="line">    myfrutis:[&#123;</span><br><span class="line">        ename:<span class="string">&#x27;apple&#x27;</span>,</span><br><span class="line">        cname:<span class="string">&#x27;苹果&#x27;</span></span><br><span class="line">    &#125;]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>v-for&#x904D;&#x5386;&#x5BF9;&#x8C61;&#xFF1A;</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-<span class="keyword">for</span>=<span class="string">&apos;(value, key, index) in object&apos;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p>v-for遍历对象：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-<span class="keyword">for</span>=<span class="string">&#x27;(value, key, index) in object&#x27;</span>&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
 
-<p>&#x4E0E;<code>v-if</code>&#x7ED3;&#x5408;&#x4F7F;&#x7528;&#xFF1A;</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-<span class="keyword">if</span>=<span class="string">&apos;value==12&apos;</span> v-<span class="keyword">for</span>=<span class="string">&apos;(value, key, index) in object&apos;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
-
-
+<p>与<code>v-if</code>结合使用：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;div v-<span class="keyword">if</span>=<span class="string">&#x27;value==12&#x27;</span> v-<span class="keyword">for</span>=<span class="string">&#x27;(value, key, index) in object&#x27;</span>&gt;&lt;/div&gt;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -494,364 +528,338 @@
 
 
 
-    </div>
-
-    
-    
-    
-
-    
-      <div>
-        
-<div>
-  
-    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
-      <span>-------- 本文结束 感谢阅读 --------</span>
-    </div>
-  
-</div>
-      </div>
-    
-      
-        <div class="reward-container">
-  <div>Donate comment here.</div>
-  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
-    Donate
-  </button>
-  <div id="qr" style="display: none;">
-      
-      <div style="display: inline-block;">
-        <img src="/images/wechatpay.jpg" alt="Sebastian WeChat Pay">
-        <p>WeChat Pay</p>
-      </div>
-      
-      <div style="display: inline-block;">
-        <img src="/images/alipay.jpg" alt="Sebastian Alipay">
-        <p>Alipay</p>
-      </div>
-
-  </div>
-</div>
 
 
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/vue/" rel="tag"># vue</a>
-          </div>
+            
 
-        
-
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/2020/01/12/uml/" rel="next" title="uml">
-                  <i class="fa fa-chevron-left"></i> uml
-                </a>
-            </div>
-
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/2020/01/17/vue02/" rel="prev" title="vue02">
-                  vue02 <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
-      </footer>
-    
-  </article>
-  
-  
-  
-
-  </div>
-
-
-          </div>
-          
 
         </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="Sebastian"
-    src="/images/avatar.jpg">
-  <p class="site-author-name" itemprop="name">Sebastian</p>
-  <div class="site-description" itemprop="description">I'm feeling lucky!</div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">59</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
-        <span class="site-state-item-count">16</span>
-        <span class="site-state-item-name">categories</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
-        <span class="site-state-item-count">52</span>
-        <span class="site-state-item-name">tags</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/Sebastian-Getts" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Sebastian-Getts" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:zzzqsw@gmail.com" title="E-Mail &amp;rarr; mailto:zzzqsw@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://instagram.com/mchin6" title="Instagram &amp;rarr; https:&#x2F;&#x2F;instagram.com&#x2F;mchin6" rel="noopener" target="_blank"><i class="fa fa-fw fa-instagram"></i>Instagram</a>
-      </span>
-  </div>
-
-
-
-      </div>
-
     </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
+    <div id="post-footer" class="post-footer main-content-wrap">
         
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/vue/" rel="tag">vue</a>
 
-<div class="copyright">
-  
-  &copy; 2019 – 
-  <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Sebastian</span>
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/01/17/vue02/"
+                    data-tooltip="vue02"
+                    aria-label="PREVIOUS: vue02"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/01/12/uml/"
+                    data-tooltip="uml"
+                    aria-label="NEXT: uml"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://github.com/sebastian/about/2020/01/17/vue01/"
+                    title="Share on Weibo"
+                    aria-label="Share on Weibo"
+                >
+                    <i class="fab fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://github.com/sebastian/about/2020/01/17/vue01/&amp;title=vue01"
+                    title="Share on QQ"
+                    aria-label="Share on QQ"
+                >
+                    <i class="fab fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://widget.renren.com/dialog/share?resourceUrl=http://github.com/sebastian/about/2020/01/17/vue01/"
+                    title="Share on Renren"
+                    aria-label="Share on Renren"
+                >
+                    <i class="fab fa-renren" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a>
-  </div>
-  <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.4.2
-  </div>
 
 
         
-
-
-
-
-
-
-
-
-
-
-
-
         
-      </div>
-    </footer>
-  </div>
-
-  
-  
-  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
-  <script src="/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
-<script src="/js/schemes/muse.js"></script>
-<script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script pjax>
-if (document.querySelectorAll('pre.mermaid').length) {
-  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/mermaid/8.2.0/mermaid.min.js', () => {
-    mermaid.initialize({
-      theme: 'forest',
-      logLevel: 3,
-      flowchart: { curve: 'linear' },
-      gantt: { axisFormat: '%m/%d/%Y' },
-      sequence: { actorMargin: 50 }
-    });
-  }, window.mermaid);
-}
-</script>
-
-
-    <div id="pjax">
-
-  
-
-  
-
-  
-
-  
-
-  <script async src="/js/cursor/love.min.js"></script>
-
-
-
-
-  <script src="/js/wobblewindow.js"></script>
-  <script>
-    //只在桌面版网页启用特效
-    if( window.innerWidth > 768  ){
-      $(document).ready(function () {
+            
         
-          $('#header').wobbleWindow({
-            radius: 50,
-            movementTop: false,
-            movementLeft: false,
-            movementRight: false,
-            debug: false,
-          });
-        
-
-        
-          $('#sidebar').wobbleWindow({
-            radius: 50,
-            movementLeft: false,
-            movementTop: false,
-            movementBottom: false,
-            position: 'fixed',
-            debug: false,
-          });
-        
-
-        
-          $('#footer').wobbleWindow({
-            radius: 50,
-            movementBottom: false,
-            movementLeft: false,
-            movementRight: false,
-            offsetX: ,
-            position: 'absolute',
-            debug: false,
-          });
-        
-      });
-    }
-  </script>
-
-
-
-
-
-
-
-
     </div>
-</body>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Sebastian Getts. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/01/17/vue02/"
+                    data-tooltip="vue02"
+                    aria-label="PREVIOUS: vue02"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/01/12/uml/"
+                    data-tooltip="uml"
+                    aria-label="NEXT: uml"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://github.com/sebastian/about/2020/01/17/vue01/"
+                    title="Share on Weibo"
+                    aria-label="Share on Weibo"
+                >
+                    <i class="fab fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://github.com/sebastian/about/2020/01/17/vue01/&amp;title=vue01"
+                    title="Share on QQ"
+                    aria-label="Share on QQ"
+                >
+                    <i class="fab fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://widget.renren.com/dialog/share?resourceUrl=http://github.com/sebastian/about/2020/01/17/vue01/"
+                    title="Share on Renren"
+                    aria-label="Share on Renren"
+                >
+                    <i class="fab fa-renren" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="http://service.weibo.com/share/share.php?&amp;title=http://github.com/sebastian/about/2020/01/17/vue01/"
+                        aria-label="Share on Weibo"
+                    >
+                        <i class="fab fa-weibo" aria-hidden="true"></i><span>Share on Weibo</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="http://connect.qq.com/widget/shareqq/index.html?url=http://github.com/sebastian/about/2020/01/17/vue01/&amp;title=vue01"
+                        aria-label="Share on QQ"
+                    >
+                        <i class="fab fa-qq" aria-hidden="true"></i><span>Share on QQ</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="http://widget.renren.com/dialog/share?resourceUrl=http://github.com/sebastian/about/2020/01/17/vue01/"
+                        aria-label="Share on Renren"
+                    >
+                        <i class="fab fa-renren" aria-hidden="true"></i><span>Share on Renren</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Sebastian Getts</h4>
+        
+            <div id="about-card-bio"><p>I write code to enrich and ease life of others. 0 errors, 0 warnings.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Software Developer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Shenzhen
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover-v1.2.0.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-karbquxnkadaf4yf1hq6g6fyv6nvvrwpv3vf2u1wz8k7osddfqtxf5wbfcfg.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
 </html>

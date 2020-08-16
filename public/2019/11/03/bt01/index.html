@@ -1,683 +1,691 @@
+
 <!DOCTYPE html>
 <html lang="en">
+    
 <head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.jpg">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.jpg">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-  <meta name="msvalidate.01" content="541BE591C13D7313C3568E6D172218E2">
-  <meta name="baidu-site-verification" content="3qvcDlCoMv">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
-
-
-<script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.4.2',
-    exturl: false,
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    },
-    sidebarPadding: 40
-  };
-</script>
-
-  <meta name="description" content="区块链、比特币、去中心化这些东西说熟不熟，说陌生吧也谈不上陌生，毕竟天天见。趁着周末，给自己冲了电，看了看收藏了好几天的视频，一个关于区块链的北大公开课。。哈哈飘了，竟然听了北大的课^_^">
-<meta name="keywords" content="密码学">
-<meta property="og:type" content="article">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hola">
+    <title>bt01 - Hola</title>
+    <meta name="author" content="Sebastian Getts">
+    
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sebastian Getts","sameAs":["https://github.com/sebastian-getts/","mailto"],"image":"avatar.jpg"},"articleBody":"区块链、比特币、去中心化这些东西说熟不熟，说陌生吧也谈不上陌生，毕竟天天见。趁着周末，给自己冲了电，看了看收藏了好几天的视频，一个关于区块链的北大公开课。。哈哈飘了，竟然听了北大的课^_^\n\n\n简介涉及基本数据结构和算法\n\n数组\n链表\n二叉树\n哈希函数\n\n参考资料：\n\nBitCoin and Cryptocurrency Technologies A Comprehensive Introduction\n以太坊白皮书、黄皮书、原代码\nSolidity文档\n\n大纲比特币\n密码学基础\n比特币的数据结构\n公式协议和系统实现\n挖矿算法和难度调整\n比特币脚本\n软分叉和硬分叉\n匿名和隐私保护\n\n以太坊\n概述：基于账户的分布式账本\n数据结构：状态树、交易树、收据树\nGHOST协议\n挖矿：memory-hard mining puzzle\n挖矿难度调整\n权益证明\nCasper the Friendly Finality Gadget(FFG)\n\n\n智能合约\n\n密码学原理比特币，虽然被成为加密货币（crypto-currency），但是交易信息都是公开的。比特币中用到的两个密码学中的两个功能：哈希， 签名。\n哈希密码学中用的哈希函数被称为Cryptographic hash function, 有两个性质，一个是 collision resistance，另一个是 hiding。 除了以上两个性质，比特币中用到的哈希函数的性质还有一个：puzzle friendly。\n\ncollision resistance\n12345var x, y;x !&#x3D; y;有哈希函数H使得H(x)&#x3D;H(y)\n\n哈希碰撞是客观存在，但是没有高效的方法来人为的方式去造成哈希碰撞。前提是输入空间很大。因为输入空间是有限的，例如256位的哈希值，输出空间位2的256次方。\ncollision resistance的使用：\n用来求message的digest，防止篡改。\n理论上证明不出来任何一个哈希函数是collision resistance的，目前是实践经验来证明的。也有一些哈希函数以前被人认为是collision resistance的，后来被证明不具备那个性质，可以认为制造出来。\nnote：MD5。\n\nhiding\nx -&gt; H(x), H(x)不会透露出任何关于x的信息，即是不可逆的。\n可以与第一个性质结合起来用作digital commitment(digital equivalent of a sealed envelope)。相当于第三方托管。前提同样是输入空间要足够大，如果不够大， 可以在做哈希前在后面加入随机数来组成一个数，一同做哈希运算。\n\npuzzle friendly\n只看输入，很难猜到哈希函数的输出。如果想要某个区间内的哈希值，没有捷径，一个一个去试，这也是工作量证明。\n挖矿是寻找一个nonce，最后要满足H(block header) &lt;= target。挖空困难，但是验证很容易（difficult to solve, but easy to verify）\n\n\n比特币中用到哈希函数sha-256.（Security Hash Algorithm）\n签名与日常生活中开账户的方式不同，比特币用户要开账户只需创建一对key：public key, private key。不需要任何人的批准。\nasymmetric encryption algorithm最开始的是encryption algorithm, 对称加密。通信双方约定一个密钥，加密和解密都是同一个key。不足的地方是key的分发不安全。\n非对称，加密和解密使用的是同一个人的key，任何人都可以公开他自己的public key，这是用来加密的，解密用的是他自己的private key，保存在自己的本地即可。公钥相当于银行账户，要转给你钱，只需要知道你的公钥即可。\n这对key是可以用来签名的。例如，当你完成了一笔交易的时候，就可以用你的私钥去签名，别人去验证的时候可以用你的公钥去完成验证。\nnote：创建账户时产生的相同的公私钥的概率可以忽略不计，微乎其微的可能性。但仍需要选取一个好的a good source randomness。\nsummary比特币中，一般是先对一个message取hash，然后再对hash签名。\n","dateCreated":"2019-11-03T12:41:57+08:00","dateModified":"2020-07-20T01:29:13+08:00","datePublished":"2019-11-03T12:41:57+08:00","description":"区块链、比特币、去中心化这些东西说熟不熟，说陌生吧也谈不上陌生，毕竟天天见。趁着周末，给自己冲了电，看了看收藏了好几天的视频，一个关于区块链的北大公开课。。哈哈飘了，竟然听了北大的课^_^","headline":"bt01","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://github.com/sebastian/about/2019/11/03/bt01/"},"publisher":{"@type":"Organization","name":"Sebastian Getts","sameAs":["https://github.com/sebastian-getts/","mailto"],"image":"avatar.jpg","logo":{"@type":"ImageObject","url":"avatar.jpg"}},"url":"http://github.com/sebastian/about/2019/11/03/bt01/","keywords":"密码学"}</script>
+    <meta name="description" content="区块链、比特币、去中心化这些东西说熟不熟，说陌生吧也谈不上陌生，毕竟天天见。趁着周末，给自己冲了电，看了看收藏了好几天的视频，一个关于区块链的北大公开课。。哈哈飘了，竟然听了北大的课^_^">
+<meta property="og:type" content="blog">
 <meta property="og:title" content="bt01">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2019&#x2F;11&#x2F;03&#x2F;bt01&#x2F;index.html">
-<meta property="og:site_name" content="Sebastian Getts">
+<meta property="og:url" content="http://github.com/sebastian/about/2019/11/03/bt01/index.html">
+<meta property="og:site_name" content="Hola">
 <meta property="og:description" content="区块链、比特币、去中心化这些东西说熟不熟，说陌生吧也谈不上陌生，毕竟天天见。趁着周末，给自己冲了电，看了看收藏了好几天的视频，一个关于区块链的北大公开课。。哈哈飘了，竟然听了北大的课^_^">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-07-19T17:29:13.366Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2019-11-03T04:41:57.000Z">
+<meta property="article:modified_time" content="2020-07-19T17:29:13.366Z">
+<meta property="article:author" content="Sebastian Getts">
+<meta property="article:tag" content="密码学">
 <meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://github.com/sebastian/about/assets/images/avatar.jpg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-spzjrm9no8kcbknku5bsn1dr9dpp94iq1g86qdztxtoqwlgtrnwyi2tucypv.min.css">
 
-<link rel="canonical" href="http://yoursite.com/2019/11/03/bt01/">
+    <!--STYLES END-->
+    
+
+    
+    <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?3e3b025a15329c47fcc47a83f6160356";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
 
 
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
-  };
-</script>
-
-  <title>bt01 | Sebastian Getts</title>
-  
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
+    
+        
+    
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
 
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-meta">
-
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Sebastian Getts</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-        <p class="site-subtitle">I'm the new one.</p>
-  </div>
-
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-</div>
-
-
-<nav class="site-nav">
-  
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
-
-  </li>
-        <li class="menu-item menu-item-movies">
-
-    <a href="/movies/" rel="section"><i class="fa fa-fw fa-video-camera"></i>movies</a>
-
-  </li>
-  </ul>
-
-</nav>
-</div>
-    </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-  <div class="reading-progress-bar"></div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content">
+        
             
+        
+    
 
-  <div class="posts-expand">
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/11/03/bt01/">
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/%20"
+            aria-label=""
+        >
+            Hola
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Sebastian">
-      <meta itemprop="description" content="I'm feeling lucky!">
-    </span>
+            <!-- Define author's picture -->
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sebastian Getts">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          bt01
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Sebastian Getts</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>I write code to enrich and ease life of others. 0 errors, 0 warnings.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link open-algolia-search"
+                            href="#search"
+                            
+                            rel="noopener"
+                            title="Search"
+                        >
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Search</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/sebastian-getts/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/mailto"
+                            
+                            rel="noopener"
+                            title="Mail"
+                        >
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            bt01
         </h1>
-
+    
+    
         <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+    <time datetime="2019-11-03T12:41:57+08:00">
+	
+		    Nov 03, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Bitcoin/">Bitcoin</a>
 
-              <time title="Created: 2019-11-03 12:41:57" itemprop="dateCreated datePublished" datetime="2019-11-03T12:41:57+08:00">2019-11-03</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-20 01:29:13" itemprop="dateModified" datetime="2020-07-20T01:29:13+08:00">2020-07-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Bitcoin/" itemprop="url" rel="index">
-                    <span itemprop="name">Bitcoin</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
 
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
+</div>
 
-      
-        <p>&#x533A;&#x5757;&#x94FE;&#x3001;&#x6BD4;&#x7279;&#x5E01;&#x3001;&#x53BB;&#x4E2D;&#x5FC3;&#x5316;&#x8FD9;&#x4E9B;&#x4E1C;&#x897F;&#x8BF4;&#x719F;&#x4E0D;&#x719F;&#xFF0C;&#x8BF4;&#x964C;&#x751F;&#x5427;&#x4E5F;&#x8C08;&#x4E0D;&#x4E0A;&#x964C;&#x751F;&#xFF0C;&#x6BD5;&#x7ADF;&#x5929;&#x5929;&#x89C1;&#x3002;&#x8D81;&#x7740;&#x5468;&#x672B;&#xFF0C;&#x7ED9;&#x81EA;&#x5DF1;&#x51B2;&#x4E86;&#x7535;&#xFF0C;&#x770B;&#x4E86;&#x770B;&#x6536;&#x85CF;&#x4E86;&#x597D;&#x51E0;&#x5929;&#x7684;&#x89C6;&#x9891;&#xFF0C;&#x4E00;&#x4E2A;&#x5173;&#x4E8E;&#x533A;&#x5757;&#x94FE;&#x7684;&#x5317;&#x5927;&#x516C;&#x5F00;&#x8BFE;&#x3002;&#x3002;&#x54C8;&#x54C8;&#x98D8;&#x4E86;&#xFF0C;&#x7ADF;&#x7136;&#x542C;&#x4E86;&#x5317;&#x5927;&#x7684;&#x8BFE;^_^</p>
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>区块链、比特币、去中心化这些东西说熟不熟，说陌生吧也谈不上陌生，毕竟天天见。趁着周末，给自己冲了电，看了看收藏了好几天的视频，一个关于区块链的北大公开课。。哈哈飘了，竟然听了北大的课^_^</p>
 <a id="more"></a>
 
-<h1 id="&#x7B80;&#x4ECB;"><a href="#&#x7B80;&#x4ECB;" class="headerlink" title="&#x7B80;&#x4ECB;"></a>&#x7B80;&#x4ECB;</h1><p>&#x6D89;&#x53CA;&#x57FA;&#x672C;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x548C;&#x7B97;&#x6CD5;</p>
+<h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><p>涉及基本数据结构和算法</p>
 <ul>
-<li>&#x6570;&#x7EC4;</li>
-<li>&#x94FE;&#x8868;</li>
-<li>&#x4E8C;&#x53C9;&#x6811;</li>
-<li>&#x54C8;&#x5E0C;&#x51FD;&#x6570;</li>
+<li>数组</li>
+<li>链表</li>
+<li>二叉树</li>
+<li>哈希函数</li>
 </ul>
-<p>&#x53C2;&#x8003;&#x8D44;&#x6599;&#xFF1A;</p>
+<p>参考资料：</p>
 <ul>
 <li>BitCoin and Cryptocurrency Technologies A Comprehensive Introduction</li>
-<li>&#x4EE5;&#x592A;&#x574A;&#x767D;&#x76AE;&#x4E66;&#x3001;&#x9EC4;&#x76AE;&#x4E66;&#x3001;&#x539F;&#x4EE3;&#x7801;</li>
-<li>Solidity&#x6587;&#x6863;</li>
+<li>以太坊白皮书、黄皮书、原代码</li>
+<li>Solidity文档</li>
 </ul>
-<h3 id="&#x5927;&#x7EB2;"><a href="#&#x5927;&#x7EB2;" class="headerlink" title="&#x5927;&#x7EB2;"></a>&#x5927;&#x7EB2;</h3><h4 id="&#x6BD4;&#x7279;&#x5E01;"><a href="#&#x6BD4;&#x7279;&#x5E01;" class="headerlink" title="&#x6BD4;&#x7279;&#x5E01;"></a>&#x6BD4;&#x7279;&#x5E01;</h4><ul>
-<li>&#x5BC6;&#x7801;&#x5B66;&#x57FA;&#x7840;</li>
-<li>&#x6BD4;&#x7279;&#x5E01;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;</li>
-<li>&#x516C;&#x5F0F;&#x534F;&#x8BAE;&#x548C;&#x7CFB;&#x7EDF;&#x5B9E;&#x73B0;</li>
-<li>&#x6316;&#x77FF;&#x7B97;&#x6CD5;&#x548C;&#x96BE;&#x5EA6;&#x8C03;&#x6574;</li>
-<li>&#x6BD4;&#x7279;&#x5E01;&#x811A;&#x672C;</li>
-<li>&#x8F6F;&#x5206;&#x53C9;&#x548C;&#x786C;&#x5206;&#x53C9;</li>
-<li>&#x533F;&#x540D;&#x548C;&#x9690;&#x79C1;&#x4FDD;&#x62A4;</li>
+<h3 id="大纲"><a href="#大纲" class="headerlink" title="大纲"></a>大纲</h3><h4 id="比特币"><a href="#比特币" class="headerlink" title="比特币"></a>比特币</h4><ul>
+<li>密码学基础</li>
+<li>比特币的数据结构</li>
+<li>公式协议和系统实现</li>
+<li>挖矿算法和难度调整</li>
+<li>比特币脚本</li>
+<li>软分叉和硬分叉</li>
+<li>匿名和隐私保护</li>
 </ul>
-<h4 id="&#x4EE5;&#x592A;&#x574A;"><a href="#&#x4EE5;&#x592A;&#x574A;" class="headerlink" title="&#x4EE5;&#x592A;&#x574A;"></a>&#x4EE5;&#x592A;&#x574A;</h4><ul>
-<li>&#x6982;&#x8FF0;&#xFF1A;&#x57FA;&#x4E8E;&#x8D26;&#x6237;&#x7684;&#x5206;&#x5E03;&#x5F0F;&#x8D26;&#x672C;</li>
-<li>&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF1A;&#x72B6;&#x6001;&#x6811;&#x3001;&#x4EA4;&#x6613;&#x6811;&#x3001;&#x6536;&#x636E;&#x6811;</li>
-<li>GHOST&#x534F;&#x8BAE;</li>
-<li>&#x6316;&#x77FF;&#xFF1A;memory-hard mining puzzle</li>
-<li>&#x6316;&#x77FF;&#x96BE;&#x5EA6;&#x8C03;&#x6574;</li>
-<li>&#x6743;&#x76CA;&#x8BC1;&#x660E;<ul>
+<h4 id="以太坊"><a href="#以太坊" class="headerlink" title="以太坊"></a>以太坊</h4><ul>
+<li>概述：基于账户的分布式账本</li>
+<li>数据结构：状态树、交易树、收据树</li>
+<li>GHOST协议</li>
+<li>挖矿：memory-hard mining puzzle</li>
+<li>挖矿难度调整</li>
+<li>权益证明<ul>
 <li>Casper the Friendly Finality Gadget(FFG)</li>
 </ul>
 </li>
-<li>&#x667A;&#x80FD;&#x5408;&#x7EA6;</li>
+<li>智能合约</li>
 </ul>
-<h2 id="&#x5BC6;&#x7801;&#x5B66;&#x539F;&#x7406;"><a href="#&#x5BC6;&#x7801;&#x5B66;&#x539F;&#x7406;" class="headerlink" title="&#x5BC6;&#x7801;&#x5B66;&#x539F;&#x7406;"></a>&#x5BC6;&#x7801;&#x5B66;&#x539F;&#x7406;</h2><p>&#x6BD4;&#x7279;&#x5E01;&#xFF0C;&#x867D;&#x7136;&#x88AB;&#x6210;&#x4E3A;&#x52A0;&#x5BC6;&#x8D27;&#x5E01;&#xFF08;<em>crypto-currency</em>&#xFF09;&#xFF0C;&#x4F46;&#x662F;&#x4EA4;&#x6613;&#x4FE1;&#x606F;&#x90FD;&#x662F;&#x516C;&#x5F00;&#x7684;&#x3002;<br>&#x6BD4;&#x7279;&#x5E01;&#x4E2D;&#x7528;&#x5230;&#x7684;&#x4E24;&#x4E2A;&#x5BC6;&#x7801;&#x5B66;&#x4E2D;&#x7684;&#x4E24;&#x4E2A;&#x529F;&#x80FD;&#xFF1A;<strong>&#x54C8;&#x5E0C;</strong>&#xFF0C; <strong>&#x7B7E;&#x540D;</strong>&#x3002;</p>
-<h3 id="&#x54C8;&#x5E0C;"><a href="#&#x54C8;&#x5E0C;" class="headerlink" title="&#x54C8;&#x5E0C;"></a>&#x54C8;&#x5E0C;</h3><p>&#x5BC6;&#x7801;&#x5B66;&#x4E2D;&#x7528;&#x7684;&#x54C8;&#x5E0C;&#x51FD;&#x6570;&#x88AB;&#x79F0;&#x4E3A;<em>Cryptographic hash function</em>, &#x6709;&#x4E24;&#x4E2A;&#x6027;&#x8D28;&#xFF0C;&#x4E00;&#x4E2A;&#x662F; <em>collision resistance</em>&#xFF0C;&#x53E6;&#x4E00;&#x4E2A;&#x662F; <em>hiding</em>&#x3002; &#x9664;&#x4E86;&#x4EE5;&#x4E0A;&#x4E24;&#x4E2A;&#x6027;&#x8D28;&#xFF0C;&#x6BD4;&#x7279;&#x5E01;&#x4E2D;&#x7528;&#x5230;&#x7684;&#x54C8;&#x5E0C;&#x51FD;&#x6570;&#x7684;&#x6027;&#x8D28;&#x8FD8;&#x6709;&#x4E00;&#x4E2A;&#xFF1A;puzzle friendly&#x3002;</p>
+<h2 id="密码学原理"><a href="#密码学原理" class="headerlink" title="密码学原理"></a>密码学原理</h2><p>比特币，虽然被成为加密货币（<em>crypto-currency</em>），但是交易信息都是公开的。<br>比特币中用到的两个密码学中的两个功能：<strong>哈希</strong>， <strong>签名</strong>。</p>
+<h3 id="哈希"><a href="#哈希" class="headerlink" title="哈希"></a>哈希</h3><p>密码学中用的哈希函数被称为<em>Cryptographic hash function</em>, 有两个性质，一个是 <em>collision resistance</em>，另一个是 <em>hiding</em>。 除了以上两个性质，比特币中用到的哈希函数的性质还有一个：puzzle friendly。</p>
 <ol>
 <li><p>collision resistance</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var x, y;</span><br><span class="line">x != y;</span><br><span class="line">&#x6709;&#x54C8;&#x5E0C;&#x51FD;&#x6570;H</span><br><span class="line">&#x4F7F;&#x5F97;</span><br><span class="line">H(x)=H(y)</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var x, y;</span><br><span class="line">x !&#x3D; y;</span><br><span class="line">有哈希函数H</span><br><span class="line">使得</span><br><span class="line">H(x)&#x3D;H(y)</span><br></pre></td></tr></table></figure>
 
-<p>&#x54C8;&#x5E0C;&#x78B0;&#x649E;&#x662F;&#x5BA2;&#x89C2;&#x5B58;&#x5728;&#xFF0C;&#x4F46;&#x662F;&#x6CA1;&#x6709;&#x9AD8;&#x6548;&#x7684;&#x65B9;&#x6CD5;&#x6765;&#x4EBA;&#x4E3A;&#x7684;&#x65B9;&#x5F0F;&#x53BB;&#x9020;&#x6210;&#x54C8;&#x5E0C;&#x78B0;&#x649E;&#x3002;&#x524D;&#x63D0;&#x662F;&#x8F93;&#x5165;&#x7A7A;&#x95F4;&#x5F88;&#x5927;&#x3002;&#x56E0;&#x4E3A;&#x8F93;&#x5165;&#x7A7A;&#x95F4;&#x662F;&#x6709;&#x9650;&#x7684;&#xFF0C;&#x4F8B;&#x5982;256&#x4F4D;&#x7684;&#x54C8;&#x5E0C;&#x503C;&#xFF0C;&#x8F93;&#x51FA;&#x7A7A;&#x95F4;&#x4F4D;2&#x7684;256&#x6B21;&#x65B9;&#x3002;</p>
-<p>collision resistance&#x7684;&#x4F7F;&#x7528;&#xFF1A;</p>
-<p>&#x7528;&#x6765;&#x6C42;message&#x7684;digest&#xFF0C;&#x9632;&#x6B62;&#x7BE1;&#x6539;&#x3002;</p>
-<p>&#x7406;&#x8BBA;&#x4E0A;&#x8BC1;&#x660E;&#x4E0D;&#x51FA;&#x6765;&#x4EFB;&#x4F55;&#x4E00;&#x4E2A;&#x54C8;&#x5E0C;&#x51FD;&#x6570;&#x662F;collision resistance&#x7684;&#xFF0C;&#x76EE;&#x524D;&#x662F;&#x5B9E;&#x8DF5;&#x7ECF;&#x9A8C;&#x6765;&#x8BC1;&#x660E;&#x7684;&#x3002;&#x4E5F;&#x6709;&#x4E00;&#x4E9B;&#x54C8;&#x5E0C;&#x51FD;&#x6570;&#x4EE5;&#x524D;&#x88AB;&#x4EBA;&#x8BA4;&#x4E3A;&#x662F;collision resistance&#x7684;&#xFF0C;&#x540E;&#x6765;&#x88AB;&#x8BC1;&#x660E;&#x4E0D;&#x5177;&#x5907;&#x90A3;&#x4E2A;&#x6027;&#x8D28;&#xFF0C;&#x53EF;&#x4EE5;&#x8BA4;&#x4E3A;&#x5236;&#x9020;&#x51FA;&#x6765;&#x3002;</p>
-<p><strong>note</strong>&#xFF1A;MD5&#x3002;</p>
+<p>哈希碰撞是客观存在，但是没有高效的方法来人为的方式去造成哈希碰撞。前提是输入空间很大。因为输入空间是有限的，例如256位的哈希值，输出空间位2的256次方。</p>
+<p>collision resistance的使用：</p>
+<p>用来求message的digest，防止篡改。</p>
+<p>理论上证明不出来任何一个哈希函数是collision resistance的，目前是实践经验来证明的。也有一些哈希函数以前被人认为是collision resistance的，后来被证明不具备那个性质，可以认为制造出来。</p>
+<p><strong>note</strong>：MD5。</p>
 </li>
 <li><p>hiding</p>
-<p>x -&gt; H(x), H(x)&#x4E0D;&#x4F1A;&#x900F;&#x9732;&#x51FA;&#x4EFB;&#x4F55;&#x5173;&#x4E8E;x&#x7684;&#x4FE1;&#x606F;&#xFF0C;&#x5373;&#x662F;&#x4E0D;&#x53EF;&#x9006;&#x7684;&#x3002;</p>
-<p>&#x53EF;&#x4EE5;&#x4E0E;&#x7B2C;&#x4E00;&#x4E2A;&#x6027;&#x8D28;&#x7ED3;&#x5408;&#x8D77;&#x6765;&#x7528;&#x4F5C;digital commitment(digital equivalent of a sealed envelope)&#x3002;&#x76F8;&#x5F53;&#x4E8E;&#x7B2C;&#x4E09;&#x65B9;&#x6258;&#x7BA1;&#x3002;&#x524D;&#x63D0;&#x540C;&#x6837;&#x662F;&#x8F93;&#x5165;&#x7A7A;&#x95F4;&#x8981;&#x8DB3;&#x591F;&#x5927;&#xFF0C;&#x5982;&#x679C;&#x4E0D;&#x591F;&#x5927;&#xFF0C; &#x53EF;&#x4EE5;&#x5728;&#x505A;&#x54C8;&#x5E0C;&#x524D;&#x5728;&#x540E;&#x9762;&#x52A0;&#x5165;&#x968F;&#x673A;&#x6570;&#x6765;&#x7EC4;&#x6210;&#x4E00;&#x4E2A;&#x6570;&#xFF0C;&#x4E00;&#x540C;&#x505A;&#x54C8;&#x5E0C;&#x8FD0;&#x7B97;&#x3002;</p>
+<p>x -&gt; H(x), H(x)不会透露出任何关于x的信息，即是不可逆的。</p>
+<p>可以与第一个性质结合起来用作digital commitment(digital equivalent of a sealed envelope)。相当于第三方托管。前提同样是输入空间要足够大，如果不够大， 可以在做哈希前在后面加入随机数来组成一个数，一同做哈希运算。</p>
 </li>
 <li><p>puzzle friendly</p>
-<p>&#x53EA;&#x770B;&#x8F93;&#x5165;&#xFF0C;&#x5F88;&#x96BE;&#x731C;&#x5230;&#x54C8;&#x5E0C;&#x51FD;&#x6570;&#x7684;&#x8F93;&#x51FA;&#x3002;&#x5982;&#x679C;&#x60F3;&#x8981;&#x67D0;&#x4E2A;&#x533A;&#x95F4;&#x5185;&#x7684;&#x54C8;&#x5E0C;&#x503C;&#xFF0C;&#x6CA1;&#x6709;&#x6377;&#x5F84;&#xFF0C;&#x4E00;&#x4E2A;&#x4E00;&#x4E2A;&#x53BB;&#x8BD5;&#xFF0C;&#x8FD9;&#x4E5F;&#x662F;&#x5DE5;&#x4F5C;&#x91CF;&#x8BC1;&#x660E;&#x3002;</p>
-<p>&#x6316;&#x77FF;&#x662F;&#x5BFB;&#x627E;&#x4E00;&#x4E2A;nonce&#xFF0C;&#x6700;&#x540E;&#x8981;&#x6EE1;&#x8DB3;H(block header) &lt;= target&#x3002;&#x6316;&#x7A7A;&#x56F0;&#x96BE;&#xFF0C;&#x4F46;&#x662F;&#x9A8C;&#x8BC1;&#x5F88;&#x5BB9;&#x6613;&#xFF08;difficult to solve, but easy to verify&#xFF09;</p>
+<p>只看输入，很难猜到哈希函数的输出。如果想要某个区间内的哈希值，没有捷径，一个一个去试，这也是工作量证明。</p>
+<p>挖矿是寻找一个nonce，最后要满足H(block header) &lt;= target。挖空困难，但是验证很容易（difficult to solve, but easy to verify）</p>
 </li>
 </ol>
-<p>&#x6BD4;&#x7279;&#x5E01;&#x4E2D;&#x7528;&#x5230;&#x54C8;&#x5E0C;&#x51FD;&#x6570;sha-256.&#xFF08;Security Hash Algorithm&#xFF09;</p>
-<h3 id="&#x7B7E;&#x540D;"><a href="#&#x7B7E;&#x540D;" class="headerlink" title="&#x7B7E;&#x540D;"></a>&#x7B7E;&#x540D;</h3><p>&#x4E0E;&#x65E5;&#x5E38;&#x751F;&#x6D3B;&#x4E2D;&#x5F00;&#x8D26;&#x6237;&#x7684;&#x65B9;&#x5F0F;&#x4E0D;&#x540C;&#xFF0C;&#x6BD4;&#x7279;&#x5E01;&#x7528;&#x6237;&#x8981;&#x5F00;&#x8D26;&#x6237;&#x53EA;&#x9700;&#x521B;&#x5EFA;&#x4E00;&#x5BF9;key&#xFF1A;public key, private key&#x3002;&#x4E0D;&#x9700;&#x8981;&#x4EFB;&#x4F55;&#x4EBA;&#x7684;&#x6279;&#x51C6;&#x3002;</p>
-<h4 id="asymmetric-encryption-algorithm"><a href="#asymmetric-encryption-algorithm" class="headerlink" title="asymmetric encryption algorithm"></a>asymmetric encryption algorithm</h4><p>&#x6700;&#x5F00;&#x59CB;&#x7684;&#x662F;encryption algorithm, &#x5BF9;&#x79F0;&#x52A0;&#x5BC6;&#x3002;&#x901A;&#x4FE1;&#x53CC;&#x65B9;&#x7EA6;&#x5B9A;&#x4E00;&#x4E2A;&#x5BC6;&#x94A5;&#xFF0C;&#x52A0;&#x5BC6;&#x548C;&#x89E3;&#x5BC6;&#x90FD;&#x662F;&#x540C;&#x4E00;&#x4E2A;key&#x3002;&#x4E0D;&#x8DB3;&#x7684;&#x5730;&#x65B9;&#x662F;key&#x7684;&#x5206;&#x53D1;&#x4E0D;&#x5B89;&#x5168;&#x3002;</p>
-<p>&#x975E;&#x5BF9;&#x79F0;&#xFF0C;&#x52A0;&#x5BC6;&#x548C;&#x89E3;&#x5BC6;&#x4F7F;&#x7528;&#x7684;&#x662F;&#x540C;&#x4E00;&#x4E2A;&#x4EBA;&#x7684;key&#xFF0C;&#x4EFB;&#x4F55;&#x4EBA;&#x90FD;&#x53EF;&#x4EE5;&#x516C;&#x5F00;&#x4ED6;&#x81EA;&#x5DF1;&#x7684;public key&#xFF0C;&#x8FD9;&#x662F;&#x7528;&#x6765;&#x52A0;&#x5BC6;&#x7684;&#xFF0C;&#x89E3;&#x5BC6;&#x7528;&#x7684;&#x662F;&#x4ED6;&#x81EA;&#x5DF1;&#x7684;private key&#xFF0C;&#x4FDD;&#x5B58;&#x5728;&#x81EA;&#x5DF1;&#x7684;&#x672C;&#x5730;&#x5373;&#x53EF;&#x3002;&#x516C;&#x94A5;&#x76F8;&#x5F53;&#x4E8E;&#x94F6;&#x884C;&#x8D26;&#x6237;&#xFF0C;&#x8981;&#x8F6C;&#x7ED9;&#x4F60;&#x94B1;&#xFF0C;&#x53EA;&#x9700;&#x8981;&#x77E5;&#x9053;&#x4F60;&#x7684;&#x516C;&#x94A5;&#x5373;&#x53EF;&#x3002;</p>
-<p>&#x8FD9;&#x5BF9;key&#x662F;&#x53EF;&#x4EE5;&#x7528;&#x6765;&#x7B7E;&#x540D;&#x7684;&#x3002;&#x4F8B;&#x5982;&#xFF0C;&#x5F53;&#x4F60;&#x5B8C;&#x6210;&#x4E86;&#x4E00;&#x7B14;&#x4EA4;&#x6613;&#x7684;&#x65F6;&#x5019;&#xFF0C;&#x5C31;&#x53EF;&#x4EE5;&#x7528;&#x4F60;&#x7684;&#x79C1;&#x94A5;&#x53BB;&#x7B7E;&#x540D;&#xFF0C;&#x522B;&#x4EBA;&#x53BB;&#x9A8C;&#x8BC1;&#x7684;&#x65F6;&#x5019;&#x53EF;&#x4EE5;&#x7528;&#x4F60;&#x7684;&#x516C;&#x94A5;&#x53BB;&#x5B8C;&#x6210;&#x9A8C;&#x8BC1;&#x3002;</p>
-<p><strong>note</strong>&#xFF1A;&#x521B;&#x5EFA;&#x8D26;&#x6237;&#x65F6;&#x4EA7;&#x751F;&#x7684;&#x76F8;&#x540C;&#x7684;&#x516C;&#x79C1;&#x94A5;&#x7684;&#x6982;&#x7387;&#x53EF;&#x4EE5;&#x5FFD;&#x7565;&#x4E0D;&#x8BA1;&#xFF0C;&#x5FAE;&#x4E4E;&#x5176;&#x5FAE;&#x7684;&#x53EF;&#x80FD;&#x6027;&#x3002;&#x4F46;&#x4ECD;&#x9700;&#x8981;&#x9009;&#x53D6;&#x4E00;&#x4E2A;&#x597D;&#x7684;a good source randomness&#x3002;</p>
-<h3 id="summary"><a href="#summary" class="headerlink" title="summary"></a>summary</h3><p>&#x6BD4;&#x7279;&#x5E01;&#x4E2D;&#xFF0C;&#x4E00;&#x822C;&#x662F;&#x5148;&#x5BF9;&#x4E00;&#x4E2A;message&#x53D6;hash&#xFF0C;&#x7136;&#x540E;&#x518D;&#x5BF9;hash&#x7B7E;&#x540D;&#x3002;</p>
+<p>比特币中用到哈希函数sha-256.（Security Hash Algorithm）</p>
+<h3 id="签名"><a href="#签名" class="headerlink" title="签名"></a>签名</h3><p>与日常生活中开账户的方式不同，比特币用户要开账户只需创建一对key：public key, private key。不需要任何人的批准。</p>
+<h4 id="asymmetric-encryption-algorithm"><a href="#asymmetric-encryption-algorithm" class="headerlink" title="asymmetric encryption algorithm"></a>asymmetric encryption algorithm</h4><p>最开始的是encryption algorithm, 对称加密。通信双方约定一个密钥，加密和解密都是同一个key。不足的地方是key的分发不安全。</p>
+<p>非对称，加密和解密使用的是同一个人的key，任何人都可以公开他自己的public key，这是用来加密的，解密用的是他自己的private key，保存在自己的本地即可。公钥相当于银行账户，要转给你钱，只需要知道你的公钥即可。</p>
+<p>这对key是可以用来签名的。例如，当你完成了一笔交易的时候，就可以用你的私钥去签名，别人去验证的时候可以用你的公钥去完成验证。</p>
+<p><strong>note</strong>：创建账户时产生的相同的公私钥的概率可以忽略不计，微乎其微的可能性。但仍需要选取一个好的a good source randomness。</p>
+<h3 id="summary"><a href="#summary" class="headerlink" title="summary"></a>summary</h3><p>比特币中，一般是先对一个message取hash，然后再对hash签名。</p>
 
-    </div>
+            
 
-    
-    
-    
-
-    
-      <div>
-        
-<div>
-  
-    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
-      <span>-------- 本文结束 感谢阅读 --------</span>
-    </div>
-  
-</div>
-      </div>
-    
-      
-        <div class="reward-container">
-  <div>Donate comment here.</div>
-  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
-    Donate
-  </button>
-  <div id="qr" style="display: none;">
-      
-      <div style="display: inline-block;">
-        <img src="/images/wechatpay.jpg" alt="Sebastian WeChat Pay">
-        <p>WeChat Pay</p>
-      </div>
-      
-      <div style="display: inline-block;">
-        <img src="/images/alipay.jpg" alt="Sebastian Alipay">
-        <p>Alipay</p>
-      </div>
-
-  </div>
-</div>
-
-
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/" rel="tag"># 密码学</a>
-          </div>
-
-        
-
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/2019/11/02/nginx/" rel="next" title="nginx">
-                  <i class="fa fa-chevron-left"></i> nginx
-                </a>
-            </div>
-
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/2019/11/03/mapOfUtils/" rel="prev" title="map of utils">
-                  map of utils <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
-      </footer>
-    
-  </article>
-  
-  
-  
-
-  </div>
-
-
-          </div>
-          
 
         </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="Sebastian"
-    src="/images/avatar.jpg">
-  <p class="site-author-name" itemprop="name">Sebastian</p>
-  <div class="site-description" itemprop="description">I'm feeling lucky!</div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">59</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
-        <span class="site-state-item-count">16</span>
-        <span class="site-state-item-name">categories</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
-        <span class="site-state-item-count">52</span>
-        <span class="site-state-item-name">tags</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/Sebastian-Getts" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Sebastian-Getts" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:zzzqsw@gmail.com" title="E-Mail &amp;rarr; mailto:zzzqsw@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://instagram.com/mchin6" title="Instagram &amp;rarr; https:&#x2F;&#x2F;instagram.com&#x2F;mchin6" rel="noopener" target="_blank"><i class="fa fa-fw fa-instagram"></i>Instagram</a>
-      </span>
-  </div>
-
-
-
-      </div>
-
     </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
+    <div id="post-footer" class="post-footer main-content-wrap">
         
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/%E5%AF%86%E7%A0%81%E5%AD%A6/" rel="tag">密码学</a>
 
-<div class="copyright">
-  
-  &copy; 2019 – 
-  <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Sebastian</span>
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2019/11/04/Pascal-s-Triangle/"
+                    data-tooltip="Pascal&#39;s Triangle"
+                    aria-label="PREVIOUS: Pascal&#39;s Triangle"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2019/11/02/nginx/"
+                    data-tooltip="nginx"
+                    aria-label="NEXT: nginx"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://github.com/sebastian/about/2019/11/03/bt01/"
+                    title="Share on Weibo"
+                    aria-label="Share on Weibo"
+                >
+                    <i class="fab fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://github.com/sebastian/about/2019/11/03/bt01/&amp;title=bt01"
+                    title="Share on QQ"
+                    aria-label="Share on QQ"
+                >
+                    <i class="fab fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://widget.renren.com/dialog/share?resourceUrl=http://github.com/sebastian/about/2019/11/03/bt01/"
+                    title="Share on Renren"
+                    aria-label="Share on Renren"
+                >
+                    <i class="fab fa-renren" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a>
-  </div>
-  <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.4.2
-  </div>
 
 
         
-
-
-
-
-
-
-
-
-
-
-
-
         
-      </div>
-    </footer>
-  </div>
-
-  
-  
-  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
-  <script src="/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
-<script src="/js/schemes/muse.js"></script>
-<script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script pjax>
-if (document.querySelectorAll('pre.mermaid').length) {
-  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/mermaid/8.2.0/mermaid.min.js', () => {
-    mermaid.initialize({
-      theme: 'forest',
-      logLevel: 3,
-      flowchart: { curve: 'linear' },
-      gantt: { axisFormat: '%m/%d/%Y' },
-      sequence: { actorMargin: 50 }
-    });
-  }, window.mermaid);
-}
-</script>
-
-
-    <div id="pjax">
-
-  
-
-  
-
-  
-
-  
-
-  <script async src="/js/cursor/love.min.js"></script>
-
-
-
-
-  <script src="/js/wobblewindow.js"></script>
-  <script>
-    //只在桌面版网页启用特效
-    if( window.innerWidth > 768  ){
-      $(document).ready(function () {
+            
         
-          $('#header').wobbleWindow({
-            radius: 50,
-            movementTop: false,
-            movementLeft: false,
-            movementRight: false,
-            debug: false,
-          });
-        
-
-        
-          $('#sidebar').wobbleWindow({
-            radius: 50,
-            movementLeft: false,
-            movementTop: false,
-            movementBottom: false,
-            position: 'fixed',
-            debug: false,
-          });
-        
-
-        
-          $('#footer').wobbleWindow({
-            radius: 50,
-            movementBottom: false,
-            movementLeft: false,
-            movementRight: false,
-            offsetX: ,
-            position: 'absolute',
-            debug: false,
-          });
-        
-      });
-    }
-  </script>
-
-
-
-
-
-
-
-
     </div>
-</body>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Sebastian Getts. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2019/11/04/Pascal-s-Triangle/"
+                    data-tooltip="Pascal&#39;s Triangle"
+                    aria-label="PREVIOUS: Pascal&#39;s Triangle"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2019/11/02/nginx/"
+                    data-tooltip="nginx"
+                    aria-label="NEXT: nginx"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://github.com/sebastian/about/2019/11/03/bt01/"
+                    title="Share on Weibo"
+                    aria-label="Share on Weibo"
+                >
+                    <i class="fab fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://github.com/sebastian/about/2019/11/03/bt01/&amp;title=bt01"
+                    title="Share on QQ"
+                    aria-label="Share on QQ"
+                >
+                    <i class="fab fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://widget.renren.com/dialog/share?resourceUrl=http://github.com/sebastian/about/2019/11/03/bt01/"
+                    title="Share on Renren"
+                    aria-label="Share on Renren"
+                >
+                    <i class="fab fa-renren" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="http://service.weibo.com/share/share.php?&amp;title=http://github.com/sebastian/about/2019/11/03/bt01/"
+                        aria-label="Share on Weibo"
+                    >
+                        <i class="fab fa-weibo" aria-hidden="true"></i><span>Share on Weibo</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="http://connect.qq.com/widget/shareqq/index.html?url=http://github.com/sebastian/about/2019/11/03/bt01/&amp;title=bt01"
+                        aria-label="Share on QQ"
+                    >
+                        <i class="fab fa-qq" aria-hidden="true"></i><span>Share on QQ</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="http://widget.renren.com/dialog/share?resourceUrl=http://github.com/sebastian/about/2019/11/03/bt01/"
+                        aria-label="Share on Renren"
+                    >
+                        <i class="fab fa-renren" aria-hidden="true"></i><span>Share on Renren</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Sebastian Getts</h4>
+        
+            <div id="about-card-bio"><p>I write code to enrich and ease life of others. 0 errors, 0 warnings.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Software Developer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Shenzhen
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover-v1.2.0.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-karbquxnkadaf4yf1hq6g6fyv6nvvrwpv3vf2u1wz8k7osddfqtxf5wbfcfg.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
 </html>

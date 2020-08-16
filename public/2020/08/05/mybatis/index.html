@@ -1,642 +1,643 @@
+
 <!DOCTYPE html>
 <html lang="en">
+    
 <head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.jpg">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.jpg">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-  <meta name="msvalidate.01" content="541BE591C13D7313C3568E6D172218E2">
-  <meta name="baidu-site-verification" content="3qvcDlCoMv">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
-
-
-<script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.4.2',
-    exturl: false,
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    },
-    sidebarPadding: 40
-  };
-</script>
-
-  <meta name="description" content="Mybatis帮助我们提升与数据库交互的效率，简化了JDBC的样板代码。">
-<meta name="keywords" content="mybatis">
-<meta property="og:type" content="article">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hola">
+    <title>mybatis - Hola</title>
+    <meta name="author" content="Sebastian Getts">
+    
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sebastian Getts","sameAs":["https://github.com/sebastian-getts/","mailto"],"image":"avatar.jpg"},"articleBody":"Mybatis帮助我们提升与数据库交互的效率，简化了JDBC的样板代码。\n\n\n流程1234567891011start&#x3D;&gt;start: startconfig&#x3D;&gt;operation: mybatis-config.xmlbuild&#x3D;&gt;operation: SqlSessionFactoryBuilderfactory&#x3D;&gt;operation: SqlSessionFactorysession&#x3D;&gt;parallel: SqlSessionmapper&#x3D;&gt;operation: Sql Mapperend&#x3D;&gt;end: endstart-&gt;config-&gt;build-&gt;factory-&gt;sessionsession(path1,)-&gt;endsession(path2,right)-&gt;mapper-&gt;end\n\n对于SqlSessionFactoryBuilder来说，作用是创建SqlSessionFactory，一旦创建完工厂就没用了，所以是作为局部变量；而对于SqlSessionFactory，可以把它看作连接池，应该一直运行，不应重复创建、销毁或另建实例（单例模式登场），否则浪费资源，他可以创建SqlSession 。创建SqlSession后用来链接数据库，每个session被看作是请求数据库，他是线程不安全的，每个线程都应有自己的session，不共享，所以最佳作用域是方法域，即每次与数据库交互都创建一个SqlSession，用完关闭（关闭是为了释放资源给别的线程使用，否则并发大了容易宕机）。\n属性名与数据库表字段名当pojo中的实例变量与数据库字段中不一致时，可以使用resultMap来解决，即结果集映射。\n也常用resultType，但是他是简单地将所有列映射到HashMap中的key上，很单一，不适合处理复杂情况，而map可以更加灵活地处理情况。用来resultMap时可以去掉resultType属性。\n日志工厂mybatis会默认去寻找日志框架，配置后会有sql信息输出，十分有用！\n123&lt;settings&gt;    &lt;setting name=&quot;logImpl&quot; value=&quot;log4j&quot;/&gt;&lt;/settings&gt;\n\n分页mybatis支持分页，有limit和rowBounts两个方法。区别是前者在sql中实现，后者面向对象。\n1select * from USER limit #&#123;index&#125;,#&#123;size&#125;\n\n缓存默认定义了两级缓存：一级缓存、二级缓存\n一级缓存默认开启，在session的close之前都有效，如果是查询相同的数据，直接在缓存中拿。\n二级缓存需要手动开启和配置，基于namespace级别，有Cache接口来自定义实现。\n","dateCreated":"2020-08-05T22:21:19+08:00","dateModified":"2020-08-06T00:02:18+08:00","datePublished":"2020-08-05T22:21:19+08:00","description":"Mybatis帮助我们提升与数据库交互的效率，简化了JDBC的样板代码。","headline":"mybatis","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://github.com/sebastian/about/2020/08/05/mybatis/"},"publisher":{"@type":"Organization","name":"Sebastian Getts","sameAs":["https://github.com/sebastian-getts/","mailto"],"image":"avatar.jpg","logo":{"@type":"ImageObject","url":"avatar.jpg"}},"url":"http://github.com/sebastian/about/2020/08/05/mybatis/","keywords":"mybatis"}</script>
+    <meta name="description" content="Mybatis帮助我们提升与数据库交互的效率，简化了JDBC的样板代码。">
+<meta property="og:type" content="blog">
 <meta property="og:title" content="mybatis">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;08&#x2F;05&#x2F;mybatis&#x2F;index.html">
-<meta property="og:site_name" content="Sebastian Getts">
+<meta property="og:url" content="http://github.com/sebastian/about/2020/08/05/mybatis/index.html">
+<meta property="og:site_name" content="Hola">
 <meta property="og:description" content="Mybatis帮助我们提升与数据库交互的效率，简化了JDBC的样板代码。">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-08-05T16:02:18.465Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-08-05T14:21:19.000Z">
+<meta property="article:modified_time" content="2020-08-05T16:02:18.465Z">
+<meta property="article:author" content="Sebastian Getts">
+<meta property="article:tag" content="mybatis">
 <meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://github.com/sebastian/about/assets/images/avatar.jpg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-spzjrm9no8kcbknku5bsn1dr9dpp94iq1g86qdztxtoqwlgtrnwyi2tucypv.min.css">
 
-<link rel="canonical" href="http://yoursite.com/2020/08/05/mybatis/">
+    <!--STYLES END-->
+    
+
+    
+    <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?3e3b025a15329c47fcc47a83f6160356";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
 
 
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
-  };
-</script>
-
-  <title>mybatis | Sebastian Getts</title>
-  
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
+    
+        
+    
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
 
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-meta">
-
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Sebastian Getts</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-        <p class="site-subtitle">I'm the new one.</p>
-  </div>
-
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-</div>
-
-
-<nav class="site-nav">
-  
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
-
-  </li>
-        <li class="menu-item menu-item-movies">
-
-    <a href="/movies/" rel="section"><i class="fa fa-fw fa-video-camera"></i>movies</a>
-
-  </li>
-  </ul>
-
-</nav>
-</div>
-    </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-  <div class="reading-progress-bar"></div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content">
+        
             
+        
+    
 
-  <div class="posts-expand">
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/08/05/mybatis/">
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/%20"
+            aria-label=""
+        >
+            Hola
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Sebastian">
-      <meta itemprop="description" content="I'm feeling lucky!">
-    </span>
+            <!-- Define author's picture -->
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sebastian Getts">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          mybatis
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Sebastian Getts</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>I write code to enrich and ease life of others. 0 errors, 0 warnings.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link open-algolia-search"
+                            href="#search"
+                            
+                            rel="noopener"
+                            title="Search"
+                        >
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Search</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/sebastian-getts/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/mailto"
+                            
+                            rel="noopener"
+                            title="Mail"
+                        >
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            mybatis
         </h1>
-
+    
+    
         <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+    <time datetime="2020-08-05T22:21:19+08:00">
+	
+		    Aug 05, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>
 
-              <time title="Created: 2020-08-05 22:21:19" itemprop="dateCreated datePublished" datetime="2020-08-05T22:21:19+08:00">2020-08-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-08-06 00:02:18" itemprop="dateModified" datetime="2020-08-06T00:02:18+08:00">2020-08-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
 
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
+</div>
 
-      
-        <p>Mybatis&#x5E2E;&#x52A9;&#x6211;&#x4EEC;&#x63D0;&#x5347;&#x4E0E;&#x6570;&#x636E;&#x5E93;&#x4EA4;&#x4E92;&#x7684;&#x6548;&#x7387;&#xFF0C;&#x7B80;&#x5316;&#x4E86;JDBC&#x7684;&#x6837;&#x677F;&#x4EE3;&#x7801;&#x3002;</p>
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>Mybatis帮助我们提升与数据库交互的效率，简化了JDBC的样板代码。</p>
 <a id="more"></a>
 
-<h1 id="&#x6D41;&#x7A0B;"><a href="#&#x6D41;&#x7A0B;" class="headerlink" title="&#x6D41;&#x7A0B;"></a>&#x6D41;&#x7A0B;</h1><div id="flowchart-0" class="flow-chart"></div>
+<h1 id="流程"><a href="#流程" class="headerlink" title="流程"></a>流程</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">start&#x3D;&gt;start: start</span><br><span class="line">config&#x3D;&gt;operation: mybatis-config.xml</span><br><span class="line">build&#x3D;&gt;operation: SqlSessionFactoryBuilder</span><br><span class="line">factory&#x3D;&gt;operation: SqlSessionFactory</span><br><span class="line">session&#x3D;&gt;parallel: SqlSession</span><br><span class="line">mapper&#x3D;&gt;operation: Sql Mapper</span><br><span class="line">end&#x3D;&gt;end: end</span><br><span class="line"></span><br><span class="line">start-&gt;config-&gt;build-&gt;factory-&gt;session</span><br><span class="line">session(path1,)-&gt;end</span><br><span class="line">session(path2,right)-&gt;mapper-&gt;end</span><br></pre></td></tr></table></figure>
 
-<p>&#x5BF9;&#x4E8E;<code>SqlSessionFactoryBuilder</code>&#x6765;&#x8BF4;&#xFF0C;&#x4F5C;&#x7528;&#x662F;&#x521B;&#x5EFA;<code>SqlSessionFactory</code>&#xFF0C;&#x4E00;&#x65E6;&#x521B;&#x5EFA;&#x5B8C;&#x5DE5;&#x5382;&#x5C31;&#x6CA1;&#x7528;&#x4E86;&#xFF0C;&#x6240;&#x4EE5;&#x662F;&#x4F5C;&#x4E3A;<strong>&#x5C40;&#x90E8;&#x53D8;&#x91CF;</strong>&#xFF1B;&#x800C;&#x5BF9;&#x4E8E;<code>SqlSessionFactory</code>&#xFF0C;&#x53EF;&#x4EE5;&#x628A;&#x5B83;&#x770B;&#x4F5C;<em>&#x8FDE;&#x63A5;&#x6C60;</em>&#xFF0C;&#x5E94;&#x8BE5;&#x4E00;&#x76F4;&#x8FD0;&#x884C;&#xFF0C;&#x4E0D;&#x5E94;&#x91CD;&#x590D;&#x521B;&#x5EFA;&#x3001;&#x9500;&#x6BC1;&#x6216;&#x53E6;&#x5EFA;&#x5B9E;&#x4F8B;&#xFF08;&#x5355;&#x4F8B;&#x6A21;&#x5F0F;&#x767B;&#x573A;&#xFF09;&#xFF0C;&#x5426;&#x5219;&#x6D6A;&#x8D39;&#x8D44;&#x6E90;&#xFF0C;&#x4ED6;&#x53EF;&#x4EE5;&#x521B;&#x5EFA;<code>SqlSession</code> &#x3002;&#x521B;&#x5EFA;<code>SqlSession</code>&#x540E;&#x7528;&#x6765;&#x94FE;&#x63A5;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x6BCF;&#x4E2A;session&#x88AB;&#x770B;&#x4F5C;&#x662F;&#x8BF7;&#x6C42;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x4ED6;&#x662F;<strong>&#x7EBF;&#x7A0B;&#x4E0D;&#x5B89;&#x5168;</strong>&#x7684;&#xFF0C;&#x6BCF;&#x4E2A;&#x7EBF;&#x7A0B;&#x90FD;&#x5E94;&#x6709;&#x81EA;&#x5DF1;&#x7684;session&#xFF0C;&#x4E0D;&#x5171;&#x4EAB;&#xFF0C;&#x6240;&#x4EE5;&#x6700;&#x4F73;&#x4F5C;&#x7528;&#x57DF;&#x662F;<strong>&#x65B9;&#x6CD5;&#x57DF;</strong>&#xFF0C;&#x5373;&#x6BCF;&#x6B21;&#x4E0E;&#x6570;&#x636E;&#x5E93;&#x4EA4;&#x4E92;&#x90FD;&#x521B;&#x5EFA;&#x4E00;&#x4E2A;<code>SqlSession</code>&#xFF0C;&#x7528;&#x5B8C;&#x5173;&#x95ED;&#xFF08;&#x5173;&#x95ED;&#x662F;&#x4E3A;&#x4E86;&#x91CA;&#x653E;&#x8D44;&#x6E90;&#x7ED9;&#x522B;&#x7684;&#x7EBF;&#x7A0B;&#x4F7F;&#x7528;&#xFF0C;&#x5426;&#x5219;&#x5E76;&#x53D1;&#x5927;&#x4E86;&#x5BB9;&#x6613;&#x5B95;&#x673A;&#xFF09;&#x3002;</p>
-<h2 id="&#x5C5E;&#x6027;&#x540D;&#x4E0E;&#x6570;&#x636E;&#x5E93;&#x8868;&#x5B57;&#x6BB5;&#x540D;"><a href="#&#x5C5E;&#x6027;&#x540D;&#x4E0E;&#x6570;&#x636E;&#x5E93;&#x8868;&#x5B57;&#x6BB5;&#x540D;" class="headerlink" title="&#x5C5E;&#x6027;&#x540D;&#x4E0E;&#x6570;&#x636E;&#x5E93;&#x8868;&#x5B57;&#x6BB5;&#x540D;"></a>&#x5C5E;&#x6027;&#x540D;&#x4E0E;&#x6570;&#x636E;&#x5E93;&#x8868;&#x5B57;&#x6BB5;&#x540D;</h2><p>&#x5F53;pojo&#x4E2D;&#x7684;&#x5B9E;&#x4F8B;&#x53D8;&#x91CF;&#x4E0E;&#x6570;&#x636E;&#x5E93;&#x5B57;&#x6BB5;&#x4E2D;&#x4E0D;&#x4E00;&#x81F4;&#x65F6;&#xFF0C;&#x53EF;&#x4EE5;&#x4F7F;&#x7528;<code>resultMap</code>&#x6765;&#x89E3;&#x51B3;&#xFF0C;&#x5373;<strong>&#x7ED3;&#x679C;&#x96C6;&#x6620;&#x5C04;</strong>&#x3002;</p>
-<p>&#x4E5F;&#x5E38;&#x7528;<code>resultType</code>&#xFF0C;&#x4F46;&#x662F;&#x4ED6;&#x662F;&#x7B80;&#x5355;&#x5730;&#x5C06;&#x6240;&#x6709;&#x5217;&#x6620;&#x5C04;&#x5230;HashMap&#x4E2D;&#x7684;key&#x4E0A;&#xFF0C;&#x5F88;&#x5355;&#x4E00;&#xFF0C;&#x4E0D;&#x9002;&#x5408;&#x5904;&#x7406;&#x590D;&#x6742;&#x60C5;&#x51B5;&#xFF0C;&#x800C;map&#x53EF;&#x4EE5;&#x66F4;&#x52A0;&#x7075;&#x6D3B;&#x5730;&#x5904;&#x7406;&#x60C5;&#x51B5;&#x3002;&#x7528;&#x6765;<code>resultMap</code>&#x65F6;&#x53EF;&#x4EE5;&#x53BB;&#x6389;<code>resultType</code>&#x5C5E;&#x6027;&#x3002;</p>
-<h2 id="&#x65E5;&#x5FD7;&#x5DE5;&#x5382;"><a href="#&#x65E5;&#x5FD7;&#x5DE5;&#x5382;" class="headerlink" title="&#x65E5;&#x5FD7;&#x5DE5;&#x5382;"></a>&#x65E5;&#x5FD7;&#x5DE5;&#x5382;</h2><p>mybatis&#x4F1A;&#x9ED8;&#x8BA4;&#x53BB;&#x5BFB;&#x627E;&#x65E5;&#x5FD7;&#x6846;&#x67B6;&#xFF0C;&#x914D;&#x7F6E;&#x540E;&#x4F1A;&#x6709;sql&#x4FE1;&#x606F;&#x8F93;&#x51FA;&#xFF0C;&#x5341;&#x5206;&#x6709;&#x7528;&#xFF01;</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">settings</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">&quot;logImpl&quot;</span> <span class="attr">value</span>=<span class="string">&quot;log4j&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">settings</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>对于<code>SqlSessionFactoryBuilder</code>来说，作用是创建<code>SqlSessionFactory</code>，一旦创建完工厂就没用了，所以是作为<strong>局部变量</strong>；而对于<code>SqlSessionFactory</code>，可以把它看作<em>连接池</em>，应该一直运行，不应重复创建、销毁或另建实例（单例模式登场），否则浪费资源，他可以创建<code>SqlSession</code> 。创建<code>SqlSession</code>后用来链接数据库，每个session被看作是请求数据库，他是<strong>线程不安全</strong>的，每个线程都应有自己的session，不共享，所以最佳作用域是<strong>方法域</strong>，即每次与数据库交互都创建一个<code>SqlSession</code>，用完关闭（关闭是为了释放资源给别的线程使用，否则并发大了容易宕机）。</p>
+<h2 id="属性名与数据库表字段名"><a href="#属性名与数据库表字段名" class="headerlink" title="属性名与数据库表字段名"></a>属性名与数据库表字段名</h2><p>当pojo中的实例变量与数据库字段中不一致时，可以使用<code>resultMap</code>来解决，即<strong>结果集映射</strong>。</p>
+<p>也常用<code>resultType</code>，但是他是简单地将所有列映射到HashMap中的key上，很单一，不适合处理复杂情况，而map可以更加灵活地处理情况。用来<code>resultMap</code>时可以去掉<code>resultType</code>属性。</p>
+<h2 id="日志工厂"><a href="#日志工厂" class="headerlink" title="日志工厂"></a>日志工厂</h2><p>mybatis会默认去寻找日志框架，配置后会有sql信息输出，十分有用！</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">settings</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">&quot;logImpl&quot;</span> <span class="attr">value</span>=<span class="string">&quot;log4j&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">settings</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="&#x5206;&#x9875;"><a href="#&#x5206;&#x9875;" class="headerlink" title="&#x5206;&#x9875;"></a>&#x5206;&#x9875;</h2><p>mybatis&#x652F;&#x6301;&#x5206;&#x9875;&#xFF0C;&#x6709;<code>limit</code>&#x548C;<code>rowBounts</code>&#x4E24;&#x4E2A;&#x65B9;&#x6CD5;&#x3002;&#x533A;&#x522B;&#x662F;&#x524D;&#x8005;&#x5728;sql&#x4E2D;&#x5B9E;&#x73B0;&#xFF0C;&#x540E;&#x8005;&#x9762;&#x5411;&#x5BF9;&#x8C61;&#x3002;</p>
-<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">USER</span> <span class="keyword">limit</span> <span class="comment">#{index},#{size}</span></span><br></pre></td></tr></table></figure>
+<h2 id="分页"><a href="#分页" class="headerlink" title="分页"></a>分页</h2><p>mybatis支持分页，有<code>limit</code>和<code>rowBounts</code>两个方法。区别是前者在sql中实现，后者面向对象。</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> * <span class="keyword">from</span> <span class="keyword">USER</span> <span class="keyword">limit</span> <span class="comment">#&#123;index&#125;,#&#123;size&#125;</span></span><br></pre></td></tr></table></figure>
 
-<h1 id="&#x7F13;&#x5B58;"><a href="#&#x7F13;&#x5B58;" class="headerlink" title="&#x7F13;&#x5B58;"></a>&#x7F13;&#x5B58;</h1><p>&#x9ED8;&#x8BA4;&#x5B9A;&#x4E49;&#x4E86;&#x4E24;&#x7EA7;&#x7F13;&#x5B58;&#xFF1A;&#x4E00;&#x7EA7;&#x7F13;&#x5B58;&#x3001;&#x4E8C;&#x7EA7;&#x7F13;&#x5B58;</p>
-<h2 id="&#x4E00;&#x7EA7;&#x7F13;&#x5B58;"><a href="#&#x4E00;&#x7EA7;&#x7F13;&#x5B58;" class="headerlink" title="&#x4E00;&#x7EA7;&#x7F13;&#x5B58;"></a>&#x4E00;&#x7EA7;&#x7F13;&#x5B58;</h2><p>&#x9ED8;&#x8BA4;&#x5F00;&#x542F;&#xFF0C;&#x5728;session&#x7684;<code>close</code>&#x4E4B;&#x524D;&#x90FD;&#x6709;&#x6548;&#xFF0C;&#x5982;&#x679C;&#x662F;&#x67E5;&#x8BE2;&#x76F8;&#x540C;&#x7684;&#x6570;&#x636E;&#xFF0C;&#x76F4;&#x63A5;&#x5728;&#x7F13;&#x5B58;&#x4E2D;&#x62FF;&#x3002;</p>
-<h2 id="&#x4E8C;&#x7EA7;&#x7F13;&#x5B58;"><a href="#&#x4E8C;&#x7EA7;&#x7F13;&#x5B58;" class="headerlink" title="&#x4E8C;&#x7EA7;&#x7F13;&#x5B58;"></a>&#x4E8C;&#x7EA7;&#x7F13;&#x5B58;</h2><p>&#x9700;&#x8981;&#x624B;&#x52A8;&#x5F00;&#x542F;&#x548C;&#x914D;&#x7F6E;&#xFF0C;&#x57FA;&#x4E8E;<code>namespace</code>&#x7EA7;&#x522B;&#xFF0C;&#x6709;<code>Cache</code>&#x63A5;&#x53E3;&#x6765;&#x81EA;&#x5B9A;&#x4E49;&#x5B9E;&#x73B0;&#x3002;<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">start=&gt;start: start
-config=&gt;operation: mybatis-config.xml
-build=&gt;operation: SqlSessionFactoryBuilder
-factory=&gt;operation: SqlSessionFactory
-session=&gt;parallel: SqlSession
-mapper=&gt;operation: Sql Mapper
-end=&gt;end: end
+<h1 id="缓存"><a href="#缓存" class="headerlink" title="缓存"></a>缓存</h1><p>默认定义了两级缓存：一级缓存、二级缓存</p>
+<h2 id="一级缓存"><a href="#一级缓存" class="headerlink" title="一级缓存"></a>一级缓存</h2><p>默认开启，在session的<code>close</code>之前都有效，如果是查询相同的数据，直接在缓存中拿。</p>
+<h2 id="二级缓存"><a href="#二级缓存" class="headerlink" title="二级缓存"></a>二级缓存</h2><p>需要手动开启和配置，基于<code>namespace</code>级别，有<code>Cache</code>接口来自定义实现。</p>
 
-start-&gt;config-&gt;build-&gt;factory-&gt;session
-session(path1,)-&gt;end
-session(path2,right)-&gt;mapper-&gt;end</textarea><textarea id="flowchart-0-options" style="display: none">{&quot;theme&quot;:&quot;simple&quot;,&quot;scale&quot;:1,&quot;line-width&quot;:2,&quot;line-length&quot;:50,&quot;text-margin&quot;:10,&quot;font-size&quot;:12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script></p>
+            
 
-    </div>
-
-    
-    
-    
-
-    
-      <div>
-        
-<div>
-  
-    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
-      <span>-------- 本文结束 感谢阅读 --------</span>
-    </div>
-  
-</div>
-      </div>
-    
-      
-        <div class="reward-container">
-  <div>Donate comment here.</div>
-  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
-    Donate
-  </button>
-  <div id="qr" style="display: none;">
-      
-      <div style="display: inline-block;">
-        <img src="/images/wechatpay.jpg" alt="Sebastian WeChat Pay">
-        <p>WeChat Pay</p>
-      </div>
-      
-      <div style="display: inline-block;">
-        <img src="/images/alipay.jpg" alt="Sebastian Alipay">
-        <p>Alipay</p>
-      </div>
-
-  </div>
-</div>
-
-
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/mybatis/" rel="tag"># mybatis</a>
-          </div>
-
-        
-
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/2020/08/02/contest200/" rel="next" title="contest200">
-                  <i class="fa fa-chevron-left"></i> contest200
-                </a>
-            </div>
-
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-            </div>
-          </div>
-      </footer>
-    
-  </article>
-  
-  
-  
-
-  </div>
-
-
-          </div>
-          
 
         </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="Sebastian"
-    src="/images/avatar.jpg">
-  <p class="site-author-name" itemprop="name">Sebastian</p>
-  <div class="site-description" itemprop="description">I'm feeling lucky!</div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">59</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
-        <span class="site-state-item-count">16</span>
-        <span class="site-state-item-name">categories</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
-        <span class="site-state-item-count">52</span>
-        <span class="site-state-item-name">tags</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/Sebastian-Getts" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Sebastian-Getts" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:zzzqsw@gmail.com" title="E-Mail &amp;rarr; mailto:zzzqsw@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://instagram.com/mchin6" title="Instagram &amp;rarr; https:&#x2F;&#x2F;instagram.com&#x2F;mchin6" rel="noopener" target="_blank"><i class="fa fa-fw fa-instagram"></i>Instagram</a>
-      </span>
-  </div>
-
-
-
-      </div>
-
     </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
+    <div id="post-footer" class="post-footer main-content-wrap">
         
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/mybatis/" rel="tag">mybatis</a>
 
-<div class="copyright">
-  
-  &copy; 2019 – 
-  <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Sebastian</span>
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/08/09/contest201/"
+                    data-tooltip="contest201"
+                    aria-label="PREVIOUS: contest201"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/08/02/contest200/"
+                    data-tooltip="contest200"
+                    aria-label="NEXT: contest200"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://github.com/sebastian/about/2020/08/05/mybatis/"
+                    title="Share on Weibo"
+                    aria-label="Share on Weibo"
+                >
+                    <i class="fab fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://github.com/sebastian/about/2020/08/05/mybatis/&amp;title=mybatis"
+                    title="Share on QQ"
+                    aria-label="Share on QQ"
+                >
+                    <i class="fab fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://widget.renren.com/dialog/share?resourceUrl=http://github.com/sebastian/about/2020/08/05/mybatis/"
+                    title="Share on Renren"
+                    aria-label="Share on Renren"
+                >
+                    <i class="fab fa-renren" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a>
-  </div>
-  <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.4.2
-  </div>
 
 
         
-
-
-
-
-
-
-
-
-
-
-
-
         
-      </div>
-    </footer>
-  </div>
-
-  
-  
-  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
-  <script src="/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
-<script src="/js/schemes/muse.js"></script>
-<script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script pjax>
-if (document.querySelectorAll('pre.mermaid').length) {
-  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/mermaid/8.2.0/mermaid.min.js', () => {
-    mermaid.initialize({
-      theme: 'forest',
-      logLevel: 3,
-      flowchart: { curve: 'linear' },
-      gantt: { axisFormat: '%m/%d/%Y' },
-      sequence: { actorMargin: 50 }
-    });
-  }, window.mermaid);
-}
-</script>
-
-
-    <div id="pjax">
-
-  
-
-  
-
-  
-
-  
-
-  <script async src="/js/cursor/love.min.js"></script>
-
-
-
-
-  <script src="/js/wobblewindow.js"></script>
-  <script>
-    //只在桌面版网页启用特效
-    if( window.innerWidth > 768  ){
-      $(document).ready(function () {
+            
         
-          $('#header').wobbleWindow({
-            radius: 50,
-            movementTop: false,
-            movementLeft: false,
-            movementRight: false,
-            debug: false,
-          });
-        
-
-        
-          $('#sidebar').wobbleWindow({
-            radius: 50,
-            movementLeft: false,
-            movementTop: false,
-            movementBottom: false,
-            position: 'fixed',
-            debug: false,
-          });
-        
-
-        
-          $('#footer').wobbleWindow({
-            radius: 50,
-            movementBottom: false,
-            movementLeft: false,
-            movementRight: false,
-            offsetX: ,
-            position: 'absolute',
-            debug: false,
-          });
-        
-      });
-    }
-  </script>
-
-
-
-
-
-
-
-
     </div>
-</body>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Sebastian Getts. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/08/09/contest201/"
+                    data-tooltip="contest201"
+                    aria-label="PREVIOUS: contest201"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/08/02/contest200/"
+                    data-tooltip="contest200"
+                    aria-label="NEXT: contest200"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://github.com/sebastian/about/2020/08/05/mybatis/"
+                    title="Share on Weibo"
+                    aria-label="Share on Weibo"
+                >
+                    <i class="fab fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://github.com/sebastian/about/2020/08/05/mybatis/&amp;title=mybatis"
+                    title="Share on QQ"
+                    aria-label="Share on QQ"
+                >
+                    <i class="fab fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://widget.renren.com/dialog/share?resourceUrl=http://github.com/sebastian/about/2020/08/05/mybatis/"
+                    title="Share on Renren"
+                    aria-label="Share on Renren"
+                >
+                    <i class="fab fa-renren" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="http://service.weibo.com/share/share.php?&amp;title=http://github.com/sebastian/about/2020/08/05/mybatis/"
+                        aria-label="Share on Weibo"
+                    >
+                        <i class="fab fa-weibo" aria-hidden="true"></i><span>Share on Weibo</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="http://connect.qq.com/widget/shareqq/index.html?url=http://github.com/sebastian/about/2020/08/05/mybatis/&amp;title=mybatis"
+                        aria-label="Share on QQ"
+                    >
+                        <i class="fab fa-qq" aria-hidden="true"></i><span>Share on QQ</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="http://widget.renren.com/dialog/share?resourceUrl=http://github.com/sebastian/about/2020/08/05/mybatis/"
+                        aria-label="Share on Renren"
+                    >
+                        <i class="fab fa-renren" aria-hidden="true"></i><span>Share on Renren</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Sebastian Getts</h4>
+        
+            <div id="about-card-bio"><p>I write code to enrich and ease life of others. 0 errors, 0 warnings.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Software Developer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Shenzhen
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover-v1.2.0.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-karbquxnkadaf4yf1hq6g6fyv6nvvrwpv3vf2u1wz8k7osddfqtxf5wbfcfg.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
 </html>

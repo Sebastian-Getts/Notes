@@ -49,11 +49,8 @@ public int[] twoSum(int[] nums, int target) {
 
 - Space complexity: O(1)
 
-  {% note info %}
-
   复杂度其实是2n，n前的常数相比幂来说可以忽略不记。。。
 
-  {% endnote %}
 
 ### Approach 2:  Two-pass Hash Table
 

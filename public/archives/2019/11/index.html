@@ -1,713 +1,1027 @@
+
 <!DOCTYPE html>
 <html lang="en">
+    
 <head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.jpg">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.jpg">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-  <meta name="msvalidate.01" content="541BE591C13D7313C3568E6D172218E2">
-  <meta name="baidu-site-verification" content="3qvcDlCoMv">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
-
-
-<script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.4.2',
-    exturl: false,
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    },
-    sidebarPadding: 40
-  };
-</script>
-
-  <meta name="description" content="I&amp;apos;m feeling lucky!">
-<meta name="keywords" content="Python, Java, Go">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Sebastian Getts">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;archives&#x2F;2019&#x2F;11&#x2F;index.html">
-<meta property="og:site_name" content="Sebastian Getts">
-<meta property="og:description" content="I&amp;apos;m feeling lucky!">
-<meta property="og:locale" content="en">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hola">
+    <title>Archives: 2019/11 - Hola</title>
+    <meta name="author" content="Sebastian Getts">
+    
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{}</script>
+    <meta property="og:type" content="blog">
+<meta property="og:title" content="Hola">
+<meta property="og:url" content="http://github.com/sebastian/about/archives/2019/11/index.html">
+<meta property="og:site_name" content="Hola">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="Sebastian Getts">
 <meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://github.com/sebastian/about/assets/images/avatar.jpg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-spzjrm9no8kcbknku5bsn1dr9dpp94iq1g86qdztxtoqwlgtrnwyi2tucypv.min.css">
 
-<link rel="canonical" href="http://yoursite.com/archives/2019/11/">
-
-
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome: false,
-    isPost: false,
-    isPage: false,
-    isArchive: true
-  };
-</script>
-
-  <title>Archive | Sebastian Getts</title>
-  
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
-
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-meta">
-
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Sebastian Getts</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-        <p class="site-subtitle">I'm the new one.</p>
-  </div>
-
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-</div>
-
-
-<nav class="site-nav">
-  
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
-
-  </li>
-        <li class="menu-item menu-item-movies">
-
-    <a href="/movies/" rel="section"><i class="fa fa-fw fa-video-camera"></i>movies</a>
-
-  </li>
-  </ul>
-
-</nav>
-</div>
-    </header>
+    <!--STYLES END-->
+    
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-  <div class="reading-progress-bar"></div>
+    <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?3e3b025a15329c47fcc47a83f6160356";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
 
 
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
+    
+</head>
 
-          <div class="content">
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
             
-
-  
-  
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
         
-        <span class="collection-header">Nice! 59 posts in total. Keep on posting.</span>
-      </div>
+    
 
-      
-    <div class="collection-year">
-      <h1 class="collection-header">2019</h1>
-    </div>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-28T22:17:48+08:00"
-              content="2019-11-28">
-          11-28
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/11/28/restful/" itemprop="url">
-            <span itemprop="name">restful</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-18T22:22:16+08:00"
-              content="2019-11-18">
-          11-18
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/11/18/javaFX/" itemprop="url">
-            <span itemprop="name">javaFX</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-17T16:04:18+08:00"
-              content="2019-11-17">
-          11-17
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/11/17/bt03/" itemprop="url">
-            <span itemprop="name">bt03</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-17T15:17:04+08:00"
-              content="2019-11-17">
-          11-17
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/11/17/bt02/" itemprop="url">
-            <span itemprop="name">bt02</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-14T12:52:44+08:00"
-              content="2019-11-14">
-          11-14
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/11/14/ProbablityAndStatics/" itemprop="url">
-            <span itemprop="name">事件的概率</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-13T23:41:20+08:00"
-              content="2019-11-13">
-          11-13
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/11/13/resolveXML/" itemprop="url">
-            <span itemprop="name">resolveXML</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-13T22:25:42+08:00"
-              content="2019-11-13">
-          11-13
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/11/13/thymeleaf01/" itemprop="url">
-            <span itemprop="name">thymeleaf01</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-07T23:41:44+08:00"
-              content="2019-11-07">
-          11-07
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/11/07/tagOfHexo/" itemprop="url">
-            <span itemprop="name">tagOfHexo</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-04T13:02:35+08:00"
-              content="2019-11-04">
-          11-04
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/11/04/Pascal-s-Triangle/" itemprop="url">
-            <span itemprop="name">Pascal's Triangle</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2019-11-03T17:23:05+08:00"
-              content="2019-11-03">
-          11-03
-        </time>
-      </div>
-
-      <h2 class="post-title">
-          <a class="post-title-link" href="/2019/11/03/mapOfUtils/" itemprop="url">
-            <span itemprop="name">map of utils</span>
-          </a>
-      </h2>
-
-    </header>
-  </article>
-
-
-    </div>
-  </div>
-  
-  
-  
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/2019/11/page/2/">2</a><a class="extend next" rel="next" href="/archives/2019/11/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
-  </nav>
-
-
-
-          </div>
-          
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="Sebastian"
-    src="/images/avatar.jpg">
-  <p class="site-author-name" itemprop="name">Sebastian</p>
-  <div class="site-description" itemprop="description">I'm feeling lucky!</div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">59</span>
-          <span class="site-state-item-name">posts</span>
+<header id="header" data-behavior="1">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/%20"
+            aria-label=""
+        >
+            Hola
         </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
-        <span class="site-state-item-count">16</span>
-        <span class="site-state-item-name">categories</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
-        <span class="site-state-item-count">52</span>
-        <span class="site-state-item-name">tags</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/Sebastian-Getts" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Sebastian-Getts" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:zzzqsw@gmail.com" title="E-Mail &amp;rarr; mailto:zzzqsw@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://instagram.com/mchin6" title="Instagram &amp;rarr; https:&#x2F;&#x2F;instagram.com&#x2F;mchin6" rel="noopener" target="_blank"><i class="fa fa-fw fa-instagram"></i>Instagram</a>
-      </span>
-  </div>
-
-
-
-      </div>
-
     </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
+    
         
-
-<div class="copyright">
-  
-  &copy; 2019 – 
-  <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Sebastian</span>
-</div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a>
-  </div>
-  <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.4.2
-  </div>
-
-
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
         
+        
+            <img class="header-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
 
-
-
-
-
-
-
-
-
+            <!-- Define author's picture -->
 
 
 
         
-      </div>
-    </footer>
-  </div>
+    
 
-  
-  
-  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
-  <script src="/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
-<script src="/js/schemes/muse.js"></script>
-<script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script pjax>
-if (document.querySelectorAll('pre.mermaid').length) {
-  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/mermaid/8.2.0/mermaid.min.js', () => {
-    mermaid.initialize({
-      theme: 'forest',
-      logLevel: 3,
-      flowchart: { curve: 'linear' },
-      gantt: { axisFormat: '%m/%d/%Y' },
-      sequence: { actorMargin: 50 }
-    });
-  }, window.mermaid);
-}
-</script>
-
-
-    <div id="pjax">
-
-  
-
-  
-
-  
-
-  
-
-  <script async src="/js/cursor/love.min.js"></script>
-
-
-
-
-  <script src="/js/wobblewindow.js"></script>
-  <script>
-    //只在桌面版网页启用特效
-    if( window.innerWidth > 768  ){
-      $(document).ready(function () {
+<nav id="sidebar" data-behavior="1">
+    <div class="sidebar-container">
         
-          $('#header').wobbleWindow({
-            radius: 50,
-            movementTop: false,
-            movementLeft: false,
-            movementRight: false,
-            debug: false,
-          });
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Sebastian Getts</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>I write code to enrich and ease life of others. 0 errors, 0 warnings.</p>
+</h5>
+                
+            </div>
         
-
         
-          $('#sidebar').wobbleWindow({
-            radius: 50,
-            movementLeft: false,
-            movementTop: false,
-            movementBottom: false,
-            position: 'fixed',
-            debug: false,
-          });
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link open-algolia-search"
+                            href="#search"
+                            
+                            rel="noopener"
+                            title="Search"
+                        >
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Search</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
         
-
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/sebastian-getts/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/mailto"
+                            
+                            rel="noopener"
+                            title="Mail"
+                        >
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
         
-          $('#footer').wobbleWindow({
-            radius: 50,
-            movementBottom: false,
-            movementLeft: false,
-            movementRight: false,
-            offsetX: ,
-            position: 'absolute',
-            debug: false,
-          });
+            <ul class="sidebar-buttons">
+            
+        </ul>
         
-      });
-    }
-  </script>
-
-
-
-
-
-
-
-
     </div>
-</body>
+</nav>
+
+            
+            <div id="main" data-behavior="1"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+    <section class="postShorten-group main-content-wrap">
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-right">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2019/11/28/restful/"
+                            aria-label=": restful"
+                        >
+                            restful
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2019-11-28T22:17:48+08:00">
+	
+		    Nov 28, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-excerpt">
+                    <p>restful风格的项目要前后端分离，前后端的http请求类型要清楚==。。。好像以用有8种。</p>
+                    
+                        <a
+                            href="/2019/11/28/restful/"
+                            class="postShorten-excerpt_link link"
+                            aria-label=": restful"
+                        >
+                            Continue reading
+                        </a>
+                        
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-right">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2019/11/18/javaFX/"
+                            aria-label=": javaFX"
+                        >
+                            javaFX
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2019-11-18T22:22:16+08:00">
+	
+		    Nov 18, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-excerpt">
+                    <p>JavaFX，据说生不逢时，，但是我觉得它很厉害啊。。写个工具自己用也不错。。好像很多工程类的应用在用它。在油管上发现了关于他的宝贝。。。之前在b站上看到过一个印度尼西亚的小哥的视频，后来就找不到了，今天又发现了它。地址文章末尾给出。 p.s. 好像是JetBrains出品的，，必属精品。</p>
+                    
+                        <a
+                            href="/2019/11/18/javaFX/"
+                            class="postShorten-excerpt_link link"
+                            aria-label=": javaFX"
+                        >
+                            Continue reading
+                        </a>
+                        
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-right">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2019/11/17/bt03/"
+                            aria-label=": bt03"
+                        >
+                            bt03
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2019-11-17T16:04:18+08:00">
+	
+		    Nov 17, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Bitcoin/">Bitcoin</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-excerpt">
+                    <p> 比特币中的协议。与纸质货币不同的是，如何防范double spending attack，即双花攻击。</p>
+                    
+                        <a
+                            href="/2019/11/17/bt03/"
+                            class="postShorten-excerpt_link link"
+                            aria-label=": bt03"
+                        >
+                            Continue reading
+                        </a>
+                        
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2019/11/17/bt02/"
+                            aria-label=": bt02"
+                        >
+                            bt02
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2019-11-17T15:17:04+08:00">
+	
+		    Nov 17, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Bitcoin/">Bitcoin</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p>比特币中最基础的数据结构：区块链</p>
+<!--mro-->
+
+<h1 id="hash指针"><a href="#hash指针" class="headerlink" title="hash指针"></a>hash指针</h1><p>普通的指针存储的是某个结构体在内存中的存放地址，而hash指针除了存放地址外还会存储hash值，能够检测结构体的内容是否被篡改。</p>
+<p>区块链和普通的链表的区别：用hash指针代替了普通的指针。Block chain is  a linked list using hash pointer.</p>
+<p>区块链中第一个区块叫genesis block(创世纪块)，最后一个叫most recent block。只需要保存最后一个区块的hash值，就能检测出之前所有区块是否被篡改。</p>
+<h1 id="merkle-tree"><a href="#merkle-tree" class="headerlink" title="merkle tree"></a>merkle tree</h1><p>比特币汇中的另一个数据接结构。</p>
+<p>c.f. binary tree</p>
+<p>区别是merkle tree用hash指针代替了普通指针。</p>
+<p>merkle tree中最下面一行是data blocks（每个数据块实际上是一个交易，transaction），上方均是hash pointers。只需记住根哈希值（最顶部的），就能发现任何节点的修改。这样效率更高，因为是二叉树的形式。</p>
+<p>每个数据块分为两部分，块头和块身。</p>
+<p>block header 无交易内容，只有hash值, 而block body中有交易列表。他们可以提供merkle proof（从最底部的某个blcok往上一直到根节点就是一个merkle proof）。</p>
+<p>这种证明被称为：<strong>proof of membership/inclusion</strong>。时间复杂度为：<br>$$<br>\theta(\log n)<br>$$<br>也可以对底部排序，sorted merkle tree，但是比特币中没有使用，不需要对做存在性证明。</p>
+<h2 id="哈希指针的其他用途："><a href="#哈希指针的其他用途：" class="headerlink" title="哈希指针的其他用途："></a>哈希指针的其他用途：</h2><p>只要数据结构是无环的，都可以使用hash指针代替普通指针。</p>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2019/11/17/bt02/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-right">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2019/11/14/ProbablityAndStatics/"
+                            aria-label=": 事件的概率"
+                        >
+                            事件的概率
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2019-11-14T12:52:44+08:00">
+	
+		    Nov 14, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Math/">Math</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-excerpt">
+                    <p>概率论与数理统计的温习。。。</p>
+                    
+                        <a
+                            href="/2019/11/14/ProbablityAndStatics/"
+                            class="postShorten-excerpt_link link"
+                            aria-label=": 事件的概率"
+                        >
+                            Continue reading
+                        </a>
+                        
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-right">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2019/11/13/thymeleaf01/"
+                            aria-label=": thymeleaf01"
+                        >
+                            thymeleaf01
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2019-11-13T22:25:42+08:00">
+	
+		    Nov 13, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Utils/">Utils</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-excerpt">
+                    <p>thymeleaf，一种新型模板引擎。参考资料：usingthymeleaf。</p>
+<p>reference: <a target="_blank" rel="noopener" href="https://www.thymeleaf.org/">project web site</a></p>
+                    
+                        <a
+                            href="/2019/11/13/thymeleaf01/"
+                            class="postShorten-excerpt_link link"
+                            aria-label=": thymeleaf01"
+                        >
+                            Continue reading
+                        </a>
+                        
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-right">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2019/11/04/Pascal-s-Triangle/"
+                            aria-label=": Pascal&#39;s Triangle"
+                        >
+                            Pascal&#39;s Triangle
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2019-11-04T13:02:35+08:00">
+	
+		    Nov 04, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Math/">Math</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-excerpt">
+                    <p>读华罗庚的著作《杨辉三角》有感：杨辉三角引申出的杨辉恒等式，利用了排列组合的原理，可以作用在二项式、开方等等的方面，简直amazing。。。。。。。。Btw，练习了Latex语法。</p>
+                    
+                        <a
+                            href="/2019/11/04/Pascal-s-Triangle/"
+                            class="postShorten-excerpt_link link"
+                            aria-label=": Pascal&#39;s Triangle"
+                        >
+                            Continue reading
+                        </a>
+                        
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-right">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2019/11/03/bt01/"
+                            aria-label=": bt01"
+                        >
+                            bt01
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2019-11-03T12:41:57+08:00">
+	
+		    Nov 03, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Bitcoin/">Bitcoin</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-excerpt">
+                    <p>区块链、比特币、去中心化这些东西说熟不熟，说陌生吧也谈不上陌生，毕竟天天见。趁着周末，给自己冲了电，看了看收藏了好几天的视频，一个关于区块链的北大公开课。。哈哈飘了，竟然听了北大的课^_^</p>
+                    
+                        <a
+                            href="/2019/11/03/bt01/"
+                            class="postShorten-excerpt_link link"
+                            aria-label=": bt01"
+                        >
+                            Continue reading
+                        </a>
+                        
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2019/11/02/nginx/"
+                            aria-label=": nginx"
+                        >
+                            nginx
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2019-11-02T22:53:32+08:00">
+	
+		    Nov 02, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Network/">Network</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="NIGNX"><a href="#NIGNX" class="headerlink" title="NIGNX"></a>NIGNX</h1><p><em>Nginx</em> (engine x) 是一个高性能的HTTP和<strong>反向代理</strong>web服务器，同时也提供了IMAP/POP3/SMTP服务。Nginx是由伊戈尔·赛索耶夫为俄罗斯访问量第二的Rambler.ru站点（俄文：Рамблер）开发的，第一个公开版本0.1.0发布于2004年10月4日。</p>
+<p>它是一款轻量级的Web服务器反向代理服务器及电子邮件（IMAP/POP3）代理服务器，在BSD-like 协议下发行。其特点是占有内存少，并发能力强，事实上nginx的并发能力确实在同类型的网页服务器中表现较好。</p>
+<p>特点：</p>
+<ul>
+<li>反向代理</li>
+<li>负载均衡</li>
+<li>动静分离</li>
+<li>高可用</li>
+</ul>
+<h2 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h2><p>客户端对代理是无感知的，因为客户端不需要任何配置就可以访问，只需要将请求发送到反向代理服务器，由反向代理服务器去选择目标服务器获取数据后，再返回给客户端。此时反向代理服务器的目标服务器对外就是一个服务器，暴露的是代理服务器地址，隐藏了真实服务器IP地址。</p>
+<h2 id="正向代理"><a href="#正向代理" class="headerlink" title="正向代理"></a>正向代理</h2><p>如果把局域网外的Internet比作资源库，则局域网中的客户端要访问Internet，则需要通过代理服务器来访问，这种代理服务就称作正向代理。（nginx还可以用作正向代理来进行上网功能。）</p>
+<p>正向访问需要在浏览器配置代理服务器。</p>
+<h2 id="负载均衡"><a href="#负载均衡" class="headerlink" title="负载均衡"></a>负载均衡</h2><p>单个服务器解决不了问题，我们增加服务器的数量，然后将请求分发到各个服务上，将原先请求集中到单个服务器上的情况改为将请求分发到多个服务器上，将负载分发到不同的服务器，即负载均衡。</p>
+<h2 id="动静分离"><a href="#动静分离" class="headerlink" title="动静分离"></a>动静分离</h2><p>为了加快网站的解析速度，可以把动态页面和静态页面由不同的服务器来解析，加快解析速度。降低原来单个服务器的压力。静态资源和动态资源分开部署放置两台不同的服务器。</p>
+<p>静态资源：html, css, js</p>
+<p>动态资源：jsp, servlet</p>
+<h2 id="操作"><a href="#操作" class="headerlink" title="操作"></a>操作</h2><h3 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h3><p>前提条件：进入nginx目录</p>
+<p>/usr/localnginx/sbin</p>
+<ul>
+<li>查看nginx版本号</li>
+<li>启动</li>
+<li>关闭</li>
+<li>重新加载nginx</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/PeNWaCDf_6gp2fCQa0Gvng">referenct</a></p>
+<h1 id="配置"><a href="#配置" class="headerlink" title="配置"></a>配置</h1><ol>
+<li><p>配置EPEL源</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo yum install -y epel-release</span><br><span class="line">sudo yum -y update</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>安装nginx</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo yum instll -y nginx</span><br></pre></td></tr></table></figure>
+
+<p>安装成功后：</p>
+<p><code>默认网站目录</code>：<em>/usr/share/nginx/html</em></p>
+<p><code>默认的配置文件为</code>：<em>/etc/nginx/nginx.conf</em></p>
+<p><code>自定义配置文件目录为</code>：<em>/etc/nginx/conf.d/</em></p>
+</li>
+<li><p>开启端口80和443</p>
+<p>如果关闭了防火墙，直接略过。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">sudo firewall-cmd --permanent --zone=public --add-service=http</span><br><span class="line">sudo firewall-cmd --permanent --zone=public --add-service=https</span><br><span class="line">sudo firewall-cmd --reload</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>命令</p>
+<ul>
+<li><p>启动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl start nginx</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>停止</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl stop nginx</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>重启</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl restart nginx</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>查看状态</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl status nginx</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>启用开机启动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl <span class="built_in">enable</span> nginx</span><br></pre></td></tr></table></figure>
+
+<p>测试的时候，直接<code>nginx</code>命令即可，方便调试，调试时使用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -t</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx -s reload</span><br></pre></td></tr></table></figure>
+
+
+
+</li>
+</ul>
+</li>
+</ol>
+<ul>
+<li><p>禁止开机启动</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl disbale nginx</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<ol start="5">
+<li><p>https</p>
+<ol>
+<li><p>关于https的相关证书，可以从阿里云控制台获取（因为我租用的是阿里云服务器）。</p>
+</li>
+<li><p>拷贝证书至nginx</p>
+<p>domain为个人域名。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mkdir -p /etc/nginx/ssl</span><br><span class="line">   </span><br><span class="line">acme.sh --install-cert -d domain \</span><br><span class="line">   --key-file       /etc/nginx/ssl/domain.key  \</span><br><span class="line">   --fullchain-file /etc/nginx/ssl/domain.cer \</span><br><span class="line">   --reloadcmd     <span class="string">&quot;service nginx force-reload&quot;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+<li><p>配置nginx</p>
+<p>删除**/etc/nginx/nginx.conf**中的server部分代码</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在**/etc/nginx/conf.d<strong>创建自定义配置文件夹</strong>default.conf**</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">server</span> <span class="string">&#123;</span></span><br><span class="line">    <span class="attr">listen</span> <span class="string">80;</span></span><br><span class="line">    <span class="attr">listen</span> <span class="string">443 ssl;</span></span><br><span class="line">    <span class="attr">server_name</span>  <span class="string">domain www.domain;</span></span><br><span class="line">    <span class="attr">location</span> <span class="string">/ &#123;</span></span><br><span class="line">         <span class="attr">root</span> <span class="string">/usr/share/nginx/html;</span></span><br><span class="line">         <span class="attr">index</span>  <span class="string">index.html index.htm;</span></span><br><span class="line">     <span class="attr">&#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">ssl_certificate</span> <span class="string">/etc/nginx/ssl/domain.crt;</span></span><br><span class="line">    <span class="attr">ssl_certificate_key</span> <span class="string">/etc/nginx/ssl/domain.key;</span></span><br><span class="line">    <span class="attr">ssl_session_timeout</span>  <span class="string">5m;</span></span><br><span class="line">    <span class="attr">ssl_protocols</span> <span class="string">TLSv1 TLSv1.1 TLSv1.2;</span></span><br><span class="line">    <span class="attr">ssl_ciphers</span> <span class="string">ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4:!DH:!DHE;</span></span><br><span class="line">    <span class="attr">ssl_prefer_server_ciphers</span>  <span class="string">on;</span></span><br><span class="line"></span><br><span class="line">    <span class="attr">error_page</span> <span class="string">497  https://$host$uri?$args;</span></span><br><span class="line"><span class="attr">&#125;</span></span><br></pre></td></tr></table></figure>
+
+
+
+
+
+</li>
+</ol>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2019/11/02/nginx/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2019/11/02/swagger/"
+                            aria-label=": swagger"
+                        >
+                            swagger
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2019-11-02T22:51:41+08:00">
+	
+		    Nov 02, 2019
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Java/">Java</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <h1 id="SWAGGER"><a href="#SWAGGER" class="headerlink" title="SWAGGER"></a>SWAGGER</h1><h2 id="前后端分离"><a href="#前后端分离" class="headerlink" title="前后端分离"></a>前后端分离</h2><p>Vue + SpringBoot</p>
+<p>后端时代：前端只有管理静态页面；模板引擎jsp</p>
+<p>前后端分离时代：</p>
+<ul>
+<li>后端：后端控制层、服务层、数据访问层</li>
+<li>前端：前端控制层，视图层<ul>
+<li>伪造后端数据，json。不需要后端，前端一九能够跑起来</li>
+</ul>
+</li>
+<li>前后端交互：api</li>
+<li>前后端相对独立，松耦合</li>
+<li>前后端甚至可以部署在不同的服务器上</li>
+</ul>
+<p>产生一个问题：</p>
+<ul>
+<li>前后端集成联调，前后端人员无法做到及时协商</li>
+</ul>
+<p>解决方案：</p>
+<ul>
+<li>首先指定schema（计划的提纲），实时更新api</li>
+<li>早些年，指定word文档计划</li>
+<li>前后端分离<ul>
+<li>前端测试后端接口：postman</li>
+<li>后端提供接口，需要实时更新最新的消息及改动</li>
+</ul>
+</li>
+</ul>
+<h2 id="swagger"><a href="#swagger" class="headerlink" title="swagger"></a>swagger</h2><p>restful api 文档在线自动生成工具</p>
+<p>在项目使用swagger需要springfox</p>
+<ul>
+<li>swagger2</li>
+<li>ui</li>
+</ul>
+<h4 id="springboot集成swagger"><a href="#springboot集成swagger" class="headerlink" title="springboot集成swagger"></a>springboot集成swagger</h4><p>导入相关依赖：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger2 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.springfox<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>springfox-swagger2<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.9.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">dependency</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">groupId</span>&gt;</span>io.springfox<span class="tag">&lt;/<span class="name">groupId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">artifactId</span>&gt;</span>springfox-swagger-ui<span class="tag">&lt;/<span class="name">artifactId</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">version</span>&gt;</span>2.9.2<span class="tag">&lt;/<span class="name">version</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">dependency</span>&gt;</span></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="配置swagger"><a href="#配置swagger" class="headerlink" title="配置swagger"></a>配置swagger</h4><p>swagger的实例<strong>docket</strong></p>
+<h5 id="配置swagger信息"><a href="#配置swagger信息" class="headerlink" title="配置swagger信息"></a>配置swagger信息</h5><p>新建一个关于swagger的配置类</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@EnableSwagger2</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SwaggerConfig</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Bean</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Docket <span class="title">docket</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2)</span><br><span class="line">                .apiInfo(apiInfo());</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> ApiInfo <span class="title">apiInfo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        Contact contact = <span class="keyword">new</span> Contact(<span class="string">&quot;Sebastian&quot;</span>, <span class="string">&quot;https://www.raspberrypi.org/&quot;</span>, <span class="string">&quot;2573992956@qq.com&quot;</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> ApiInfo(<span class="string">&quot;Sebastian&#x27;s api document&quot;</span>, <span class="string">&quot;FUN SWAGGER&quot;</span>, <span class="string">&quot;1.1&quot;</span>,</span><br><span class="line">                <span class="string">&quot;http://www.baidu.com&quot;</span>, contact, <span class="string">&quot;Apache 2.0&quot;</span>,</span><br><span class="line">                <span class="string">&quot;http://www.bing.com&quot;</span>, <span class="keyword">new</span> ArrayList());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h5 id="配置扫描接口及开关"><a href="#配置扫描接口及开关" class="headerlink" title="配置扫描接口及开关"></a>配置扫描接口及开关</h5><p>Docket.select()</p>
+<blockquote>
+<p> RequestHandlerSelectors //配置要扫描接口的方式</p>
+</blockquote>
+<p>源码涉及<a target="_blank" rel="noopener" href="https://www.jb51.net/article/49405.htm">链式调用</a></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Docket <span class="title">docket</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2)</span><br><span class="line">        .apiInfo(apiInfo())</span><br><span class="line">        .enable(<span class="keyword">false</span>)</span><br><span class="line">        .select()</span><br><span class="line">        .apis(RequestHandlerSelectors.basePackage(<span class="string">&quot;com.sunday.personal.tuesday.controller&quot;</span>))</span><br><span class="line">        <span class="comment">//                .paths(PathSelectors.ant(&quot;/com/sunday/personal/tuesday/config/*&quot;))</span></span><br><span class="line">        .build(); <span class="comment">//build</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//basePackage, 扫描路径中的</span></span><br><span class="line"><span class="comment">//any，扫描全部</span></span><br><span class="line"><span class="comment">//withClassAnnotation(RestController.class)，扫描类上有…的类</span></span><br><span class="line"><span class="comment">//withMethodAnnotation(...)，扫描方法上有…的类</span></span><br></pre></td></tr></table></figure>
+
+
+
+<p><u>只在测试环境使用swagger：</u></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Docket <span class="title">docket</span><span class="params">(Environment environment)</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//<span class="doctag">TODO:</span>设置要显示的swagger环境</span></span><br><span class="line">    <span class="comment">//Profiles profiles = Profiles.of(&quot;dev&quot;);</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取项目的环境</span></span><br><span class="line">    <span class="keyword">boolean</span> flag = environment.acceptsProfiles(); <span class="comment">//acceptsProfiles(profiles)</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2)</span><br><span class="line">        .apiInfo(apiInfo())</span><br><span class="line">        .enable(<span class="keyword">false</span>)</span><br><span class="line">        .select()</span><br><span class="line">        .apis(RequestHandlerSelectors.basePackage(<span class="string">&quot;com.sunday.personal.tuesday.controller&quot;</span>))</span><br><span class="line">        <span class="comment">//                .paths(PathSelectors.ant(&quot;/com/sunday/personal/tuesday/config/*&quot;))</span></span><br><span class="line">        .build(); <span class="comment">//build</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="配置api分组"><a href="#配置api分组" class="headerlink" title="配置api分组"></a>配置api分组</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Docket <span class="title">docket2</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2).groupName(<span class="string">&quot;crm&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Docket <span class="title">docket1</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2).groupName(<span class="string">&quot;pay&quot;</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> Docket <span class="title">docket</span><span class="params">()</span> </span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="comment">//<span class="doctag">TODO:</span>设置要显示的swagger环境</span></span><br><span class="line">    <span class="comment">//        Profiles profiles = Profiles.of(&quot;dev&quot;);</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">//获取项目的环境</span></span><br><span class="line">    <span class="comment">//        boolean flag = environment.acceptsProfiles(); //acceptsProfiles(profiles)</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> Docket(DocumentationType.SWAGGER_2)</span><br><span class="line">        .apiInfo(apiInfo())</span><br><span class="line">        .groupName(<span class="string">&quot;interface&quot;</span>)</span><br><span class="line">        .enable(<span class="keyword">true</span>)</span><br><span class="line">        .select()</span><br><span class="line">        .apis(RequestHandlerSelectors.basePackage(<span class="string">&quot;com.sunday.personal.tuesday.controller&quot;</span>))</span><br><span class="line">        .build(); <span class="comment">//build</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h4 id="实体类配置"><a href="#实体类配置" class="headerlink" title="实体类配置"></a>实体类配置</h4><p>@Api…注释</p>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2019/11/02/swagger/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    <div class="pagination-bar">
+    <ul class="pagination">
+        
+        
+        <li class="pagination-number">page 1 of 1</li>
+    </ul>
+</div>
+
+</section>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Sebastian Getts. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Sebastian Getts</h4>
+        
+            <div id="about-card-bio"><p>I write code to enrich and ease life of others. 0 errors, 0 warnings.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Software Developer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Shenzhen
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover-v1.2.0.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-karbquxnkadaf4yf1hq6g6fyv6nvvrwpv3vf2u1wz8k7osddfqtxf5wbfcfg.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+
+
+
+    </body>
 </html>

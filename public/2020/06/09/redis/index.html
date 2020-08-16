@@ -1,754 +1,748 @@
+
 <!DOCTYPE html>
 <html lang="en">
+    
 <head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.jpg">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.jpg">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-  <meta name="msvalidate.01" content="541BE591C13D7313C3568E6D172218E2">
-  <meta name="baidu-site-verification" content="3qvcDlCoMv">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
-
-
-<script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.4.2',
-    exturl: false,
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    },
-    sidebarPadding: 40
-  };
-</script>
-
-  <meta name="description" content="常用redis，深入了解redis的性能和瓶颈。reference">
-<meta name="keywords" content="redis,nosql">
-<meta property="og:type" content="article">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hola">
+    <title>redis - Hola</title>
+    <meta name="author" content="Sebastian Getts">
+    
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sebastian Getts","sameAs":["https://github.com/sebastian-getts/","mailto"],"image":"avatar.jpg"},"articleBody":"常用redis，深入了解redis的性能和瓶颈。reference\n\n\n介绍redis: 内存中的数据结构存储系统，可以用作数据库、缓存和消息中间件，nosql的一种。\nnosql关系型数据库不够用，出来了nosql。。。\n\n一开始单体应用，小用户量能承受。但是当体量变大时：\n数据量大\n数据的索引大\n访问量大\n\n\n读写分离思想（垂直拆分），写一个库，其他库从这个库做同步，但是数据库大部分其实都是读，把刚查到的进行缓存，这样下一个要查且数据没变的话就用缓存中的数据。 添加一层memcache缓存\n集群（水平拆分）：上面的读写分离copy多份。\n\nmysql早些年使用的是MyISAM引擎，特性是表锁（查询某个数据会将整个表锁起来，高并发下性能下滑），现在使用的是Innodb，改为了行锁。\n不能用mysql做实时存储和访问、个人信息、地理位置（如微信热门10万+的文章记录等）。\n特点\n易于扩展，数据间没有关系（key value键值对），好比java面向接口，便于解偶。\n大数据量也高性能（写8万次/秒，读11万次/秒）\n多样型，不需要事先设计数据库\n没有固定的查询语言；最终一致性\n键值对存储，列存储，文档存储，图形存储库（社交）\n高性能、高可用、高可扩\nCAP、BASE，异地多活\n多样、实时、并发（Volume, Variety, Veiocity）\n\n与关系型一起使用。\n商品的描述、评论（文字比较多的）：文档型数据库（MongoDB）\n商品的基本信息（价格、商家、名称）：MySQL\n图片：FastDFS, GFS, HDFS, OSS…\n商品热门的波段信息：内存数据库（Redis，Tair，Memcache……）\n==没有什么不是加以层解决不了的==： 统一服务层。\n文档型数据库MongoDB，介于关系型和非关系型数据库中的中间产品，非关系型数据库中功能最丰富的。\nKV键值对Redis，Tair\n列存储数据库HBase（大数据）\n分布式文件系统\n图类似知识图谱，不是存储图形。主要用于存储社交网络。\nNeo4j，InfoGrid。\nRedisRemote Dictionary Server. C语言编写的。免费，开源，提供多种语言的api。\n\n内存存储、持久化，但是内存是断电即失，所以持久化很重要（rdb、aof）\n计时器、计数器（浏览量）\n\n测试安装后自带的测试工具\n1redis-benchmark -h localhost -p 6379 -100 -n 100000\n\n基础默认16个数据库且使用的是第0个。 \nGEOSPATIAL地理位置，不仅仅是GET、SET！根据经纬度获取距离。\nspringboot集成版本&lt;2.0 底层使用的jedis，BIO，直连数据库，多线程下不安全，优化方式是jedis pool连接池。\n版本&gt;2.0 底层使用的lettuce，NIO，采用netty，实例可以在多个线程中进行共享，不存在线程不安全的情况。\nrdb为什么会有这个rdb？\nredis的高速查询来源于它的内存存储，由于内存断电即失，可以把rdb作为备份来弥补这个不足。所以rdb即redis databse。但是也不是每次操作都保存，否则性能急速降低，这也带来另一个问题，即最后一个/批操作不会被保存。\n123456789start&#x3D;&gt;start: startend&#x3D;&gt;end: endcondition&#x3D;&gt;condition: 触发rdbrdbfile&#x3D;&gt;inputoutput: dump.rdboperation&#x3D;&gt;operation: go on dealing withstart-&gt;conditioncondition(yes)-&gt;rdbfile-&gt;endcondition(no)-&gt;operation-&gt;end\n\n触发机制\nsave的规则\n执行flushall\n退出redis\n\n产生备份，会自动生成一个dump.rdb\n用rdb恢复1config get dir\n\n优点：\n适合大数据\n对数据完整性要求不高（比如90srdb一次，60s的时候宕机，就会造成数据丢失）\n\n缺点：\n需要一定的时间间隔进程操作\nfork进程的时候会占用一定的内容空间\n\nAOFAppend Only File， 将我们的所有命令都记录下来，相当于history，恢复的时候再追加。这是另一种恢复的方法。\n\n大数据的情况下效率会比较低。\n默认是不开启的。\n\n开启后会记录操作记录，关闭redis的时候会产生aof文件，如果恶意篡改，redis无法正常启动。\n修复aof文件 redis-check-aof --fix\n优点：\n每次修改都同步，文件的完整性更好，默认每秒同步一次，可能会丢失一秒的数据\n从不同步效率最高\n\n缺点：\n相对于数据文件，aof远大于rdb，修复的速度比rdb慢\n默认是rdb，效率自然高于aof。\n\n与rdb混合使用\n主从复制将一台redis服务器的数据复制到其他的redis服务器，前者称为主节点，后者称为从结点。\n作用：数据冗余、故障恢复、负载均衡（读写分离）、高可用（集群）基石\nreids的容量有限，机器的内存不可能全部用来给redis做存储内存，最大不应该超过20G。\n默认情况下每台redis都是主节点；一个主节点可以有多个从结点，但是一个从结点只能有一个主节点。\n环境配置1info replication # 查看当前库的信息\n\n一般情况下只用配置从机即可。\n1SLAVEOF ip:port # ip:port为主机\n\n上面的是命令配置，只是暂时的。实际生产应该修改配置文件，在文件中写主机的地址和密码，主机负责写，从机负责读，主机的所有数据会自动被从机保存。\n如果主机宕机了呢？默认情况下，主机挂了以后，用info replication查看剩余机器，从机运行正常，但是没有写操作了。主机恢复后，仍旧正常主从复制。考虑到主机要人工手动恢复、排查故障，仍旧会影响业务。\n更好的情况是，默认从剩余的从机中选择一个作为主机，继续完成写操作。\n\n全量复制 master将整个数据传送到slaver\n增量复制\n\n只要重新链接master，一次全量复制将被自动执行\n哨兵模式Sentinel（Redis2.8起）后台监控主机是否故障，如果故障了根据投票数自动将从库转为主库。\n哨兵是一个独立的进程。通过发送命令，等待Redis服务器响应，从而监控运行的多个redis实例。为了防止哨兵挂了，还要配置哨兵集群。（如果一主二从，正常应该启动六个进程，加上哨兵的话）\n优点\n集群\n主从切换\n\n缺点\n不方便在线扩容，一旦到达上线。\n配置麻烦（配置文件的内容很多）。简单的话可以只启动一个哨兵监控主机，会自动检测到从机。\n\nredis异常处理缓存穿透（一直查询不到）1234567start&#x3D;&gt;start: requestend&#x3D;&gt;end: responsecondition&#x3D;&gt;condition: redis缓存中是否存在op1&#x3D;&gt;operation: select in mysqlstart-&gt;conditioncondition(yes)-&gt;endcondition(no)-&gt;op1-&gt;end\n\n如果请求量非常大，redis相当于空白，都去请求到dao层，redis的作用就没了。\n布隆过滤器它是一种数据结构，对所有可能查询的参数以hash形式存储，在控制层先进行校验，不符合则丢弃，避免了对底层存储系统的查询压力\n缓存空对象缓存击穿（量太大，缓存过期）活力集中在一个点（一个热评的点，如微博）。\n加互斥锁设置热点数据永不过期缓存雪崩在某一个时间段，缓存集中过期失效，可能瞬间把数据库压跨。\nredis高可用限流降级数据预热正式部署前先把可能的数据访问一遍（加入缓存），设置不同的过期时间，让缓存失效的时间尽可能平均。\n","dateCreated":"2020-06-09T21:54:01+08:00","dateModified":"2020-08-06T20:11:06+08:00","datePublished":"2020-06-09T21:54:01+08:00","description":"常用redis，深入了解redis的性能和瓶颈。reference","headline":"redis","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://github.com/sebastian/about/2020/06/09/redis/"},"publisher":{"@type":"Organization","name":"Sebastian Getts","sameAs":["https://github.com/sebastian-getts/","mailto"],"image":"avatar.jpg","logo":{"@type":"ImageObject","url":"avatar.jpg"}},"url":"http://github.com/sebastian/about/2020/06/09/redis/","keywords":"redis, nosql"}</script>
+    <meta name="description" content="常用redis，深入了解redis的性能和瓶颈。reference">
+<meta property="og:type" content="blog">
 <meta property="og:title" content="redis">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;06&#x2F;09&#x2F;redis&#x2F;index.html">
-<meta property="og:site_name" content="Sebastian Getts">
+<meta property="og:url" content="http://github.com/sebastian/about/2020/06/09/redis/index.html">
+<meta property="og:site_name" content="Hola">
 <meta property="og:description" content="常用redis，深入了解redis的性能和瓶颈。reference">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-08-06T12:11:06.098Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-06-09T13:54:01.000Z">
+<meta property="article:modified_time" content="2020-08-06T12:11:06.098Z">
+<meta property="article:author" content="Sebastian Getts">
+<meta property="article:tag" content="redis">
+<meta property="article:tag" content="nosql">
 <meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://github.com/sebastian/about/assets/images/avatar.jpg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-spzjrm9no8kcbknku5bsn1dr9dpp94iq1g86qdztxtoqwlgtrnwyi2tucypv.min.css">
 
-<link rel="canonical" href="http://yoursite.com/2020/06/09/redis/">
+    <!--STYLES END-->
+    
+
+    
+    <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?3e3b025a15329c47fcc47a83f6160356";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
 
 
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
-  };
-</script>
-
-  <title>redis | Sebastian Getts</title>
-  
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
+    
+        
+    
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
 
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-meta">
-
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Sebastian Getts</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-        <p class="site-subtitle">I'm the new one.</p>
-  </div>
-
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-</div>
-
-
-<nav class="site-nav">
-  
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
-
-  </li>
-        <li class="menu-item menu-item-movies">
-
-    <a href="/movies/" rel="section"><i class="fa fa-fw fa-video-camera"></i>movies</a>
-
-  </li>
-  </ul>
-
-</nav>
-</div>
-    </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-  <div class="reading-progress-bar"></div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content">
+        
             
+        
+    
 
-  <div class="posts-expand">
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/06/09/redis/">
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/%20"
+            aria-label=""
+        >
+            Hola
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Sebastian">
-      <meta itemprop="description" content="I'm feeling lucky!">
-    </span>
+            <!-- Define author's picture -->
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sebastian Getts">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          redis
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Sebastian Getts</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>I write code to enrich and ease life of others. 0 errors, 0 warnings.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link open-algolia-search"
+                            href="#search"
+                            
+                            rel="noopener"
+                            title="Search"
+                        >
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Search</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/sebastian-getts/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/mailto"
+                            
+                            rel="noopener"
+                            title="Mail"
+                        >
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            redis
         </h1>
-
+    
+    
         <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+    <time datetime="2020-06-09T21:54:01+08:00">
+	
+		    Jun 09, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/DB/">DB</a>
 
-              <time title="Created: 2020-06-09 21:54:01" itemprop="dateCreated datePublished" datetime="2020-06-09T21:54:01+08:00">2020-06-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-08-06 20:11:06" itemprop="dateModified" datetime="2020-08-06T20:11:06+08:00">2020-08-06</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/DB/" itemprop="url" rel="index">
-                    <span itemprop="name">DB</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
 
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
+</div>
 
-      
-        <p>&#x5E38;&#x7528;redis&#xFF0C;&#x6DF1;&#x5165;&#x4E86;&#x89E3;redis&#x7684;&#x6027;&#x80FD;&#x548C;&#x74F6;&#x9888;&#x3002;<a href="https://github.com/antirez/redis">reference</a></p>
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>常用redis，深入了解redis的性能和瓶颈。<a href="https://github.com/antirez/redis">reference</a></p>
 <a id="more"></a>
 
-<h1 id="&#x4ECB;&#x7ECD;"><a href="#&#x4ECB;&#x7ECD;" class="headerlink" title="&#x4ECB;&#x7ECD;"></a>&#x4ECB;&#x7ECD;</h1><p>redis: <strong>&#x5185;&#x5B58;</strong>&#x4E2D;&#x7684;&#x6570;&#x636E;&#x7ED3;&#x6784;&#x5B58;&#x50A8;&#x7CFB;&#x7EDF;&#xFF0C;&#x53EF;&#x4EE5;&#x7528;&#x4F5C;<strong>&#x6570;&#x636E;&#x5E93;</strong>&#x3001;<strong>&#x7F13;&#x5B58;</strong>&#x548C;<strong>&#x6D88;&#x606F;&#x4E2D;&#x95F4;&#x4EF6;</strong>&#xFF0C;nosql&#x7684;&#x4E00;&#x79CD;&#x3002;</p>
-<h2 id="nosql"><a href="#nosql" class="headerlink" title="nosql"></a>nosql</h2><p>&#x5173;&#x7CFB;&#x578B;&#x6570;&#x636E;&#x5E93;&#x4E0D;&#x591F;&#x7528;&#xFF0C;&#x51FA;&#x6765;&#x4E86;nosql&#x3002;&#x3002;&#x3002;</p>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p>redis: <strong>内存</strong>中的数据结构存储系统，可以用作<strong>数据库</strong>、<strong>缓存</strong>和<strong>消息中间件</strong>，nosql的一种。</p>
+<h2 id="nosql"><a href="#nosql" class="headerlink" title="nosql"></a>nosql</h2><p>关系型数据库不够用，出来了nosql。。。</p>
 <ol>
-<li>&#x4E00;&#x5F00;&#x59CB;&#x5355;&#x4F53;&#x5E94;&#x7528;&#xFF0C;&#x5C0F;&#x7528;&#x6237;&#x91CF;&#x80FD;&#x627F;&#x53D7;&#x3002;&#x4F46;&#x662F;&#x5F53;&#x4F53;&#x91CF;&#x53D8;&#x5927;&#x65F6;&#xFF1A;<ul>
-<li>&#x6570;&#x636E;&#x91CF;&#x5927;</li>
-<li>&#x6570;&#x636E;&#x7684;&#x7D22;&#x5F15;&#x5927;</li>
-<li>&#x8BBF;&#x95EE;&#x91CF;&#x5927;</li>
+<li>一开始单体应用，小用户量能承受。但是当体量变大时：<ul>
+<li>数据量大</li>
+<li>数据的索引大</li>
+<li>访问量大</li>
 </ul>
 </li>
-<li>&#x8BFB;&#x5199;&#x5206;&#x79BB;&#x601D;&#x60F3;&#xFF08;&#x5782;&#x76F4;&#x62C6;&#x5206;&#xFF09;&#xFF0C;&#x5199;&#x4E00;&#x4E2A;&#x5E93;&#xFF0C;&#x5176;&#x4ED6;&#x5E93;&#x4ECE;&#x8FD9;&#x4E2A;&#x5E93;&#x505A;&#x540C;&#x6B65;&#xFF0C;&#x4F46;&#x662F;&#x6570;&#x636E;&#x5E93;&#x5927;&#x90E8;&#x5206;&#x5176;&#x5B9E;&#x90FD;&#x662F;&#x8BFB;&#xFF0C;&#x628A;&#x521A;&#x67E5;&#x5230;&#x7684;&#x8FDB;&#x884C;&#x7F13;&#x5B58;&#xFF0C;&#x8FD9;&#x6837;&#x4E0B;&#x4E00;&#x4E2A;&#x8981;&#x67E5;&#x4E14;&#x6570;&#x636E;&#x6CA1;&#x53D8;&#x7684;&#x8BDD;&#x5C31;&#x7528;&#x7F13;&#x5B58;&#x4E2D;&#x7684;&#x6570;&#x636E;&#x3002; &#x6DFB;&#x52A0;&#x4E00;&#x5C42;<strong>memcache</strong>&#x7F13;&#x5B58;</li>
-<li>&#x96C6;&#x7FA4;&#xFF08;&#x6C34;&#x5E73;&#x62C6;&#x5206;&#xFF09;&#xFF1A;&#x4E0A;&#x9762;&#x7684;&#x8BFB;&#x5199;&#x5206;&#x79BB;copy&#x591A;&#x4EFD;&#x3002;</li>
+<li>读写分离思想（垂直拆分），写一个库，其他库从这个库做同步，但是数据库大部分其实都是读，把刚查到的进行缓存，这样下一个要查且数据没变的话就用缓存中的数据。 添加一层<strong>memcache</strong>缓存</li>
+<li>集群（水平拆分）：上面的读写分离copy多份。</li>
 </ol>
-<p>mysql&#x65E9;&#x4E9B;&#x5E74;&#x4F7F;&#x7528;&#x7684;&#x662F;MyISAM&#x5F15;&#x64CE;&#xFF0C;&#x7279;&#x6027;&#x662F;<strong>&#x8868;&#x9501;</strong>&#xFF08;&#x67E5;&#x8BE2;&#x67D0;&#x4E2A;&#x6570;&#x636E;&#x4F1A;&#x5C06;&#x6574;&#x4E2A;&#x8868;&#x9501;&#x8D77;&#x6765;&#xFF0C;&#x9AD8;&#x5E76;&#x53D1;&#x4E0B;&#x6027;&#x80FD;&#x4E0B;&#x6ED1;&#xFF09;&#xFF0C;&#x73B0;&#x5728;&#x4F7F;&#x7528;&#x7684;&#x662F;Innodb&#xFF0C;&#x6539;&#x4E3A;&#x4E86;<strong>&#x884C;&#x9501;</strong>&#x3002;</p>
-<p>&#x4E0D;&#x80FD;&#x7528;mysql&#x505A;&#x5B9E;&#x65F6;&#x5B58;&#x50A8;&#x548C;&#x8BBF;&#x95EE;&#x3001;&#x4E2A;&#x4EBA;&#x4FE1;&#x606F;&#x3001;&#x5730;&#x7406;&#x4F4D;&#x7F6E;&#xFF08;&#x5982;&#x5FAE;&#x4FE1;&#x70ED;&#x95E8;10&#x4E07;+&#x7684;&#x6587;&#x7AE0;&#x8BB0;&#x5F55;&#x7B49;&#xFF09;&#x3002;</p>
-<h3 id="&#x7279;&#x70B9;"><a href="#&#x7279;&#x70B9;" class="headerlink" title="&#x7279;&#x70B9;"></a>&#x7279;&#x70B9;</h3><ol>
-<li>&#x6613;&#x4E8E;&#x6269;&#x5C55;&#xFF0C;&#x6570;&#x636E;&#x95F4;&#x6CA1;&#x6709;&#x5173;&#x7CFB;&#xFF08;key value&#x952E;&#x503C;&#x5BF9;&#xFF09;&#xFF0C;&#x597D;&#x6BD4;java&#x9762;&#x5411;&#x63A5;&#x53E3;&#xFF0C;&#x4FBF;&#x4E8E;&#x89E3;&#x5076;&#x3002;</li>
-<li>&#x5927;&#x6570;&#x636E;&#x91CF;&#x4E5F;&#x9AD8;&#x6027;&#x80FD;&#xFF08;&#x5199;8&#x4E07;&#x6B21;/&#x79D2;&#xFF0C;&#x8BFB;11&#x4E07;&#x6B21;/&#x79D2;&#xFF09;</li>
-<li>&#x591A;&#x6837;&#x578B;&#xFF0C;&#x4E0D;&#x9700;&#x8981;&#x4E8B;&#x5148;&#x8BBE;&#x8BA1;&#x6570;&#x636E;&#x5E93;</li>
-<li>&#x6CA1;&#x6709;&#x56FA;&#x5B9A;&#x7684;&#x67E5;&#x8BE2;&#x8BED;&#x8A00;&#xFF1B;&#x6700;&#x7EC8;&#x4E00;&#x81F4;&#x6027;</li>
-<li>&#x952E;&#x503C;&#x5BF9;&#x5B58;&#x50A8;&#xFF0C;&#x5217;&#x5B58;&#x50A8;&#xFF0C;&#x6587;&#x6863;&#x5B58;&#x50A8;&#xFF0C;&#x56FE;&#x5F62;&#x5B58;&#x50A8;&#x5E93;&#xFF08;&#x793E;&#x4EA4;&#xFF09;</li>
-<li>&#x9AD8;&#x6027;&#x80FD;&#x3001;&#x9AD8;&#x53EF;&#x7528;&#x3001;&#x9AD8;&#x53EF;&#x6269;</li>
-<li>CAP&#x3001;BASE&#xFF0C;&#x5F02;&#x5730;&#x591A;&#x6D3B;</li>
-<li>&#x591A;&#x6837;&#x3001;&#x5B9E;&#x65F6;&#x3001;&#x5E76;&#x53D1;&#xFF08;Volume, Variety, Veiocity&#xFF09;</li>
+<p>mysql早些年使用的是MyISAM引擎，特性是<strong>表锁</strong>（查询某个数据会将整个表锁起来，高并发下性能下滑），现在使用的是Innodb，改为了<strong>行锁</strong>。</p>
+<p>不能用mysql做实时存储和访问、个人信息、地理位置（如微信热门10万+的文章记录等）。</p>
+<h3 id="特点"><a href="#特点" class="headerlink" title="特点"></a>特点</h3><ol>
+<li>易于扩展，数据间没有关系（key value键值对），好比java面向接口，便于解偶。</li>
+<li>大数据量也高性能（写8万次/秒，读11万次/秒）</li>
+<li>多样型，不需要事先设计数据库</li>
+<li>没有固定的查询语言；最终一致性</li>
+<li>键值对存储，列存储，文档存储，图形存储库（社交）</li>
+<li>高性能、高可用、高可扩</li>
+<li>CAP、BASE，异地多活</li>
+<li>多样、实时、并发（Volume, Variety, Veiocity）</li>
 </ol>
-<p>&#x4E0E;&#x5173;&#x7CFB;&#x578B;&#x4E00;&#x8D77;&#x4F7F;&#x7528;&#x3002;</p>
-<p>&#x5546;&#x54C1;&#x7684;&#x63CF;&#x8FF0;&#x3001;&#x8BC4;&#x8BBA;&#xFF08;&#x6587;&#x5B57;&#x6BD4;&#x8F83;&#x591A;&#x7684;&#xFF09;&#xFF1A;&#x6587;&#x6863;&#x578B;&#x6570;&#x636E;&#x5E93;&#xFF08;MongoDB&#xFF09;</p>
-<p>&#x5546;&#x54C1;&#x7684;&#x57FA;&#x672C;&#x4FE1;&#x606F;&#xFF08;&#x4EF7;&#x683C;&#x3001;&#x5546;&#x5BB6;&#x3001;&#x540D;&#x79F0;&#xFF09;&#xFF1A;MySQL</p>
-<p>&#x56FE;&#x7247;&#xFF1A;FastDFS, GFS, HDFS, OSS&#x2026;</p>
-<p>&#x5546;&#x54C1;&#x70ED;&#x95E8;&#x7684;&#x6CE2;&#x6BB5;&#x4FE1;&#x606F;&#xFF1A;&#x5185;&#x5B58;&#x6570;&#x636E;&#x5E93;&#xFF08;Redis&#xFF0C;Tair&#xFF0C;Memcache&#x2026;&#x2026;&#xFF09;</p>
-<p>==&#x6CA1;&#x6709;&#x4EC0;&#x4E48;&#x4E0D;&#x662F;&#x52A0;&#x4EE5;&#x5C42;&#x89E3;&#x51B3;&#x4E0D;&#x4E86;&#x7684;==&#xFF1A; &#x7EDF;&#x4E00;&#x670D;&#x52A1;&#x5C42;&#x3002;</p>
-<h3 id="&#x6587;&#x6863;&#x578B;&#x6570;&#x636E;&#x5E93;"><a href="#&#x6587;&#x6863;&#x578B;&#x6570;&#x636E;&#x5E93;" class="headerlink" title="&#x6587;&#x6863;&#x578B;&#x6570;&#x636E;&#x5E93;"></a>&#x6587;&#x6863;&#x578B;&#x6570;&#x636E;&#x5E93;</h3><p>MongoDB&#xFF0C;&#x4ECB;&#x4E8E;&#x5173;&#x7CFB;&#x578B;&#x548C;&#x975E;&#x5173;&#x7CFB;&#x578B;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x7684;&#x4E2D;&#x95F4;&#x4EA7;&#x54C1;&#xFF0C;&#x975E;&#x5173;&#x7CFB;&#x578B;&#x6570;&#x636E;&#x5E93;&#x4E2D;&#x529F;&#x80FD;&#x6700;&#x4E30;&#x5BCC;&#x7684;&#x3002;</p>
-<h3 id="KV&#x952E;&#x503C;&#x5BF9;"><a href="#KV&#x952E;&#x503C;&#x5BF9;" class="headerlink" title="KV&#x952E;&#x503C;&#x5BF9;"></a>KV&#x952E;&#x503C;&#x5BF9;</h3><p>Redis&#xFF0C;Tair</p>
-<h3 id="&#x5217;&#x5B58;&#x50A8;&#x6570;&#x636E;&#x5E93;"><a href="#&#x5217;&#x5B58;&#x50A8;&#x6570;&#x636E;&#x5E93;" class="headerlink" title="&#x5217;&#x5B58;&#x50A8;&#x6570;&#x636E;&#x5E93;"></a>&#x5217;&#x5B58;&#x50A8;&#x6570;&#x636E;&#x5E93;</h3><p>HBase&#xFF08;&#x5927;&#x6570;&#x636E;&#xFF09;</p>
-<p>&#x5206;&#x5E03;&#x5F0F;&#x6587;&#x4EF6;&#x7CFB;&#x7EDF;</p>
-<h3 id="&#x56FE;"><a href="#&#x56FE;" class="headerlink" title="&#x56FE;"></a>&#x56FE;</h3><p>&#x7C7B;&#x4F3C;&#x77E5;&#x8BC6;&#x56FE;&#x8C31;&#xFF0C;&#x4E0D;&#x662F;&#x5B58;&#x50A8;&#x56FE;&#x5F62;&#x3002;&#x4E3B;&#x8981;&#x7528;&#x4E8E;&#x5B58;&#x50A8;&#x793E;&#x4EA4;&#x7F51;&#x7EDC;&#x3002;</p>
-<p>Neo4j&#xFF0C;InfoGrid&#x3002;</p>
-<h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><p>Remote Dictionary Server. C&#x8BED;&#x8A00;&#x7F16;&#x5199;&#x7684;&#x3002;&#x514D;&#x8D39;&#xFF0C;&#x5F00;&#x6E90;&#xFF0C;&#x63D0;&#x4F9B;&#x591A;&#x79CD;&#x8BED;&#x8A00;&#x7684;api&#x3002;</p>
+<p>与关系型一起使用。</p>
+<p>商品的描述、评论（文字比较多的）：文档型数据库（MongoDB）</p>
+<p>商品的基本信息（价格、商家、名称）：MySQL</p>
+<p>图片：FastDFS, GFS, HDFS, OSS…</p>
+<p>商品热门的波段信息：内存数据库（Redis，Tair，Memcache……）</p>
+<p>==没有什么不是加以层解决不了的==： 统一服务层。</p>
+<h3 id="文档型数据库"><a href="#文档型数据库" class="headerlink" title="文档型数据库"></a>文档型数据库</h3><p>MongoDB，介于关系型和非关系型数据库中的中间产品，非关系型数据库中功能最丰富的。</p>
+<h3 id="KV键值对"><a href="#KV键值对" class="headerlink" title="KV键值对"></a>KV键值对</h3><p>Redis，Tair</p>
+<h3 id="列存储数据库"><a href="#列存储数据库" class="headerlink" title="列存储数据库"></a>列存储数据库</h3><p>HBase（大数据）</p>
+<p>分布式文件系统</p>
+<h3 id="图"><a href="#图" class="headerlink" title="图"></a>图</h3><p>类似知识图谱，不是存储图形。主要用于存储社交网络。</p>
+<p>Neo4j，InfoGrid。</p>
+<h1 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h1><p>Remote Dictionary Server. C语言编写的。免费，开源，提供多种语言的api。</p>
 <ul>
-<li>&#x5185;&#x5B58;&#x5B58;&#x50A8;&#x3001;&#x6301;&#x4E45;&#x5316;&#xFF0C;&#x4F46;&#x662F;&#x5185;&#x5B58;&#x662F;&#x65AD;&#x7535;&#x5373;&#x5931;&#xFF0C;&#x6240;&#x4EE5;&#x6301;&#x4E45;&#x5316;&#x5F88;&#x91CD;&#x8981;&#xFF08;rdb&#x3001;aof&#xFF09;</li>
-<li>&#x8BA1;&#x65F6;&#x5668;&#x3001;&#x8BA1;&#x6570;&#x5668;&#xFF08;&#x6D4F;&#x89C8;&#x91CF;&#xFF09;</li>
+<li>内存存储、持久化，但是内存是断电即失，所以持久化很重要（rdb、aof）</li>
+<li>计时器、计数器（浏览量）</li>
 </ul>
-<h2 id="&#x6D4B;&#x8BD5;"><a href="#&#x6D4B;&#x8BD5;" class="headerlink" title="&#x6D4B;&#x8BD5;"></a>&#x6D4B;&#x8BD5;</h2><p>&#x5B89;&#x88C5;&#x540E;&#x81EA;&#x5E26;&#x7684;&#x6D4B;&#x8BD5;&#x5DE5;&#x5177;</p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p>安装后自带的测试工具</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-benchmark -h localhost -p 6379 -100 -n 100000</span><br></pre></td></tr></table></figure>
 
-<h2 id="&#x57FA;&#x7840;"><a href="#&#x57FA;&#x7840;" class="headerlink" title="&#x57FA;&#x7840;"></a>&#x57FA;&#x7840;</h2><p>&#x9ED8;&#x8BA4;16&#x4E2A;&#x6570;&#x636E;&#x5E93;&#x4E14;&#x4F7F;&#x7528;&#x7684;&#x662F;&#x7B2C;0&#x4E2A;&#x3002; </p>
-<h3 id="GEOSPATIAL"><a href="#GEOSPATIAL" class="headerlink" title="GEOSPATIAL"></a>GEOSPATIAL</h3><p>&#x5730;&#x7406;&#x4F4D;&#x7F6E;&#xFF0C;&#x4E0D;&#x4EC5;&#x4EC5;&#x662F;GET&#x3001;SET&#xFF01;&#x6839;&#x636E;&#x7ECF;&#x7EAC;&#x5EA6;&#x83B7;&#x53D6;&#x8DDD;&#x79BB;&#x3002;</p>
-<h2 id="springboot&#x96C6;&#x6210;"><a href="#springboot&#x96C6;&#x6210;" class="headerlink" title="springboot&#x96C6;&#x6210;"></a>springboot&#x96C6;&#x6210;</h2><p>&#x7248;&#x672C;&lt;2.0 &#x5E95;&#x5C42;&#x4F7F;&#x7528;&#x7684;jedis&#xFF0C;BIO&#xFF0C;&#x76F4;&#x8FDE;&#x6570;&#x636E;&#x5E93;&#xFF0C;&#x591A;&#x7EBF;&#x7A0B;&#x4E0B;&#x4E0D;&#x5B89;&#x5168;&#xFF0C;&#x4F18;&#x5316;&#x65B9;&#x5F0F;&#x662F;jedis pool&#x8FDE;&#x63A5;&#x6C60;&#x3002;</p>
-<p>&#x7248;&#x672C;&gt;2.0 &#x5E95;&#x5C42;&#x4F7F;&#x7528;&#x7684;lettuce&#xFF0C;NIO&#xFF0C;&#x91C7;&#x7528;netty&#xFF0C;&#x5B9E;&#x4F8B;&#x53EF;&#x4EE5;&#x5728;&#x591A;&#x4E2A;&#x7EBF;&#x7A0B;&#x4E2D;&#x8FDB;&#x884C;&#x5171;&#x4EAB;&#xFF0C;&#x4E0D;&#x5B58;&#x5728;&#x7EBF;&#x7A0B;&#x4E0D;&#x5B89;&#x5168;&#x7684;&#x60C5;&#x51B5;&#x3002;</p>
-<h2 id="rdb"><a href="#rdb" class="headerlink" title="rdb"></a>rdb</h2><p>&#x4E3A;&#x4EC0;&#x4E48;&#x4F1A;&#x6709;&#x8FD9;&#x4E2A;rdb&#xFF1F;</p>
-<p>redis&#x7684;&#x9AD8;&#x901F;&#x67E5;&#x8BE2;&#x6765;&#x6E90;&#x4E8E;&#x5B83;&#x7684;&#x5185;&#x5B58;&#x5B58;&#x50A8;&#xFF0C;&#x7531;&#x4E8E;&#x5185;&#x5B58;&#x65AD;&#x7535;&#x5373;&#x5931;&#xFF0C;&#x53EF;&#x4EE5;&#x628A;rdb&#x4F5C;&#x4E3A;&#x5907;&#x4EFD;&#x6765;&#x5F25;&#x8865;&#x8FD9;&#x4E2A;&#x4E0D;&#x8DB3;&#x3002;&#x6240;&#x4EE5;rdb&#x5373;redis databse&#x3002;&#x4F46;&#x662F;&#x4E5F;&#x4E0D;&#x662F;&#x6BCF;&#x6B21;&#x64CD;&#x4F5C;&#x90FD;&#x4FDD;&#x5B58;&#xFF0C;&#x5426;&#x5219;&#x6027;&#x80FD;&#x6025;&#x901F;&#x964D;&#x4F4E;&#xFF0C;&#x8FD9;&#x4E5F;&#x5E26;&#x6765;&#x53E6;&#x4E00;&#x4E2A;&#x95EE;&#x9898;&#xFF0C;&#x5373;&#x6700;&#x540E;&#x4E00;&#x4E2A;/&#x6279;&#x64CD;&#x4F5C;&#x4E0D;&#x4F1A;&#x88AB;&#x4FDD;&#x5B58;&#x3002;</p>
-<div id="flowchart-0" class="flow-chart"></div>
+<h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><p>默认16个数据库且使用的是第0个。 </p>
+<h3 id="GEOSPATIAL"><a href="#GEOSPATIAL" class="headerlink" title="GEOSPATIAL"></a>GEOSPATIAL</h3><p>地理位置，不仅仅是GET、SET！根据经纬度获取距离。</p>
+<h2 id="springboot集成"><a href="#springboot集成" class="headerlink" title="springboot集成"></a>springboot集成</h2><p>版本&lt;2.0 底层使用的jedis，BIO，直连数据库，多线程下不安全，优化方式是jedis pool连接池。</p>
+<p>版本&gt;2.0 底层使用的lettuce，NIO，采用netty，实例可以在多个线程中进行共享，不存在线程不安全的情况。</p>
+<h2 id="rdb"><a href="#rdb" class="headerlink" title="rdb"></a>rdb</h2><p>为什么会有这个rdb？</p>
+<p>redis的高速查询来源于它的内存存储，由于内存断电即失，可以把rdb作为备份来弥补这个不足。所以rdb即redis databse。但是也不是每次操作都保存，否则性能急速降低，这也带来另一个问题，即最后一个/批操作不会被保存。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">start&#x3D;&gt;start: start</span><br><span class="line">end&#x3D;&gt;end: end</span><br><span class="line">condition&#x3D;&gt;condition: 触发rdb</span><br><span class="line">rdbfile&#x3D;&gt;inputoutput: dump.rdb</span><br><span class="line">operation&#x3D;&gt;operation: go on dealing with</span><br><span class="line"></span><br><span class="line">start-&gt;condition</span><br><span class="line">condition(yes)-&gt;rdbfile-&gt;end</span><br><span class="line">condition(no)-&gt;operation-&gt;end</span><br></pre></td></tr></table></figure>
 
-<h4 id="&#x89E6;&#x53D1;&#x673A;&#x5236;"><a href="#&#x89E6;&#x53D1;&#x673A;&#x5236;" class="headerlink" title="&#x89E6;&#x53D1;&#x673A;&#x5236;"></a>&#x89E6;&#x53D1;&#x673A;&#x5236;</h4><ol>
-<li>save&#x7684;&#x89C4;&#x5219;</li>
-<li>&#x6267;&#x884C;flushall</li>
-<li>&#x9000;&#x51FA;redis</li>
+<h4 id="触发机制"><a href="#触发机制" class="headerlink" title="触发机制"></a>触发机制</h4><ol>
+<li>save的规则</li>
+<li>执行flushall</li>
+<li>退出redis</li>
 </ol>
-<p>&#x4EA7;&#x751F;&#x5907;&#x4EFD;&#xFF0C;&#x4F1A;&#x81EA;&#x52A8;&#x751F;&#x6210;&#x4E00;&#x4E2A;dump.rdb</p>
-<h4 id="&#x7528;rdb&#x6062;&#x590D;"><a href="#&#x7528;rdb&#x6062;&#x590D;" class="headerlink" title="&#x7528;rdb&#x6062;&#x590D;"></a>&#x7528;rdb&#x6062;&#x590D;</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config get dir</span><br></pre></td></tr></table></figure>
+<p>产生备份，会自动生成一个dump.rdb</p>
+<h4 id="用rdb恢复"><a href="#用rdb恢复" class="headerlink" title="用rdb恢复"></a>用rdb恢复</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">config get dir</span><br></pre></td></tr></table></figure>
 
-<h4 id="&#x4F18;&#x70B9;&#xFF1A;"><a href="#&#x4F18;&#x70B9;&#xFF1A;" class="headerlink" title="&#x4F18;&#x70B9;&#xFF1A;"></a>&#x4F18;&#x70B9;&#xFF1A;</h4><ol>
-<li>&#x9002;&#x5408;&#x5927;&#x6570;&#x636E;</li>
-<li>&#x5BF9;&#x6570;&#x636E;&#x5B8C;&#x6574;&#x6027;&#x8981;&#x6C42;&#x4E0D;&#x9AD8;&#xFF08;&#x6BD4;&#x5982;90srdb&#x4E00;&#x6B21;&#xFF0C;60s&#x7684;&#x65F6;&#x5019;&#x5B95;&#x673A;&#xFF0C;&#x5C31;&#x4F1A;&#x9020;&#x6210;&#x6570;&#x636E;&#x4E22;&#x5931;&#xFF09;</li>
+<h4 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h4><ol>
+<li>适合大数据</li>
+<li>对数据完整性要求不高（比如90srdb一次，60s的时候宕机，就会造成数据丢失）</li>
 </ol>
-<h4 id="&#x7F3A;&#x70B9;&#xFF1A;"><a href="#&#x7F3A;&#x70B9;&#xFF1A;" class="headerlink" title="&#x7F3A;&#x70B9;&#xFF1A;"></a>&#x7F3A;&#x70B9;&#xFF1A;</h4><ol>
-<li>&#x9700;&#x8981;&#x4E00;&#x5B9A;&#x7684;&#x65F6;&#x95F4;&#x95F4;&#x9694;&#x8FDB;&#x7A0B;&#x64CD;&#x4F5C;</li>
-<li>fork&#x8FDB;&#x7A0B;&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x5360;&#x7528;&#x4E00;&#x5B9A;&#x7684;&#x5185;&#x5BB9;&#x7A7A;&#x95F4;</li>
+<h4 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h4><ol>
+<li>需要一定的时间间隔进程操作</li>
+<li>fork进程的时候会占用一定的内容空间</li>
 </ol>
-<h2 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h2><p>Append Only File&#xFF0C; &#x5C06;&#x6211;&#x4EEC;&#x7684;&#x6240;&#x6709;&#x547D;&#x4EE4;&#x90FD;&#x8BB0;&#x5F55;&#x4E0B;&#x6765;&#xFF0C;&#x76F8;&#x5F53;&#x4E8E;history&#xFF0C;&#x6062;&#x590D;&#x7684;&#x65F6;&#x5019;&#x518D;&#x8FFD;&#x52A0;&#x3002;&#x8FD9;&#x662F;&#x53E6;&#x4E00;&#x79CD;&#x6062;&#x590D;&#x7684;&#x65B9;&#x6CD5;&#x3002;</p>
+<h2 id="AOF"><a href="#AOF" class="headerlink" title="AOF"></a>AOF</h2><p>Append Only File， 将我们的所有命令都记录下来，相当于history，恢复的时候再追加。这是另一种恢复的方法。</p>
 <ul>
-<li>&#x5927;&#x6570;&#x636E;&#x7684;&#x60C5;&#x51B5;&#x4E0B;&#x6548;&#x7387;&#x4F1A;&#x6BD4;&#x8F83;&#x4F4E;&#x3002;</li>
-<li>&#x9ED8;&#x8BA4;&#x662F;&#x4E0D;&#x5F00;&#x542F;&#x7684;&#x3002;</li>
+<li>大数据的情况下效率会比较低。</li>
+<li>默认是不开启的。</li>
 </ul>
-<p>&#x5F00;&#x542F;&#x540E;&#x4F1A;&#x8BB0;&#x5F55;&#x64CD;&#x4F5C;&#x8BB0;&#x5F55;&#xFF0C;&#x5173;&#x95ED;redis&#x7684;&#x65F6;&#x5019;&#x4F1A;&#x4EA7;&#x751F;aof&#x6587;&#x4EF6;&#xFF0C;&#x5982;&#x679C;&#x6076;&#x610F;&#x7BE1;&#x6539;&#xFF0C;redis&#x65E0;&#x6CD5;&#x6B63;&#x5E38;&#x542F;&#x52A8;&#x3002;</p>
-<p>&#x4FEE;&#x590D;aof&#x6587;&#x4EF6; <code>redis-check-aof --fix</code></p>
-<h3 id="&#x4F18;&#x70B9;&#xFF1A;-1"><a href="#&#x4F18;&#x70B9;&#xFF1A;-1" class="headerlink" title="&#x4F18;&#x70B9;&#xFF1A;"></a>&#x4F18;&#x70B9;&#xFF1A;</h3><ol>
-<li>&#x6BCF;&#x6B21;&#x4FEE;&#x6539;&#x90FD;&#x540C;&#x6B65;&#xFF0C;&#x6587;&#x4EF6;&#x7684;&#x5B8C;&#x6574;&#x6027;&#x66F4;&#x597D;&#xFF0C;&#x9ED8;&#x8BA4;&#x6BCF;&#x79D2;&#x540C;&#x6B65;&#x4E00;&#x6B21;&#xFF0C;&#x53EF;&#x80FD;&#x4F1A;&#x4E22;&#x5931;&#x4E00;&#x79D2;&#x7684;&#x6570;&#x636E;</li>
-<li>&#x4ECE;&#x4E0D;&#x540C;&#x6B65;&#x6548;&#x7387;&#x6700;&#x9AD8;</li>
+<p>开启后会记录操作记录，关闭redis的时候会产生aof文件，如果恶意篡改，redis无法正常启动。</p>
+<p>修复aof文件 <code>redis-check-aof --fix</code></p>
+<h3 id="优点：-1"><a href="#优点：-1" class="headerlink" title="优点："></a>优点：</h3><ol>
+<li>每次修改都同步，文件的完整性更好，默认每秒同步一次，可能会丢失一秒的数据</li>
+<li>从不同步效率最高</li>
 </ol>
-<h3 id="&#x7F3A;&#x70B9;&#xFF1A;-1"><a href="#&#x7F3A;&#x70B9;&#xFF1A;-1" class="headerlink" title="&#x7F3A;&#x70B9;&#xFF1A;"></a>&#x7F3A;&#x70B9;&#xFF1A;</h3><ol>
-<li>&#x76F8;&#x5BF9;&#x4E8E;&#x6570;&#x636E;&#x6587;&#x4EF6;&#xFF0C;aof&#x8FDC;&#x5927;&#x4E8E;rdb&#xFF0C;&#x4FEE;&#x590D;&#x7684;&#x901F;&#x5EA6;&#x6BD4;rdb&#x6162;</li>
-<li>&#x9ED8;&#x8BA4;&#x662F;rdb&#xFF0C;&#x6548;&#x7387;&#x81EA;&#x7136;&#x9AD8;&#x4E8E;aof&#x3002;</li>
+<h3 id="缺点：-1"><a href="#缺点：-1" class="headerlink" title="缺点："></a>缺点：</h3><ol>
+<li>相对于数据文件，aof远大于rdb，修复的速度比rdb慢</li>
+<li>默认是rdb，效率自然高于aof。</li>
 </ol>
-<p><strong>&#x4E0E;rdb&#x6DF7;&#x5408;&#x4F7F;&#x7528;</strong></p>
-<h2 id="&#x4E3B;&#x4ECE;&#x590D;&#x5236;"><a href="#&#x4E3B;&#x4ECE;&#x590D;&#x5236;" class="headerlink" title="&#x4E3B;&#x4ECE;&#x590D;&#x5236;"></a>&#x4E3B;&#x4ECE;&#x590D;&#x5236;</h2><p>&#x5C06;&#x4E00;&#x53F0;redis&#x670D;&#x52A1;&#x5668;&#x7684;&#x6570;&#x636E;&#x590D;&#x5236;&#x5230;&#x5176;&#x4ED6;&#x7684;redis&#x670D;&#x52A1;&#x5668;&#xFF0C;&#x524D;&#x8005;&#x79F0;&#x4E3A;&#x4E3B;&#x8282;&#x70B9;&#xFF0C;&#x540E;&#x8005;&#x79F0;&#x4E3A;&#x4ECE;&#x7ED3;&#x70B9;&#x3002;</p>
-<p>&#x4F5C;&#x7528;&#xFF1A;&#x6570;&#x636E;&#x5197;&#x4F59;&#x3001;&#x6545;&#x969C;&#x6062;&#x590D;&#x3001;&#x8D1F;&#x8F7D;&#x5747;&#x8861;&#xFF08;&#x8BFB;&#x5199;&#x5206;&#x79BB;&#xFF09;&#x3001;&#x9AD8;&#x53EF;&#x7528;&#xFF08;&#x96C6;&#x7FA4;&#xFF09;&#x57FA;&#x77F3;</p>
-<p>reids&#x7684;&#x5BB9;&#x91CF;&#x6709;&#x9650;&#xFF0C;&#x673A;&#x5668;&#x7684;&#x5185;&#x5B58;&#x4E0D;&#x53EF;&#x80FD;&#x5168;&#x90E8;&#x7528;&#x6765;&#x7ED9;redis&#x505A;&#x5B58;&#x50A8;&#x5185;&#x5B58;&#xFF0C;&#x6700;&#x5927;&#x4E0D;&#x5E94;&#x8BE5;&#x8D85;&#x8FC7;20G&#x3002;</p>
-<p>&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#x6BCF;&#x53F0;redis&#x90FD;&#x662F;&#x4E3B;&#x8282;&#x70B9;&#xFF1B;&#x4E00;&#x4E2A;&#x4E3B;&#x8282;&#x70B9;&#x53EF;&#x4EE5;&#x6709;&#x591A;&#x4E2A;&#x4ECE;&#x7ED3;&#x70B9;&#xFF0C;&#x4F46;&#x662F;&#x4E00;&#x4E2A;&#x4ECE;&#x7ED3;&#x70B9;&#x53EA;&#x80FD;&#x6709;&#x4E00;&#x4E2A;&#x4E3B;&#x8282;&#x70B9;&#x3002;</p>
-<h3 id="&#x73AF;&#x5883;&#x914D;&#x7F6E;"><a href="#&#x73AF;&#x5883;&#x914D;&#x7F6E;" class="headerlink" title="&#x73AF;&#x5883;&#x914D;&#x7F6E;"></a>&#x73AF;&#x5883;&#x914D;&#x7F6E;</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">info replication # &#x67E5;&#x770B;&#x5F53;&#x524D;&#x5E93;&#x7684;&#x4FE1;&#x606F;</span><br></pre></td></tr></table></figure>
+<p><strong>与rdb混合使用</strong></p>
+<h2 id="主从复制"><a href="#主从复制" class="headerlink" title="主从复制"></a>主从复制</h2><p>将一台redis服务器的数据复制到其他的redis服务器，前者称为主节点，后者称为从结点。</p>
+<p>作用：数据冗余、故障恢复、负载均衡（读写分离）、高可用（集群）基石</p>
+<p>reids的容量有限，机器的内存不可能全部用来给redis做存储内存，最大不应该超过20G。</p>
+<p>默认情况下每台redis都是主节点；一个主节点可以有多个从结点，但是一个从结点只能有一个主节点。</p>
+<h3 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">info replication # 查看当前库的信息</span><br></pre></td></tr></table></figure>
 
-<p>&#x4E00;&#x822C;&#x60C5;&#x51B5;&#x4E0B;&#x53EA;&#x7528;&#x914D;&#x7F6E;&#x4ECE;&#x673A;&#x5373;&#x53EF;&#x3002;</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SLAVEOF ip:port # ip:port&#x4E3A;&#x4E3B;&#x673A;</span><br></pre></td></tr></table></figure>
+<p>一般情况下只用配置从机即可。</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">SLAVEOF ip:port # ip:port为主机</span><br></pre></td></tr></table></figure>
 
-<p>&#x4E0A;&#x9762;&#x7684;&#x662F;&#x547D;&#x4EE4;&#x914D;&#x7F6E;&#xFF0C;&#x53EA;&#x662F;&#x6682;&#x65F6;&#x7684;&#x3002;<strong>&#x5B9E;&#x9645;&#x751F;&#x4EA7;&#x5E94;&#x8BE5;&#x4FEE;&#x6539;&#x914D;&#x7F6E;&#x6587;&#x4EF6;</strong>&#xFF0C;&#x5728;&#x6587;&#x4EF6;&#x4E2D;&#x5199;&#x4E3B;&#x673A;&#x7684;&#x5730;&#x5740;&#x548C;&#x5BC6;&#x7801;&#xFF0C;&#x4E3B;&#x673A;&#x8D1F;&#x8D23;&#x5199;&#xFF0C;&#x4ECE;&#x673A;&#x8D1F;&#x8D23;&#x8BFB;&#xFF0C;&#x4E3B;&#x673A;&#x7684;&#x6240;&#x6709;&#x6570;&#x636E;&#x4F1A;&#x81EA;&#x52A8;&#x88AB;&#x4ECE;&#x673A;&#x4FDD;&#x5B58;&#x3002;</p>
-<h4 id="&#x5982;&#x679C;&#x4E3B;&#x673A;&#x5B95;&#x673A;&#x4E86;&#x5462;&#xFF1F;"><a href="#&#x5982;&#x679C;&#x4E3B;&#x673A;&#x5B95;&#x673A;&#x4E86;&#x5462;&#xFF1F;" class="headerlink" title="&#x5982;&#x679C;&#x4E3B;&#x673A;&#x5B95;&#x673A;&#x4E86;&#x5462;&#xFF1F;"></a>&#x5982;&#x679C;&#x4E3B;&#x673A;&#x5B95;&#x673A;&#x4E86;&#x5462;&#xFF1F;</h4><p>&#x9ED8;&#x8BA4;&#x60C5;&#x51B5;&#x4E0B;&#xFF0C;&#x4E3B;&#x673A;&#x6302;&#x4E86;&#x4EE5;&#x540E;&#xFF0C;&#x7528;<code>info replication</code>&#x67E5;&#x770B;&#x5269;&#x4F59;&#x673A;&#x5668;&#xFF0C;&#x4ECE;&#x673A;&#x8FD0;&#x884C;&#x6B63;&#x5E38;&#xFF0C;&#x4F46;&#x662F;&#x6CA1;&#x6709;&#x5199;&#x64CD;&#x4F5C;&#x4E86;&#x3002;&#x4E3B;&#x673A;&#x6062;&#x590D;&#x540E;&#xFF0C;&#x4ECD;&#x65E7;&#x6B63;&#x5E38;&#x4E3B;&#x4ECE;&#x590D;&#x5236;&#x3002;&#x8003;&#x8651;&#x5230;&#x4E3B;&#x673A;&#x8981;&#x4EBA;&#x5DE5;&#x624B;&#x52A8;&#x6062;&#x590D;&#x3001;&#x6392;&#x67E5;&#x6545;&#x969C;&#xFF0C;&#x4ECD;&#x65E7;&#x4F1A;&#x5F71;&#x54CD;&#x4E1A;&#x52A1;&#x3002;</p>
-<p>&#x66F4;&#x597D;&#x7684;&#x60C5;&#x51B5;&#x662F;&#xFF0C;&#x9ED8;&#x8BA4;&#x4ECE;&#x5269;&#x4F59;&#x7684;&#x4ECE;&#x673A;&#x4E2D;&#x9009;&#x62E9;&#x4E00;&#x4E2A;&#x4F5C;&#x4E3A;&#x4E3B;&#x673A;&#xFF0C;&#x7EE7;&#x7EED;&#x5B8C;&#x6210;&#x5199;&#x64CD;&#x4F5C;&#x3002;</p>
+<p>上面的是命令配置，只是暂时的。<strong>实际生产应该修改配置文件</strong>，在文件中写主机的地址和密码，主机负责写，从机负责读，主机的所有数据会自动被从机保存。</p>
+<h4 id="如果主机宕机了呢？"><a href="#如果主机宕机了呢？" class="headerlink" title="如果主机宕机了呢？"></a>如果主机宕机了呢？</h4><p>默认情况下，主机挂了以后，用<code>info replication</code>查看剩余机器，从机运行正常，但是没有写操作了。主机恢复后，仍旧正常主从复制。考虑到主机要人工手动恢复、排查故障，仍旧会影响业务。</p>
+<p>更好的情况是，默认从剩余的从机中选择一个作为主机，继续完成写操作。</p>
 <ul>
-<li>&#x5168;&#x91CF;&#x590D;&#x5236; master&#x5C06;&#x6574;&#x4E2A;&#x6570;&#x636E;&#x4F20;&#x9001;&#x5230;slaver</li>
-<li>&#x589E;&#x91CF;&#x590D;&#x5236;</li>
+<li>全量复制 master将整个数据传送到slaver</li>
+<li>增量复制</li>
 </ul>
-<p>&#x53EA;&#x8981;&#x91CD;&#x65B0;&#x94FE;&#x63A5;master&#xFF0C;&#x4E00;&#x6B21;&#x5168;&#x91CF;&#x590D;&#x5236;&#x5C06;&#x88AB;&#x81EA;&#x52A8;&#x6267;&#x884C;</p>
-<h3 id="&#x54E8;&#x5175;&#x6A21;&#x5F0F;"><a href="#&#x54E8;&#x5175;&#x6A21;&#x5F0F;" class="headerlink" title="&#x54E8;&#x5175;&#x6A21;&#x5F0F;"></a>&#x54E8;&#x5175;&#x6A21;&#x5F0F;</h3><p>Sentinel&#xFF08;Redis2.8&#x8D77;&#xFF09;&#x540E;&#x53F0;&#x76D1;&#x63A7;&#x4E3B;&#x673A;&#x662F;&#x5426;&#x6545;&#x969C;&#xFF0C;&#x5982;&#x679C;&#x6545;&#x969C;&#x4E86;&#x6839;&#x636E;&#x6295;&#x7968;&#x6570;&#x81EA;&#x52A8;&#x5C06;&#x4ECE;&#x5E93;&#x8F6C;&#x4E3A;&#x4E3B;&#x5E93;&#x3002;</p>
-<p>&#x54E8;&#x5175;&#x662F;&#x4E00;&#x4E2A;&#x72EC;&#x7ACB;&#x7684;&#x8FDB;&#x7A0B;&#x3002;&#x901A;&#x8FC7;&#x53D1;&#x9001;&#x547D;&#x4EE4;&#xFF0C;&#x7B49;&#x5F85;Redis&#x670D;&#x52A1;&#x5668;&#x54CD;&#x5E94;&#xFF0C;&#x4ECE;&#x800C;&#x76D1;&#x63A7;&#x8FD0;&#x884C;&#x7684;&#x591A;&#x4E2A;redis&#x5B9E;&#x4F8B;&#x3002;&#x4E3A;&#x4E86;&#x9632;&#x6B62;&#x54E8;&#x5175;&#x6302;&#x4E86;&#xFF0C;&#x8FD8;&#x8981;&#x914D;&#x7F6E;&#x54E8;&#x5175;&#x96C6;&#x7FA4;&#x3002;&#xFF08;&#x5982;&#x679C;&#x4E00;&#x4E3B;&#x4E8C;&#x4ECE;&#xFF0C;&#x6B63;&#x5E38;&#x5E94;&#x8BE5;&#x542F;&#x52A8;&#x516D;&#x4E2A;&#x8FDB;&#x7A0B;&#xFF0C;&#x52A0;&#x4E0A;&#x54E8;&#x5175;&#x7684;&#x8BDD;&#xFF09;</p>
-<h4 id="&#x4F18;&#x70B9;"><a href="#&#x4F18;&#x70B9;" class="headerlink" title="&#x4F18;&#x70B9;"></a>&#x4F18;&#x70B9;</h4><ol>
-<li>&#x96C6;&#x7FA4;</li>
-<li>&#x4E3B;&#x4ECE;&#x5207;&#x6362;</li>
+<p>只要重新链接master，一次全量复制将被自动执行</p>
+<h3 id="哨兵模式"><a href="#哨兵模式" class="headerlink" title="哨兵模式"></a>哨兵模式</h3><p>Sentinel（Redis2.8起）后台监控主机是否故障，如果故障了根据投票数自动将从库转为主库。</p>
+<p>哨兵是一个独立的进程。通过发送命令，等待Redis服务器响应，从而监控运行的多个redis实例。为了防止哨兵挂了，还要配置哨兵集群。（如果一主二从，正常应该启动六个进程，加上哨兵的话）</p>
+<h4 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h4><ol>
+<li>集群</li>
+<li>主从切换</li>
 </ol>
-<h4 id="&#x7F3A;&#x70B9;"><a href="#&#x7F3A;&#x70B9;" class="headerlink" title="&#x7F3A;&#x70B9;"></a>&#x7F3A;&#x70B9;</h4><ol>
-<li>&#x4E0D;&#x65B9;&#x4FBF;&#x5728;&#x7EBF;&#x6269;&#x5BB9;&#xFF0C;&#x4E00;&#x65E6;&#x5230;&#x8FBE;&#x4E0A;&#x7EBF;&#x3002;</li>
-<li>&#x914D;&#x7F6E;&#x9EBB;&#x70E6;&#xFF08;&#x914D;&#x7F6E;&#x6587;&#x4EF6;&#x7684;&#x5185;&#x5BB9;&#x5F88;&#x591A;&#xFF09;&#x3002;&#x7B80;&#x5355;&#x7684;&#x8BDD;&#x53EF;&#x4EE5;&#x53EA;&#x542F;&#x52A8;&#x4E00;&#x4E2A;&#x54E8;&#x5175;&#x76D1;&#x63A7;&#x4E3B;&#x673A;&#xFF0C;&#x4F1A;&#x81EA;&#x52A8;&#x68C0;&#x6D4B;&#x5230;&#x4ECE;&#x673A;&#x3002;</li>
+<h4 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h4><ol>
+<li>不方便在线扩容，一旦到达上线。</li>
+<li>配置麻烦（配置文件的内容很多）。简单的话可以只启动一个哨兵监控主机，会自动检测到从机。</li>
 </ol>
-<h2 id="redis&#x5F02;&#x5E38;&#x5904;&#x7406;"><a href="#redis&#x5F02;&#x5E38;&#x5904;&#x7406;" class="headerlink" title="redis&#x5F02;&#x5E38;&#x5904;&#x7406;"></a>redis&#x5F02;&#x5E38;&#x5904;&#x7406;</h2><h3 id="&#x7F13;&#x5B58;&#x7A7F;&#x900F;&#xFF08;&#x4E00;&#x76F4;&#x67E5;&#x8BE2;&#x4E0D;&#x5230;&#xFF09;"><a href="#&#x7F13;&#x5B58;&#x7A7F;&#x900F;&#xFF08;&#x4E00;&#x76F4;&#x67E5;&#x8BE2;&#x4E0D;&#x5230;&#xFF09;" class="headerlink" title="&#x7F13;&#x5B58;&#x7A7F;&#x900F;&#xFF08;&#x4E00;&#x76F4;&#x67E5;&#x8BE2;&#x4E0D;&#x5230;&#xFF09;"></a>&#x7F13;&#x5B58;&#x7A7F;&#x900F;&#xFF08;&#x4E00;&#x76F4;&#x67E5;&#x8BE2;&#x4E0D;&#x5230;&#xFF09;</h3><div id="flowchart-1" class="flow-chart"></div>
+<h2 id="redis异常处理"><a href="#redis异常处理" class="headerlink" title="redis异常处理"></a>redis异常处理</h2><h3 id="缓存穿透（一直查询不到）"><a href="#缓存穿透（一直查询不到）" class="headerlink" title="缓存穿透（一直查询不到）"></a>缓存穿透（一直查询不到）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">start&#x3D;&gt;start: request</span><br><span class="line">end&#x3D;&gt;end: response</span><br><span class="line">condition&#x3D;&gt;condition: redis缓存中是否存在</span><br><span class="line">op1&#x3D;&gt;operation: select in mysql</span><br><span class="line">start-&gt;condition</span><br><span class="line">condition(yes)-&gt;end</span><br><span class="line">condition(no)-&gt;op1-&gt;end</span><br></pre></td></tr></table></figure>
 
-<p>&#x5982;&#x679C;&#x8BF7;&#x6C42;&#x91CF;&#x975E;&#x5E38;&#x5927;&#xFF0C;redis&#x76F8;&#x5F53;&#x4E8E;&#x7A7A;&#x767D;&#xFF0C;&#x90FD;&#x53BB;&#x8BF7;&#x6C42;&#x5230;dao&#x5C42;&#xFF0C;redis&#x7684;&#x4F5C;&#x7528;&#x5C31;&#x6CA1;&#x4E86;&#x3002;</p>
-<h4 id="&#x5E03;&#x9686;&#x8FC7;&#x6EE4;&#x5668;"><a href="#&#x5E03;&#x9686;&#x8FC7;&#x6EE4;&#x5668;" class="headerlink" title="&#x5E03;&#x9686;&#x8FC7;&#x6EE4;&#x5668;"></a>&#x5E03;&#x9686;&#x8FC7;&#x6EE4;&#x5668;</h4><p>&#x5B83;&#x662F;&#x4E00;&#x79CD;&#x6570;&#x636E;&#x7ED3;&#x6784;&#xFF0C;&#x5BF9;&#x6240;&#x6709;&#x53EF;&#x80FD;&#x67E5;&#x8BE2;&#x7684;&#x53C2;&#x6570;&#x4EE5;hash&#x5F62;&#x5F0F;&#x5B58;&#x50A8;&#xFF0C;&#x5728;&#x63A7;&#x5236;&#x5C42;&#x5148;&#x8FDB;&#x884C;&#x6821;&#x9A8C;&#xFF0C;&#x4E0D;&#x7B26;&#x5408;&#x5219;&#x4E22;&#x5F03;&#xFF0C;&#x907F;&#x514D;&#x4E86;&#x5BF9;&#x5E95;&#x5C42;&#x5B58;&#x50A8;&#x7CFB;&#x7EDF;&#x7684;&#x67E5;&#x8BE2;&#x538B;&#x529B;</p>
-<h4 id="&#x7F13;&#x5B58;&#x7A7A;&#x5BF9;&#x8C61;"><a href="#&#x7F13;&#x5B58;&#x7A7A;&#x5BF9;&#x8C61;" class="headerlink" title="&#x7F13;&#x5B58;&#x7A7A;&#x5BF9;&#x8C61;"></a>&#x7F13;&#x5B58;&#x7A7A;&#x5BF9;&#x8C61;</h4><h3 id="&#x7F13;&#x5B58;&#x51FB;&#x7A7F;&#xFF08;&#x91CF;&#x592A;&#x5927;&#xFF0C;&#x7F13;&#x5B58;&#x8FC7;&#x671F;&#xFF09;"><a href="#&#x7F13;&#x5B58;&#x51FB;&#x7A7F;&#xFF08;&#x91CF;&#x592A;&#x5927;&#xFF0C;&#x7F13;&#x5B58;&#x8FC7;&#x671F;&#xFF09;" class="headerlink" title="&#x7F13;&#x5B58;&#x51FB;&#x7A7F;&#xFF08;&#x91CF;&#x592A;&#x5927;&#xFF0C;&#x7F13;&#x5B58;&#x8FC7;&#x671F;&#xFF09;"></a>&#x7F13;&#x5B58;&#x51FB;&#x7A7F;&#xFF08;&#x91CF;&#x592A;&#x5927;&#xFF0C;&#x7F13;&#x5B58;&#x8FC7;&#x671F;&#xFF09;</h3><p>&#x6D3B;&#x529B;&#x96C6;&#x4E2D;&#x5728;&#x4E00;&#x4E2A;&#x70B9;&#xFF08;&#x4E00;&#x4E2A;&#x70ED;&#x8BC4;&#x7684;&#x70B9;&#xFF0C;&#x5982;&#x5FAE;&#x535A;&#xFF09;&#x3002;</p>
-<h4 id="&#x52A0;&#x4E92;&#x65A5;&#x9501;"><a href="#&#x52A0;&#x4E92;&#x65A5;&#x9501;" class="headerlink" title="&#x52A0;&#x4E92;&#x65A5;&#x9501;"></a>&#x52A0;&#x4E92;&#x65A5;&#x9501;</h4><h4 id="&#x8BBE;&#x7F6E;&#x70ED;&#x70B9;&#x6570;&#x636E;&#x6C38;&#x4E0D;&#x8FC7;&#x671F;"><a href="#&#x8BBE;&#x7F6E;&#x70ED;&#x70B9;&#x6570;&#x636E;&#x6C38;&#x4E0D;&#x8FC7;&#x671F;" class="headerlink" title="&#x8BBE;&#x7F6E;&#x70ED;&#x70B9;&#x6570;&#x636E;&#x6C38;&#x4E0D;&#x8FC7;&#x671F;"></a>&#x8BBE;&#x7F6E;&#x70ED;&#x70B9;&#x6570;&#x636E;&#x6C38;&#x4E0D;&#x8FC7;&#x671F;</h4><h3 id="&#x7F13;&#x5B58;&#x96EA;&#x5D29;"><a href="#&#x7F13;&#x5B58;&#x96EA;&#x5D29;" class="headerlink" title="&#x7F13;&#x5B58;&#x96EA;&#x5D29;"></a>&#x7F13;&#x5B58;&#x96EA;&#x5D29;</h3><p>&#x5728;&#x67D0;&#x4E00;&#x4E2A;&#x65F6;&#x95F4;&#x6BB5;&#xFF0C;&#x7F13;&#x5B58;&#x96C6;&#x4E2D;&#x8FC7;&#x671F;&#x5931;&#x6548;&#xFF0C;&#x53EF;&#x80FD;&#x77AC;&#x95F4;&#x628A;&#x6570;&#x636E;&#x5E93;&#x538B;&#x8DE8;&#x3002;</p>
-<h4 id="redis&#x9AD8;&#x53EF;&#x7528;"><a href="#redis&#x9AD8;&#x53EF;&#x7528;" class="headerlink" title="redis&#x9AD8;&#x53EF;&#x7528;"></a>redis&#x9AD8;&#x53EF;&#x7528;</h4><h4 id="&#x9650;&#x6D41;&#x964D;&#x7EA7;"><a href="#&#x9650;&#x6D41;&#x964D;&#x7EA7;" class="headerlink" title="&#x9650;&#x6D41;&#x964D;&#x7EA7;"></a>&#x9650;&#x6D41;&#x964D;&#x7EA7;</h4><h4 id="&#x6570;&#x636E;&#x9884;&#x70ED;"><a href="#&#x6570;&#x636E;&#x9884;&#x70ED;" class="headerlink" title="&#x6570;&#x636E;&#x9884;&#x70ED;"></a>&#x6570;&#x636E;&#x9884;&#x70ED;</h4><p>&#x6B63;&#x5F0F;&#x90E8;&#x7F72;&#x524D;&#x5148;&#x628A;&#x53EF;&#x80FD;&#x7684;&#x6570;&#x636E;&#x8BBF;&#x95EE;&#x4E00;&#x904D;&#xFF08;&#x52A0;&#x5165;&#x7F13;&#x5B58;&#xFF09;&#xFF0C;&#x8BBE;&#x7F6E;&#x4E0D;&#x540C;&#x7684;&#x8FC7;&#x671F;&#x65F6;&#x95F4;&#xFF0C;&#x8BA9;&#x7F13;&#x5B58;&#x5931;&#x6548;&#x7684;&#x65F6;&#x95F4;&#x5C3D;&#x53EF;&#x80FD;&#x5E73;&#x5747;&#x3002;</p>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/raphael/2.2.7/raphael.min.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/flowchart/1.6.5/flowchart.min.js"></script><textarea id="flowchart-0-code" style="display: none">start=&gt;start: start
-end=&gt;end: end
-condition=&gt;condition: &#x89E6;&#x53D1;rdb
-rdbfile=&gt;inputoutput: dump.rdb
-operation=&gt;operation: go on dealing with
+<p>如果请求量非常大，redis相当于空白，都去请求到dao层，redis的作用就没了。</p>
+<h4 id="布隆过滤器"><a href="#布隆过滤器" class="headerlink" title="布隆过滤器"></a>布隆过滤器</h4><p>它是一种数据结构，对所有可能查询的参数以hash形式存储，在控制层先进行校验，不符合则丢弃，避免了对底层存储系统的查询压力</p>
+<h4 id="缓存空对象"><a href="#缓存空对象" class="headerlink" title="缓存空对象"></a>缓存空对象</h4><h3 id="缓存击穿（量太大，缓存过期）"><a href="#缓存击穿（量太大，缓存过期）" class="headerlink" title="缓存击穿（量太大，缓存过期）"></a>缓存击穿（量太大，缓存过期）</h3><p>活力集中在一个点（一个热评的点，如微博）。</p>
+<h4 id="加互斥锁"><a href="#加互斥锁" class="headerlink" title="加互斥锁"></a>加互斥锁</h4><h4 id="设置热点数据永不过期"><a href="#设置热点数据永不过期" class="headerlink" title="设置热点数据永不过期"></a>设置热点数据永不过期</h4><h3 id="缓存雪崩"><a href="#缓存雪崩" class="headerlink" title="缓存雪崩"></a>缓存雪崩</h3><p>在某一个时间段，缓存集中过期失效，可能瞬间把数据库压跨。</p>
+<h4 id="redis高可用"><a href="#redis高可用" class="headerlink" title="redis高可用"></a>redis高可用</h4><h4 id="限流降级"><a href="#限流降级" class="headerlink" title="限流降级"></a>限流降级</h4><h4 id="数据预热"><a href="#数据预热" class="headerlink" title="数据预热"></a>数据预热</h4><p>正式部署前先把可能的数据访问一遍（加入缓存），设置不同的过期时间，让缓存失效的时间尽可能平均。</p>
 
-start-&gt;condition
-condition(yes)-&gt;rdbfile-&gt;end
-condition(no)-&gt;operation-&gt;end</textarea><textarea id="flowchart-0-options" style="display: none">{&quot;theme&quot;:&quot;simple&quot;,&quot;scale&quot;:1,&quot;line-width&quot;:2,&quot;line-length&quot;:50,&quot;text-margin&quot;:10,&quot;font-size&quot;:12}</textarea><script>  var code = document.getElementById("flowchart-0-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-0-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-0", options);</script><textarea id="flowchart-1-code" style="display: none">start=&gt;start: request
-end=&gt;end: response
-condition=&gt;condition: redis&#x7F13;&#x5B58;&#x4E2D;&#x662F;&#x5426;&#x5B58;&#x5728;
-op1=&gt;operation: select in mysql
-start-&gt;condition
-condition(yes)-&gt;end
-condition(no)-&gt;op1-&gt;end</textarea><textarea id="flowchart-1-options" style="display: none">{&quot;theme&quot;:&quot;simple&quot;,&quot;scale&quot;:1,&quot;line-width&quot;:2,&quot;line-length&quot;:50,&quot;text-margin&quot;:10,&quot;font-size&quot;:12}</textarea><script>  var code = document.getElementById("flowchart-1-code").value;  var options = JSON.parse(decodeURIComponent(document.getElementById("flowchart-1-options").value));  var diagram = flowchart.parse(code);  diagram.drawSVG("flowchart-1", options);</script>
-    </div>
+            
 
-    
-    
-    
-
-    
-      <div>
-        
-<div>
-  
-    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
-      <span>-------- 本文结束 感谢阅读 --------</span>
-    </div>
-  
-</div>
-      </div>
-    
-      
-        <div class="reward-container">
-  <div>Donate comment here.</div>
-  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
-    Donate
-  </button>
-  <div id="qr" style="display: none;">
-      
-      <div style="display: inline-block;">
-        <img src="/images/wechatpay.jpg" alt="Sebastian WeChat Pay">
-        <p>WeChat Pay</p>
-      </div>
-      
-      <div style="display: inline-block;">
-        <img src="/images/alipay.jpg" alt="Sebastian Alipay">
-        <p>Alipay</p>
-      </div>
-
-  </div>
-</div>
-
-
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/redis/" rel="tag"># redis</a>
-              <a href="/tags/nosql/" rel="tag"># nosql</a>
-          </div>
-
-        
-
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/2020/06/06/heap/" rel="next" title="heap">
-                  <i class="fa fa-chevron-left"></i> heap
-                </a>
-            </div>
-
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/2020/06/09/FS/" rel="prev" title="FS">
-                  FS <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
-      </footer>
-    
-  </article>
-  
-  
-  
-
-  </div>
-
-
-          </div>
-          
 
         </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="Sebastian"
-    src="/images/avatar.jpg">
-  <p class="site-author-name" itemprop="name">Sebastian</p>
-  <div class="site-description" itemprop="description">I'm feeling lucky!</div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">59</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
-        <span class="site-state-item-count">16</span>
-        <span class="site-state-item-name">categories</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
-        <span class="site-state-item-count">52</span>
-        <span class="site-state-item-name">tags</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/Sebastian-Getts" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Sebastian-Getts" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:zzzqsw@gmail.com" title="E-Mail &amp;rarr; mailto:zzzqsw@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://instagram.com/mchin6" title="Instagram &amp;rarr; https:&#x2F;&#x2F;instagram.com&#x2F;mchin6" rel="noopener" target="_blank"><i class="fa fa-fw fa-instagram"></i>Instagram</a>
-      </span>
-  </div>
-
-
-
-      </div>
-
     </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
+    <div id="post-footer" class="post-footer main-content-wrap">
         
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/nosql/" rel="tag">nosql</a> <a class="tag tag--primary tag--small t-none-link" href="/tags/redis/" rel="tag">redis</a>
 
-<div class="copyright">
-  
-  &copy; 2019 – 
-  <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Sebastian</span>
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/06/09/FS/"
+                    data-tooltip="FS"
+                    aria-label="PREVIOUS: FS"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/06/06/heap/"
+                    data-tooltip="heap"
+                    aria-label="NEXT: heap"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://github.com/sebastian/about/2020/06/09/redis/"
+                    title="Share on Weibo"
+                    aria-label="Share on Weibo"
+                >
+                    <i class="fab fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://github.com/sebastian/about/2020/06/09/redis/&amp;title=redis"
+                    title="Share on QQ"
+                    aria-label="Share on QQ"
+                >
+                    <i class="fab fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://widget.renren.com/dialog/share?resourceUrl=http://github.com/sebastian/about/2020/06/09/redis/"
+                    title="Share on Renren"
+                    aria-label="Share on Renren"
+                >
+                    <i class="fab fa-renren" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a>
-  </div>
-  <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.4.2
-  </div>
 
 
         
-
-
-
-
-
-
-
-
-
-
-
-
         
-      </div>
-    </footer>
-  </div>
-
-  
-  
-  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
-  <script src="/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
-<script src="/js/schemes/muse.js"></script>
-<script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script pjax>
-if (document.querySelectorAll('pre.mermaid').length) {
-  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/mermaid/8.2.0/mermaid.min.js', () => {
-    mermaid.initialize({
-      theme: 'forest',
-      logLevel: 3,
-      flowchart: { curve: 'linear' },
-      gantt: { axisFormat: '%m/%d/%Y' },
-      sequence: { actorMargin: 50 }
-    });
-  }, window.mermaid);
-}
-</script>
-
-
-    <div id="pjax">
-
-  
-
-  
-
-  
-
-  
-
-  <script async src="/js/cursor/love.min.js"></script>
-
-
-
-
-  <script src="/js/wobblewindow.js"></script>
-  <script>
-    //只在桌面版网页启用特效
-    if( window.innerWidth > 768  ){
-      $(document).ready(function () {
+            
         
-          $('#header').wobbleWindow({
-            radius: 50,
-            movementTop: false,
-            movementLeft: false,
-            movementRight: false,
-            debug: false,
-          });
-        
-
-        
-          $('#sidebar').wobbleWindow({
-            radius: 50,
-            movementLeft: false,
-            movementTop: false,
-            movementBottom: false,
-            position: 'fixed',
-            debug: false,
-          });
-        
-
-        
-          $('#footer').wobbleWindow({
-            radius: 50,
-            movementBottom: false,
-            movementLeft: false,
-            movementRight: false,
-            offsetX: ,
-            position: 'absolute',
-            debug: false,
-          });
-        
-      });
-    }
-  </script>
-
-
-
-
-
-
-
-
     </div>
-</body>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Sebastian Getts. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/06/09/FS/"
+                    data-tooltip="FS"
+                    aria-label="PREVIOUS: FS"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/06/06/heap/"
+                    data-tooltip="heap"
+                    aria-label="NEXT: heap"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://github.com/sebastian/about/2020/06/09/redis/"
+                    title="Share on Weibo"
+                    aria-label="Share on Weibo"
+                >
+                    <i class="fab fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://github.com/sebastian/about/2020/06/09/redis/&amp;title=redis"
+                    title="Share on QQ"
+                    aria-label="Share on QQ"
+                >
+                    <i class="fab fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://widget.renren.com/dialog/share?resourceUrl=http://github.com/sebastian/about/2020/06/09/redis/"
+                    title="Share on Renren"
+                    aria-label="Share on Renren"
+                >
+                    <i class="fab fa-renren" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="http://service.weibo.com/share/share.php?&amp;title=http://github.com/sebastian/about/2020/06/09/redis/"
+                        aria-label="Share on Weibo"
+                    >
+                        <i class="fab fa-weibo" aria-hidden="true"></i><span>Share on Weibo</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="http://connect.qq.com/widget/shareqq/index.html?url=http://github.com/sebastian/about/2020/06/09/redis/&amp;title=redis"
+                        aria-label="Share on QQ"
+                    >
+                        <i class="fab fa-qq" aria-hidden="true"></i><span>Share on QQ</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="http://widget.renren.com/dialog/share?resourceUrl=http://github.com/sebastian/about/2020/06/09/redis/"
+                        aria-label="Share on Renren"
+                    >
+                        <i class="fab fa-renren" aria-hidden="true"></i><span>Share on Renren</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Sebastian Getts</h4>
+        
+            <div id="about-card-bio"><p>I write code to enrich and ease life of others. 0 errors, 0 warnings.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Software Developer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Shenzhen
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover-v1.2.0.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-karbquxnkadaf4yf1hq6g6fyv6nvvrwpv3vf2u1wz8k7osddfqtxf5wbfcfg.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
 </html>

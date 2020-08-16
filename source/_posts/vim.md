@@ -82,11 +82,7 @@ Lesson 3 SUMMARY
 
 Lesson 4 SUMMARY
 
-<% note info %>
-
 this lesson is very helpful...
-
-<% endnote %>
 
 1. `CTRL-G` displays your location in the file and the file status.
 

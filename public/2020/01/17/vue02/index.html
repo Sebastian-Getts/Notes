@@ -1,357 +1,393 @@
+
 <!DOCTYPE html>
 <html lang="en">
+    
 <head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 4.0.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/avatar.jpg">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/avatar.jpg">
-  <link rel="mask-icon" href="/images/logo.svg" color="#222">
-  <meta name="msvalidate.01" content="541BE591C13D7313C3568E6D172218E2">
-  <meta name="baidu-site-verification" content="3qvcDlCoMv">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
-
-
-<script id="hexo-configurations">
-  var NexT = window.NexT || {};
-  var CONFIG = {
-    root: '/',
-    scheme: 'Muse',
-    version: '7.4.2',
-    exturl: false,
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
-    bookmark: {"enable":false,"color":"#222","save":"auto"},
-    fancybox: true,
-    mediumzoom: false,
-    lazyload: false,
-    pangu: true,
-    algolia: {
-      appID: '',
-      apiKey: '',
-      indexName: '',
-      hits: {"per_page":10},
-      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
-    },
-    sidebarPadding: 40
-  };
-</script>
-
-  <meta name="description" content="vue常用特性">
-<meta name="keywords" content="vue">
-<meta property="og:type" content="article">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hola">
+    <title>vue02 - Hola</title>
+    <meta name="author" content="Sebastian Getts">
+    
+    
+    
+        
+            <link rel="alternate" type="application/atom+xml" title="RSS" href="/atom.xml">
+        
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sebastian Getts","sameAs":["https://github.com/sebastian-getts/","mailto"],"image":"avatar.jpg"},"articleBody":"vue常用特性\n\n\n序\n表单操作\n自定义指令\n计算属性\n过滤器\n侦听器\n生命周期 \n\n表单操作用户交互的时候用到表单操作。\n基于vue的表单操作\ninput单行文本\ntextarea多行文本\nselect下拉多选\nradio单选框\ncheckbox多选框\n\n表单域修饰符\nnumber: 转化为数值\ntrim: 去掉开始和结尾的空格\nlazy: 将input事件切换为change事件\n\n1&lt;input v-model.number=&quot;age&quot; type=&quot;number&quot;&gt;\n\nlazy使用场景：注册时校验用户名是否被注册过，当失去焦点时开始检测。\n自定义指令1234567&lt;input type=&quot;text&quot; v-focus&gt;Vue.directive(&#x27;focus&#x27;,&#123;    inserted: funciton(el)&#123;    el.focus();&#125;&#125;)\n\n计算属性表达式的计算逻辑可能会比较复杂，使用计算属性可以使模板内容更加简洁。\n123456789&lt;div&gt;&#123;&#123;reverseString&#125;&#125;data:&#123;    msg:&#x27;hello&#x27;&#125;,computed:&#123;    reverseString: function()&#123;        return this.msg.split(&#x27;&#x27;).reverse().join(&#x27;&#x27;);    &#125;&#125;\n\n与方法的区别：缓存上的差异，方法不存在缓存。对于同样的数据，多次访问只用到一次的结果，而方法会执行两次。\n侦听器和计算属性类似，数据变化会通知侦听器绑定的方法。\n应用场景：异步或开交较大的操作。\n12345678watch:&#123;    fisrName:function(val)&#123;        this.fullName = val + this.lastName;    &#125;,     lastName:function(vla)&#123;         this.fullName = this.firstName + val;     &#125;&#125;\n\n应用场景：验证用户名是否可用。\n通过v-model实现数据绑定\n需要提供提示信息\n需要侦听器监输入信息的变化\n需要修改触发的事件\n\n123456789101112131415161718192021222324252627282930313233343536373839404142&lt;body&gt;    &lt;div id=&quot;app&quot;&gt;        &lt;div&gt;            &lt;span&gt;username: &lt;/span&gt;            &lt;span&gt;                &lt;input type=&quot;text&quot; v-model.lazy=&#x27;username&#x27;&gt;            &lt;/span&gt;            &lt;span&gt;&#123;&#123;tip&#125;&#125;&lt;/span&gt;        &lt;/div&gt;    &lt;/div&gt;    &lt;script type=&quot;text/javascript&quot; src=&quot;js/vue.js&quot;&gt;&lt;/script&gt;    &lt;script type=&quot;text/javascript&quot;&gt;        var vm = new Vue(&#123;            el: &#x27;#app&#x27;,            data: &#123;                username:&#x27;&#x27;,                tip:&#x27;&#x27;            &#125;,            methods:&#123;                checkName:function(username)&#123;                    //接口调用，用定时任务的方式模拟接口调用                    var that = this;                    setTimeout(function()&#123;                        if(username == &#x27;admin&#x27;)&#123;                            that.tip = &#x27;change it&#x27;;                        &#125;else&#123;                            that.tip = &#x27;ok&#x27;;                        &#125;                    &#125;,2000);                &#125;            &#125;,            watch:&#123;                username:function(val)&#123;//当数据变化时会触发                    //调用后台验证                    this.checkName(val);                    this.tip = &#x27;checking...&#x27;;                &#125;            &#125;        &#125;)    &lt;/script&gt;&lt;/body&gt;\n\n过滤器自定义过滤器（全局）123Vue.filter(&#x27;filterName&#x27;function(value)&#123;    //logic...&#125;)\n\n局部过滤器\n12345filters:&#123;    capitalize:function()&#123;        ...    &#125;&#125;\n\n使用\n123&lt;div&gt;&#123;&#123;msg|upper&#125;&#125;&lt;/div&gt;&lt;div&gt;&#123;&#123;msg|upper|lower&#125;&#125;&lt;/div&gt; &lt;!-- 级联 --&gt;&lt;div v-bind:id=&quot;id|formatId&quot;&gt;&lt;/div&gt;\n\n\n\n带参数过滤器123Vue.filter(&#x27;format&#x27;,function(value, arg1)&#123;    &#125;)\n\n使用\n123&lt;div&gt;    &#123;&#123;date | format(&#x27;yyyy-MM-dd&#x27;)&#125;&#125;&lt;/div&gt;\n\n声明周期\n挂载\n更新\n销毁\n\n修改响应式数据1Vue.set(vm.items, indexOfItem, newValue)\n\n1vm.$set(vm.items, indexOfItem, newValue)\n\n参数一表示要处理的数组名称，参数二表示要处理的数组索引，参数三表示要处理的数组的值。\nlibrary变异方法push(), pop(), shift(), unshift(), splice(), sort(), reverse()\n替换数组（生成新的数组）filter(), concat(), slice()\n1this.list = this.list.slice(0,2)\n\n图书列表\n静态列效果\n基于数据实现模板效果\n处理每行的操作按钮\n\n添加图书\n实现表单的静态效果\n添加图书表单域数据绑定\n添加按钮事件绑定\n实现添加业务逻辑\n\n修改图书\n修改信息填充到表单\n修改后重新提交表单\n重用添加和修改的方法\n\n常用特性应用\n过滤器（格式化日期）\n自定义指令（获取表单焦点）\n计算属性（统计图书数量）\n侦听器（验证图书存在性）\n生命周期（图书数据处理）  \n\nlibrary.html123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525354555657585960616263646566676869707172737475767778798081828384858687888990919293949596979899100101102103104105106107108109110111112113114115116117118119120121122123124125126127128129130131132133134135136137138139140141142143144145146147148149150151152153154155156157158159160161162163164165166167168169170171172173174175176177178179180181182183184185186187188189190191192193194195196197198199200&lt;!DOCTYPE html&gt;&lt;html lang=&quot;en&quot;&gt;&lt;head&gt;    &lt;meta charset=&quot;UTF-8&quot;&gt;    &lt;title&gt;Document&lt;/title&gt;    &lt;style type=&quot;text/css&quot;&gt;        .grid &#123;            margin: auto;            width: 500px;            text-align: center;        &#125;        .grid table &#123;            width: 100%;            border-collapse: collapse;        &#125;        .grid th,td &#123;            padding: 10;            border: 1px dashed rgb(224, 182, 105);            height: 35px;            line-height: 35px;        &#125;        .grid th &#123;            background-color: rgb(255, 207, 117);        &#125;        .grid .book &#123;            padding-bottom: 10px;            padding-top: 5px;            background-color: rgb(236, 192, 111);        &#125;        .grid .total&#123;            height: 30px;            line-height: 30px;            border-top: 1px solid rgb(173, 139, 69);            background-color: rgb(196, 153, 75);        &#125;    &lt;/style&gt;&lt;/head&gt;&lt;body&gt;    &lt;div id=&quot;app&quot;&gt;        &lt;div class=&quot;grid&quot;&gt;            &lt;div&gt;                &lt;h1&gt;图书管理&lt;/h1&gt;                &lt;div class=&quot;book&quot;&gt;                    &lt;div&gt;                        &lt;label for=&quot;id&quot;&gt;                            编号:                        &lt;/label&gt;                        &lt;input type=&quot;text&quot; id=&quot;id&quot; v-model=&#x27;id&#x27; :disabled=&#x27;flag&#x27; v-focus&gt;                        &lt;label for=&quot;name&quot;&gt;                            名称:                        &lt;/label&gt;                        &lt;input type=&quot;text&quot; id=&quot;name&quot; v-model=&#x27;name&#x27;&gt;                        &lt;button @click=&#x27;handle&#x27; :disabled=&#x27;isSubmit&#x27;&gt;提交&lt;/button&gt;                    &lt;/div&gt;                &lt;/div&gt;            &lt;/div&gt;            &lt;div class=&quot;total&quot;&gt;                &lt;span&gt;图书数量：&lt;/span&gt;                &lt;span&gt;&#123;&#123;total&#125;&#125;&lt;/span&gt;            &lt;/div&gt;            &lt;table&gt;                &lt;thead&gt;                    &lt;tr&gt;                        &lt;th&gt;编号&lt;/th&gt;                        &lt;th&gt;名称&lt;/th&gt;                        &lt;th&gt;时间&lt;/th&gt;                        &lt;th&gt;操作&lt;/th&gt;                    &lt;/tr&gt;                &lt;/thead&gt;                &lt;tbody&gt;                    &lt;tr :key=&#x27;item.id&#x27; v-for=&#x27;item in books&#x27;&gt;                        &lt;td&gt;&#123;&#123;item.id&#125;&#125;&lt;/td&gt;                        &lt;td&gt;&#123;&#123;item.name&#125;&#125;&lt;/td&gt;                        &lt;td&gt;&#123;&#123;item.date&#125;&#125;&lt;/td&gt;                        &lt;td&gt;                            &lt;a href=&quot;&quot; @click.prevent=&#x27;modify(item)&#x27;&gt;修改&lt;/a&gt;                            &lt;span&gt;|&lt;/span&gt;                            &lt;a href=&quot;&quot; @click.prevent=&#x27;del(item)&#x27;&gt;删除&lt;/a&gt;                        &lt;/td&gt;                    &lt;/tr&gt;                &lt;/tbody&gt;            &lt;/table&gt;        &lt;/div&gt;    &lt;/div&gt;    &lt;script type=&quot;text/javascript&quot; src=&quot;js/vue.js&quot;&gt;&lt;/script&gt;    &lt;script type=&quot;text/javascript&quot;&gt;        Vue.directive(&#x27;focus&#x27;,&#123;            inserted: function(el)&#123;                el.focus();            &#125;        &#125;)        var vm = new Vue(&#123;            el: &#x27;#app&#x27;,            data: &#123;                isSubmit: false,                flag: false,                id: &#x27;&#x27;,                name: &#x27;&#x27;,                books: []            &#125;,            methods: &#123;                handle: function () &#123;                    var book = &#123;&#125;;                    if (!this.flag) &#123;                        book.id = this.id;                        book.name = this.name;                        book.date = &#x27;&#x27;,                        this.books.push(book);                    &#125; else &#123;                        this.books.some((item) =&gt; &#123;                            if (item.id == this.id) &#123;                                item.name = this.name;                                return true;                            &#125;                        &#125;),                        this.flag = true;                    &#125;                    this.id = &#x27;&#x27;,                    this.name = &#x27;&#x27;                &#125;,                modify: function (itemin) &#123;                    // this.id = books.id;                    // this.name = books.name                    this.flag = true;                    var book = this.books.filter(function (item) &#123;                        return item.id == itemin.id                    &#125;)                    this.id = book[0].id;                    this.name = book[0].name;                &#125;,                del:function(itemin)&#123;                    // //查找索引                    // var index = this.books.findIndex(function(item)&#123;                    //     return item.id == itemin.id;                    // &#125;);                    // //删除                    // this.books.splice(index, 1);                    //method2 也可已通过filter来实现                    this.books = this.books.filter(function(item)&#123;                        return item.id != itemin.id;                    &#125;)                    this.id = &#x27;&#x27;,                    this.name = &#x27;&#x27;,                    this.flag = false;                &#125;            &#125;,            computed:&#123;                total:function()&#123;                    return this.books.length;                &#125;            &#125;,            watch:&#123;                name: function(val)&#123;                    var flag = this.books.some(function(item)&#123;                        return item.name == val;                    &#125;);                                        if(flag)&#123;                        this.isSubmit = true;                    &#125;else&#123;                        this.isSubmit = false;                    &#125;                &#125;            &#125;,            mounted: function()&#123;                //一般用于获取后台数据，然后把数据填充到模板                var data = [&#123;                    id: 1,                    name: &#x27;三国演义&#x27;,                    date: &#x27;&#x27;                &#125;, &#123;                    id: 2,                    name: &#x27;水浒传&#x27;,                    date: &#x27;&#x27;                &#125;, &#123;                    id: 3,                    name: &#x27;红楼梦&#x27;,                    date: &#x27;&#x27;                &#125;, &#123;                    id: 4,                    name: &#x27;西游记&#x27;,                    date: &#x27;&#x27;                &#125;];                this.books = data;            &#125;        &#125;)    &lt;/script&gt;&lt;/body&gt;&lt;/html&gt;\n\n\n\n\n\n\n\n\n\n\n\n","dateCreated":"2020-01-17T23:21:24+08:00","dateModified":"2020-07-20T01:29:13+08:00","datePublished":"2020-01-17T23:21:24+08:00","description":"vue常用特性","headline":"vue02","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://github.com/sebastian/about/2020/01/17/vue02/"},"publisher":{"@type":"Organization","name":"Sebastian Getts","sameAs":["https://github.com/sebastian-getts/","mailto"],"image":"avatar.jpg","logo":{"@type":"ImageObject","url":"avatar.jpg"}},"url":"http://github.com/sebastian/about/2020/01/17/vue02/","keywords":"vue"}</script>
+    <meta name="description" content="vue常用特性">
+<meta property="og:type" content="blog">
 <meta property="og:title" content="vue02">
-<meta property="og:url" content="http:&#x2F;&#x2F;yoursite.com&#x2F;2020&#x2F;01&#x2F;17&#x2F;vue02&#x2F;index.html">
-<meta property="og:site_name" content="Sebastian Getts">
+<meta property="og:url" content="http://github.com/sebastian/about/2020/01/17/vue02/index.html">
+<meta property="og:site_name" content="Hola">
 <meta property="og:description" content="vue常用特性">
-<meta property="og:locale" content="en">
-<meta property="og:updated_time" content="2020-07-19T17:29:13.366Z">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-01-17T15:21:24.000Z">
+<meta property="article:modified_time" content="2020-07-19T17:29:13.366Z">
+<meta property="article:author" content="Sebastian Getts">
+<meta property="article:tag" content="vue">
 <meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://github.com/sebastian/about/assets/images/avatar.jpg"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-spzjrm9no8kcbknku5bsn1dr9dpp94iq1g86qdztxtoqwlgtrnwyi2tucypv.min.css">
 
-<link rel="canonical" href="http://yoursite.com/2020/01/17/vue02/">
+    <!--STYLES END-->
+    
+
+    
+    <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "//hm.baidu.com/hm.js?3e3b025a15329c47fcc47a83f6160356";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+    </script>
 
 
-<script id="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
-  };
-</script>
-
-  <title>vue02 | Sebastian Getts</title>
-  
-
-
-
-
-
-
-  <noscript>
-  <style>
-  .use-motion .brand,
-  .use-motion .menu-item,
-  .sidebar-inner,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
-  </style>
-</noscript>
-
+    
+        
+    
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
 
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-meta">
-
-    <div>
-      <a href="/" class="brand" rel="start">
-        <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Sebastian Getts</span>
-        <span class="logo-line-after"><i></i></span>
-      </a>
-    </div>
-        <p class="site-subtitle">I'm the new one.</p>
-  </div>
-
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
-    </div>
-  </div>
-</div>
-
-
-<nav class="site-nav">
-  
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-fw fa-user"></i>About</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>Tags</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>Categories</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
-
-  </li>
-        <li class="menu-item menu-item-movies">
-
-    <a href="/movies/" rel="section"><i class="fa fa-fw fa-video-camera"></i>movies</a>
-
-  </li>
-  </ul>
-
-</nav>
-</div>
-    </header>
 
     
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-  <div class="reading-progress-bar"></div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content">
+        
             
+        
+    
 
-  <div class="posts-expand">
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="en">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2020/01/17/vue02/">
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/%20"
+            aria-label=""
+        >
+            Hola
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="Sebastian">
-      <meta itemprop="description" content="I'm feeling lucky!">
-    </span>
+            <!-- Define author's picture -->
 
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Sebastian Getts">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          vue02
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Sebastian Getts</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>I write code to enrich and ease life of others. 0 errors, 0 warnings.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link open-algolia-search"
+                            href="#search"
+                            
+                            rel="noopener"
+                            title="Search"
+                        >
+                        <i class="sidebar-button-icon fa fa-search" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Search</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/sebastian-getts/"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/mailto"
+                            
+                            rel="noopener"
+                            title="Mail"
+                        >
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            vue02
         </h1>
-
+    
+    
         <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
+    <time datetime="2020-01-17T23:21:24+08:00">
+	
+		    Jan 17, 2020
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Vue/">Vue</a>
 
-              <time title="Created: 2020-01-17 23:21:24" itemprop="dateCreated datePublished" datetime="2020-01-17T23:21:24+08:00">2020-01-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2020-07-20 01:29:13" itemprop="dateModified" datetime="2020-07-20T01:29:13+08:00">2020-07-20</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Vue/" itemprop="url" rel="index">
-                    <span itemprop="name">Vue</span>
-                  </a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
 
     
-    
-    
-    <div class="post-body" itemprop="articleBody">
+</div>
 
-      
-        <p>vue&#x5E38;&#x7528;&#x7279;&#x6027;</p>
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>vue常用特性</p>
 <a id="more"></a>
 
-<h1 id="&#x5E8F;"><a href="#&#x5E8F;" class="headerlink" title="&#x5E8F;"></a>&#x5E8F;</h1><ul>
-<li>&#x8868;&#x5355;&#x64CD;&#x4F5C;</li>
-<li>&#x81EA;&#x5B9A;&#x4E49;&#x6307;&#x4EE4;</li>
-<li>&#x8BA1;&#x7B97;&#x5C5E;&#x6027;</li>
-<li>&#x8FC7;&#x6EE4;&#x5668;</li>
-<li>&#x4FA6;&#x542C;&#x5668;</li>
-<li>&#x751F;&#x547D;&#x5468;&#x671F; </li>
+<h1 id="序"><a href="#序" class="headerlink" title="序"></a>序</h1><ul>
+<li>表单操作</li>
+<li>自定义指令</li>
+<li>计算属性</li>
+<li>过滤器</li>
+<li>侦听器</li>
+<li>生命周期 </li>
 </ul>
-<h1 id="&#x8868;&#x5355;&#x64CD;&#x4F5C;"><a href="#&#x8868;&#x5355;&#x64CD;&#x4F5C;" class="headerlink" title="&#x8868;&#x5355;&#x64CD;&#x4F5C;"></a>&#x8868;&#x5355;&#x64CD;&#x4F5C;</h1><p>&#x7528;&#x6237;&#x4EA4;&#x4E92;&#x7684;&#x65F6;&#x5019;&#x7528;&#x5230;&#x8868;&#x5355;&#x64CD;&#x4F5C;&#x3002;</p>
-<h3 id="&#x57FA;&#x4E8E;vue&#x7684;&#x8868;&#x5355;&#x64CD;&#x4F5C;"><a href="#&#x57FA;&#x4E8E;vue&#x7684;&#x8868;&#x5355;&#x64CD;&#x4F5C;" class="headerlink" title="&#x57FA;&#x4E8E;vue&#x7684;&#x8868;&#x5355;&#x64CD;&#x4F5C;"></a>&#x57FA;&#x4E8E;vue&#x7684;&#x8868;&#x5355;&#x64CD;&#x4F5C;</h3><ul>
-<li>input&#x5355;&#x884C;&#x6587;&#x672C;</li>
-<li>textarea&#x591A;&#x884C;&#x6587;&#x672C;</li>
-<li>select&#x4E0B;&#x62C9;&#x591A;&#x9009;</li>
-<li>radio&#x5355;&#x9009;&#x6846;</li>
-<li>checkbox&#x591A;&#x9009;&#x6846;</li>
+<h1 id="表单操作"><a href="#表单操作" class="headerlink" title="表单操作"></a>表单操作</h1><p>用户交互的时候用到表单操作。</p>
+<h3 id="基于vue的表单操作"><a href="#基于vue的表单操作" class="headerlink" title="基于vue的表单操作"></a>基于vue的表单操作</h3><ul>
+<li>input单行文本</li>
+<li>textarea多行文本</li>
+<li>select下拉多选</li>
+<li>radio单选框</li>
+<li>checkbox多选框</li>
 </ul>
-<h3 id="&#x8868;&#x5355;&#x57DF;&#x4FEE;&#x9970;&#x7B26;"><a href="#&#x8868;&#x5355;&#x57DF;&#x4FEE;&#x9970;&#x7B26;" class="headerlink" title="&#x8868;&#x5355;&#x57DF;&#x4FEE;&#x9970;&#x7B26;"></a>&#x8868;&#x5355;&#x57DF;&#x4FEE;&#x9970;&#x7B26;</h3><ul>
-<li>number: &#x8F6C;&#x5316;&#x4E3A;&#x6570;&#x503C;</li>
-<li>trim: &#x53BB;&#x6389;&#x5F00;&#x59CB;&#x548C;&#x7ED3;&#x5C3E;&#x7684;&#x7A7A;&#x683C;</li>
-<li>lazy: &#x5C06;input&#x4E8B;&#x4EF6;&#x5207;&#x6362;&#x4E3A;change&#x4E8B;&#x4EF6;</li>
+<h3 id="表单域修饰符"><a href="#表单域修饰符" class="headerlink" title="表单域修饰符"></a>表单域修饰符</h3><ul>
+<li>number: 转化为数值</li>
+<li>trim: 去掉开始和结尾的空格</li>
+<li>lazy: 将input事件切换为change事件</li>
 </ul>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;input v-model.number=<span class="string">&quot;age&quot;</span> type=<span class="string">&quot;number&quot;</span>&gt;</span><br></pre></td></tr></table></figure>
 
-<p>lazy&#x4F7F;&#x7528;&#x573A;&#x666F;&#xFF1A;&#x6CE8;&#x518C;&#x65F6;&#x6821;&#x9A8C;&#x7528;&#x6237;&#x540D;&#x662F;&#x5426;&#x88AB;&#x6CE8;&#x518C;&#x8FC7;&#xFF0C;&#x5F53;&#x5931;&#x53BB;&#x7126;&#x70B9;&#x65F6;&#x5F00;&#x59CB;&#x68C0;&#x6D4B;&#x3002;</p>
-<h3 id="&#x81EA;&#x5B9A;&#x4E49;&#x6307;&#x4EE4;"><a href="#&#x81EA;&#x5B9A;&#x4E49;&#x6307;&#x4EE4;" class="headerlink" title="&#x81EA;&#x5B9A;&#x4E49;&#x6307;&#x4EE4;"></a>&#x81EA;&#x5B9A;&#x4E49;&#x6307;&#x4EE4;</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&quot;text&quot;</span> v-focus&gt;</span><br><span class="line"></span><br><span class="line">Vue.directive(<span class="string">&apos;focus&apos;</span>,{</span><br><span class="line">    inserted: funciton(el){</span><br><span class="line">    el.focus();</span><br><span class="line">}</span><br><span class="line">})</span><br></pre></td></tr></table></figure>
+<p>lazy使用场景：注册时校验用户名是否被注册过，当失去焦点时开始检测。</p>
+<h3 id="自定义指令"><a href="#自定义指令" class="headerlink" title="自定义指令"></a>自定义指令</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;input type=<span class="string">&quot;text&quot;</span> v-focus&gt;</span><br><span class="line"></span><br><span class="line">Vue.directive(<span class="string">&#x27;focus&#x27;</span>,&#123;</span><br><span class="line">    inserted: funciton(el)&#123;</span><br><span class="line">    el.focus();</span><br><span class="line">&#125;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
-<h3 id="&#x8BA1;&#x7B97;&#x5C5E;&#x6027;"><a href="#&#x8BA1;&#x7B97;&#x5C5E;&#x6027;" class="headerlink" title="&#x8BA1;&#x7B97;&#x5C5E;&#x6027;"></a>&#x8BA1;&#x7B97;&#x5C5E;&#x6027;</h3><p>&#x8868;&#x8FBE;&#x5F0F;&#x7684;&#x8BA1;&#x7B97;&#x903B;&#x8F91;&#x53EF;&#x80FD;&#x4F1A;&#x6BD4;&#x8F83;&#x590D;&#x6742;&#xFF0C;&#x4F7F;&#x7528;&#x8BA1;&#x7B97;&#x5C5E;&#x6027;&#x53EF;&#x4EE5;&#x4F7F;&#x6A21;&#x677F;&#x5185;&#x5BB9;&#x66F4;&#x52A0;&#x7B80;&#x6D01;&#x3002;</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;{{reverseString}}</span><br><span class="line">data:{</span><br><span class="line">    msg:<span class="string">&apos;hello&apos;</span></span><br><span class="line">},</span><br><span class="line">computed:{</span><br><span class="line">    reverseString: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.msg.split(<span class="string">&apos;&apos;</span>).reverse().join(<span class="string">&apos;&apos;</span>);</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<h3 id="计算属性"><a href="#计算属性" class="headerlink" title="计算属性"></a>计算属性</h3><p>表达式的计算逻辑可能会比较复杂，使用计算属性可以使模板内容更加简洁。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;&#123;&#123;reverseString&#125;&#125;</span><br><span class="line">data:&#123;</span><br><span class="line">    msg:<span class="string">&#x27;hello&#x27;</span></span><br><span class="line">&#125;,</span><br><span class="line">computed:&#123;</span><br><span class="line">    reverseString: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">this</span>.msg.split(<span class="string">&#x27;&#x27;</span>).reverse().join(<span class="string">&#x27;&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>&#x4E0E;&#x65B9;&#x6CD5;&#x7684;&#x533A;&#x522B;&#xFF1A;&#x7F13;&#x5B58;&#x4E0A;&#x7684;&#x5DEE;&#x5F02;&#xFF0C;&#x65B9;&#x6CD5;&#x4E0D;&#x5B58;&#x5728;&#x7F13;&#x5B58;&#x3002;&#x5BF9;&#x4E8E;<strong>&#x540C;&#x6837;&#x7684;&#x6570;&#x636E;</strong>&#xFF0C;&#x591A;&#x6B21;&#x8BBF;&#x95EE;&#x53EA;&#x7528;&#x5230;&#x4E00;&#x6B21;&#x7684;&#x7ED3;&#x679C;&#xFF0C;&#x800C;&#x65B9;&#x6CD5;&#x4F1A;&#x6267;&#x884C;&#x4E24;&#x6B21;&#x3002;</p>
-<h3 id="&#x4FA6;&#x542C;&#x5668;"><a href="#&#x4FA6;&#x542C;&#x5668;" class="headerlink" title="&#x4FA6;&#x542C;&#x5668;"></a>&#x4FA6;&#x542C;&#x5668;</h3><p>&#x548C;&#x8BA1;&#x7B97;&#x5C5E;&#x6027;&#x7C7B;&#x4F3C;&#xFF0C;&#x6570;&#x636E;&#x53D8;&#x5316;&#x4F1A;&#x901A;&#x77E5;&#x4FA6;&#x542C;&#x5668;&#x7ED1;&#x5B9A;&#x7684;&#x65B9;&#x6CD5;&#x3002;</p>
-<p>&#x5E94;&#x7528;&#x573A;&#x666F;&#xFF1A;&#x5F02;&#x6B65;&#x6216;&#x5F00;&#x4EA4;&#x8F83;&#x5927;&#x7684;&#x64CD;&#x4F5C;&#x3002;</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">watch:{</span><br><span class="line">    fisrName:<span class="function"><span class="keyword">function</span>(<span class="params">val</span>)</span>{</span><br><span class="line">        <span class="keyword">this</span>.fullName = val + <span class="keyword">this</span>.lastName;</span><br><span class="line">    },</span><br><span class="line">     lastName:<span class="function"><span class="keyword">function</span>(<span class="params">vla</span>)</span>{</span><br><span class="line">         <span class="keyword">this</span>.fullName = <span class="keyword">this</span>.firstName + val;</span><br><span class="line">     }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>与方法的区别：缓存上的差异，方法不存在缓存。对于<strong>同样的数据</strong>，多次访问只用到一次的结果，而方法会执行两次。</p>
+<h3 id="侦听器"><a href="#侦听器" class="headerlink" title="侦听器"></a>侦听器</h3><p>和计算属性类似，数据变化会通知侦听器绑定的方法。</p>
+<p>应用场景：异步或开交较大的操作。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">watch:&#123;</span><br><span class="line">    fisrName:<span class="function"><span class="keyword">function</span>(<span class="params">val</span>)</span>&#123;</span><br><span class="line">        <span class="built_in">this</span>.fullName = val + <span class="built_in">this</span>.lastName;</span><br><span class="line">    &#125;,</span><br><span class="line">     lastName:<span class="function"><span class="keyword">function</span>(<span class="params">vla</span>)</span>&#123;</span><br><span class="line">         <span class="built_in">this</span>.fullName = <span class="built_in">this</span>.firstName + val;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h4 id="&#x5E94;&#x7528;&#x573A;&#x666F;&#xFF1A;&#x9A8C;&#x8BC1;&#x7528;&#x6237;&#x540D;&#x662F;&#x5426;&#x53EF;&#x7528;&#x3002;"><a href="#&#x5E94;&#x7528;&#x573A;&#x666F;&#xFF1A;&#x9A8C;&#x8BC1;&#x7528;&#x6237;&#x540D;&#x662F;&#x5426;&#x53EF;&#x7528;&#x3002;" class="headerlink" title="&#x5E94;&#x7528;&#x573A;&#x666F;&#xFF1A;&#x9A8C;&#x8BC1;&#x7528;&#x6237;&#x540D;&#x662F;&#x5426;&#x53EF;&#x7528;&#x3002;"></a>&#x5E94;&#x7528;&#x573A;&#x666F;&#xFF1A;&#x9A8C;&#x8BC1;&#x7528;&#x6237;&#x540D;&#x662F;&#x5426;&#x53EF;&#x7528;&#x3002;</h4><ul>
-<li>&#x901A;&#x8FC7;<code>v-model</code>&#x5B9E;&#x73B0;&#x6570;&#x636E;&#x7ED1;&#x5B9A;</li>
-<li>&#x9700;&#x8981;&#x63D0;&#x4F9B;&#x63D0;&#x793A;&#x4FE1;&#x606F;</li>
-<li>&#x9700;&#x8981;&#x4FA6;&#x542C;&#x5668;&#x76D1;&#x8F93;&#x5165;&#x4FE1;&#x606F;&#x7684;&#x53D8;&#x5316;</li>
-<li>&#x9700;&#x8981;&#x4FEE;&#x6539;&#x89E6;&#x53D1;&#x7684;&#x4E8B;&#x4EF6;</li>
+<h4 id="应用场景：验证用户名是否可用。"><a href="#应用场景：验证用户名是否可用。" class="headerlink" title="应用场景：验证用户名是否可用。"></a>应用场景：验证用户名是否可用。</h4><ul>
+<li>通过<code>v-model</code>实现数据绑定</li>
+<li>需要提供提示信息</li>
+<li>需要侦听器监输入信息的变化</li>
+<li>需要修改触发的事件</li>
 </ul>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &lt;span&gt;username: <span class="xml"><span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line">            &lt;span&gt;</span><br><span class="line">                &lt;input type=<span class="string">&quot;text&quot;</span> v-model.lazy=<span class="string">&apos;username&apos;</span>&gt;</span><br><span class="line">            &lt;<span class="regexp">/span&gt;</span></span><br><span class="line"><span class="regexp">            &lt;span&gt;{{tip}}&lt;/</span>span&gt;</span><br><span class="line">        &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>div&gt;</span><br><span class="line">    &lt;script type=<span class="string">&quot;text/javascript&quot;</span> src=<span class="string">&quot;js/vue.js&quot;</span>&gt;<span class="xml"><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line">    &lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> vm = <span class="keyword">new</span> Vue({</span><br><span class="line">            el: <span class="string">&apos;#app&apos;</span>,</span><br><span class="line">            data: {</span><br><span class="line">                username:<span class="string">&apos;&apos;</span>,</span><br><span class="line">                tip:<span class="string">&apos;&apos;</span></span><br><span class="line">            },</span><br><span class="line">            methods:{</span><br><span class="line">                checkName:<span class="function"><span class="keyword">function</span>(<span class="params">username</span>)</span>{</span><br><span class="line">                    <span class="comment">//&#x63A5;&#x53E3;&#x8C03;&#x7528;&#xFF0C;&#x7528;&#x5B9A;&#x65F6;&#x4EFB;&#x52A1;&#x7684;&#x65B9;&#x5F0F;&#x6A21;&#x62DF;&#x63A5;&#x53E3;&#x8C03;&#x7528;</span></span><br><span class="line">                    <span class="keyword">var</span> that = <span class="keyword">this</span>;</span><br><span class="line">                    setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{</span><br><span class="line">                        <span class="keyword">if</span>(username == <span class="string">&apos;admin&apos;</span>){</span><br><span class="line">                            that.tip = <span class="string">&apos;change it&apos;</span>;</span><br><span class="line">                        }<span class="keyword">else</span>{</span><br><span class="line">                            that.tip = <span class="string">&apos;ok&apos;</span>;</span><br><span class="line">                        }</span><br><span class="line">                    },<span class="number">2000</span>);</span><br><span class="line">                }</span><br><span class="line">            },</span><br><span class="line">            watch:{</span><br><span class="line">                username:<span class="function"><span class="keyword">function</span>(<span class="params">val</span>)</span>{<span class="comment">//&#x5F53;&#x6570;&#x636E;&#x53D8;&#x5316;&#x65F6;&#x4F1A;&#x89E6;&#x53D1;</span></span><br><span class="line">                    <span class="comment">//&#x8C03;&#x7528;&#x540E;&#x53F0;&#x9A8C;&#x8BC1;</span></span><br><span class="line">                    <span class="keyword">this</span>.checkName(val);</span><br><span class="line">                    <span class="keyword">this</span>.tip = <span class="string">&apos;checking...&apos;</span>;</span><br><span class="line">                }</span><br><span class="line">            }</span><br><span class="line">        })</span><br><span class="line">    &lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>body&gt;</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">        &lt;div&gt;</span><br><span class="line">            &lt;span&gt;username: &lt;/span&gt;</span><br><span class="line">            &lt;span&gt;</span><br><span class="line">                &lt;input type=<span class="string">&quot;text&quot;</span> v-model.lazy=<span class="string">&#x27;username&#x27;</span>&gt;</span><br><span class="line">            &lt;/span&gt;</span><br><span class="line">            &lt;span&gt;&#123;&#123;tip&#125;&#125;&lt;/span&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;script type=<span class="string">&quot;text/javascript&quot;</span> src=<span class="string">&quot;js/vue.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">            el: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">            data: &#123;</span><br><span class="line">                username:<span class="string">&#x27;&#x27;</span>,</span><br><span class="line">                tip:<span class="string">&#x27;&#x27;</span></span><br><span class="line">            &#125;,</span><br><span class="line">            methods:&#123;</span><br><span class="line">                checkName:<span class="function"><span class="keyword">function</span>(<span class="params">username</span>)</span>&#123;</span><br><span class="line">                    <span class="comment">//接口调用，用定时任务的方式模拟接口调用</span></span><br><span class="line">                    <span class="keyword">var</span> that = <span class="built_in">this</span>;</span><br><span class="line">                    <span class="built_in">setTimeout</span>(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                        <span class="keyword">if</span>(username == <span class="string">&#x27;admin&#x27;</span>)&#123;</span><br><span class="line">                            that.tip = <span class="string">&#x27;change it&#x27;</span>;</span><br><span class="line">                        &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                            that.tip = <span class="string">&#x27;ok&#x27;</span>;</span><br><span class="line">                        &#125;</span><br><span class="line">                    &#125;,<span class="number">2000</span>);</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            watch:&#123;</span><br><span class="line">                username:<span class="function"><span class="keyword">function</span>(<span class="params">val</span>)</span>&#123;<span class="comment">//当数据变化时会触发</span></span><br><span class="line">                    <span class="comment">//调用后台验证</span></span><br><span class="line">                    <span class="built_in">this</span>.checkName(val);</span><br><span class="line">                    <span class="built_in">this</span>.tip = <span class="string">&#x27;checking...&#x27;</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br></pre></td></tr></table></figure>
 
-<h3 id="&#x8FC7;&#x6EE4;&#x5668;"><a href="#&#x8FC7;&#x6EE4;&#x5668;" class="headerlink" title="&#x8FC7;&#x6EE4;&#x5668;"></a>&#x8FC7;&#x6EE4;&#x5668;</h3><h4 id="&#x81EA;&#x5B9A;&#x4E49;&#x8FC7;&#x6EE4;&#x5668;&#xFF08;&#x5168;&#x5C40;&#xFF09;"><a href="#&#x81EA;&#x5B9A;&#x4E49;&#x8FC7;&#x6EE4;&#x5668;&#xFF08;&#x5168;&#x5C40;&#xFF09;" class="headerlink" title="&#x81EA;&#x5B9A;&#x4E49;&#x8FC7;&#x6EE4;&#x5668;&#xFF08;&#x5168;&#x5C40;&#xFF09;"></a>&#x81EA;&#x5B9A;&#x4E49;&#x8FC7;&#x6EE4;&#x5668;&#xFF08;&#x5168;&#x5C40;&#xFF09;</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Vue.filter(<span class="string">&apos;filterName&apos;</span><span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>{</span><br><span class="line">    <span class="comment">//logic...</span></span><br><span class="line">})</span><br></pre></td></tr></table></figure>
+<h3 id="过滤器"><a href="#过滤器" class="headerlink" title="过滤器"></a>过滤器</h3><h4 id="自定义过滤器（全局）"><a href="#自定义过滤器（全局）" class="headerlink" title="自定义过滤器（全局）"></a>自定义过滤器（全局）</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Vue.filter(<span class="string">&#x27;filterName&#x27;</span><span class="function"><span class="keyword">function</span>(<span class="params">value</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//logic...</span></span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
-<p>&#x5C40;&#x90E8;&#x8FC7;&#x6EE4;&#x5668;</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">filters:{</span><br><span class="line">    capitalize:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>{</span><br><span class="line">        ...</span><br><span class="line">    }</span><br><span class="line">}</span><br></pre></td></tr></table></figure>
+<p>局部过滤器</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">filters:&#123;</span><br><span class="line">    capitalize:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">        ...</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>&#x4F7F;&#x7528;</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>{{msg|upper}}<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>{{msg|upper|lower}}<span class="tag">&lt;/<span class="name">div</span>&gt;</span> <span class="comment">&lt;!-- &#x7EA7;&#x8054; --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-bind:id</span>=<span class="string">&quot;id|formatId&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>使用</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;&#123;msg|upper&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span>&#123;&#123;msg|upper|lower&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span> <span class="comment">&lt;!-- 级联 --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-bind:id</span>=<span class="string">&quot;id|formatId&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 
 
-<h4 id="&#x5E26;&#x53C2;&#x6570;&#x8FC7;&#x6EE4;&#x5668;"><a href="#&#x5E26;&#x53C2;&#x6570;&#x8FC7;&#x6EE4;&#x5668;" class="headerlink" title="&#x5E26;&#x53C2;&#x6570;&#x8FC7;&#x6EE4;&#x5668;"></a>&#x5E26;&#x53C2;&#x6570;&#x8FC7;&#x6EE4;&#x5668;</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Vue.filter(<span class="string">&apos;format&apos;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">value, arg1</span>)</span>{</span><br><span class="line">    </span><br><span class="line">})</span><br></pre></td></tr></table></figure>
+<h4 id="带参数过滤器"><a href="#带参数过滤器" class="headerlink" title="带参数过滤器"></a>带参数过滤器</h4><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Vue.filter(<span class="string">&#x27;format&#x27;</span>,<span class="function"><span class="keyword">function</span>(<span class="params">value, arg1</span>)</span>&#123;</span><br><span class="line">    </span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 
-<p>&#x4F7F;&#x7528;</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    {{date | format(&apos;yyyy-MM-dd&apos;)}}</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>使用</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span>&gt;</span></span><br><span class="line">    &#123;&#123;date | format(&#x27;yyyy-MM-dd&#x27;)&#125;&#125;</span><br><span class="line"><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<h3 id="&#x58F0;&#x660E;&#x5468;&#x671F;"><a href="#&#x58F0;&#x660E;&#x5468;&#x671F;" class="headerlink" title="&#x58F0;&#x660E;&#x5468;&#x671F;"></a>&#x58F0;&#x660E;&#x5468;&#x671F;</h3><ul>
-<li>&#x6302;&#x8F7D;</li>
-<li>&#x66F4;&#x65B0;</li>
-<li>&#x9500;&#x6BC1;</li>
+<h3 id="声明周期"><a href="#声明周期" class="headerlink" title="声明周期"></a>声明周期</h3><ul>
+<li>挂载</li>
+<li>更新</li>
+<li>销毁</li>
 </ul>
-<h3 id="&#x4FEE;&#x6539;&#x54CD;&#x5E94;&#x5F0F;&#x6570;&#x636E;"><a href="#&#x4FEE;&#x6539;&#x54CD;&#x5E94;&#x5F0F;&#x6570;&#x636E;" class="headerlink" title="&#x4FEE;&#x6539;&#x54CD;&#x5E94;&#x5F0F;&#x6570;&#x636E;"></a>&#x4FEE;&#x6539;&#x54CD;&#x5E94;&#x5F0F;&#x6570;&#x636E;</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Vue.set(vm.items, indexOfItem, newValue)</span><br></pre></td></tr></table></figure>
+<h3 id="修改响应式数据"><a href="#修改响应式数据" class="headerlink" title="修改响应式数据"></a>修改响应式数据</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Vue.set(vm.items, indexOfItem, newValue)</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vm.$<span class="keyword">set</span>(vm.items, indexOfItem, newValue)</span><br></pre></td></tr></table></figure>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vm.$set(vm.items, indexOfItem, newValue)</span><br></pre></td></tr></table></figure>
 
-<p>&#x53C2;&#x6570;&#x4E00;&#x8868;&#x793A;&#x8981;&#x5904;&#x7406;&#x7684;&#x6570;&#x7EC4;&#x540D;&#x79F0;&#xFF0C;&#x53C2;&#x6570;&#x4E8C;&#x8868;&#x793A;&#x8981;&#x5904;&#x7406;&#x7684;&#x6570;&#x7EC4;&#x7D22;&#x5F15;&#xFF0C;&#x53C2;&#x6570;&#x4E09;&#x8868;&#x793A;&#x8981;&#x5904;&#x7406;&#x7684;&#x6570;&#x7EC4;&#x7684;&#x503C;&#x3002;</p>
-<h3 id="library"><a href="#library" class="headerlink" title="library"></a>library</h3><h4 id="&#x53D8;&#x5F02;&#x65B9;&#x6CD5;"><a href="#&#x53D8;&#x5F02;&#x65B9;&#x6CD5;" class="headerlink" title="&#x53D8;&#x5F02;&#x65B9;&#x6CD5;"></a>&#x53D8;&#x5F02;&#x65B9;&#x6CD5;</h4><p>push(), pop(), shift(), unshift(), splice(), sort(), reverse()</p>
-<h4 id="&#x66FF;&#x6362;&#x6570;&#x7EC4;&#xFF08;&#x751F;&#x6210;&#x65B0;&#x7684;&#x6570;&#x7EC4;&#xFF09;"><a href="#&#x66FF;&#x6362;&#x6570;&#x7EC4;&#xFF08;&#x751F;&#x6210;&#x65B0;&#x7684;&#x6570;&#x7EC4;&#xFF09;" class="headerlink" title="&#x66FF;&#x6362;&#x6570;&#x7EC4;&#xFF08;&#x751F;&#x6210;&#x65B0;&#x7684;&#x6570;&#x7EC4;&#xFF09;"></a>&#x66FF;&#x6362;&#x6570;&#x7EC4;&#xFF08;&#x751F;&#x6210;&#x65B0;&#x7684;&#x6570;&#x7EC4;&#xFF09;</h4><p>filter(), concat(), slice()</p>
-<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">this</span>.list = <span class="keyword">this</span>.list.slice(<span class="number">0</span>,<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
+<p>参数一表示要处理的数组名称，参数二表示要处理的数组索引，参数三表示要处理的数组的值。</p>
+<h3 id="library"><a href="#library" class="headerlink" title="library"></a>library</h3><h4 id="变异方法"><a href="#变异方法" class="headerlink" title="变异方法"></a>变异方法</h4><p>push(), pop(), shift(), unshift(), splice(), sort(), reverse()</p>
+<h4 id="替换数组（生成新的数组）"><a href="#替换数组（生成新的数组）" class="headerlink" title="替换数组（生成新的数组）"></a>替换数组（生成新的数组）</h4><p>filter(), concat(), slice()</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">this</span>.list = <span class="built_in">this</span>.list.slice(<span class="number">0</span>,<span class="number">2</span>)</span><br></pre></td></tr></table></figure>
 
-<h4 id="&#x56FE;&#x4E66;&#x5217;&#x8868;"><a href="#&#x56FE;&#x4E66;&#x5217;&#x8868;" class="headerlink" title="&#x56FE;&#x4E66;&#x5217;&#x8868;"></a>&#x56FE;&#x4E66;&#x5217;&#x8868;</h4><ul>
-<li>&#x9759;&#x6001;&#x5217;&#x6548;&#x679C;</li>
-<li>&#x57FA;&#x4E8E;&#x6570;&#x636E;&#x5B9E;&#x73B0;&#x6A21;&#x677F;&#x6548;&#x679C;</li>
-<li>&#x5904;&#x7406;&#x6BCF;&#x884C;&#x7684;&#x64CD;&#x4F5C;&#x6309;&#x94AE;</li>
+<h4 id="图书列表"><a href="#图书列表" class="headerlink" title="图书列表"></a>图书列表</h4><ul>
+<li>静态列效果</li>
+<li>基于数据实现模板效果</li>
+<li>处理每行的操作按钮</li>
 </ul>
-<h4 id="&#x6DFB;&#x52A0;&#x56FE;&#x4E66;"><a href="#&#x6DFB;&#x52A0;&#x56FE;&#x4E66;" class="headerlink" title="&#x6DFB;&#x52A0;&#x56FE;&#x4E66;"></a>&#x6DFB;&#x52A0;&#x56FE;&#x4E66;</h4><ul>
-<li>&#x5B9E;&#x73B0;&#x8868;&#x5355;&#x7684;&#x9759;&#x6001;&#x6548;&#x679C;</li>
-<li>&#x6DFB;&#x52A0;&#x56FE;&#x4E66;&#x8868;&#x5355;&#x57DF;&#x6570;&#x636E;&#x7ED1;&#x5B9A;</li>
-<li>&#x6DFB;&#x52A0;&#x6309;&#x94AE;&#x4E8B;&#x4EF6;&#x7ED1;&#x5B9A;</li>
-<li>&#x5B9E;&#x73B0;&#x6DFB;&#x52A0;&#x4E1A;&#x52A1;&#x903B;&#x8F91;</li>
+<h4 id="添加图书"><a href="#添加图书" class="headerlink" title="添加图书"></a>添加图书</h4><ul>
+<li>实现表单的静态效果</li>
+<li>添加图书表单域数据绑定</li>
+<li>添加按钮事件绑定</li>
+<li>实现添加业务逻辑</li>
 </ul>
-<h4 id="&#x4FEE;&#x6539;&#x56FE;&#x4E66;"><a href="#&#x4FEE;&#x6539;&#x56FE;&#x4E66;" class="headerlink" title="&#x4FEE;&#x6539;&#x56FE;&#x4E66;"></a>&#x4FEE;&#x6539;&#x56FE;&#x4E66;</h4><ul>
-<li>&#x4FEE;&#x6539;&#x4FE1;&#x606F;&#x586B;&#x5145;&#x5230;&#x8868;&#x5355;</li>
-<li>&#x4FEE;&#x6539;&#x540E;&#x91CD;&#x65B0;&#x63D0;&#x4EA4;&#x8868;&#x5355;</li>
-<li>&#x91CD;&#x7528;&#x6DFB;&#x52A0;&#x548C;&#x4FEE;&#x6539;&#x7684;&#x65B9;&#x6CD5;</li>
+<h4 id="修改图书"><a href="#修改图书" class="headerlink" title="修改图书"></a>修改图书</h4><ul>
+<li>修改信息填充到表单</li>
+<li>修改后重新提交表单</li>
+<li>重用添加和修改的方法</li>
 </ul>
-<h4 id="&#x5E38;&#x7528;&#x7279;&#x6027;&#x5E94;&#x7528;"><a href="#&#x5E38;&#x7528;&#x7279;&#x6027;&#x5E94;&#x7528;" class="headerlink" title="&#x5E38;&#x7528;&#x7279;&#x6027;&#x5E94;&#x7528;"></a>&#x5E38;&#x7528;&#x7279;&#x6027;&#x5E94;&#x7528;</h4><ul>
-<li>&#x8FC7;&#x6EE4;&#x5668;&#xFF08;&#x683C;&#x5F0F;&#x5316;&#x65E5;&#x671F;&#xFF09;</li>
-<li>&#x81EA;&#x5B9A;&#x4E49;&#x6307;&#x4EE4;&#xFF08;&#x83B7;&#x53D6;&#x8868;&#x5355;&#x7126;&#x70B9;&#xFF09;</li>
-<li>&#x8BA1;&#x7B97;&#x5C5E;&#x6027;&#xFF08;&#x7EDF;&#x8BA1;&#x56FE;&#x4E66;&#x6570;&#x91CF;&#xFF09;</li>
-<li>&#x4FA6;&#x542C;&#x5668;&#xFF08;&#x9A8C;&#x8BC1;&#x56FE;&#x4E66;&#x5B58;&#x5728;&#x6027;&#xFF09;</li>
-<li>&#x751F;&#x547D;&#x5468;&#x671F;&#xFF08;&#x56FE;&#x4E66;&#x6570;&#x636E;&#x5904;&#x7406;&#xFF09;  </li>
+<h4 id="常用特性应用"><a href="#常用特性应用" class="headerlink" title="常用特性应用"></a>常用特性应用</h4><ul>
+<li>过滤器（格式化日期）</li>
+<li>自定义指令（获取表单焦点）</li>
+<li>计算属性（统计图书数量）</li>
+<li>侦听器（验证图书存在性）</li>
+<li>生命周期（图书数据处理）  </li>
 </ul>
-<h1 id="library-html"><a href="#library-html" class="headerlink" title="library.html"></a>library.html</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">    &lt;title&gt;Document&lt;<span class="regexp">/title&gt;</span></span><br><span class="line"><span class="regexp">    &lt;style type=&quot;text/</span>css<span class="string">&quot;&gt;</span></span><br><span class="line"><span class="string">        .grid {</span></span><br><span class="line"><span class="string">            margin: auto;</span></span><br><span class="line"><span class="string">            width: 500px;</span></span><br><span class="line"><span class="string">            text-align: center;</span></span><br><span class="line"><span class="string">        }</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        .grid table {</span></span><br><span class="line"><span class="string">            width: 100%;</span></span><br><span class="line"><span class="string">            border-collapse: collapse;</span></span><br><span class="line"><span class="string">        }</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        .grid th,td {</span></span><br><span class="line"><span class="string">            padding: 10;</span></span><br><span class="line"><span class="string">            border: 1px dashed rgb(224, 182, 105);</span></span><br><span class="line"><span class="string">            height: 35px;</span></span><br><span class="line"><span class="string">            line-height: 35px;</span></span><br><span class="line"><span class="string">        }</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        .grid th {</span></span><br><span class="line"><span class="string">            background-color: rgb(255, 207, 117);</span></span><br><span class="line"><span class="string">        }</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        .grid .book {</span></span><br><span class="line"><span class="string">            padding-bottom: 10px;</span></span><br><span class="line"><span class="string">            padding-top: 5px;</span></span><br><span class="line"><span class="string">            background-color: rgb(236, 192, 111);</span></span><br><span class="line"><span class="string">        }</span></span><br><span class="line"><span class="string">        .grid .total{</span></span><br><span class="line"><span class="string">            height: 30px;</span></span><br><span class="line"><span class="string">            line-height: 30px;</span></span><br><span class="line"><span class="string">            border-top: 1px solid rgb(173, 139, 69);</span></span><br><span class="line"><span class="string">            background-color: rgb(196, 153, 75);</span></span><br><span class="line"><span class="string">        }</span></span><br><span class="line"><span class="string">    &lt;/style&gt;</span></span><br><span class="line"><span class="string">&lt;/head&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;body&gt;</span></span><br><span class="line"><span class="string">    &lt;div id=&quot;</span>app<span class="string">&quot;&gt;</span></span><br><span class="line"><span class="string">        &lt;div class=&quot;</span>grid<span class="string">&quot;&gt;</span></span><br><span class="line"><span class="string">            &lt;div&gt;</span></span><br><span class="line"><span class="string">                &lt;h1&gt;&#x56FE;&#x4E66;&#x7BA1;&#x7406;&lt;/h1&gt;</span></span><br><span class="line"><span class="string">                &lt;div class=&quot;</span>book<span class="string">&quot;&gt;</span></span><br><span class="line"><span class="string">                    &lt;div&gt;</span></span><br><span class="line"><span class="string">                        &lt;label for=&quot;</span>id<span class="string">&quot;&gt;</span></span><br><span class="line"><span class="string">                            &#x7F16;&#x53F7;:</span></span><br><span class="line"><span class="string">                        &lt;/label&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;</span>text<span class="string">&quot; id=&quot;</span>id<span class="string">&quot; v-model=&apos;id&apos; :disabled=&apos;flag&apos; v-focus&gt;</span></span><br><span class="line"><span class="string">                        &lt;label for=&quot;</span>name<span class="string">&quot;&gt;</span></span><br><span class="line"><span class="string">                            &#x540D;&#x79F0;:</span></span><br><span class="line"><span class="string">                        &lt;/label&gt;</span></span><br><span class="line"><span class="string">                        &lt;input type=&quot;</span>text<span class="string">&quot; id=&quot;</span>name<span class="string">&quot; v-model=&apos;name&apos;&gt;</span></span><br><span class="line"><span class="string">                        &lt;button @click=&apos;handle&apos; :disabled=&apos;isSubmit&apos;&gt;&#x63D0;&#x4EA4;&lt;/button&gt;</span></span><br><span class="line"><span class="string">                    &lt;/div&gt;</span></span><br><span class="line"><span class="string">                &lt;/div&gt;</span></span><br><span class="line"><span class="string">            &lt;/div&gt;</span></span><br><span class="line"><span class="string">            &lt;div class=&quot;</span>total<span class="string">&quot;&gt;</span></span><br><span class="line"><span class="string">                &lt;span&gt;&#x56FE;&#x4E66;&#x6570;&#x91CF;&#xFF1A;&lt;/span&gt;</span></span><br><span class="line"><span class="string">                &lt;span&gt;{{total}}&lt;/span&gt;</span></span><br><span class="line"><span class="string">            &lt;/div&gt;</span></span><br><span class="line"><span class="string">            &lt;table&gt;</span></span><br><span class="line"><span class="string">                &lt;thead&gt;</span></span><br><span class="line"><span class="string">                    &lt;tr&gt;</span></span><br><span class="line"><span class="string">                        &lt;th&gt;&#x7F16;&#x53F7;&lt;/th&gt;</span></span><br><span class="line"><span class="string">                        &lt;th&gt;&#x540D;&#x79F0;&lt;/th&gt;</span></span><br><span class="line"><span class="string">                        &lt;th&gt;&#x65F6;&#x95F4;&lt;/th&gt;</span></span><br><span class="line"><span class="string">                        &lt;th&gt;&#x64CD;&#x4F5C;&lt;/th&gt;</span></span><br><span class="line"><span class="string">                    &lt;/tr&gt;</span></span><br><span class="line"><span class="string">                &lt;/thead&gt;</span></span><br><span class="line"><span class="string">                &lt;tbody&gt;</span></span><br><span class="line"><span class="string">                    &lt;tr :key=&apos;item.id&apos; v-for=&apos;item in books&apos;&gt;</span></span><br><span class="line"><span class="string">                        &lt;td&gt;{{item.id}}&lt;/td&gt;</span></span><br><span class="line"><span class="string">                        &lt;td&gt;{{item.name}}&lt;/td&gt;</span></span><br><span class="line"><span class="string">                        &lt;td&gt;{{item.date}}&lt;/td&gt;</span></span><br><span class="line"><span class="string">                        &lt;td&gt;</span></span><br><span class="line"><span class="string">                            &lt;a href=&quot;</span><span class="string">&quot; @click.prevent=&apos;modify(item)&apos;&gt;&#x4FEE;&#x6539;&lt;/a&gt;</span></span><br><span class="line"><span class="string">                            &lt;span&gt;|&lt;/span&gt;</span></span><br><span class="line"><span class="string">                            &lt;a href=&quot;</span><span class="string">&quot; @click.prevent=&apos;del(item)&apos;&gt;&#x5220;&#x9664;&lt;/a&gt;</span></span><br><span class="line"><span class="string">                        &lt;/td&gt;</span></span><br><span class="line"><span class="string">                    &lt;/tr&gt;</span></span><br><span class="line"><span class="string">                &lt;/tbody&gt;</span></span><br><span class="line"><span class="string">            &lt;/table&gt;</span></span><br><span class="line"><span class="string">        &lt;/div&gt;</span></span><br><span class="line"><span class="string">    &lt;/div&gt;</span></span><br><span class="line"><span class="string">    &lt;script type=&quot;</span>text/javascript<span class="string">&quot; src=&quot;</span>js/vue.js<span class="string">&quot;&gt;&lt;/script&gt;</span></span><br><span class="line"><span class="string">    &lt;script type=&quot;</span>text/javascript<span class="string">&quot;&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">        Vue.directive(&apos;focus&apos;,{</span></span><br><span class="line"><span class="string">            inserted: function(el){</span></span><br><span class="line"><span class="string">                el.focus();</span></span><br><span class="line"><span class="string">            }</span></span><br><span class="line"><span class="string">        })</span></span><br><span class="line"><span class="string">        var vm = new Vue({</span></span><br><span class="line"><span class="string">            el: &apos;#app&apos;,</span></span><br><span class="line"><span class="string">            data: {</span></span><br><span class="line"><span class="string">                isSubmit: false,</span></span><br><span class="line"><span class="string">                flag: false,</span></span><br><span class="line"><span class="string">                id: &apos;&apos;,</span></span><br><span class="line"><span class="string">                name: &apos;&apos;,</span></span><br><span class="line"><span class="string">                books: []</span></span><br><span class="line"><span class="string">            },</span></span><br><span class="line"><span class="string">            methods: {</span></span><br><span class="line"><span class="string">                handle: function () {</span></span><br><span class="line"><span class="string">                    var book = {};</span></span><br><span class="line"><span class="string">                    if (!this.flag) {</span></span><br><span class="line"><span class="string">                        book.id = this.id;</span></span><br><span class="line"><span class="string">                        book.name = this.name;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">                        book.date = &apos;&apos;,</span></span><br><span class="line"><span class="string">                        this.books.push(book);</span></span><br><span class="line"><span class="string">                    } else {</span></span><br><span class="line"><span class="string">                        this.books.some((item) =&gt; {</span></span><br><span class="line"><span class="string">                            if (item.id == this.id) {</span></span><br><span class="line"><span class="string">                                item.name = this.name;</span></span><br><span class="line"><span class="string">                                return true;</span></span><br><span class="line"><span class="string">                            }</span></span><br><span class="line"><span class="string">                        }),</span></span><br><span class="line"><span class="string">                        this.flag = true;</span></span><br><span class="line"><span class="string">                    }</span></span><br><span class="line"><span class="string">                    this.id = &apos;&apos;,</span></span><br><span class="line"><span class="string">                    this.name = &apos;&apos;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">                },</span></span><br><span class="line"><span class="string">                modify: function (itemin) {</span></span><br><span class="line"><span class="string">                    // this.id = books.id;</span></span><br><span class="line"><span class="string">                    // this.name = books.name</span></span><br><span class="line"><span class="string">                    this.flag = true;</span></span><br><span class="line"><span class="string">                    var book = this.books.filter(function (item) {</span></span><br><span class="line"><span class="string">                        return item.id == itemin.id</span></span><br><span class="line"><span class="string">                    })</span></span><br><span class="line"><span class="string">                    this.id = book[0].id;</span></span><br><span class="line"><span class="string">                    this.name = book[0].name;</span></span><br><span class="line"><span class="string">                },</span></span><br><span class="line"><span class="string">                del:function(itemin){</span></span><br><span class="line"><span class="string">                    // //&#x67E5;&#x627E;&#x7D22;&#x5F15;</span></span><br><span class="line"><span class="string">                    // var index = this.books.findIndex(function(item){</span></span><br><span class="line"><span class="string">                    //     return item.id == itemin.id;</span></span><br><span class="line"><span class="string">                    // });</span></span><br><span class="line"><span class="string">                    // //&#x5220;&#x9664;</span></span><br><span class="line"><span class="string">                    // this.books.splice(index, 1);</span></span><br><span class="line"><span class="string">                    //method2 &#x4E5F;&#x53EF;&#x5DF2;&#x901A;&#x8FC7;filter&#x6765;&#x5B9E;&#x73B0;</span></span><br><span class="line"><span class="string">                    this.books = this.books.filter(function(item){</span></span><br><span class="line"><span class="string">                        return item.id != itemin.id;</span></span><br><span class="line"><span class="string">                    })</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">                    this.id = &apos;&apos;,</span></span><br><span class="line"><span class="string">                    this.name = &apos;&apos;,</span></span><br><span class="line"><span class="string">                    this.flag = false;</span></span><br><span class="line"><span class="string">                }</span></span><br><span class="line"><span class="string">            },</span></span><br><span class="line"><span class="string">            computed:{</span></span><br><span class="line"><span class="string">                total:function(){</span></span><br><span class="line"><span class="string">                    return this.books.length;</span></span><br><span class="line"><span class="string">                }</span></span><br><span class="line"><span class="string">            },</span></span><br><span class="line"><span class="string">            watch:{</span></span><br><span class="line"><span class="string">                name: function(val){</span></span><br><span class="line"><span class="string">                    var flag = this.books.some(function(item){</span></span><br><span class="line"><span class="string">                        return item.name == val;</span></span><br><span class="line"><span class="string">                    });</span></span><br><span class="line"><span class="string">                    </span></span><br><span class="line"><span class="string">                    if(flag){</span></span><br><span class="line"><span class="string">                        this.isSubmit = true;</span></span><br><span class="line"><span class="string">                    }else{</span></span><br><span class="line"><span class="string">                        this.isSubmit = false;</span></span><br><span class="line"><span class="string">                    }</span></span><br><span class="line"><span class="string">                }</span></span><br><span class="line"><span class="string">            },</span></span><br><span class="line"><span class="string">            mounted: function(){</span></span><br><span class="line"><span class="string">                //&#x4E00;&#x822C;&#x7528;&#x4E8E;&#x83B7;&#x53D6;&#x540E;&#x53F0;&#x6570;&#x636E;&#xFF0C;&#x7136;&#x540E;&#x628A;&#x6570;&#x636E;&#x586B;&#x5145;&#x5230;&#x6A21;&#x677F;</span></span><br><span class="line"><span class="string">                var data = [{</span></span><br><span class="line"><span class="string">                    id: 1,</span></span><br><span class="line"><span class="string">                    name: &apos;&#x4E09;&#x56FD;&#x6F14;&#x4E49;&apos;,</span></span><br><span class="line"><span class="string">                    date: &apos;&apos;</span></span><br><span class="line"><span class="string">                }, {</span></span><br><span class="line"><span class="string">                    id: 2,</span></span><br><span class="line"><span class="string">                    name: &apos;&#x6C34;&#x6D52;&#x4F20;&apos;,</span></span><br><span class="line"><span class="string">                    date: &apos;&apos;</span></span><br><span class="line"><span class="string">                }, {</span></span><br><span class="line"><span class="string">                    id: 3,</span></span><br><span class="line"><span class="string">                    name: &apos;&#x7EA2;&#x697C;&#x68A6;&apos;,</span></span><br><span class="line"><span class="string">                    date: &apos;&apos;</span></span><br><span class="line"><span class="string">                }, {</span></span><br><span class="line"><span class="string">                    id: 4,</span></span><br><span class="line"><span class="string">                    name: &apos;&#x897F;&#x6E38;&#x8BB0;&apos;,</span></span><br><span class="line"><span class="string">                    date: &apos;&apos;</span></span><br><span class="line"><span class="string">                }];</span></span><br><span class="line"><span class="string">                this.books = data;</span></span><br><span class="line"><span class="string">            }</span></span><br><span class="line"><span class="string">        })</span></span><br><span class="line"><span class="string">    &lt;/script&gt;</span></span><br><span class="line"><span class="string">&lt;/body&gt;</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">&lt;/html&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="library-html"><a href="#library-html" class="headerlink" title="library.html"></a>library.html</h1><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html lang=<span class="string">&quot;en&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">&lt;head&gt;</span><br><span class="line">    &lt;meta charset=<span class="string">&quot;UTF-8&quot;</span>&gt;</span><br><span class="line">    &lt;title&gt;Document&lt;/title&gt;</span><br><span class="line">    &lt;style type=<span class="string">&quot;text/css&quot;</span>&gt;</span><br><span class="line">        .grid &#123;</span><br><span class="line">            margin: auto;</span><br><span class="line">            width: <span class="number">500</span>px;</span><br><span class="line">            text-align: center;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .grid table &#123;</span><br><span class="line">            width: <span class="number">100</span>%;</span><br><span class="line">            border-collapse: collapse;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .grid th,td &#123;</span><br><span class="line">            padding: <span class="number">10</span>;</span><br><span class="line">            border: <span class="number">1</span>px dashed rgb(<span class="number">224</span>, <span class="number">182</span>, <span class="number">105</span>);</span><br><span class="line">            height: <span class="number">35</span>px;</span><br><span class="line">            line-height: <span class="number">35</span>px;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .grid th &#123;</span><br><span class="line">            background-color: rgb(<span class="number">255</span>, <span class="number">207</span>, <span class="number">117</span>);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        .grid .book &#123;</span><br><span class="line">            padding-bottom: <span class="number">10</span>px;</span><br><span class="line">            padding-top: <span class="number">5</span>px;</span><br><span class="line">            background-color: rgb(<span class="number">236</span>, <span class="number">192</span>, <span class="number">111</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        .grid .total&#123;</span><br><span class="line">            height: <span class="number">30</span>px;</span><br><span class="line">            line-height: <span class="number">30</span>px;</span><br><span class="line">            border-top: <span class="number">1</span>px solid rgb(<span class="number">173</span>, <span class="number">139</span>, <span class="number">69</span>);</span><br><span class="line">            background-color: rgb(<span class="number">196</span>, <span class="number">153</span>, <span class="number">75</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &lt;/style&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line"></span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div id=<span class="string">&quot;app&quot;</span>&gt;</span><br><span class="line">        &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;grid&quot;</span>&gt;</span><br><span class="line">            &lt;div&gt;</span><br><span class="line">                &lt;h1&gt;图书管理&lt;/h1&gt;</span><br><span class="line">                &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;book&quot;</span>&gt;</span><br><span class="line">                    &lt;div&gt;</span><br><span class="line">                        &lt;label <span class="keyword">for</span>=<span class="string">&quot;id&quot;</span>&gt;</span><br><span class="line">                            编号:</span><br><span class="line">                        &lt;/label&gt;</span><br><span class="line">                        &lt;input type=<span class="string">&quot;text&quot;</span> id=<span class="string">&quot;id&quot;</span> v-model=<span class="string">&#x27;id&#x27;</span> :disabled=<span class="string">&#x27;flag&#x27;</span> v-focus&gt;</span><br><span class="line">                        &lt;label <span class="keyword">for</span>=<span class="string">&quot;name&quot;</span>&gt;</span><br><span class="line">                            名称:</span><br><span class="line">                        &lt;/label&gt;</span><br><span class="line">                        &lt;input type=<span class="string">&quot;text&quot;</span> id=<span class="string">&quot;name&quot;</span> v-model=<span class="string">&#x27;name&#x27;</span>&gt;</span><br><span class="line">                        &lt;button @click=<span class="string">&#x27;handle&#x27;</span> :disabled=<span class="string">&#x27;isSubmit&#x27;</span>&gt;提交&lt;/button&gt;</span><br><span class="line">                    &lt;/div&gt;</span><br><span class="line">                &lt;/div&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">            &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">&quot;total&quot;</span>&gt;</span><br><span class="line">                &lt;span&gt;图书数量：&lt;/span&gt;</span><br><span class="line">                &lt;span&gt;&#123;&#123;total&#125;&#125;&lt;/span&gt;</span><br><span class="line">            &lt;/div&gt;</span><br><span class="line">            &lt;table&gt;</span><br><span class="line">                &lt;thead&gt;</span><br><span class="line">                    &lt;tr&gt;</span><br><span class="line">                        &lt;th&gt;编号&lt;/th&gt;</span><br><span class="line">                        &lt;th&gt;名称&lt;/th&gt;</span><br><span class="line">                        &lt;th&gt;时间&lt;/th&gt;</span><br><span class="line">                        &lt;th&gt;操作&lt;/th&gt;</span><br><span class="line">                    &lt;/tr&gt;</span><br><span class="line">                &lt;/thead&gt;</span><br><span class="line">                &lt;tbody&gt;</span><br><span class="line">                    &lt;tr :key=<span class="string">&#x27;item.id&#x27;</span> v-<span class="keyword">for</span>=<span class="string">&#x27;item in books&#x27;</span>&gt;</span><br><span class="line">                        &lt;td&gt;&#123;&#123;item.id&#125;&#125;&lt;/td&gt;</span><br><span class="line">                        &lt;td&gt;&#123;&#123;item.name&#125;&#125;&lt;/td&gt;</span><br><span class="line">                        &lt;td&gt;&#123;&#123;item.date&#125;&#125;&lt;/td&gt;</span><br><span class="line">                        &lt;td&gt;</span><br><span class="line">                            &lt;a href=<span class="string">&quot;&quot;</span> @click.prevent=<span class="string">&#x27;modify(item)&#x27;</span>&gt;修改&lt;/a&gt;</span><br><span class="line">                            &lt;span&gt;|&lt;/span&gt;</span><br><span class="line">                            &lt;a href=<span class="string">&quot;&quot;</span> @click.prevent=<span class="string">&#x27;del(item)&#x27;</span>&gt;删除&lt;/a&gt;</span><br><span class="line">                        &lt;/td&gt;</span><br><span class="line">                    &lt;/tr&gt;</span><br><span class="line">                &lt;/tbody&gt;</span><br><span class="line">            &lt;/table&gt;</span><br><span class="line">        &lt;/div&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    &lt;script type=<span class="string">&quot;text/javascript&quot;</span> src=<span class="string">&quot;js/vue.js&quot;</span>&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script type=<span class="string">&quot;text/javascript&quot;</span>&gt;</span><br><span class="line"></span><br><span class="line">        Vue.directive(<span class="string">&#x27;focus&#x27;</span>,&#123;</span><br><span class="line">            inserted: <span class="function"><span class="keyword">function</span>(<span class="params">el</span>)</span>&#123;</span><br><span class="line">                el.focus();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">        <span class="keyword">var</span> vm = <span class="keyword">new</span> Vue(&#123;</span><br><span class="line">            el: <span class="string">&#x27;#app&#x27;</span>,</span><br><span class="line">            data: &#123;</span><br><span class="line">                isSubmit: <span class="literal">false</span>,</span><br><span class="line">                flag: <span class="literal">false</span>,</span><br><span class="line">                id: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">                name: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">                books: []</span><br><span class="line">            &#125;,</span><br><span class="line">            methods: &#123;</span><br><span class="line">                handle: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">                    <span class="keyword">var</span> book = &#123;&#125;;</span><br><span class="line">                    <span class="keyword">if</span> (!<span class="built_in">this</span>.flag) &#123;</span><br><span class="line">                        book.id = <span class="built_in">this</span>.id;</span><br><span class="line">                        book.name = <span class="built_in">this</span>.name;</span><br><span class="line"></span><br><span class="line">                        book.date = <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">                        <span class="built_in">this</span>.books.push(book);</span><br><span class="line">                    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                        <span class="built_in">this</span>.books.some(<span class="function">(<span class="params">item</span>) =&gt;</span> &#123;</span><br><span class="line">                            <span class="keyword">if</span> (item.id == <span class="built_in">this</span>.id) &#123;</span><br><span class="line">                                item.name = <span class="built_in">this</span>.name;</span><br><span class="line">                                <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;),</span><br><span class="line">                        <span class="built_in">this</span>.flag = <span class="literal">true</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    <span class="built_in">this</span>.id = <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">                    <span class="built_in">this</span>.name = <span class="string">&#x27;&#x27;</span></span><br><span class="line"></span><br><span class="line">                &#125;,</span><br><span class="line">                modify: <span class="function"><span class="keyword">function</span> (<span class="params">itemin</span>) </span>&#123;</span><br><span class="line">                    <span class="comment">// this.id = books.id;</span></span><br><span class="line">                    <span class="comment">// this.name = books.name</span></span><br><span class="line">                    <span class="built_in">this</span>.flag = <span class="literal">true</span>;</span><br><span class="line">                    <span class="keyword">var</span> book = <span class="built_in">this</span>.books.filter(<span class="function"><span class="keyword">function</span> (<span class="params">item</span>) </span>&#123;</span><br><span class="line">                        <span class="keyword">return</span> item.id == itemin.id</span><br><span class="line">                    &#125;)</span><br><span class="line">                    <span class="built_in">this</span>.id = book[<span class="number">0</span>].id;</span><br><span class="line">                    <span class="built_in">this</span>.name = book[<span class="number">0</span>].name;</span><br><span class="line">                &#125;,</span><br><span class="line">                del:<span class="function"><span class="keyword">function</span>(<span class="params">itemin</span>)</span>&#123;</span><br><span class="line">                    <span class="comment">// //查找索引</span></span><br><span class="line">                    <span class="comment">// var index = this.books.findIndex(function(item)&#123;</span></span><br><span class="line">                    <span class="comment">//     return item.id == itemin.id;</span></span><br><span class="line">                    <span class="comment">// &#125;);</span></span><br><span class="line">                    <span class="comment">// //删除</span></span><br><span class="line">                    <span class="comment">// this.books.splice(index, 1);</span></span><br><span class="line">                    <span class="comment">//method2 也可已通过filter来实现</span></span><br><span class="line">                    <span class="built_in">this</span>.books = <span class="built_in">this</span>.books.filter(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>)</span>&#123;</span><br><span class="line">                        <span class="keyword">return</span> item.id != itemin.id;</span><br><span class="line">                    &#125;)</span><br><span class="line"></span><br><span class="line">                    <span class="built_in">this</span>.id = <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">                    <span class="built_in">this</span>.name = <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">                    <span class="built_in">this</span>.flag = <span class="literal">false</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            computed:&#123;</span><br><span class="line">                total:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                    <span class="keyword">return</span> <span class="built_in">this</span>.books.length;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            watch:&#123;</span><br><span class="line">                name: <span class="function"><span class="keyword">function</span>(<span class="params">val</span>)</span>&#123;</span><br><span class="line">                    <span class="keyword">var</span> flag = <span class="built_in">this</span>.books.some(<span class="function"><span class="keyword">function</span>(<span class="params">item</span>)</span>&#123;</span><br><span class="line">                        <span class="keyword">return</span> item.name == val;</span><br><span class="line">                    &#125;);</span><br><span class="line">                    </span><br><span class="line">                    <span class="keyword">if</span>(flag)&#123;</span><br><span class="line">                        <span class="built_in">this</span>.isSubmit = <span class="literal">true</span>;</span><br><span class="line">                    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                        <span class="built_in">this</span>.isSubmit = <span class="literal">false</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;,</span><br><span class="line">            mounted: <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">                <span class="comment">//一般用于获取后台数据，然后把数据填充到模板</span></span><br><span class="line">                <span class="keyword">var</span> data = [&#123;</span><br><span class="line">                    id: <span class="number">1</span>,</span><br><span class="line">                    name: <span class="string">&#x27;三国演义&#x27;</span>,</span><br><span class="line">                    date: <span class="string">&#x27;&#x27;</span></span><br><span class="line">                &#125;, &#123;</span><br><span class="line">                    id: <span class="number">2</span>,</span><br><span class="line">                    name: <span class="string">&#x27;水浒传&#x27;</span>,</span><br><span class="line">                    date: <span class="string">&#x27;&#x27;</span></span><br><span class="line">                &#125;, &#123;</span><br><span class="line">                    id: <span class="number">3</span>,</span><br><span class="line">                    name: <span class="string">&#x27;红楼梦&#x27;</span>,</span><br><span class="line">                    date: <span class="string">&#x27;&#x27;</span></span><br><span class="line">                &#125;, &#123;</span><br><span class="line">                    id: <span class="number">4</span>,</span><br><span class="line">                    name: <span class="string">&#x27;西游记&#x27;</span>,</span><br><span class="line">                    date: <span class="string">&#x27;&#x27;</span></span><br><span class="line">                &#125;];</span><br><span class="line">                <span class="built_in">this</span>.books = data;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;)</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -364,364 +400,336 @@
 
 
 
-    </div>
+            
 
-    
-    
-    
-
-    
-      <div>
-        
-<div>
-  
-    <div style="text-align:center;color:#bfbfbf;font-size:16px;">
-      <span>-------- 本文结束 感谢阅读 --------</span>
-    </div>
-  
-</div>
-      </div>
-    
-      
-        <div class="reward-container">
-  <div>Donate comment here.</div>
-  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
-    Donate
-  </button>
-  <div id="qr" style="display: none;">
-      
-      <div style="display: inline-block;">
-        <img src="/images/wechatpay.jpg" alt="Sebastian WeChat Pay">
-        <p>WeChat Pay</p>
-      </div>
-      
-      <div style="display: inline-block;">
-        <img src="/images/alipay.jpg" alt="Sebastian Alipay">
-        <p>Alipay</p>
-      </div>
-
-  </div>
-</div>
-
-
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/vue/" rel="tag"># vue</a>
-          </div>
-
-        
-
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/2020/01/17/vue01/" rel="next" title="vue01">
-                  <i class="fa fa-chevron-left"></i> vue01
-                </a>
-            </div>
-
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/2020/01/18/vue03/" rel="prev" title="vue03">
-                  vue03 <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
-      </footer>
-    
-  </article>
-  
-  
-  
-
-  </div>
-
-
-          </div>
-          
 
         </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="Sebastian"
-    src="/images/avatar.jpg">
-  <p class="site-author-name" itemprop="name">Sebastian</p>
-  <div class="site-description" itemprop="description">I'm feeling lucky!</div>
-</div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives/">
-        
-          <span class="site-state-item-count">59</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories/">
-          
-        <span class="site-state-item-count">16</span>
-        <span class="site-state-item-name">categories</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags/">
-          
-        <span class="site-state-item-count">52</span>
-        <span class="site-state-item-name">tags</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/Sebastian-Getts" title="GitHub &amp;rarr; https:&#x2F;&#x2F;github.com&#x2F;Sebastian-Getts" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:zzzqsw@gmail.com" title="E-Mail &amp;rarr; mailto:zzzqsw@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="https://instagram.com/mchin6" title="Instagram &amp;rarr; https:&#x2F;&#x2F;instagram.com&#x2F;mchin6" rel="noopener" target="_blank"><i class="fa fa-fw fa-instagram"></i>Instagram</a>
-      </span>
-  </div>
-
-
-
-      </div>
-
     </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
+    <div id="post-footer" class="post-footer main-content-wrap">
         
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/vue/" rel="tag">vue</a>
 
-<div class="copyright">
-  
-  &copy; 2019 – 
-  <span itemprop="copyrightYear">2020</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">Sebastian</span>
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/01/18/vue03/"
+                    data-tooltip="vue03"
+                    aria-label="PREVIOUS: vue03"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/01/17/vue01/"
+                    data-tooltip="vue01"
+                    aria-label="NEXT: vue01"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://github.com/sebastian/about/2020/01/17/vue02/"
+                    title="Share on Weibo"
+                    aria-label="Share on Weibo"
+                >
+                    <i class="fab fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://github.com/sebastian/about/2020/01/17/vue02/&amp;title=vue02"
+                    title="Share on QQ"
+                    aria-label="Share on QQ"
+                >
+                    <i class="fab fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://widget.renren.com/dialog/share?resourceUrl=http://github.com/sebastian/about/2020/01/17/vue02/"
+                    title="Share on Renren"
+                    aria-label="Share on Renren"
+                >
+                    <i class="fab fa-renren" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a>
-  </div>
-  <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://muse.theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.4.2
-  </div>
 
 
         
-
-
-
-
-
-
-
-
-
-
-
-
         
-      </div>
-    </footer>
-  </div>
-
-  
-  
-  <script color='0,0,255' opacity='0.5' zIndex='-1' count='99' src="//cdn.jsdelivr.net/gh/theme-next/theme-next-canvas-nest@1/canvas-nest.min.js"></script>
-  <script src="/lib/anime.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/theme-next/theme-next-pjax@0/pjax.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
-  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/pangu@4/dist/browser/pangu.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
-<script src="/js/schemes/muse.js"></script>
-<script src="/js/next-boot.js"></script>
-  <script>
-var pjax = new Pjax({
-  selectors: [
-    'head title',
-    '#page-configurations',
-    '.content-wrap',
-    '.post-toc-wrap',
-    '#pjax'
-  ],
-  switches: {
-    '.post-toc-wrap': Pjax.switches.innerHTML
-  },
-  analytics: false,
-  cacheBust: false,
-  scrollTo : !CONFIG.bookmark.enable
-});
-
-window.addEventListener('pjax:success', () => {
-  document.querySelectorAll('script[pjax], script#page-configurations, #pjax script').forEach(element => {
-    var code = element.text || element.textContent || element.innerHTML || '';
-    var parent = element.parentNode;
-    parent.removeChild(element);
-    var script = document.createElement('script');
-    if (element.id) {
-      script.id = element.id;
-    }
-    if (element.className) {
-      script.className = element.className;
-    }
-    if (element.type) {
-      script.type = element.type;
-    }
-    if (element.src) {
-      script.src = element.src;
-      // Force synchronous loading of peripheral JS.
-      script.async = false;
-    }
-    if (element.getAttribute('pjax') !== null) {
-      element.setAttribute('pjax', '');
-    }
-    if (code !== '') {
-      script.appendChild(document.createTextNode(code));
-    }
-    parent.appendChild(script);
-  });
-  NexT.boot.refresh();
-  // Define Motion Sequence & Bootstrap Motion.
-  if (CONFIG.motion.enable) {
-    NexT.motion.integrator
-      .init()
-      .add(NexT.motion.middleWares.postList)
-      .bootstrap();
-  }
-  NexT.utils.updateSidebarPosition();
-});
-</script>
-
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-<script pjax>
-if (document.querySelectorAll('pre.mermaid').length) {
-  NexT.utils.getScript('//cdnjs.cloudflare.com/ajax/libs/mermaid/8.2.0/mermaid.min.js', () => {
-    mermaid.initialize({
-      theme: 'forest',
-      logLevel: 3,
-      flowchart: { curve: 'linear' },
-      gantt: { axisFormat: '%m/%d/%Y' },
-      sequence: { actorMargin: 50 }
-    });
-  }, window.mermaid);
-}
-</script>
-
-
-    <div id="pjax">
-
-  
-
-  
-
-  
-
-  
-
-  <script async src="/js/cursor/love.min.js"></script>
-
-
-
-
-  <script src="/js/wobblewindow.js"></script>
-  <script>
-    //只在桌面版网页启用特效
-    if( window.innerWidth > 768  ){
-      $(document).ready(function () {
+            
         
-          $('#header').wobbleWindow({
-            radius: 50,
-            movementTop: false,
-            movementLeft: false,
-            movementRight: false,
-            debug: false,
-          });
-        
-
-        
-          $('#sidebar').wobbleWindow({
-            radius: 50,
-            movementLeft: false,
-            movementTop: false,
-            movementBottom: false,
-            position: 'fixed',
-            debug: false,
-          });
-        
-
-        
-          $('#footer').wobbleWindow({
-            radius: 50,
-            movementBottom: false,
-            movementLeft: false,
-            movementRight: false,
-            offsetX: ,
-            position: 'absolute',
-            debug: false,
-          });
-        
-      });
-    }
-  </script>
-
-
-
-
-
-
-
-
     </div>
-</body>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2020 Sebastian Getts. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/01/18/vue03/"
+                    data-tooltip="vue03"
+                    aria-label="PREVIOUS: vue03"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2020/01/17/vue01/"
+                    data-tooltip="vue01"
+                    aria-label="NEXT: vue01"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://service.weibo.com/share/share.php?&amp;title=http://github.com/sebastian/about/2020/01/17/vue02/"
+                    title="Share on Weibo"
+                    aria-label="Share on Weibo"
+                >
+                    <i class="fab fa-weibo" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://connect.qq.com/widget/shareqq/index.html?url=http://github.com/sebastian/about/2020/01/17/vue02/&amp;title=vue02"
+                    title="Share on QQ"
+                    aria-label="Share on QQ"
+                >
+                    <i class="fab fa-qq" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="http://widget.renren.com/dialog/share?resourceUrl=http://github.com/sebastian/about/2020/01/17/vue02/"
+                    title="Share on Renren"
+                    aria-label="Share on Renren"
+                >
+                    <i class="fab fa-renren" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="http://service.weibo.com/share/share.php?&amp;title=http://github.com/sebastian/about/2020/01/17/vue02/"
+                        aria-label="Share on Weibo"
+                    >
+                        <i class="fab fa-weibo" aria-hidden="true"></i><span>Share on Weibo</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="http://connect.qq.com/widget/shareqq/index.html?url=http://github.com/sebastian/about/2020/01/17/vue02/&amp;title=vue02"
+                        aria-label="Share on QQ"
+                    >
+                        <i class="fab fa-qq" aria-hidden="true"></i><span>Share on QQ</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="http://widget.renren.com/dialog/share?resourceUrl=http://github.com/sebastian/about/2020/01/17/vue02/"
+                        aria-label="Share on Renren"
+                    >
+                        <i class="fab fa-renren" aria-hidden="true"></i><span>Share on Renren</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.jpg" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Sebastian Getts</h4>
+        
+            <div id="about-card-bio"><p>I write code to enrich and ease life of others. 0 errors, 0 warnings.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Software Developer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Shenzhen
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover-v1.2.0.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-karbquxnkadaf4yf1hq6g6fyv6nvvrwpv3vf2u1wz8k7osddfqtxf5wbfcfg.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
 </html>
