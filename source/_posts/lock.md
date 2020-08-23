@@ -5,7 +5,7 @@ categories: Java
 tags: lock
 ---
 
-进程，线程，流程。
+锁跟多线程紧密相关，有复杂与简单之分。
 
 <!--more-->
 
@@ -43,6 +43,8 @@ public void modifyPublicResources()){
 private AtomicInteger ai = new AtomicInteger();
 atomicInteger.incrementAndGet(); // 执行自增1
 ```
+
+
 
 # Compare And Swap
 
