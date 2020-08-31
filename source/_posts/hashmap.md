@@ -1,10 +1,13 @@
 ---
 title: hashmap
 date: 2020-08-20 23:04:30
+categories: Java
 tags: hashmap, data structure
 ---
 
 Java Hashmap. 探究他的实现原理和数据结构。基于jdk8. 虽然被讲烂了，但是再烂也得自己整明白了记下来，不然总归不是自己的。
+
+经典数据结构。
 
 <!--more-->
 

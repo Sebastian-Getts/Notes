@@ -1,7 +1,7 @@
 ---
 title: observer
 date: 2020-06-12 17:12:38
-categories: Java
+categories: DesignPatterns
 tags: design_patterns
 ---
 
