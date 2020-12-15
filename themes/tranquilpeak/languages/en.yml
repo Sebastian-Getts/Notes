@@ -81,6 +81,6 @@ post:
 
 author:
     # Your biography (Markdown and HTML supported)
-    bio: "I write code to enrich and ease life of others. 0 errors, 0 warnings." 
+    bio: ""
     # Your job
-    job: "Software Developer"
+    job: ""
