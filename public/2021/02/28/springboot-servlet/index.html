@@ -1,0 +1,625 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hola">
+    <title>Springboot-servlet - Hola</title>
+    <meta name="author" content="Sebastian Getts">
+    
+    
+        <link rel="icon" href="http://github.com/sebastian/about/assets/images/avatar.png">
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sebastian Getts","sameAs":["https://github.com/Sebastian-Getts","zzzqsw@gmail.com"],"image":"avatar.png"},"articleBody":"这篇探究SpringBoot的内置servlet容器。\n\n\n\n\n自打接触java web项目以来，使用的绝大多数情况都是内置的tomcat，还没好好整tomcat，他就被内置了。这篇看看他是如何被放入springboot并启动的。\n入口之前有分析过springBoot的refresh方法，里面又有十几个方法，其中有一个名叫onRefresh()的方法，用到了模板方法，让子类复写来完成特定工作的，之前也提到过，在类SpringApplication初始化时就会根据class文件判断程序的类型，现在我们假设引入了web环境，那么这个方法就会被ServletWebServerApplicationContext重写：\n1234567891011@Overrideprotected void onRefresh() &#123;    super.onRefresh();    try &#123;        // 创建web服务器！        createWebServer();    &#125;    catch (Throwable ex) &#123;        throw new ApplicationContextException(&quot;Unable to start web server&quot;, ex);    &#125;&#125;\n\n\n\n创建服务入口找到后，接下来我们分析他是如何创建的：\n123456789101112131415161718192021222324252627private void createWebServer() &#123;    // volatile标志的引用    WebServer webServer = this.webServer;    // 从抽象类（父类）中获取servlet容器    ServletContext servletContext = getServletContext();    // 判断获取到的容器是否为null    if (webServer == null &amp;&amp; servletContext == null) &#123;        // 为null就从web服务器工厂建一个        ServletWebServerFactory factory = getWebServerFactory();        // 从这里获取到web服务器！入参还有初始化器！        this.webServer = factory.getWebServer(getSelfInitializer());        getBeanFactory().registerSingleton(&quot;webServerGracefulShutdown&quot;,                                           new WebServerGracefulShutdownLifecycle(this.webServer));        getBeanFactory().registerSingleton(&quot;webServerStartStop&quot;,                                           new WebServerStartStopLifecycle(this, this.webServer));    &#125;    // 不为null就启动它    else if (servletContext != null) &#123;        try &#123;            getSelfInitializer().onStartup(servletContext);        &#125;        catch (ServletException ex) &#123;            throw new ApplicationContextException(&quot;Cannot initialize servlet context&quot;, ex);        &#125;    &#125;    initPropertySources();&#125;\n\ngetWebServerFactory工厂哪里来？回顾之前的就可以猜到，SPI！\n12345678910111213protected ServletWebServerFactory getWebServerFactory() &#123;    // Use bean names so that we don&#x27;t consider the hierarchy    String[] beanNames = getBeanFactory().getBeanNamesForType(ServletWebServerFactory.class);    if (beanNames.length == 0) &#123;        throw new ApplicationContextException(&quot;Unable to start ServletWebServerApplicationContext due to missing &quot;                                              + &quot;ServletWebServerFactory bean.&quot;);    &#125;    if (beanNames.length &gt; 1) &#123;        throw new ApplicationContextException(&quot;Unable to start ServletWebServerApplicationContext due to multiple &quot;                                              + &quot;ServletWebServerFactory beans : &quot; + StringUtils.arrayToCommaDelimitedString(beanNames));    &#125;    return getBeanFactory().getBean(beanNames[0], ServletWebServerFactory.class);&#125;\n\ngetSelfInitializer看看如何获取到初始化器：\n123private org.springframework.boot.web.servlet.ServletContextInitializer getSelfInitializer() &#123;    return this::selfInitialize;&#125;\n\n这里会获取到初始化器，这些初始化器就相当与一个个的配置，只是目前没有去配置那个容器对象，在等一个触发的时机。\ngetWebServer123456789101112131415161718192021222324public WebServer getWebServer(ServletContextInitializer... initializers) &#123;    if (this.disableMBeanRegistry) &#123;        Registry.disableRegistry();    &#125;    // 创建tomcat实例    Tomcat tomcat = new Tomcat();    File baseDir = (this.baseDirectory != null) ? this.baseDirectory : createTempDir(&quot;tomcat&quot;);    // 设置属性    tomcat.setBaseDir(baseDir.getAbsolutePath());    Connector connector = new Connector(this.protocol);    connector.setThrowOnFailure(true);    tomcat.getService().addConnector(connector);    customizeConnector(connector);    tomcat.setConnector(connector);    tomcat.getHost().setAutoDeploy(false);    configureEngine(tomcat.getEngine());    for (Connector additionalConnector : this.additionalTomcatConnectors) &#123;        tomcat.getService().addConnector(additionalConnector);    &#125;    // 准备    prepareContext(tomcat.getHost(), initializers);    // 获取    return getTomcatWebServer(tomcat);&#125;\n\n我们主要来看如何获取tomcat的，这里入参传入了tomcat的一个引用:\n1234protected TomcatWebServer getTomcatWebServer(Tomcat tomcat) &#123;    // 继续调用有有参方法    return new TomcatWebServer(tomcat, getPort() &gt;= 0, getShutdown());&#125;\n\n123456789101112131415161718192021222324252627282930313233343536373839404142434445464748public TomcatWebServer(Tomcat tomcat, boolean autoStart, Shutdown shutdown) &#123;    Assert.notNull(tomcat, &quot;Tomcat Server must not be null&quot;);    this.tomcat = tomcat;    this.autoStart = autoStart;    this.gracefulShutdown = (shutdown == Shutdown.GRACEFUL) ? new GracefulShutdown(tomcat) : null;    // 初始化    initialize();&#125;private void initialize() throws WebServerException &#123;    logger.info(&quot;Tomcat initialized with port(s): &quot; + getPortsDescription(false));    synchronized (this.monitor) &#123;        try &#123;            addInstanceIdToEngineName();            Context context = findContext();            context.addLifecycleListener((event) -&gt; &#123;                if (context.equals(event.getSource()) &amp;&amp; Lifecycle.START_EVENT.equals(event.getType())) &#123;                    // Remove service connectors so that protocol binding doesn&#x27;t                    // happen when the service is started.                    removeServiceConnectors();                &#125;            &#125;);            // Start the server to trigger initialization listeners            this.tomcat.start();            // We can re-throw failure exception directly in the main thread            rethrowDeferredStartupExceptions();            try &#123;                ContextBindings.bindClassLoader(context, context.getNamingToken(), getClass().getClassLoader());            &#125;            catch (NamingException ex) &#123;                // Naming is not enabled. Continue            &#125;            // Unlike Jetty, all Tomcat threads are daemon threads. We create a            // blocking non-daemon to stop immediate shutdown            startDaemonAwaitThread();        &#125;        catch (Exception ex) &#123;            stopSilently();            destroySilently();            throw new WebServerException(&quot;Unable to start embedded Tomcat&quot;, ex);        &#125;    &#125;&#125;\n\n在上面的初始化的方法中，我们找到了启动的地方。\n","dateCreated":"2021-02-28T22:01:17+08:00","dateModified":"2021-03-02T23:48:34+08:00","datePublished":"2021-02-28T22:01:17+08:00","description":"这篇探究SpringBoot的内置servlet容器。","headline":"Springboot-servlet","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://github.com/sebastian/about/2021/02/28/springboot-servlet/"},"publisher":{"@type":"Organization","name":"Sebastian Getts","sameAs":["https://github.com/Sebastian-Getts","zzzqsw@gmail.com"],"image":"avatar.png","logo":{"@type":"ImageObject","url":"avatar.png"}},"url":"http://github.com/sebastian/about/2021/02/28/springboot-servlet/","keywords":"source"}</script>
+    <meta name="description" content="这篇探究SpringBoot的内置servlet容器。">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="Springboot-servlet">
+<meta property="og:url" content="http://github.com/sebastian/about/2021/02/28/springboot-servlet/index.html">
+<meta property="og:site_name" content="Hola">
+<meta property="og:description" content="这篇探究SpringBoot的内置servlet容器。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-02-28T14:01:17.000Z">
+<meta property="article:modified_time" content="2021-03-02T15:48:34.523Z">
+<meta property="article:author" content="Sebastian Getts">
+<meta property="article:tag" content="source">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://github.com/sebastian/about/assets/images/avatar.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-xsmpikcbczzhpff1zqybzgesjqcgmkdkx9b5ntr0bkmk6wqucpktuaodiuvy.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Hola
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/avatar.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Sebastian Getts</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>I write code to enrich and ease life of others.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/Sebastian-Getts"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/zzzqsw@gmail.com"
+                            
+                            rel="noopener"
+                            title="Mail"
+                        >
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            Springboot-servlet
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2021-02-28T22:01:17+08:00">
+	
+		    Feb 28, 2021
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/springboot/">springboot</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>这篇探究SpringBoot的内置servlet容器。</p>
+<a id="more"></a>
+
+<h1 id="table-of-contents">Table of Contents</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%85%A5%E5%8F%A3"><span class="toc-text">入口</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E6%9C%8D%E5%8A%A1"><span class="toc-text">创建服务</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#getWebServerFactory"><span class="toc-text">getWebServerFactory</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#getSelfInitializer"><span class="toc-text">getSelfInitializer</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#getWebServer"><span class="toc-text">getWebServer</span></a></li></ol>
+
+<p>自打接触java web项目以来，使用的绝大多数情况都是内置的tomcat，还没好好整tomcat，他就被内置了。这篇看看他是如何被放入springboot并启动的。</p>
+<h1 id="入口"><a href="#入口" class="headerlink" title="入口"></a>入口</h1><p>之前有分析过springBoot的refresh方法，里面又有十几个方法，其中有一个名叫<code>onRefresh()</code>的方法，用到了<strong>模板方法</strong>，让子类复写来完成特定工作的，之前也提到过，在类<code>SpringApplication</code>初始化时就会根据class文件判断程序的类型，现在我们假设引入了web环境，那么这个方法就会被<code>ServletWebServerApplicationContext</code>重写：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onRefresh</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onRefresh();</span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 创建web服务器！</span></span><br><span class="line">        createWebServer();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (Throwable ex) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ApplicationContextException(<span class="string">&quot;Unable to start web server&quot;</span>, ex);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="创建服务"><a href="#创建服务" class="headerlink" title="创建服务"></a>创建服务</h1><p>入口找到后，接下来我们分析他是如何创建的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">createWebServer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// volatile标志的引用</span></span><br><span class="line">    WebServer webServer = <span class="keyword">this</span>.webServer;</span><br><span class="line">    <span class="comment">// 从抽象类（父类）中获取servlet容器</span></span><br><span class="line">    ServletContext servletContext = getServletContext();</span><br><span class="line">    <span class="comment">// 判断获取到的容器是否为null</span></span><br><span class="line">    <span class="keyword">if</span> (webServer == <span class="keyword">null</span> &amp;&amp; servletContext == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="comment">// 为null就从web服务器工厂建一个</span></span><br><span class="line">        ServletWebServerFactory factory = getWebServerFactory();</span><br><span class="line">        <span class="comment">// 从这里获取到web服务器！入参还有初始化器！</span></span><br><span class="line">        <span class="keyword">this</span>.webServer = factory.getWebServer(getSelfInitializer());</span><br><span class="line">        getBeanFactory().registerSingleton(<span class="string">&quot;webServerGracefulShutdown&quot;</span>,</span><br><span class="line">                                           <span class="keyword">new</span> WebServerGracefulShutdownLifecycle(<span class="keyword">this</span>.webServer));</span><br><span class="line">        getBeanFactory().registerSingleton(<span class="string">&quot;webServerStartStop&quot;</span>,</span><br><span class="line">                                           <span class="keyword">new</span> WebServerStartStopLifecycle(<span class="keyword">this</span>, <span class="keyword">this</span>.webServer));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 不为null就启动它</span></span><br><span class="line">    <span class="keyword">else</span> <span class="keyword">if</span> (servletContext != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            getSelfInitializer().onStartup(servletContext);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (ServletException ex) &#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ApplicationContextException(<span class="string">&quot;Cannot initialize servlet context&quot;</span>, ex);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    initPropertySources();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="getWebServerFactory"><a href="#getWebServerFactory" class="headerlink" title="getWebServerFactory"></a>getWebServerFactory</h2><p>工厂哪里来？回顾之前的就可以猜到，SPI！</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> ServletWebServerFactory <span class="title">getWebServerFactory</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="comment">// Use bean names so that we don&#x27;t consider the hierarchy</span></span><br><span class="line">    String[] beanNames = getBeanFactory().getBeanNamesForType(ServletWebServerFactory.class);</span><br><span class="line">    <span class="keyword">if</span> (beanNames.length == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ApplicationContextException(<span class="string">&quot;Unable to start ServletWebServerApplicationContext due to missing &quot;</span></span><br><span class="line">                                              + <span class="string">&quot;ServletWebServerFactory bean.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (beanNames.length &gt; <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> ApplicationContextException(<span class="string">&quot;Unable to start ServletWebServerApplicationContext due to multiple &quot;</span></span><br><span class="line">                                              + <span class="string">&quot;ServletWebServerFactory beans : &quot;</span> + StringUtils.arrayToCommaDelimitedString(beanNames));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> getBeanFactory().getBean(beanNames[<span class="number">0</span>], ServletWebServerFactory.class);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="getSelfInitializer"><a href="#getSelfInitializer" class="headerlink" title="getSelfInitializer"></a>getSelfInitializer</h2><p>看看如何获取到初始化器：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> org.springframework.boot.web.servlet.<span class="function">ServletContextInitializer <span class="title">getSelfInitializer</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>::selfInitialize;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这里会获取到初始化器，这些初始化器就相当与一个个的配置，只是目前没有去配置那个容器对象，在等一个触发的时机。</p>
+<h1 id="getWebServer"><a href="#getWebServer" class="headerlink" title="getWebServer"></a>getWebServer</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> WebServer <span class="title">getWebServer</span><span class="params">(ServletContextInitializer... initializers)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.disableMBeanRegistry) &#123;</span><br><span class="line">        Registry.disableRegistry();</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 创建tomcat实例</span></span><br><span class="line">    Tomcat tomcat = <span class="keyword">new</span> Tomcat();</span><br><span class="line">    File baseDir = (<span class="keyword">this</span>.baseDirectory != <span class="keyword">null</span>) ? <span class="keyword">this</span>.baseDirectory : createTempDir(<span class="string">&quot;tomcat&quot;</span>);</span><br><span class="line">    <span class="comment">// 设置属性</span></span><br><span class="line">    tomcat.setBaseDir(baseDir.getAbsolutePath());</span><br><span class="line">    Connector connector = <span class="keyword">new</span> Connector(<span class="keyword">this</span>.protocol);</span><br><span class="line">    connector.setThrowOnFailure(<span class="keyword">true</span>);</span><br><span class="line">    tomcat.getService().addConnector(connector);</span><br><span class="line">    customizeConnector(connector);</span><br><span class="line">    tomcat.setConnector(connector);</span><br><span class="line">    tomcat.getHost().setAutoDeploy(<span class="keyword">false</span>);</span><br><span class="line">    configureEngine(tomcat.getEngine());</span><br><span class="line">    <span class="keyword">for</span> (Connector additionalConnector : <span class="keyword">this</span>.additionalTomcatConnectors) &#123;</span><br><span class="line">        tomcat.getService().addConnector(additionalConnector);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 准备</span></span><br><span class="line">    prepareContext(tomcat.getHost(), initializers);</span><br><span class="line">    <span class="comment">// 获取</span></span><br><span class="line">    <span class="keyword">return</span> getTomcatWebServer(tomcat);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们主要来看如何获取tomcat的，这里入参传入了tomcat的一个引用:</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> TomcatWebServer <span class="title">getTomcatWebServer</span><span class="params">(Tomcat tomcat)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 继续调用有有参方法</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> TomcatWebServer(tomcat, getPort() &gt;= <span class="number">0</span>, getShutdown());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">TomcatWebServer</span><span class="params">(Tomcat tomcat, <span class="keyword">boolean</span> autoStart, Shutdown shutdown)</span> </span>&#123;</span><br><span class="line">    Assert.notNull(tomcat, <span class="string">&quot;Tomcat Server must not be null&quot;</span>);</span><br><span class="line">    <span class="keyword">this</span>.tomcat = tomcat;</span><br><span class="line">    <span class="keyword">this</span>.autoStart = autoStart;</span><br><span class="line">    <span class="keyword">this</span>.gracefulShutdown = (shutdown == Shutdown.GRACEFUL) ? <span class="keyword">new</span> GracefulShutdown(tomcat) : <span class="keyword">null</span>;</span><br><span class="line">    <span class="comment">// 初始化</span></span><br><span class="line">    initialize();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">initialize</span><span class="params">()</span> <span class="keyword">throws</span> WebServerException </span>&#123;</span><br><span class="line">    logger.info(<span class="string">&quot;Tomcat initialized with port(s): &quot;</span> + getPortsDescription(<span class="keyword">false</span>));</span><br><span class="line">    <span class="keyword">synchronized</span> (<span class="keyword">this</span>.monitor) &#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            addInstanceIdToEngineName();</span><br><span class="line"></span><br><span class="line">            Context context = findContext();</span><br><span class="line">            context.addLifecycleListener((event) -&gt; &#123;</span><br><span class="line">                <span class="keyword">if</span> (context.equals(event.getSource()) &amp;&amp; Lifecycle.START_EVENT.equals(event.getType())) &#123;</span><br><span class="line">                    <span class="comment">// Remove service connectors so that protocol binding doesn&#x27;t</span></span><br><span class="line">                    <span class="comment">// happen when the service is started.</span></span><br><span class="line">                    removeServiceConnectors();</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;);</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Start the server to trigger initialization listeners</span></span><br><span class="line">            <span class="keyword">this</span>.tomcat.start();</span><br><span class="line"></span><br><span class="line">            <span class="comment">// We can re-throw failure exception directly in the main thread</span></span><br><span class="line">            rethrowDeferredStartupExceptions();</span><br><span class="line"></span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                ContextBindings.bindClassLoader(context, context.getNamingToken(), getClass().getClassLoader());</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">catch</span> (NamingException ex) &#123;</span><br><span class="line">                <span class="comment">// Naming is not enabled. Continue</span></span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="comment">// Unlike Jetty, all Tomcat threads are daemon threads. We create a</span></span><br><span class="line">            <span class="comment">// blocking non-daemon to stop immediate shutdown</span></span><br><span class="line">            startDaemonAwaitThread();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">catch</span> (Exception ex) &#123;</span><br><span class="line">            stopSilently();</span><br><span class="line">            destroySilently();</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> WebServerException(<span class="string">&quot;Unable to start embedded Tomcat&quot;</span>, ex);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在上面的初始化的方法中，我们找到了启动的地方。</p>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/source/" rel="tag">source</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/03/06/java-collection-framework/"
+                    data-tooltip="java collection framework"
+                    aria-label="PREVIOUS: java collection framework"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/02/27/binary-search-tre/"
+                    data-tooltip="binary search tree"
+                    aria-label="NEXT: binary search tree"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/02/28/springboot-servlet/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/02/28/springboot-servlet/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/02/28/springboot-servlet/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2021 Sebastian Getts. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/03/06/java-collection-framework/"
+                    data-tooltip="java collection framework"
+                    aria-label="PREVIOUS: java collection framework"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/02/27/binary-search-tre/"
+                    data-tooltip="binary search tree"
+                    aria-label="NEXT: binary search tree"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/02/28/springboot-servlet/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/02/28/springboot-servlet/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/02/28/springboot-servlet/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/02/28/springboot-servlet/"
+                        aria-label="Share on Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/02/28/springboot-servlet/"
+                        aria-label="Share on Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/02/28/springboot-servlet/"
+                        aria-label="Share on Google+"
+                    >
+                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Sebastian Getts</h4>
+        
+            <div id="about-card-bio"><p>I write code to enrich and ease life of others.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Software Engineer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Shenzhen China
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover-v1.2.0.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-jsoeqoqa2ajw9nwj0xf5gmftvb2jhopk3sxu8iodabvev2jdlmr0zsitv3jm.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
+</html>

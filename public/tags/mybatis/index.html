@@ -225,6 +225,165 @@
     <section class="postShorten-group main-content-wrap">
     
     
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2021/03/09/mybatis-autoconfiguration/"
+                            aria-label=": mybatis autoconfiguration"
+                        >
+                            mybatis autoconfiguration
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2021-03-09T20:48:57+08:00">
+	
+		    Mar 09, 2021
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/framework/">framework</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p>这一篇我们来看mybatis在springboot环境下的自动装配。之前分析过SpringBoot对于Spring的自动装配，mybatis引入时作为一个starter，开箱即用的产品，自然也少不了，同时在springboot的大环境下，为了方便开发肯定也会遵循他的装配法则。</p>
+<!-- import -->
+
+<h1 id="table-of-contents">Table of Contents</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9D%A5%E6%BA%90"><span class="toc-text">来源</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D"><span class="toc-text">自动装配</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#sqlSessionFactory"><span class="toc-text">sqlSessionFactory</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sqlSessionTemplate"><span class="toc-text">sqlSessionTemplate</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MapperScannerRegistrarNotFoundConfiguration"><span class="toc-text">MapperScannerRegistrarNotFoundConfiguration</span></a></li></ol></li></ol>
+
+<h1 id="来源"><a href="#来源" class="headerlink" title="来源"></a>来源</h1><p>如果还记得之前的分析就会知道，SpringBoot会从<code>META-INF</code>目录下找<code>spring.factories</code>文件，并从中找<code>EnableAutoConfiguration</code>对应的值，这个值是一个以逗号分割开的全类名字符串，你配多少他加载多少。换句话说，如果没有导入mybatis，就不会有相关的配置。加载后会通过反射来获取类相关信息并进行配置。mybatis的自动装配内容非常少，我们来看下：</p>
+<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Auto Configure</span></span><br><span class="line"><span class="meta">org.springframework.boot.autoconfigure.EnableAutoConfiguration</span>=<span class="string">\</span></span><br><span class="line">org.mybatis.spring.boot.autoconfigure.MybatisLanguageDriverAutoConfiguration,\</span><br><span class="line"><span class="attr">org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration</span></span><br></pre></td></tr></table></figure>
+
+<p>一共就两个类，第一个是语言相关的，会检测是否有<em>thymeleaf</em>、<em>framemarker</em>等web框架，如果有的话会配置相关的语法，目前项目大多前后分离，在此就不分析这部分啦，我们重点看看下面那个配置类。</p>
+<h1 id="自动装配"><a href="#自动装配" class="headerlink" title="自动装配"></a>自动装配</h1><p>通过这个类我们要弄清楚他自动装配了啥。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ConditionalOnClass(&#123;SqlSessionFactory.class, SqlSessionFactoryBean.class&#125;)</span> <span class="comment">// 路径下存在这两个类的class时生效</span></span><br><span class="line"><span class="meta">@ConditionalOnSingleCandidate(DataSource.class)</span> <span class="comment">// 单个数据源生效</span></span><br><span class="line"><span class="meta">@EnableConfigurationProperties(&#123;MybatisProperties.class&#125;)</span> <span class="comment">// 启用mybatis配置文件的属性</span></span><br><span class="line"><span class="meta">@AutoConfigureAfter(&#123;DataSourceAutoConfiguration.class, MybatisLanguageDriverAutoConfiguration.class&#125;)</span> <span class="comment">// 这两个类后自动配置</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MybatisAutoConfiguration</span> <span class="keyword">implements</span> <span class="title">InitializingBean</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="sqlSessionFactory"><a href="#sqlSessionFactory" class="headerlink" title="sqlSessionFactory"></a>sqlSessionFactory</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="meta">@ConditionalOnMissingBean</span> <span class="comment">// 缺少这个bean时创建他</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> SqlSessionFactory <span class="title">sqlSessionFactory</span><span class="params">(DataSource dataSource)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>sqlSessionFactory是用来创建sqlSession的，我们知道，每次执行sql时都是以sqlSession为执行对象的，里面封装了增删改查等操作，要创建这个factory需要数据源，并且里面还用到了配置文件，就是上面注解中的<code>MapperProperties</code>，会根据用户配置的信息来修改facotry的相关属性。</p>
+<h2 id="sqlSessionTemplate"><a href="#sqlSessionTemplate" class="headerlink" title="sqlSessionTemplate"></a>sqlSessionTemplate</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="meta">@ConditionalOnMissingBean</span> <span class="comment">// 同sqlSessionFactory</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> SqlSessionTemplate <span class="title">sqlSessionTemplate</span><span class="params">(SqlSessionFactory sqlSessionFactory)</span> </span>&#123;</span><br><span class="line">    ExecutorType executorType = <span class="keyword">this</span>.properties.getExecutorType();</span><br><span class="line">    <span class="keyword">return</span> executorType != <span class="keyword">null</span> ? <span class="keyword">new</span> SqlSessionTemplate(sqlSessionFactory, executorType) : <span class="keyword">new</span> SqlSessionTemplate(sqlSessionFactory);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个sqlSessionFactory的创建需要用到sqlSessionFactory，同时会根据用户有没有指定<code>executorType</code>来创建对应的sqlSessionTemplate。通过这个bean的名称可以知道他是一直种sqlSession的模板，而且还用到了配置文件中<code>executorType</code>这个属性，他通常有三个选择：</p>
+<ul>
+<li>SIMPLE：为每个语句的执行创建一个预处理语句，基操</li>
+<li>REUSE：复用预处理语句</li>
+<li>BATCH：批量执行所有更新语句</li>
+</ul>
+<h2 id="MapperScannerRegistrarNotFoundConfiguration"><a href="#MapperScannerRegistrarNotFoundConfiguration" class="headerlink" title="MapperScannerRegistrarNotFoundConfiguration"></a>MapperScannerRegistrarNotFoundConfiguration</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@Import(&#123;MybatisAutoConfiguration.AutoConfiguredMapperScannerRegistrar.class&#125;)</span> <span class="comment">// 导入</span></span><br><span class="line"><span class="meta">@ConditionalOnMissingBean(&#123;MapperFactoryBean.class, MapperScannerConfigurer.class&#125;)</span> <span class="comment">// 缺少这两个类时生效</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">MapperScannerRegistrarNotFoundConfiguration</span> <span class="keyword">implements</span> <span class="title">InitializingBean</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MapperScannerRegistrarNotFoundConfiguration</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterPropertiesSet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        MybatisAutoConfiguration.logger.debug(<span class="string">&quot;Not found configuration for registering mapper bean using @MapperScan, MapperFactoryBean and MapperScannerConfigurer.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这个类导入了一个内部类，并且会在<code>MapperFactoryBean</code>和<code>MapperScannerConfigure.class</code>缺少时生效，这个大家就很熟悉了，通常没有写*@MapperScan*时的异常就是在这里产生的，他用来干嘛的呢，结合他导入的类，我们就能一探究竟：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MapperFactoryBean</span>&lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">SqlSessionDaoSupport</span> <span class="keyword">implements</span> <span class="title">FactoryBean</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Class&lt;T&gt; mapperInterface;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> addToConfig = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MapperFactoryBean</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MapperFactoryBean</span><span class="params">(Class&lt;T&gt; mapperInterface)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.mapperInterface = mapperInterface;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">checkDaoConfig</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.checkDaoConfig();</span><br><span class="line">        Assert.notNull(<span class="keyword">this</span>.mapperInterface, <span class="string">&quot;Property &#x27;mapperInterface&#x27; is required&quot;</span>);</span><br><span class="line">        Configuration configuration = <span class="keyword">this</span>.getSqlSession().getConfiguration();</span><br><span class="line">        <span class="comment">// 如果开启了“添加配置”并且接口没有被添加过的话</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.addToConfig &amp;&amp; !configuration.hasMapper(<span class="keyword">this</span>.mapperInterface)) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">// 往mybatis的配置类中添加接口</span></span><br><span class="line">                configuration.addMapper(<span class="keyword">this</span>.mapperInterface);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception var6) &#123;</span><br><span class="line">                <span class="keyword">this</span>.logger.error(<span class="string">&quot;Error while adding the mapper &#x27;&quot;</span> + <span class="keyword">this</span>.mapperInterface + <span class="string">&quot;&#x27; to configuration.&quot;</span>, var6);</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(var6);</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                ErrorContext.instance().reset();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>总结一下，这个自动配置类主要做了以下工作：</p>
+<ol>
+<li>启用配置文件</li>
+<li>缺少sqlSessionFactory时创建该bean，依赖数据源dataSource</li>
+<li>缺少sqlSessionTemplate时创建该bean，依赖sqlSessionFactory</li>
+<li>没有配置mapper文件扫描时注册异常bean，否则扫描并加载mapper</li>
+</ol>
+<p>以上是我们使用mybatis的基础，启用了配置文件，我们会加入mapper文件路径等配置信息，有了sqlSessionFactory就会创建sqlSessionTemplate，进而根据他获到mybatis的关键类Configuration，最后将获取到的mapper接口加入到配置类中，配置类是持有<code>mapperRegister</code>的，这个就好比一个mapper池，装载着所有的mapper接口，使用HashMap实现。</p>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2021/03/09/mybatis-autoconfiguration/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2021/03/07/mybatis-sql-resolution/"
+                            aria-label=": mybatis sql resolution"
+                        >
+                            mybatis sql resolution
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2021-03-07T19:03:54+08:00">
+	
+		    Mar 07, 2021
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/framework/">framework</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    <p>承接去年记录的mybatis，从架构和源码的角度剖析mybatis。从整个项目工程来看他比spring小得多，因此代码更易读。使用他时，通常我们要做的就是编写sql和接口，这篇首先从sql解析开始。</p>
+<!-- import -->
+
+<h1 id="table-of-contents">Table of Contents</h1>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 模拟的pojo</span></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> age;</span><br><span class="line">        <span class="keyword">int</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 核心就在这</span></span><br><span class="line">        UserMapper userMapper = (UserMapper) Proxy.newProxyInstance(Test.class.getClassLoader(), <span class="keyword">new</span> Class&lt;?&gt;[]&#123;UserMapper.class&#125;, <span class="keyword">new</span> InvocationHandler() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">                <span class="comment">// 获取到注解</span></span><br><span class="line">                Select annotation = method.getAnnotation(Select.class);</span><br><span class="line">                <span class="comment">// 构建入参的映射</span></span><br><span class="line">                Map&lt;String, Object&gt; map = buildMethodArgNameMap(method, args);</span><br><span class="line"></span><br><span class="line">                System.out.println(map.toString());</span><br><span class="line">                <span class="keyword">if</span> (annotation != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    String[] value = annotation.value();</span><br><span class="line">                    String s = parseSql(value[<span class="number">0</span>], map);</span><br><span class="line">                    System.out.println(s);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        userMapper.selectUesList(<span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 解析sql</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">parseSql</span><span class="params">(String sql, Map&lt;String, Object&gt; map)</span> </span>&#123;</span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="keyword">int</span> length = sql.length();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length; i++) &#123;</span><br><span class="line">            <span class="keyword">char</span> c = sql.charAt(i);</span><br><span class="line">            <span class="keyword">if</span> (c == <span class="string">&#x27;#&#x27;</span>) &#123;</span><br><span class="line">                <span class="keyword">int</span> nextIndex = i + <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">char</span> nextChar = sql.charAt(nextIndex);</span><br><span class="line">                <span class="keyword">if</span> (nextChar != <span class="string">&#x27;&#123;&#x27;</span>) &#123;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;sql写法错误，应该是 &#123; &quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                StringBuilder argSb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">                i = parseSqlArg(argSb, sql, nextIndex);</span><br><span class="line">                String argName = argSb.toString();</span><br><span class="line">                Object argValue = map.get(argName);</span><br><span class="line">                sb.append(argValue.toString());</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            sb.append(c);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 返回解析后拼接过的sql</span></span><br><span class="line">        <span class="keyword">return</span> sb.toString();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 这里应该是解析出&#123;&#125;中的的东西</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">parseSqlArg</span><span class="params">(StringBuilder argSb, String sql, <span class="keyword">int</span> nextIndex)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = nextIndex + <span class="number">1</span>; i &lt; sql.length(); i++) &#123;</span><br><span class="line">            <span class="keyword">char</span> c = sql.charAt(i);</span><br><span class="line">            <span class="keyword">if</span> (c != <span class="string">&#x27;&#125;&#x27;</span>) &#123;</span><br><span class="line">                argSb.append(c);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;sql写法错误，应该是 &#125; &quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 解析传入的参数</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> method method</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> args   参数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 解析后的参数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Map&lt;String, Object&gt; <span class="title">buildMethodArgNameMap</span><span class="params">(Method method, Object[] args)</span> </span>&#123;</span><br><span class="line">        Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">6</span>);</span><br><span class="line">        <span class="comment">// 方法的入参，例如：Integer id, args是实际的入参值，如 6</span></span><br><span class="line">        Parameter[] parameters = method.getParameters();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; parameters.length; i++) &#123;</span><br><span class="line">            map.put(parameters[i].getName(), args[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> map;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Select(&quot;select * from User where id = #&#123;id&#125;&quot;)</span></span><br><span class="line">    List&lt;Test.User&gt; selectUesList(Integer id);</span><br><span class="line">&#125;	</span><br></pre></td></tr></table></figure>
+
+<p>以上只是模拟mybatis架构中的解析sql的部分，真正的解析还是比较复杂的，要考虑很多种情况，但是原理是一样，都离不开动态代理。下面我们看看他的架构设计图（非官方）：<img src="https://i.loli.net/2021/03/07/cPamMLRFU4xHXu8.jpg" alt="mybatis_structure.jpg"></p>
+<p>我们从这个角度去想：如何用sql去跟数据库交互？如何动态地去用sql与数据库交互？站在现在看过去，mybatis实现了这一点，如何做的？利用接口来实现，有两种方式：在接口上用注释来写或者写在xml文件里需要替换的地方用<code>#&#123;&#125;</code>括起来，在需要的地方调用接口的方法并把值传进去，我们要做的就只有这些，其他的mybatis帮我们做了。我们来看看他都做了什么，首先就是映射关系，把传入的值替换到sql语句并拼接起来、查询的结果映射到想要的对象上；管理sql与数据库的交互。这两个是最基本的，其次，还可以做些优化，比如缓存，频繁地查询某个sql可以将结果存起来；扩展性，对结果统一处理等。</p>
+
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2021/03/07/mybatis-sql-resolution/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
     <article class="postShorten postShorten--thumbnailimg-right">
         <div class="postShorten-wrap">
             
@@ -233,10 +392,10 @@
                     
                         <a
                             class="link-unstyled"
-                            href="/2020/08/05/mybatis/"
-                            aria-label=": mybatis"
+                            href="/2020/08/05/mybatis_preview/"
+                            aria-label=": mybatis_preview"
                         >
-                            mybatis
+                            mybatis_preview
                         </a>
                     
                 </h1>
@@ -249,7 +408,7 @@
     
         <span>in </span>
         
-    <a class="category-link" href="/categories/Java/">Java</a>
+    <a class="category-link" href="/categories/framework/">framework</a>
 
 
     
@@ -261,9 +420,9 @@
                     <p>Mybatis帮助我们提升与数据库交互的效率，简化了JDBC的样板代码。</p>
                     
                         <a
-                            href="/2020/08/05/mybatis/"
+                            href="/2020/08/05/mybatis_preview/"
                             class="postShorten-excerpt_link link"
-                            aria-label=": mybatis"
+                            aria-label=": mybatis_preview"
                         >
                             Continue reading
                         </a>

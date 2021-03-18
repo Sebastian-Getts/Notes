@@ -1,0 +1,607 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hola">
+    <title>mybatis sql resolution - Hola</title>
+    <meta name="author" content="Sebastian Getts">
+    
+    
+        <link rel="icon" href="http://github.com/sebastian/about/assets/images/avatar.png">
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sebastian Getts","sameAs":["https://github.com/Sebastian-Getts","zzzqsw@gmail.com"],"image":"avatar.png"},"articleBody":"承接去年记录的mybatis，从架构和源码的角度剖析mybatis。从整个项目工程来看他比spring小得多，因此代码更易读。使用他时，通常我们要做的就是编写sql和接口，这篇首先从sql解析开始。\n\n\n\n\n1234567891011121314151617181920212223242526272829303132333435363738394041424344454647484950515253545556575859606162636465666768697071727374757677787980818283848586878889909192939495public class Test &#123;    // 模拟的pojo    static class User &#123;        int age;        int name;    &#125;    public static void main(String[] args) &#123;        // 核心就在这        UserMapper userMapper = (UserMapper) Proxy.newProxyInstance(Test.class.getClassLoader(), new Class&lt;?&gt;[]&#123;UserMapper.class&#125;, new InvocationHandler() &#123;            @Override            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable &#123;                // 获取到注解                Select annotation = method.getAnnotation(Select.class);                // 构建入参的映射                Map&lt;String, Object&gt; map = buildMethodArgNameMap(method, args);                System.out.println(map.toString());                if (annotation != null) &#123;                    String[] value = annotation.value();                    String s = parseSql(value[0], map);                    System.out.println(s);                &#125;                return null;            &#125;        &#125;);        userMapper.selectUesList(2);    &#125;    // 解析sql    public static String parseSql(String sql, Map&lt;String, Object&gt; map) &#123;        StringBuilder sb = new StringBuilder();        int length = sql.length();        for (int i = 0; i &lt; length; i++) &#123;            char c = sql.charAt(i);            if (c == &#x27;#&#x27;) &#123;                int nextIndex = i + 1;                char nextChar = sql.charAt(nextIndex);                if (nextChar != &#x27;&#123;&#x27;) &#123;                    throw new RuntimeException(&quot;sql写法错误，应该是 &#123; &quot;);                &#125;                StringBuilder argSb = new StringBuilder();                i = parseSqlArg(argSb, sql, nextIndex);                String argName = argSb.toString();                Object argValue = map.get(argName);                sb.append(argValue.toString());                continue;            &#125;            sb.append(c);        &#125;        // 返回解析后拼接过的sql        return sb.toString();    &#125;    /**     * 这里应该是解析出&#123;&#125;中的的东西     */    private static int parseSqlArg(StringBuilder argSb, String sql, int nextIndex) &#123;        for (int i = nextIndex + 1; i &lt; sql.length(); i++) &#123;            char c = sql.charAt(i);            if (c != &#x27;&#125;&#x27;) &#123;                argSb.append(c);            &#125; else &#123;                return i;            &#125;        &#125;        throw new RuntimeException(&quot;sql写法错误，应该是 &#125; &quot;);    &#125;    /**     * 解析传入的参数     *     * @param method method     * @param args   参数     * @return 解析后的参数     */    public static Map&lt;String, Object&gt; buildMethodArgNameMap(Method method, Object[] args) &#123;        Map&lt;String, Object&gt; map = new HashMap&lt;&gt;(6);        // 方法的入参，例如：Integer id, args是实际的入参值，如 6        Parameter[] parameters = method.getParameters();        for (int i = 0; i &lt; parameters.length; i++) &#123;            map.put(parameters[i].getName(), args[i]);        &#125;        return map;    &#125;&#125;interface UserMapper &#123;    @Select(&quot;select * from User where id = #&#123;id&#125;&quot;)    List&lt;Test.User&gt; selectUesList(Integer id);&#125;\t\n\n以上只是模拟mybatis架构中的解析sql的部分，真正的解析还是比较复杂的，要考虑很多种情况，但是原理是一样，都离不开动态代理。下面我们看看他的架构设计图（非官方）：\n我们从这个角度去想：如何用sql去跟数据库交互？如何动态地去用sql与数据库交互？站在现在看过去，mybatis实现了这一点，如何做的？利用接口来实现，有两种方式：在接口上用注释来写或者写在xml文件里需要替换的地方用#&#123;&#125;括起来，在需要的地方调用接口的方法并把值传进去，我们要做的就只有这些，其他的mybatis帮我们做了。我们来看看他都做了什么，首先就是映射关系，把传入的值替换到sql语句并拼接起来、查询的结果映射到想要的对象上；管理sql与数据库的交互。这两个是最基本的，其次，还可以做些优化，比如缓存，频繁地查询某个sql可以将结果存起来；扩展性，对结果统一处理等。\n","dateCreated":"2021-03-07T19:03:54+08:00","dateModified":"2021-03-09T20:59:34+08:00","datePublished":"2021-03-07T19:03:54+08:00","description":"","headline":"mybatis sql resolution","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://github.com/sebastian/about/2021/03/07/mybatis-sql-resolution/"},"publisher":{"@type":"Organization","name":"Sebastian Getts","sameAs":["https://github.com/Sebastian-Getts","zzzqsw@gmail.com"],"image":"avatar.png","logo":{"@type":"ImageObject","url":"avatar.png"}},"url":"http://github.com/sebastian/about/2021/03/07/mybatis-sql-resolution/","keywords":"mybatis"}</script>
+    <meta name="description" content="承接去年记录的mybatis，从架构和源码的角度剖析mybatis。从整个项目工程来看他比spring小得多，因此代码更易读。使用他时，通常我们要做的就是编写sql和接口，这篇首先从sql解析开始。     123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="mybatis sql resolution">
+<meta property="og:url" content="http://github.com/sebastian/about/2021/03/07/mybatis-sql-resolution/index.html">
+<meta property="og:site_name" content="Hola">
+<meta property="og:description" content="承接去年记录的mybatis，从架构和源码的角度剖析mybatis。从整个项目工程来看他比spring小得多，因此代码更易读。使用他时，通常我们要做的就是编写sql和接口，这篇首先从sql解析开始。     123456789101112131415161718192021222324252627282930313233343536373839404142434445464748495051525">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://i.loli.net/2021/03/07/cPamMLRFU4xHXu8.jpg">
+<meta property="article:published_time" content="2021-03-07T11:03:54.000Z">
+<meta property="article:modified_time" content="2021-03-09T12:59:34.495Z">
+<meta property="article:author" content="Sebastian Getts">
+<meta property="article:tag" content="mybatis">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://i.loli.net/2021/03/07/cPamMLRFU4xHXu8.jpg">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://github.com/sebastian/about/assets/images/avatar.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-xsmpikcbczzhpff1zqybzgesjqcgmkdkx9b5ntr0bkmk6wqucpktuaodiuvy.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Hola
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/avatar.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Sebastian Getts</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>I write code to enrich and ease life of others.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/Sebastian-Getts"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/zzzqsw@gmail.com"
+                            
+                            rel="noopener"
+                            title="Mail"
+                        >
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            mybatis sql resolution
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2021-03-07T19:03:54+08:00">
+	
+		    Mar 07, 2021
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/framework/">framework</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>承接去年记录的mybatis，从架构和源码的角度剖析mybatis。从整个项目工程来看他比spring小得多，因此代码更易读。使用他时，通常我们要做的就是编写sql和接口，这篇首先从sql解析开始。</p>
+<!-- import -->
+
+<h1 id="table-of-contents">Table of Contents</h1>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 模拟的pojo</span></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> age;</span><br><span class="line">        <span class="keyword">int</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 核心就在这</span></span><br><span class="line">        UserMapper userMapper = (UserMapper) Proxy.newProxyInstance(Test.class.getClassLoader(), <span class="keyword">new</span> Class&lt;?&gt;[]&#123;UserMapper.class&#125;, <span class="keyword">new</span> InvocationHandler() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">                <span class="comment">// 获取到注解</span></span><br><span class="line">                Select annotation = method.getAnnotation(Select.class);</span><br><span class="line">                <span class="comment">// 构建入参的映射</span></span><br><span class="line">                Map&lt;String, Object&gt; map = buildMethodArgNameMap(method, args);</span><br><span class="line"></span><br><span class="line">                System.out.println(map.toString());</span><br><span class="line">                <span class="keyword">if</span> (annotation != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    String[] value = annotation.value();</span><br><span class="line">                    String s = parseSql(value[<span class="number">0</span>], map);</span><br><span class="line">                    System.out.println(s);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        userMapper.selectUesList(<span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 解析sql</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">parseSql</span><span class="params">(String sql, Map&lt;String, Object&gt; map)</span> </span>&#123;</span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="keyword">int</span> length = sql.length();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length; i++) &#123;</span><br><span class="line">            <span class="keyword">char</span> c = sql.charAt(i);</span><br><span class="line">            <span class="keyword">if</span> (c == <span class="string">&#x27;#&#x27;</span>) &#123;</span><br><span class="line">                <span class="keyword">int</span> nextIndex = i + <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">char</span> nextChar = sql.charAt(nextIndex);</span><br><span class="line">                <span class="keyword">if</span> (nextChar != <span class="string">&#x27;&#123;&#x27;</span>) &#123;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;sql写法错误，应该是 &#123; &quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                StringBuilder argSb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">                i = parseSqlArg(argSb, sql, nextIndex);</span><br><span class="line">                String argName = argSb.toString();</span><br><span class="line">                Object argValue = map.get(argName);</span><br><span class="line">                sb.append(argValue.toString());</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            sb.append(c);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 返回解析后拼接过的sql</span></span><br><span class="line">        <span class="keyword">return</span> sb.toString();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 这里应该是解析出&#123;&#125;中的的东西</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">parseSqlArg</span><span class="params">(StringBuilder argSb, String sql, <span class="keyword">int</span> nextIndex)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = nextIndex + <span class="number">1</span>; i &lt; sql.length(); i++) &#123;</span><br><span class="line">            <span class="keyword">char</span> c = sql.charAt(i);</span><br><span class="line">            <span class="keyword">if</span> (c != <span class="string">&#x27;&#125;&#x27;</span>) &#123;</span><br><span class="line">                argSb.append(c);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;sql写法错误，应该是 &#125; &quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 解析传入的参数</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> method method</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> args   参数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 解析后的参数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Map&lt;String, Object&gt; <span class="title">buildMethodArgNameMap</span><span class="params">(Method method, Object[] args)</span> </span>&#123;</span><br><span class="line">        Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">6</span>);</span><br><span class="line">        <span class="comment">// 方法的入参，例如：Integer id, args是实际的入参值，如 6</span></span><br><span class="line">        Parameter[] parameters = method.getParameters();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; parameters.length; i++) &#123;</span><br><span class="line">            map.put(parameters[i].getName(), args[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> map;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Select(&quot;select * from User where id = #&#123;id&#125;&quot;)</span></span><br><span class="line">    List&lt;Test.User&gt; selectUesList(Integer id);</span><br><span class="line">&#125;	</span><br></pre></td></tr></table></figure>
+
+<p>以上只是模拟mybatis架构中的解析sql的部分，真正的解析还是比较复杂的，要考虑很多种情况，但是原理是一样，都离不开动态代理。下面我们看看他的架构设计图（非官方）：<img src="https://i.loli.net/2021/03/07/cPamMLRFU4xHXu8.jpg" alt="mybatis_structure.jpg"></p>
+<p>我们从这个角度去想：如何用sql去跟数据库交互？如何动态地去用sql与数据库交互？站在现在看过去，mybatis实现了这一点，如何做的？利用接口来实现，有两种方式：在接口上用注释来写或者写在xml文件里需要替换的地方用<code>#&#123;&#125;</code>括起来，在需要的地方调用接口的方法并把值传进去，我们要做的就只有这些，其他的mybatis帮我们做了。我们来看看他都做了什么，首先就是映射关系，把传入的值替换到sql语句并拼接起来、查询的结果映射到想要的对象上；管理sql与数据库的交互。这两个是最基本的，其次，还可以做些优化，比如缓存，频繁地查询某个sql可以将结果存起来；扩展性，对结果统一处理等。</p>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/mybatis/" rel="tag">mybatis</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/03/09/mybatis-autoconfiguration/"
+                    data-tooltip="mybatis autoconfiguration"
+                    aria-label="PREVIOUS: mybatis autoconfiguration"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/03/06/java-collection-framework/"
+                    data-tooltip="java collection framework"
+                    aria-label="NEXT: java collection framework"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/03/07/mybatis-sql-resolution/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/03/07/mybatis-sql-resolution/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/03/07/mybatis-sql-resolution/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2021 Sebastian Getts. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/03/09/mybatis-autoconfiguration/"
+                    data-tooltip="mybatis autoconfiguration"
+                    aria-label="PREVIOUS: mybatis autoconfiguration"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/03/06/java-collection-framework/"
+                    data-tooltip="java collection framework"
+                    aria-label="NEXT: java collection framework"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/03/07/mybatis-sql-resolution/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/03/07/mybatis-sql-resolution/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/03/07/mybatis-sql-resolution/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/03/07/mybatis-sql-resolution/"
+                        aria-label="Share on Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/03/07/mybatis-sql-resolution/"
+                        aria-label="Share on Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/03/07/mybatis-sql-resolution/"
+                        aria-label="Share on Google+"
+                    >
+                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Sebastian Getts</h4>
+        
+            <div id="about-card-bio"><p>I write code to enrich and ease life of others.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Software Engineer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Shenzhen China
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover-v1.2.0.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-jsoeqoqa2ajw9nwj0xf5gmftvb2jhopk3sxu8iodabvev2jdlmr0zsitv3jm.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
+</html>

@@ -1,7 +1,7 @@
 ---
-title: mybatis
+title: mybatis_preview
 date: 2020-08-05 22:21:19
-categories: Java
+categories: framework
 tags: mybatis
 ---
 
