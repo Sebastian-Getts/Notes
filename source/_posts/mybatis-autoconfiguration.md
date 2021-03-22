@@ -7,7 +7,7 @@ tags: mybatis
 
 这一篇我们来看mybatis在springboot环境下的自动装配。之前分析过SpringBoot对于Spring的自动装配，mybatis引入时作为一个starter，开箱即用的产品，自然也少不了，同时在springboot的大环境下，为了方便开发肯定也会遵循他的装配法则。
 
-<!-- import -->
+<!-- more -->
 
 <!-- toc -->
 
@@ -22,7 +22,7 @@ org.mybatis.spring.boot.autoconfigure.MybatisLanguageDriverAutoConfiguration,\
 org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration
 ```
 
-一共就两个类，第一个是语言相关的，会检测是否有*thymeleaf*、*framemarker*等web框架，如果有的话会配置相关的语法，目前项目大多前后分离，在此就不分析这部分啦，我们重点看看下面那个配置类。
+一共就两个类，第一个是语言相关的，会检测是否有*thymeleaf*、*framemarker*等web框架，如果有的话会配置相关的语法，目前项目大多前后分离，在此就不分析这部分啦，我们重点看看下面那个`MybatisAutoConfiguration`配置类。
 
 # 自动装配
 
@@ -84,7 +84,7 @@ public static class MapperScannerRegistrarNotFoundConfiguration implements Initi
 }
 ```
 
-这个类导入了一个内部类，并且会在`MapperFactoryBean`和`MapperScannerConfigure.class`缺少时生效，这个大家就很熟悉了，通常没有写*@MapperScan*时的异常就是在这里产生的，他用来干嘛的呢，结合他导入的类，我们就能一探究竟：
+这个类导入了一个内部类，并且会在`MapperFactoryBean`和`MapperScannerConfigure.class`缺少时生效，这个大家就很熟悉了，**通常没有写*@MapperScan*时的异常就是在这里产生的**：
 
 ```java
 public class MapperFactoryBean<T> extends SqlSessionDaoSupport implements FactoryBean<T> {

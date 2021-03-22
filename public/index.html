@@ -224,7 +224,58 @@
                 <section class="postShorten-group main-content-wrap">
     
     
-    <article class="postShorten postShorten--thumbnailimg-bottom">
+    <article class="postShorten postShorten--thumbnailimg-right">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2021/03/22/Spring-Security-AutoConfiguration/"
+                            aria-label=": Spring Security AutoConfiguration"
+                        >
+                            Spring Security AutoConfiguration
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2021-03-22T22:18:10+08:00">
+	
+		    Mar 22, 2021
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/framework/">framework</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-excerpt">
+                    <p>​        最近有设计权限模块，用到了<em>Spring Security</em>，在SpringBoot项目中导入了相关的jar包后几乎不用做任何配置（当然，除了启用的*@EnableWebSecurity*）就会拦截请求，达到了“安全“的目的，配置的方式也是多种多样，我们先从”方便使用“这个角度，看看他如何做到的”拆箱即用“。</p>
+                    
+                        <a
+                            href="/2021/03/22/Spring-Security-AutoConfiguration/"
+                            class="postShorten-excerpt_link link"
+                            aria-label=": Spring Security AutoConfiguration"
+                        >
+                            Continue reading
+                        </a>
+                        
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-right">
         <div class="postShorten-wrap">
             
             <div class="postShorten-header">
@@ -256,59 +307,17 @@
 
             </div>
             
-                <div class="postShorten-content">
+                <div class="postShorten-excerpt">
                     <p>这一篇我们来看mybatis在springboot环境下的自动装配。之前分析过SpringBoot对于Spring的自动装配，mybatis引入时作为一个starter，开箱即用的产品，自然也少不了，同时在springboot的大环境下，为了方便开发肯定也会遵循他的装配法则。</p>
-<!-- import -->
-
-<h1 id="table-of-contents">Table of Contents</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%9D%A5%E6%BA%90"><span class="toc-text">来源</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E8%A3%85%E9%85%8D"><span class="toc-text">自动装配</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#sqlSessionFactory"><span class="toc-text">sqlSessionFactory</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#sqlSessionTemplate"><span class="toc-text">sqlSessionTemplate</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MapperScannerRegistrarNotFoundConfiguration"><span class="toc-text">MapperScannerRegistrarNotFoundConfiguration</span></a></li></ol></li></ol>
-
-<h1 id="来源"><a href="#来源" class="headerlink" title="来源"></a>来源</h1><p>如果还记得之前的分析就会知道，SpringBoot会从<code>META-INF</code>目录下找<code>spring.factories</code>文件，并从中找<code>EnableAutoConfiguration</code>对应的值，这个值是一个以逗号分割开的全类名字符串，你配多少他加载多少。换句话说，如果没有导入mybatis，就不会有相关的配置。加载后会通过反射来获取类相关信息并进行配置。mybatis的自动装配内容非常少，我们来看下：</p>
-<figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Auto Configure</span></span><br><span class="line"><span class="meta">org.springframework.boot.autoconfigure.EnableAutoConfiguration</span>=<span class="string">\</span></span><br><span class="line">org.mybatis.spring.boot.autoconfigure.MybatisLanguageDriverAutoConfiguration,\</span><br><span class="line"><span class="attr">org.mybatis.spring.boot.autoconfigure.MybatisAutoConfiguration</span></span><br></pre></td></tr></table></figure>
-
-<p>一共就两个类，第一个是语言相关的，会检测是否有<em>thymeleaf</em>、<em>framemarker</em>等web框架，如果有的话会配置相关的语法，目前项目大多前后分离，在此就不分析这部分啦，我们重点看看下面那个配置类。</p>
-<h1 id="自动装配"><a href="#自动装配" class="headerlink" title="自动装配"></a>自动装配</h1><p>通过这个类我们要弄清楚他自动装配了啥。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@ConditionalOnClass(&#123;SqlSessionFactory.class, SqlSessionFactoryBean.class&#125;)</span> <span class="comment">// 路径下存在这两个类的class时生效</span></span><br><span class="line"><span class="meta">@ConditionalOnSingleCandidate(DataSource.class)</span> <span class="comment">// 单个数据源生效</span></span><br><span class="line"><span class="meta">@EnableConfigurationProperties(&#123;MybatisProperties.class&#125;)</span> <span class="comment">// 启用mybatis配置文件的属性</span></span><br><span class="line"><span class="meta">@AutoConfigureAfter(&#123;DataSourceAutoConfiguration.class, MybatisLanguageDriverAutoConfiguration.class&#125;)</span> <span class="comment">// 这两个类后自动配置</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MybatisAutoConfiguration</span> <span class="keyword">implements</span> <span class="title">InitializingBean</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h2 id="sqlSessionFactory"><a href="#sqlSessionFactory" class="headerlink" title="sqlSessionFactory"></a>sqlSessionFactory</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="meta">@ConditionalOnMissingBean</span> <span class="comment">// 缺少这个bean时创建他</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> SqlSessionFactory <span class="title">sqlSessionFactory</span><span class="params">(DataSource dataSource)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>sqlSessionFactory是用来创建sqlSession的，我们知道，每次执行sql时都是以sqlSession为执行对象的，里面封装了增删改查等操作，要创建这个factory需要数据源，并且里面还用到了配置文件，就是上面注解中的<code>MapperProperties</code>，会根据用户配置的信息来修改facotry的相关属性。</p>
-<h2 id="sqlSessionTemplate"><a href="#sqlSessionTemplate" class="headerlink" title="sqlSessionTemplate"></a>sqlSessionTemplate</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Bean</span></span><br><span class="line"><span class="meta">@ConditionalOnMissingBean</span> <span class="comment">// 同sqlSessionFactory</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> SqlSessionTemplate <span class="title">sqlSessionTemplate</span><span class="params">(SqlSessionFactory sqlSessionFactory)</span> </span>&#123;</span><br><span class="line">    ExecutorType executorType = <span class="keyword">this</span>.properties.getExecutorType();</span><br><span class="line">    <span class="keyword">return</span> executorType != <span class="keyword">null</span> ? <span class="keyword">new</span> SqlSessionTemplate(sqlSessionFactory, executorType) : <span class="keyword">new</span> SqlSessionTemplate(sqlSessionFactory);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个sqlSessionFactory的创建需要用到sqlSessionFactory，同时会根据用户有没有指定<code>executorType</code>来创建对应的sqlSessionTemplate。通过这个bean的名称可以知道他是一直种sqlSession的模板，而且还用到了配置文件中<code>executorType</code>这个属性，他通常有三个选择：</p>
-<ul>
-<li>SIMPLE：为每个语句的执行创建一个预处理语句，基操</li>
-<li>REUSE：复用预处理语句</li>
-<li>BATCH：批量执行所有更新语句</li>
-</ul>
-<h2 id="MapperScannerRegistrarNotFoundConfiguration"><a href="#MapperScannerRegistrarNotFoundConfiguration" class="headerlink" title="MapperScannerRegistrarNotFoundConfiguration"></a>MapperScannerRegistrarNotFoundConfiguration</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="meta">@Import(&#123;MybatisAutoConfiguration.AutoConfiguredMapperScannerRegistrar.class&#125;)</span> <span class="comment">// 导入</span></span><br><span class="line"><span class="meta">@ConditionalOnMissingBean(&#123;MapperFactoryBean.class, MapperScannerConfigurer.class&#125;)</span> <span class="comment">// 缺少这两个类时生效</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">MapperScannerRegistrarNotFoundConfiguration</span> <span class="keyword">implements</span> <span class="title">InitializingBean</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MapperScannerRegistrarNotFoundConfiguration</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">afterPropertiesSet</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        MybatisAutoConfiguration.logger.debug(<span class="string">&quot;Not found configuration for registering mapper bean using @MapperScan, MapperFactoryBean and MapperScannerConfigurer.&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>这个类导入了一个内部类，并且会在<code>MapperFactoryBean</code>和<code>MapperScannerConfigure.class</code>缺少时生效，这个大家就很熟悉了，通常没有写*@MapperScan*时的异常就是在这里产生的，他用来干嘛的呢，结合他导入的类，我们就能一探究竟：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MapperFactoryBean</span>&lt;<span class="title">T</span>&gt; <span class="keyword">extends</span> <span class="title">SqlSessionDaoSupport</span> <span class="keyword">implements</span> <span class="title">FactoryBean</span>&lt;<span class="title">T</span>&gt; </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> Class&lt;T&gt; mapperInterface;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> addToConfig = <span class="keyword">true</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MapperFactoryBean</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">MapperFactoryBean</span><span class="params">(Class&lt;T&gt; mapperInterface)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.mapperInterface = mapperInterface;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">checkDaoConfig</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">super</span>.checkDaoConfig();</span><br><span class="line">        Assert.notNull(<span class="keyword">this</span>.mapperInterface, <span class="string">&quot;Property &#x27;mapperInterface&#x27; is required&quot;</span>);</span><br><span class="line">        Configuration configuration = <span class="keyword">this</span>.getSqlSession().getConfiguration();</span><br><span class="line">        <span class="comment">// 如果开启了“添加配置”并且接口没有被添加过的话</span></span><br><span class="line">        <span class="keyword">if</span> (<span class="keyword">this</span>.addToConfig &amp;&amp; !configuration.hasMapper(<span class="keyword">this</span>.mapperInterface)) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                <span class="comment">// 往mybatis的配置类中添加接口</span></span><br><span class="line">                configuration.addMapper(<span class="keyword">this</span>.mapperInterface);</span><br><span class="line">            &#125; <span class="keyword">catch</span> (Exception var6) &#123;</span><br><span class="line">                <span class="keyword">this</span>.logger.error(<span class="string">&quot;Error while adding the mapper &#x27;&quot;</span> + <span class="keyword">this</span>.mapperInterface + <span class="string">&quot;&#x27; to configuration.&quot;</span>, var6);</span><br><span class="line">                <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(var6);</span><br><span class="line">            &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">                ErrorContext.instance().reset();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>总结一下，这个自动配置类主要做了以下工作：</p>
-<ol>
-<li>启用配置文件</li>
-<li>缺少sqlSessionFactory时创建该bean，依赖数据源dataSource</li>
-<li>缺少sqlSessionTemplate时创建该bean，依赖sqlSessionFactory</li>
-<li>没有配置mapper文件扫描时注册异常bean，否则扫描并加载mapper</li>
-</ol>
-<p>以上是我们使用mybatis的基础，启用了配置文件，我们会加入mapper文件路径等配置信息，有了sqlSessionFactory就会创建sqlSessionTemplate，进而根据他获到mybatis的关键类Configuration，最后将获取到的mapper接口加入到配置类中，配置类是持有<code>mapperRegister</code>的，这个就好比一个mapper池，装载着所有的mapper接口，使用HashMap实现。</p>
-
                     
+                        <a
+                            href="/2021/03/09/mybatis-autoconfiguration/"
+                            class="postShorten-excerpt_link link"
+                            aria-label=": mybatis autoconfiguration"
+                        >
+                            Continue reading
+                        </a>
                         
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2021/03/09/mybatis-autoconfiguration/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
                     
                 </div>
             
@@ -747,51 +756,6 @@
                             href="/2021/02/15/SpringBoot-startup/"
                             class="postShorten-excerpt_link link"
                             aria-label=": SpringBoot startup"
-                        >
-                            Continue reading
-                        </a>
-                        
-                    
-                </div>
-            
-        </div>
-        
-    </article>
-    
-    
-    <article class="postShorten postShorten--thumbnailimg-right">
-        <div class="postShorten-wrap">
-            
-            <div class="postShorten-header">
-                <h1 class="postShorten-title">
-                    
-                        <a
-                            class="link-unstyled"
-                            href="/2021/01/03/2020-end/"
-                            aria-label=": 2020_end"
-                        >
-                            2020_end
-                        </a>
-                    
-                </h1>
-                <div class="postShorten-meta">
-    <time datetime="2021-01-03T21:35:35+08:00">
-	
-		    Jan 03, 2021
-    	
-    </time>
-    
-</div>
-
-            </div>
-            
-                <div class="postShorten-excerpt">
-                    <p>2020过完了，做个总结，同时简要规划新一年的目标。</p>
-                    
-                        <a
-                            href="/2021/01/03/2020-end/"
-                            class="postShorten-excerpt_link link"
-                            aria-label=": 2020_end"
                         >
                             Continue reading
                         </a>
