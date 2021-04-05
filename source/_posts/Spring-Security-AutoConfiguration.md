@@ -9,6 +9,8 @@ tags: spring security
 
 <!-- more -->
 
+<!-- toc -->
+
 # 入口
 
 ​		在SpringBoot中使用注解来解放xml配置文件后，一直都是*@Configuration*的天下，开启一个模块的功能同样需要它。开头提到的那个注解*@EnableWebSecurity*就是探究的入口：

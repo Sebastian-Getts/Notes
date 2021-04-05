@@ -7,7 +7,7 @@ tags: mybatis
 
 承接去年记录的mybatis，从架构和源码的角度剖析mybatis。从整个项目工程来看他比spring小得多，因此代码更易读。使用他时，通常我们要做的就是编写sql和接口，这篇首先从sql解析开始。
 
-<!-- import -->
+<!-- more -->
 
 <!-- toc -->
 

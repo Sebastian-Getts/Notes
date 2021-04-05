@@ -233,6 +233,159 @@
                     
                         <a
                             class="link-unstyled"
+                            href="/2021/03/23/jvm-memory-manage/"
+                            aria-label=": jvm memory-manage"
+                        >
+                            jvm memory-manage
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2021-03-23T23:38:15+08:00">
+	
+		    Mar 23, 2021
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/JVM/">JVM</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-excerpt">
+                    <p>温故知新。jvm的自动内存管理在代码层面为我们省去了很多麻烦，在机器与代码之间有虚拟机执行编译后的字节码，虽然已经不太可能出现oom，但对于以后java的发展以及目前java运行机制的来说，熟悉jvm的内存管理是很有必要的。学过C++，语法中专门有开辟内存的语句……，虽然不用我们写这些，但起码说明了一些涉及内存的东西：开辟与回收。</p>
+                    
+                        <a
+                            href="/2021/03/23/jvm-memory-manage/"
+                            class="postShorten-excerpt_link link"
+                            aria-label=": jvm memory-manage"
+                        >
+                            Continue reading
+                        </a>
+                        
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-bottom">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2021/03/23/jvm-concurrency/"
+                            aria-label=": jvm concurrency"
+                        >
+                            jvm concurrency
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2021-03-23T23:32:31+08:00">
+	
+		    Mar 23, 2021
+    	
+    </time>
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-content">
+                    
+                    
+                        
+
+
+                    
+                    
+                        <p>
+                            <a
+                                href="/2021/03/23/jvm-concurrency/#post-footer"
+                                class="postShorten-excerpt_link link"
+                                aria-label=""
+                            >
+                                Comment and share
+                            </a>
+                        </p>
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-right">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
+                            href="/2021/03/23/jvm-classloader/"
+                            aria-label=": jvm classloader"
+                        >
+                            jvm classloader
+                        </a>
+                    
+                </h1>
+                <div class="postShorten-meta">
+    <time datetime="2021-03-23T23:32:02+08:00">
+	
+		    Mar 23, 2021
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/JVM/">JVM</a>
+
+
+    
+</div>
+
+            </div>
+            
+                <div class="postShorten-excerpt">
+                    <p>类加载器是java从抽象到更抽象的过程……我们写出来的是代码，编译后成了另一套代码（不是给人读的），然后通过类加载器加载进虚拟机给虚拟机去执行。所以类加载器就是这么一个位置。</p>
+                    
+                        <a
+                            href="/2021/03/23/jvm-classloader/"
+                            class="postShorten-excerpt_link link"
+                            aria-label=": jvm classloader"
+                        >
+                            Continue reading
+                        </a>
+                        
+                    
+                </div>
+            
+        </div>
+        
+    </article>
+    
+    
+    <article class="postShorten postShorten--thumbnailimg-right">
+        <div class="postShorten-wrap">
+            
+            <div class="postShorten-header">
+                <h1 class="postShorten-title">
+                    
+                        <a
+                            class="link-unstyled"
                             href="/2021/03/22/Spring-Security-AutoConfiguration/"
                             aria-label=": Spring Security AutoConfiguration"
                         >
@@ -327,7 +480,7 @@
     </article>
     
     
-    <article class="postShorten postShorten--thumbnailimg-bottom">
+    <article class="postShorten postShorten--thumbnailimg-right">
         <div class="postShorten-wrap">
             
             <div class="postShorten-header">
@@ -359,32 +512,17 @@
 
             </div>
             
-                <div class="postShorten-content">
+                <div class="postShorten-excerpt">
                     <p>承接去年记录的mybatis，从架构和源码的角度剖析mybatis。从整个项目工程来看他比spring小得多，因此代码更易读。使用他时，通常我们要做的就是编写sql和接口，这篇首先从sql解析开始。</p>
-<!-- import -->
-
-<h1 id="table-of-contents">Table of Contents</h1>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 模拟的pojo</span></span><br><span class="line">    <span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">User</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> age;</span><br><span class="line">        <span class="keyword">int</span> name;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        <span class="comment">// 核心就在这</span></span><br><span class="line">        UserMapper userMapper = (UserMapper) Proxy.newProxyInstance(Test.class.getClassLoader(), <span class="keyword">new</span> Class&lt;?&gt;[]&#123;UserMapper.class&#125;, <span class="keyword">new</span> InvocationHandler() &#123;</span><br><span class="line">            <span class="meta">@Override</span></span><br><span class="line">            <span class="function"><span class="keyword">public</span> Object <span class="title">invoke</span><span class="params">(Object proxy, Method method, Object[] args)</span> <span class="keyword">throws</span> Throwable </span>&#123;</span><br><span class="line">                <span class="comment">// 获取到注解</span></span><br><span class="line">                Select annotation = method.getAnnotation(Select.class);</span><br><span class="line">                <span class="comment">// 构建入参的映射</span></span><br><span class="line">                Map&lt;String, Object&gt; map = buildMethodArgNameMap(method, args);</span><br><span class="line"></span><br><span class="line">                System.out.println(map.toString());</span><br><span class="line">                <span class="keyword">if</span> (annotation != <span class="keyword">null</span>) &#123;</span><br><span class="line">                    String[] value = annotation.value();</span><br><span class="line">                    String s = parseSql(value[<span class="number">0</span>], map);</span><br><span class="line">                    System.out.println(s);</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">return</span> <span class="keyword">null</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        userMapper.selectUesList(<span class="number">2</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 解析sql</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> String <span class="title">parseSql</span><span class="params">(String sql, Map&lt;String, Object&gt; map)</span> </span>&#123;</span><br><span class="line">        StringBuilder sb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">        <span class="keyword">int</span> length = sql.length();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; length; i++) &#123;</span><br><span class="line">            <span class="keyword">char</span> c = sql.charAt(i);</span><br><span class="line">            <span class="keyword">if</span> (c == <span class="string">&#x27;#&#x27;</span>) &#123;</span><br><span class="line">                <span class="keyword">int</span> nextIndex = i + <span class="number">1</span>;</span><br><span class="line">                <span class="keyword">char</span> nextChar = sql.charAt(nextIndex);</span><br><span class="line">                <span class="keyword">if</span> (nextChar != <span class="string">&#x27;&#123;&#x27;</span>) &#123;</span><br><span class="line">                    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;sql写法错误，应该是 &#123; &quot;</span>);</span><br><span class="line">                &#125;</span><br><span class="line">                StringBuilder argSb = <span class="keyword">new</span> StringBuilder();</span><br><span class="line">                i = parseSqlArg(argSb, sql, nextIndex);</span><br><span class="line">                String argName = argSb.toString();</span><br><span class="line">                Object argValue = map.get(argName);</span><br><span class="line">                sb.append(argValue.toString());</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            sb.append(c);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 返回解析后拼接过的sql</span></span><br><span class="line">        <span class="keyword">return</span> sb.toString();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 这里应该是解析出&#123;&#125;中的的东西</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> <span class="title">parseSqlArg</span><span class="params">(StringBuilder argSb, String sql, <span class="keyword">int</span> nextIndex)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = nextIndex + <span class="number">1</span>; i &lt; sql.length(); i++) &#123;</span><br><span class="line">            <span class="keyword">char</span> c = sql.charAt(i);</span><br><span class="line">            <span class="keyword">if</span> (c != <span class="string">&#x27;&#125;&#x27;</span>) &#123;</span><br><span class="line">                argSb.append(c);</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                <span class="keyword">return</span> i;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">&quot;sql写法错误，应该是 &#125; &quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 解析传入的参数</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> method method</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> args   参数</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> 解析后的参数</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Map&lt;String, Object&gt; <span class="title">buildMethodArgNameMap</span><span class="params">(Method method, Object[] args)</span> </span>&#123;</span><br><span class="line">        Map&lt;String, Object&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;(<span class="number">6</span>);</span><br><span class="line">        <span class="comment">// 方法的入参，例如：Integer id, args是实际的入参值，如 6</span></span><br><span class="line">        Parameter[] parameters = method.getParameters();</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; parameters.length; i++) &#123;</span><br><span class="line">            map.put(parameters[i].getName(), args[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> map;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">interface</span> <span class="title">UserMapper</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Select(&quot;select * from User where id = #&#123;id&#125;&quot;)</span></span><br><span class="line">    List&lt;Test.User&gt; selectUesList(Integer id);</span><br><span class="line">&#125;	</span><br></pre></td></tr></table></figure>
-
-<p>以上只是模拟mybatis架构中的解析sql的部分，真正的解析还是比较复杂的，要考虑很多种情况，但是原理是一样，都离不开动态代理。下面我们看看他的架构设计图（非官方）：<img src="https://i.loli.net/2021/03/07/cPamMLRFU4xHXu8.jpg" alt="mybatis_structure.jpg"></p>
-<p>我们从这个角度去想：如何用sql去跟数据库交互？如何动态地去用sql与数据库交互？站在现在看过去，mybatis实现了这一点，如何做的？利用接口来实现，有两种方式：在接口上用注释来写或者写在xml文件里需要替换的地方用<code>#&#123;&#125;</code>括起来，在需要的地方调用接口的方法并把值传进去，我们要做的就只有这些，其他的mybatis帮我们做了。我们来看看他都做了什么，首先就是映射关系，把传入的值替换到sql语句并拼接起来、查询的结果映射到想要的对象上；管理sql与数据库的交互。这两个是最基本的，其次，还可以做些优化，比如缓存，频繁地查询某个sql可以将结果存起来；扩展性，对结果统一处理等。</p>
-
                     
+                        <a
+                            href="/2021/03/07/mybatis-sql-resolution/"
+                            class="postShorten-excerpt_link link"
+                            aria-label=": mybatis sql resolution"
+                        >
+                            Continue reading
+                        </a>
                         
-
-
-                    
-                    
-                        <p>
-                            <a
-                                href="/2021/03/07/mybatis-sql-resolution/#post-footer"
-                                class="postShorten-excerpt_link link"
-                                aria-label=""
-                            >
-                                Comment and share
-                            </a>
-                        </p>
                     
                 </div>
             

@@ -1,0 +1,612 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hola">
+    <title>jvm memory-manage - Hola</title>
+    <meta name="author" content="Sebastian Getts">
+    
+    
+        <link rel="icon" href="http://github.com/sebastian/about/assets/images/avatar.png">
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sebastian Getts","sameAs":["https://github.com/Sebastian-Getts","zzzqsw@gmail.com"],"image":"avatar.png"},"articleBody":"温故知新。jvm的自动内存管理在代码层面为我们省去了很多麻烦，在机器与代码之间有虚拟机执行编译后的字节码，虽然已经不太可能出现oom，但对于以后java的发展以及目前java运行机制的来说，熟悉jvm的内存管理是很有必要的。学过C++，语法中专门有开辟内存的语句……，虽然不用我们写这些，但起码说明了一些涉及内存的东西：开辟与回收。\n\n\n\n\n布局在了解jvm如何帮我们处理内存之前，我们先回顾jvm对于内存管理的布局，或者说是运行时数据区。这里图就不贴了，想看的可以参考之前的一篇jvm概览，运行时数据区的各模块同理，这里主要回顾对象与数据区之间的联系，也就是对象的产生以及在内存中的布局。\n​        普通的对象如何产生？在java代码层面我们通过关键字new来创建对象，他会调用构造方法来构造，这样一个对象被创建出来了，又叫实例化（Initialize）。还有一个概念叫初始化，这两点在Spring源码中区分的特别清晰，对于一个解放new的框架来说这么做是没毛病的，面向对象中，对象是有属性的，简单来说初始化是创建对象，实例化是对象的属性赋值。我们代码写完是交由虚拟机处理，虚拟机处理的又是编译过后的class文件，所以对象如何创建以及创建后如何布局都是jvm要做的事了。创建后对象会有个生存周期吧，一直存在虚拟机装不下的……等等诸多围绕着对象的问题。\n​        jvm在读到new相关的指令后（我们知道new之后是类啊）会从方法区找类关的信息，看是否被加载，被加载后就开始为内存分配地方，换句话说，给一个对象分配多大的地方是确定的，而且是在类加载后就能确定。在哪里看类的相关信息呢，方法区，这是类加载的入口，通常要经过加载、解析、初始化等过程。创建后的对象如何存在于虚拟机中的呢？分为三部分：对象头，实例数据，对齐填充。其实对于后两个是容易理解的，首先来说对齐填充，在计算机世界中，充斥各种二进制的特征，尤其是2的整数倍，一来是方便运算，二来是节省空间；其次是实例数据，这个当然，我们创建了对象，对象得有属性，即实例变量。最后是这个对象头，是蛮抽象的，有什么用呢？从这个角度想：我可以new很多个对象，每个对象独一无二如何体现（每个属性都相同）？每个属性不同的对象我们好区分，虚拟机知道么，是不是得有标记？对象该被回收了虚拟机如何知道谁该被回收，考实力数据和对齐填充吗？显然不可能。所以，可以理解为对象头是辅助用的（地位绝对可以做star），拿来记录各种标记。\n对象头拿对象头来做各种标记是没错的，标记这么多，还是可以再分分类的：记录的归做一类，引用（查找）的做另一类。\n”打标记“这词儿我取的口语化，官方叫做Mark Word，用来存储自身的运行时数据，有那些呢？哈希码、GC分代年龄、锁状态标志、线程持有的锁、偏向时间戳等。\n另一类，引用，为什么这么叫呢，这是上面提到过的“创建那么多对象如何确定哪个是哪个”的查找问题，也就是指针。他的作用是确定这个实例对象是由哪个类创建出来的，例如，我们可以通过这个来找出对象的模板信息（即类的结构信息），但并不是所有虚拟机都是这样设计的，除了指针也可以用句柄。对象存在于方法中，通过各种逻辑实现对象之间的交互，在java中，除了基本数据类型就是对象的引用类型了，指针还好理解，句柄又是什么呢？可以理解为指针的中转站：\n\nreference -&gt; 句柄 -&gt;实例数据、类型数据\n\n其中实例数据与句柄均在堆中，类型数据位于方法区，reference位于java栈。这样做的坏处是每次访问对象不像指针那样简单地之间访问（对象头有指针，对象实例数据与对象头平级），而是会多一次开销。好处也不是没有，他与指针的方式的最大区别是将reference与实力数据、类型数据解耦了，即无论句柄到实例数据的关系如何修改，reference到句柄是稳定不变的。句柄到实例数据的引用为什么会变，频繁么？我觉得如果足够频繁才能凸显出句柄的优势。什么时候变？垃圾回收导致的对象移动。\n开辟上面说到对象的大小是在类加载后就能确定的，毕竟类结构信息就是一个模板，照着模板造出来的对象一定是整齐化一的，如何开辟空间、在哪里开辟？这是这部分要讨论的问题。我们知道垃圾回收的地点是堆，对象也是创建在堆中的，所以，每次创建对象，虚拟机都会在堆中给这个新生对象开辟一块区域。\n重点来了，虚拟机，开辟区域。\n真实的计算机中也会涉及到内存的问题，经典的数据结构有线性表和链表，我们都知道线性表随机访问与他连续存储的特点分不开，链表不同，因为内存是分散的，要链在一起一定要有个指针来标记下一个在哪。虚拟机不也得仿照真实的计算机不是么，不然为什么叫虚拟机。于是也有两种分配内存的方式，一种是连续的，一种是链式的。这里虚拟与真实的区别也是有的，虚拟的要考虑开辟后如何回收，如何回收取决与启动时如何配置垃圾回收策略，而垃圾回收的策略决定着内存是否完整，内存的完整与否决定对象分配是整块划分还是散着链式链接。专业的术语叫做指针碰撞（Bump the Pointer）与空闲链表（Free List）。如何分配内存确定了，还剩下一个问题是冲突，频繁移动指针引起的线程安全问题。关于锁，在操作系统中我们知道有轻锁与重锁，这里同样适用，但是这里更聪明一些，一个方法是使用了轻度锁CAS+失败重试，另一个是单独给线程分配一块内存，需要分配时让线程在自己的地方玩，玩完了重新分内存时再上锁处理并发。后一个方法中给线程分配出来的内存更专业的术语是本地线程分配缓冲区（Thread Local Allocation Buffer, TLAB）。\n回收​        关于对象回收，之前一直在说垃圾回收，没错，没用的对象就成了垃圾。这里明显的问题就是如何知道对象该不该被回收，以及确定了回收对象后，回收的策略是什么。现在我们是站在巨人的肩膀上，以上帝视角看待这个问题，目前java的版本迭代更像是打了鸡血……，博主虽然从事java开发工作，但截至前接触java的时间不到两年，更是鲜有遇见过jvm崩溃的问题，所以以前的jvm垃圾回收器在步入历史长河的情况下，只作为了解，这部分更多是对现用和具有发展潜力的回收器如G1展开分析。\n如何确定对象该不该被回收，\n历史垃圾回收器，\nG1，新的分区方式，打破传统\n","dateCreated":"2021-03-23T23:38:15+08:00","dateModified":"2021-03-26T00:12:00+08:00","datePublished":"2021-03-23T23:38:15+08:00","description":"温故知新。jvm的自动内存管理在代码层面为我们省去了很多麻烦，在机器与代码之间有虚拟机执行编译后的字节码，虽然已经不太可能出现oom，但对于以后java的发展以及目前java运行机制的来说，熟悉jvm的内存管理是很有必要的。学过C++，语法中专门有开辟内存的语句……，虽然不用我们写这些，但起码说明了一些涉及内存的东西：开辟与回收。","headline":"jvm memory-manage","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://github.com/sebastian/about/2021/03/23/jvm-memory-manage/"},"publisher":{"@type":"Organization","name":"Sebastian Getts","sameAs":["https://github.com/Sebastian-Getts","zzzqsw@gmail.com"],"image":"avatar.png","logo":{"@type":"ImageObject","url":"avatar.png"}},"url":"http://github.com/sebastian/about/2021/03/23/jvm-memory-manage/","keywords":"memory"}</script>
+    <meta name="description" content="温故知新。jvm的自动内存管理在代码层面为我们省去了很多麻烦，在机器与代码之间有虚拟机执行编译后的字节码，虽然已经不太可能出现oom，但对于以后java的发展以及目前java运行机制的来说，熟悉jvm的内存管理是很有必要的。学过C++，语法中专门有开辟内存的语句……，虽然不用我们写这些，但起码说明了一些涉及内存的东西：开辟与回收。">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="jvm memory-manage">
+<meta property="og:url" content="http://github.com/sebastian/about/2021/03/23/jvm-memory-manage/index.html">
+<meta property="og:site_name" content="Hola">
+<meta property="og:description" content="温故知新。jvm的自动内存管理在代码层面为我们省去了很多麻烦，在机器与代码之间有虚拟机执行编译后的字节码，虽然已经不太可能出现oom，但对于以后java的发展以及目前java运行机制的来说，熟悉jvm的内存管理是很有必要的。学过C++，语法中专门有开辟内存的语句……，虽然不用我们写这些，但起码说明了一些涉及内存的东西：开辟与回收。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-03-23T15:38:15.000Z">
+<meta property="article:modified_time" content="2021-03-25T16:12:00.978Z">
+<meta property="article:author" content="Sebastian Getts">
+<meta property="article:tag" content="memory">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://github.com/sebastian/about/assets/images/avatar.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-xsmpikcbczzhpff1zqybzgesjqcgmkdkx9b5ntr0bkmk6wqucpktuaodiuvy.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Hola
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/avatar.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Sebastian Getts</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>I write code to enrich and ease life of others.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/Sebastian-Getts"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/zzzqsw@gmail.com"
+                            
+                            rel="noopener"
+                            title="Mail"
+                        >
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            jvm memory-manage
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2021-03-23T23:38:15+08:00">
+	
+		    Mar 23, 2021
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/JVM/">JVM</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>温故知新。jvm的自动内存管理在代码层面为我们省去了很多麻烦，在机器与代码之间有虚拟机执行编译后的字节码，虽然已经不太可能出现oom，但对于以后java的发展以及目前java运行机制的来说，熟悉jvm的内存管理是很有必要的。学过C++，语法中专门有开辟内存的语句……，虽然不用我们写这些，但起码说明了一些涉及内存的东西：开辟与回收。</p>
+<a id="more"></a>
+
+<h1 id="table-of-contents">Table of Contents</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B8%83%E5%B1%80"><span class="toc-text">布局</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E8%B1%A1%E5%A4%B4"><span class="toc-text">对象头</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%BC%80%E8%BE%9F"><span class="toc-text">开辟</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9E%E6%94%B6"><span class="toc-text">回收</span></a></li></ol>
+
+<h1 id="布局"><a href="#布局" class="headerlink" title="布局"></a>布局</h1><p>在了解jvm如何帮我们处理内存之前，我们先回顾jvm对于内存管理的布局，或者说是<strong>运行时数据区</strong>。这里图就不贴了，想看的可以参考之前的一篇jvm概览，运行时数据区的各模块同理，这里主要回顾对象与数据区之间的联系，也就是对象的产生以及在内存中的布局。</p>
+<p>​        普通的对象如何产生？在java代码层面我们通过关键字<strong>new</strong>来创建对象，他会调用构造方法来构造，这样一个对象被创建出来了，又叫实例化（Initialize）。还有一个概念叫初始化，这两点在Spring源码中区分的特别清晰，对于一个解放<strong>new</strong>的框架来说这么做是没毛病的，面向对象中，对象是有属性的，简单来说初始化是创建对象，实例化是对象的属性赋值。我们代码写完是交由虚拟机处理，虚拟机处理的又是编译过后的class文件，所以对象如何创建以及创建后如何布局都是jvm要做的事了。创建后对象会有个生存周期吧，一直存在虚拟机装不下的……等等诸多围绕着对象的问题。</p>
+<p>​        jvm在读到new相关的指令后（我们知道new之后是类啊）会从方法区找类关的信息，看是否被加载，被加载后就开始为内存分配地方，换句话说，给一个对象分配多大的地方是确定的，而且是在类加载后就能确定。在哪里看类的相关信息呢，方法区，这是类加载的入口，通常要经过加载、解析、初始化等过程。创建后的对象如何存在于虚拟机中的呢？分为三部分：<strong>对象头，实例数据，对齐填充</strong>。其实对于后两个是容易理解的，首先来说对齐填充，在计算机世界中，充斥各种二进制的特征，尤其是2的整数倍，一来是方便运算，二来是节省空间；其次是实例数据，这个当然，我们创建了对象，对象得有属性，即实例变量。最后是这个对象头，是蛮抽象的，有什么用呢？从这个角度想：我可以new很多个对象，每个对象独一无二如何体现（每个属性都相同）？每个属性不同的对象我们好区分，虚拟机知道么，是不是得有标记？对象该被回收了虚拟机如何知道谁该被回收，考实力数据和对齐填充吗？显然不可能。所以，可以理解为对象头是辅助用的（地位绝对可以做star），拿来记录各种标记。</p>
+<h2 id="对象头"><a href="#对象头" class="headerlink" title="对象头"></a>对象头</h2><p>拿对象头来做各种标记是没错的，标记这么多，还是可以再分分类的：记录的归做一类，引用（查找）的做另一类。</p>
+<p>”打标记“这词儿我取的口语化，官方叫做<em>Mark Word</em>，用来存储自身的<em>运行时数据</em>，有那些呢？哈希码、GC分代年龄、锁状态标志、线程持有的锁、偏向时间戳等。</p>
+<p>另一类，引用，为什么这么叫呢，这是上面提到过的“创建那么多对象如何确定哪个是哪个”的查找问题，也就是<strong>指针</strong>。他的作用是确定这个实例对象是由哪个类创建出来的，例如，我们可以通过这个来找出对象的模板信息（即类的结构信息），但并不是所有虚拟机都是这样设计的，除了指针也可以用<strong>句柄</strong>。对象存在于方法中，通过各种逻辑实现对象之间的交互，在java中，除了基本数据类型就是对象的引用类型了，指针还好理解，句柄又是什么呢？可以理解为指针的中转站：</p>
+<blockquote>
+<p>reference -&gt; 句柄 -&gt;实例数据、类型数据</p>
+</blockquote>
+<p>其中实例数据与句柄均在堆中，类型数据位于方法区，reference位于java栈。这样做的坏处是每次访问对象不像指针那样简单地之间访问（对象头有指针，对象实例数据与对象头平级），而是会多一次开销。好处也不是没有，他与指针的方式的最大区别是将reference与实力数据、类型数据解耦了，即无论句柄到实例数据的关系如何修改，reference到句柄是稳定不变的。句柄到实例数据的引用为什么会变，频繁么？我觉得如果足够频繁才能凸显出句柄的优势。什么时候变？垃圾回收导致的对象移动。</p>
+<h1 id="开辟"><a href="#开辟" class="headerlink" title="开辟"></a>开辟</h1><p>上面说到对象的大小是在类加载后就能确定的，毕竟类结构信息就是一个模板，照着模板造出来的对象一定是整齐化一的，如何开辟空间、在哪里开辟？这是这部分要讨论的问题。我们知道垃圾回收的地点是堆，对象也是创建在堆中的，所以，每次创建对象，虚拟机都会在堆中给这个新生对象开辟一块区域。</p>
+<p>重点来了，虚拟机，开辟区域。</p>
+<p>真实的计算机中也会涉及到内存的问题，经典的数据结构有线性表和链表，我们都知道线性表随机访问与他连续存储的特点分不开，链表不同，因为内存是分散的，要链在一起一定要有个指针来标记下一个在哪。虚拟机不也得仿照真实的计算机不是么，不然为什么叫虚拟机。于是也有两种分配内存的方式，一种是连续的，一种是链式的。这里虚拟与真实的区别也是有的，虚拟的要考虑开辟后如何回收，如何回收取决与启动时如何配置垃圾回收策略，而垃圾回收的策略决定着内存是否完整，内存的完整与否决定对象分配是整块划分还是散着链式链接。专业的术语叫做<strong>指针碰撞（Bump the Pointer）</strong>与<strong>空闲链表（Free List）</strong>。如何分配内存确定了，还剩下一个问题是冲突，频繁移动指针引起的线程安全问题。关于锁，在操作系统中我们知道有轻锁与重锁，这里同样适用，但是这里更聪明一些，一个方法是使用了轻度锁<strong>CAS+失败重试</strong>，另一个是单独给线程分配一块内存，需要分配时让线程在自己的地方玩，玩完了重新分内存时再上锁处理并发。后一个方法中给线程分配出来的内存更专业的术语是<strong>本地线程分配缓冲区（Thread Local Allocation Buffer, TLAB）</strong>。</p>
+<h1 id="回收"><a href="#回收" class="headerlink" title="回收"></a>回收</h1><p>​        关于对象回收，之前一直在说垃圾回收，没错，没用的对象就成了垃圾。这里明显的问题就是如何知道对象该不该被回收，以及确定了回收对象后，回收的策略是什么。现在我们是站在巨人的肩膀上，以上帝视角看待这个问题，目前java的版本迭代更像是打了鸡血……，博主虽然从事java开发工作，但截至前接触java的时间不到两年，更是鲜有遇见过jvm崩溃的问题，所以以前的jvm垃圾回收器在步入历史长河的情况下，只作为了解，这部分更多是对现用和具有发展潜力的回收器如G1展开分析。</p>
+<p>如何确定对象该不该被回收，</p>
+<p>历史垃圾回收器，</p>
+<p>G1，新的分区方式，打破传统</p>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/memory/" rel="tag">memory</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/03/23/jvm-concurrency/"
+                    data-tooltip="jvm concurrency"
+                    aria-label="NEXT: jvm concurrency"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/03/23/jvm-memory-manage/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/03/23/jvm-memory-manage/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/03/23/jvm-memory-manage/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2021 Sebastian Getts. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/03/23/jvm-concurrency/"
+                    data-tooltip="jvm concurrency"
+                    aria-label="NEXT: jvm concurrency"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/03/23/jvm-memory-manage/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/03/23/jvm-memory-manage/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/03/23/jvm-memory-manage/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/03/23/jvm-memory-manage/"
+                        aria-label="Share on Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/03/23/jvm-memory-manage/"
+                        aria-label="Share on Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/03/23/jvm-memory-manage/"
+                        aria-label="Share on Google+"
+                    >
+                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Sebastian Getts</h4>
+        
+            <div id="about-card-bio"><p>I write code to enrich and ease life of others.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Software Engineer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Shenzhen China
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover-v1.2.0.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-jsoeqoqa2ajw9nwj0xf5gmftvb2jhopk3sxu8iodabvev2jdlmr0zsitv3jm.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
+</html>

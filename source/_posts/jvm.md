@@ -2,7 +2,7 @@
 title: jvm
 date: 2020-05-24 17:39:25
 categories: JVM
-tags: jvm
+tags: summary
 ---
 
 associate with juc
@@ -288,13 +288,11 @@ java虚拟机提供的轻量级的同步机制，乞丐版syncronized。
 - 不保证原子性
 - 禁止指令重排
 
-# Q&A:
 
-## 请谈谈你对JVM的理解？java8虚拟机有哪些更新？
 
-## 什么是OOM？是么是StackOverFlowError？有哪些方法分析？
+# 总结
 
-## JVM的常用参数调优你知道哪些？
+这一篇是对整个jvm的概览，接触java有一年多了，想深入了解java，在代码层面会止步于*native*以及便以后的*class*，所以，jvm是一个突破后，只有深入理解了jvm才能理解java的运行机制。当然我的初衷并不是无缘无故地想去了解它，而是源于多线程编程，所以我是从jmm入坑的，了解完jmm又迫不及待地从头阅读，有种豁然开朗的感觉。不出意外jvm会出一个系列。
 
-## 谈谈JVM中，对类加载器你的认识？
+
 

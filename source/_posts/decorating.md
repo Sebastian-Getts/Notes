@@ -1,4 +1,5 @@
 ---
+
 title: decorating
 date: 2020-06-12 18:30:28
 categories: DesignPatterns
