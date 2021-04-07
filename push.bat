@@ -1,1 +1,1 @@
-hexo clean && hexo g && hexo douban -m && hexo deploy && git add -A && git commit -m "update" && git push origin source
+hexo clean && hexo g && hexo deploy && git add -A && git commit -m "update from Windows" && git push origin source

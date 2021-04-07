@@ -1,0 +1,642 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hola">
+    <title>springmvc-dispatcherservlet - Hola</title>
+    <meta name="author" content="Sebastian Getts">
+    
+    
+        <link rel="icon" href="http://github.com/sebastian/about/assets/images/avatar.png">
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sebastian Getts","sameAs":["https://github.com/Sebastian-Getts","zzzqsw@gmail.com"],"image":"avatar.png"},"articleBody":"这是剖析springmvc的第一篇，剖析前的他的原理已经猜的差不多了， 看源码是为了做一个验证，因为他也是依托于spring的，离不开ioc，所以一部分的原理已经清楚了， 剩下的是核心类DispatcherServlet以及为springboot适配而做的工作。\n\n\n\n\nHttpServletBean1234-- HttpServlet    -- HttpServletBean    \t-- FrameworkServlet    \t\t-- DispatcherServlet\n\nHttpServlet我们都知道，是javax提供的类，对所有的http请求做了封装，也是对每个servlet类的具体实现，在springmvc中为了将这个类融入到框架中，首先将他视作bean，添加了一些属性、实现了两个接口：EnvironmentCapable和EnvironmentAware，这两个接口的作用可通过名称或方法名来看（正符合spring的规范的设计）：\n123456public interface EnvironmentCapable&#123;    Environment getEnvironment();&#125;public interface EnvironmentAware extends Aware&#123;    void setEnvironment(Environment environment);\n\n除此之外，HttpServletBean重写了*init()*方法：\n12345678910111213141516171819202122232425public final void init() throws ServletException &#123;   // Set bean properties from init parameters.   PropertyValues pvs = new ServletConfigPropertyValues(getServletConfig(), this.requiredProperties);   if (!pvs.isEmpty()) &#123;      try &#123;          // 使用beanWrapper构造servletBean         BeanWrapper bw = PropertyAccessorFactory.forBeanPropertyAccess(this);         ResourceLoader resourceLoader = new ServletContextResourceLoader(getServletContext());         bw.registerCustomEditor(Resource.class, new ResourceEditor(resourceLoader, getEnvironment()));         initBeanWrapper(bw);         bw.setPropertyValues(pvs, true);      &#125;      catch (BeansException ex) &#123;         if (logger.isErrorEnabled()) &#123;            logger.error(&quot;Failed to set bean properties on servlet &#x27;&quot; + getServletName() + &quot;&#x27;&quot;, ex);         &#125;         throw ex;      &#125;   &#125;    // 子类方法重写，也就是初始化时可以做更多的事情   // Let subclasses do whatever initialization they like.   initServletBean();&#125;\n\nFrameworkServlet这是一个抽象类，但他把控了大方向，正如他的名字一样，充分适配了spring上下文，具体体现在两个方面：\n\n每个servlet都管理着web上下文实例\n事件推送机制\n\n了解上面之前我们还是先顺着HttpServletBean中提到的扩展初始化的机制——留给子类复写的方法*initServletBean()*，看看在这里他是如何实现的：\n1234567891011121314protected final void initServletBean() throws ServletException &#123;    // log...   try &#123;       // 初始化WebApplicationContext，如果不存在的话会先创建      this.webApplicationContext = initWebApplicationContext();       // 留给子类重写      initFrameworkServlet();   &#125;   catch (ServletException | RuntimeException ex) &#123;      logger.error(&quot;Context initialization failed&quot;, ex);      throw ex;   &#125;   // log...&#125;\n\n12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152protected WebApplicationContext initWebApplicationContext() &#123;   WebApplicationContext rootContext =         WebApplicationContextUtils.getWebApplicationContext(getServletContext());   WebApplicationContext wac = null;   if (this.webApplicationContext != null) &#123;      // A context instance was injected at construction time -&gt; use it      wac = this.webApplicationContext;      if (wac instanceof ConfigurableWebApplicationContext) &#123;         ConfigurableWebApplicationContext cwac = (ConfigurableWebApplicationContext) wac;         if (!cwac.isActive()) &#123;            // The context has not yet been refreshed -&gt; provide services such as            // setting the parent context, setting the application context id, etc            if (cwac.getParent() == null) &#123;               // The context instance was injected without an explicit parent -&gt; set               // the root application context (if any; may be null) as the parent               cwac.setParent(rootContext);            &#125;            configureAndRefreshWebApplicationContext(cwac);         &#125;      &#125;   &#125;   if (wac == null) &#123;      // No context instance was injected at construction time -&gt; see if one      // has been registered in the servlet context. If one exists, it is assumed      // that the parent context (if any) has already been set and that the      // user has performed any initialization such as setting the context id      wac = findWebApplicationContext();   &#125;   if (wac == null) &#123;      // No context instance is defined for this servlet -&gt; create a local one      wac = createWebApplicationContext(rootContext);   &#125;   if (!this.refreshEventReceived) &#123;      // Either the context is not a ConfigurableApplicationContext with refresh      // support or the context injected at construction time had already been      // refreshed -&gt; trigger initial onRefresh manually here.      synchronized (this.onRefreshMonitor) &#123;         // 留给子类实现         onRefresh(wac);      &#125;   &#125;   if (this.publishContext) &#123;      // Publish the context as a servlet context attribute.      String attrName = getServletContextAttributeName();      getServletContext().setAttribute(attrName, wac);   &#125;   return wac;&#125;\n\n初始化webApplicationContext时主要做两件事：\n\n关联servlet与容器，做法是设置父上下文\n推送事件\n\nDispatcherServlet我们顺着上面留给子类重写的方法看起，这个类中并没有重写initFrameworkdServlet()，但是重写了onRefresh()方法：\n1234567891011121314151617181920@Overrideprotected void onRefresh(ApplicationContext context) &#123;\tinitStrategies(context);&#125;/** * Initialize the strategy objects that this servlet uses. * &lt;p&gt;May be overridden in subclasses in order to initialize further strategy objects. */protected void initStrategies(ApplicationContext context) &#123;\tinitMultipartResolver(context);\tinitLocaleResolver(context);\tinitThemeResolver(context);\tinitHandlerMappings(context);\tinitHandlerAdapters(context);\tinitHandlerExceptionResolvers(context);\tinitRequestToViewNameTranslator(context);\tinitViewResolvers(context);\tinitFlashMapManager(context);&#125;\n\n也就是说，在初始化阶段会做这么多事情，主要是集中在了这里，包括我们熟悉的HandlerMapping请求映射处理和异常处理HandlerExceptionResolvers等，做的是更具体的功能的实现。\n所以说，HttpServletBean也是继承了HttpServlet的，他做的是完成Bean所需要的工作，如配置环境属性；FrameworkServlet扩展了父类初始化时能做的事情，并且更加适配了spring上下文：有了上下文属性和事件推送；在这个类中，他做的事情更加具体了。\n分发请求上面提到HttpSrevlet对每个请求做了分装，细分了不同种类的请求，如POST、GET等，他的子类HttpServletBean是对bean的一种适配，业务规则没有做什么改变，而FrameworkServlet重写了*service()*方法：\n123456789101112protected void service(HttpServletRequest request, HttpServletResponse response)      throws ServletException, IOException &#123;   HttpMethod httpMethod = HttpMethod.resolve(request.getMethod());    // 判断方法是否是PATHCH或null   if (httpMethod == HttpMethod.PATCH || httpMethod == null) &#123;      processRequest(request, response);   &#125;   else &#123;      super.service(request, response);   &#125;&#125;\n\n12345678910111213141516171819202122232425262728293031323334353637383940protected final void processRequest(HttpServletRequest request, HttpServletResponse response)    throws ServletException, IOException &#123;    long startTime = System.currentTimeMillis();    Throwable failureCause = null;    // 这部分是国际化的处理    LocaleContext previousLocaleContext = LocaleContextHolder.getLocaleContext();    LocaleContext localeContext = buildLocaleContext(request);    RequestAttributes previousAttributes = RequestContextHolder.getRequestAttributes();    ServletRequestAttributes requestAttributes = buildRequestAttributes(request, response, previousAttributes);    WebAsyncManager asyncManager = WebAsyncUtils.getAsyncManager(request);    asyncManager.registerCallableInterceptor(FrameworkServlet.class.getName(), new RequestBindingInterceptor());    initContextHolders(request, localeContext, requestAttributes);    try &#123;        // 留给子类实现，即Dispatcherservlet        doService(request, response);    &#125;    catch (ServletException | IOException ex) &#123;        failureCause = ex;        throw ex;    &#125;    catch (Throwable ex) &#123;        failureCause = ex;        throw new NestedServletException(&quot;Request processing failed&quot;, ex);    &#125;    finally &#123;        resetContextHolders(request, previousLocaleContext, previousAttributes);        if (requestAttributes != null) &#123;            requestAttributes.requestCompleted();        &#125;        logResult(request, response, failureCause, asyncManager);        publishRequestHandledEvent(request, response, startTime, failureCause);    &#125;&#125;\n\n12345678910111213141516171819202122232425262728293031323334353637383940414243444546protected void doService(HttpServletRequest request, HttpServletResponse response) throws Exception &#123;    logRequest(request);    // Keep a snapshot of the request attributes in case of an include,    // to be able to restore the original attributes after the include.    Map&lt;String, Object&gt; attributesSnapshot = null;    // 如果是include请求，特殊处理    if (WebUtils.isIncludeRequest(request)) &#123;        attributesSnapshot = new HashMap&lt;&gt;();        Enumeration&lt;?&gt; attrNames = request.getAttributeNames();        while (attrNames.hasMoreElements()) &#123;            String attrName = (String) attrNames.nextElement();            if (this.cleanupAfterInclude || attrName.startsWith(DEFAULT_STRATEGIES_PREFIX)) &#123;                attributesSnapshot.put(attrName, request.getAttribute(attrName));            &#125;        &#125;    &#125;    // Make framework objects available to handlers and view objects.    request.setAttribute(WEB_APPLICATION_CONTEXT_ATTRIBUTE, getWebApplicationContext());    request.setAttribute(LOCALE_RESOLVER_ATTRIBUTE, this.localeResolver);    request.setAttribute(THEME_RESOLVER_ATTRIBUTE, this.themeResolver);    request.setAttribute(THEME_SOURCE_ATTRIBUTE, getThemeSource());    if (this.flashMapManager != null) &#123;        FlashMap inputFlashMap = this.flashMapManager.retrieveAndUpdate(request, response);        if (inputFlashMap != null) &#123;            request.setAttribute(INPUT_FLASH_MAP_ATTRIBUTE, Collections.unmodifiableMap(inputFlashMap));        &#125;        request.setAttribute(OUTPUT_FLASH_MAP_ATTRIBUTE, new FlashMap());        request.setAttribute(FLASH_MAP_MANAGER_ATTRIBUTE, this.flashMapManager);    &#125;    try &#123;        // 其他请求在这里处理        doDispatch(request, response);    &#125;    finally &#123;        if (!WebAsyncUtils.getAsyncManager(request).isConcurrentHandlingStarted()) &#123;            // Restore the original attribute snapshot, in case of an include.            if (attributesSnapshot != null) &#123;                restoreAttributesAfterInclude(request, attributesSnapshot);            &#125;        &#125;    &#125;&#125;\n\n我们可以看到，在最初的FrameworkServlet中进入到DispatcherServlet中是有条件的，如果不是PATCH或null的方法就进入不了了吗？并不是，看到上面的流程，他会先去执行父类的方法，然后同样会回到DispatcherServlet中的*doDispatcherf()中，更准确的说是processRequest()中，在process之后会紧接着发布事件，FrameworkServlet是针对父类有了较大的业务修改的，重写了很多方法，其中就包括各种doPost()、doGet()*……这些，按照上面的流程，执行父类的请求，就会回到FrameworkServlet类中，而不是HttpServlet：\n123456789101112131415protected final void doGet(HttpServletRequest request, HttpServletResponse response)    throws ServletException, IOException &#123;    processRequest(request, response);&#125;/** * Delegate POST requests to &#123;@link #processRequest&#125;. * @see #doService */@Overrideprotected final void doPost(HttpServletRequest request, HttpServletResponse response)    throws ServletException, IOException &#123;    processRequest(request, response);\n\n\n\n小结以上是这篇的内容，主要介绍要了DispatcherServlet及其父类之间的关系，在融合进spring框架时各自的侧重点。关于请求时如何准确找到对应的controller（也就是没有展开将的*doDispatch(request, response)*方法）将在后面继续分析。\n","dateCreated":"2021-04-06T13:59:49+08:00","dateModified":"2021-04-06T15:56:02+08:00","datePublished":"2021-04-06T13:59:49+08:00","description":"这是剖析springmvc的第一篇，剖析前的他的原理已经猜的差不多了， 看源码是为了做一个验证，因为他也是依托于spring的，离不开ioc，所以一部分的原理已经清楚了， 剩下的是核心类DispatcherServlet以及为springboot适配而做的工作。","headline":"springmvc-dispatcherservlet","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://github.com/sebastian/about/2021/04/06/springmvc-dispatcherservlet/"},"publisher":{"@type":"Organization","name":"Sebastian Getts","sameAs":["https://github.com/Sebastian-Getts","zzzqsw@gmail.com"],"image":"avatar.png","logo":{"@type":"ImageObject","url":"avatar.png"}},"url":"http://github.com/sebastian/about/2021/04/06/springmvc-dispatcherservlet/","keywords":"source"}</script>
+    <meta name="description" content="这是剖析springmvc的第一篇，剖析前的他的原理已经猜的差不多了， 看源码是为了做一个验证，因为他也是依托于spring的，离不开ioc，所以一部分的原理已经清楚了， 剩下的是核心类DispatcherServlet以及为springboot适配而做的工作。">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="springmvc-dispatcherservlet">
+<meta property="og:url" content="http://github.com/sebastian/about/2021/04/06/springmvc-dispatcherservlet/index.html">
+<meta property="og:site_name" content="Hola">
+<meta property="og:description" content="这是剖析springmvc的第一篇，剖析前的他的原理已经猜的差不多了， 看源码是为了做一个验证，因为他也是依托于spring的，离不开ioc，所以一部分的原理已经清楚了， 剩下的是核心类DispatcherServlet以及为springboot适配而做的工作。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-04-06T05:59:49.000Z">
+<meta property="article:modified_time" content="2021-04-06T07:56:02.649Z">
+<meta property="article:author" content="Sebastian Getts">
+<meta property="article:tag" content="source">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://github.com/sebastian/about/assets/images/avatar.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-xsmpikcbczzhpff1zqybzgesjqcgmkdkx9b5ntr0bkmk6wqucpktuaodiuvy.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Hola
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/avatar.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Sebastian Getts</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>I write code to enrich and ease life of others.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/Sebastian-Getts"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/zzzqsw@gmail.com"
+                            
+                            rel="noopener"
+                            title="Mail"
+                        >
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            springmvc-dispatcherservlet
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2021-04-06T13:59:49+08:00">
+	
+		    Apr 06, 2021
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/springmvc/">springmvc</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>这是剖析springmvc的第一篇，剖析前的他的原理已经猜的差不多了， 看源码是为了做一个验证，因为他也是依托于spring的，离不开ioc，所以一部分的原理已经清楚了， 剩下的是核心类<code>DispatcherServlet</code>以及为springboot适配而做的工作。</p>
+<span id="more"></span>
+
+<h1 id="table-of-contents">Table of Contents</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#HttpServletBean"><span class="toc-text">HttpServletBean</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FrameworkServlet"><span class="toc-text">FrameworkServlet</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DispatcherServlet"><span class="toc-text">DispatcherServlet</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E5%8F%91%E8%AF%B7%E6%B1%82"><span class="toc-text">分发请求</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-text">小结</span></a></li></ol>
+
+<h1 id="HttpServletBean"><a href="#HttpServletBean" class="headerlink" title="HttpServletBean"></a>HttpServletBean</h1><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">--</span> <span class="string">HttpServlet</span></span><br><span class="line">    <span class="meta">--</span> <span class="string">HttpServletBean</span></span><br><span class="line">    	<span class="meta">--</span> <span class="string">FrameworkServlet</span></span><br><span class="line">    		<span class="meta">--</span> <span class="string">DispatcherServlet</span></span><br></pre></td></tr></table></figure>
+
+<p><code>HttpServlet</code>我们都知道，是javax提供的类，对所有的http请求做了封装，也是对每个servlet类的具体实现，在springmvc中为了将这个类融入到框架中，首先将他视作bean，添加了一些属性、实现了两个接口：<code>EnvironmentCapable</code>和<code>EnvironmentAware</code>，这两个接口的作用可通过名称或方法名来看（正符合spring的规范的设计）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">EnvironmentCapable</span></span>&#123;</span><br><span class="line">    <span class="function">Environment <span class="title">getEnvironment</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">EnvironmentAware</span> <span class="keyword">extends</span> <span class="title">Aware</span></span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">setEnvironment</span><span class="params">(Environment environment)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<p>除此之外，<code>HttpServletBean</code>重写了*init()*方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">()</span> <span class="keyword">throws</span> ServletException </span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="comment">// Set bean properties from init parameters.</span></span><br><span class="line">   PropertyValues pvs = <span class="keyword">new</span> ServletConfigPropertyValues(getServletConfig(), <span class="keyword">this</span>.requiredProperties);</span><br><span class="line">   <span class="keyword">if</span> (!pvs.isEmpty()) &#123;</span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">          <span class="comment">// 使用beanWrapper构造servletBean</span></span><br><span class="line">         BeanWrapper bw = PropertyAccessorFactory.forBeanPropertyAccess(<span class="keyword">this</span>);</span><br><span class="line">         ResourceLoader resourceLoader = <span class="keyword">new</span> ServletContextResourceLoader(getServletContext());</span><br><span class="line">         bw.registerCustomEditor(Resource.class, <span class="keyword">new</span> ResourceEditor(resourceLoader, getEnvironment()));</span><br><span class="line">         initBeanWrapper(bw);</span><br><span class="line">         bw.setPropertyValues(pvs, <span class="keyword">true</span>);</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">catch</span> (BeansException ex) &#123;</span><br><span class="line">         <span class="keyword">if</span> (logger.isErrorEnabled()) &#123;</span><br><span class="line">            logger.error(<span class="string">&quot;Failed to set bean properties on servlet &#x27;&quot;</span> + getServletName() + <span class="string">&quot;&#x27;&quot;</span>, ex);</span><br><span class="line">         &#125;</span><br><span class="line">         <span class="keyword">throw</span> ex;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 子类方法重写，也就是初始化时可以做更多的事情</span></span><br><span class="line">   <span class="comment">// Let subclasses do whatever initialization they like.</span></span><br><span class="line">   initServletBean();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="FrameworkServlet"><a href="#FrameworkServlet" class="headerlink" title="FrameworkServlet"></a>FrameworkServlet</h1><p>这是一个抽象类，但他把控了大方向，正如他的名字一样，充分适配了spring上下文，具体体现在两个方面：</p>
+<ul>
+<li>每个servlet都管理着web上下文实例</li>
+<li>事件推送机制</li>
+</ul>
+<p>了解上面之前我们还是先顺着<code>HttpServletBean</code>中提到的扩展初始化的机制——留给子类复写的方法*initServletBean()*，看看在这里他是如何实现的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">initServletBean</span><span class="params">()</span> <span class="keyword">throws</span> ServletException </span>&#123;</span><br><span class="line">    <span class="comment">// log...</span></span><br><span class="line">   <span class="keyword">try</span> &#123;</span><br><span class="line">       <span class="comment">// 初始化WebApplicationContext，如果不存在的话会先创建</span></span><br><span class="line">      <span class="keyword">this</span>.webApplicationContext = initWebApplicationContext();</span><br><span class="line">       <span class="comment">// 留给子类重写</span></span><br><span class="line">      initFrameworkServlet();</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">catch</span> (ServletException | RuntimeException ex) &#123;</span><br><span class="line">      logger.error(<span class="string">&quot;Context initialization failed&quot;</span>, ex);</span><br><span class="line">      <span class="keyword">throw</span> ex;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="comment">// log...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> WebApplicationContext <span class="title">initWebApplicationContext</span><span class="params">()</span> </span>&#123;</span><br><span class="line">   WebApplicationContext rootContext =</span><br><span class="line">         WebApplicationContextUtils.getWebApplicationContext(getServletContext());</span><br><span class="line">   WebApplicationContext wac = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> (<span class="keyword">this</span>.webApplicationContext != <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="comment">// A context instance was injected at construction time -&gt; use it</span></span><br><span class="line">      wac = <span class="keyword">this</span>.webApplicationContext;</span><br><span class="line">      <span class="keyword">if</span> (wac <span class="keyword">instanceof</span> ConfigurableWebApplicationContext) &#123;</span><br><span class="line">         ConfigurableWebApplicationContext cwac = (ConfigurableWebApplicationContext) wac;</span><br><span class="line">         <span class="keyword">if</span> (!cwac.isActive()) &#123;</span><br><span class="line">            <span class="comment">// The context has not yet been refreshed -&gt; provide services such as</span></span><br><span class="line">            <span class="comment">// setting the parent context, setting the application context id, etc</span></span><br><span class="line">            <span class="keyword">if</span> (cwac.getParent() == <span class="keyword">null</span>) &#123;</span><br><span class="line">               <span class="comment">// The context instance was injected without an explicit parent -&gt; set</span></span><br><span class="line">               <span class="comment">// the root application context (if any; may be null) as the parent</span></span><br><span class="line">               cwac.setParent(rootContext);</span><br><span class="line">            &#125;</span><br><span class="line">            configureAndRefreshWebApplicationContext(cwac);</span><br><span class="line">         &#125;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span> (wac == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="comment">// No context instance was injected at construction time -&gt; see if one</span></span><br><span class="line">      <span class="comment">// has been registered in the servlet context. If one exists, it is assumed</span></span><br><span class="line">      <span class="comment">// that the parent context (if any) has already been set and that the</span></span><br><span class="line">      <span class="comment">// user has performed any initialization such as setting the context id</span></span><br><span class="line">      wac = findWebApplicationContext();</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">if</span> (wac == <span class="keyword">null</span>) &#123;</span><br><span class="line">      <span class="comment">// No context instance is defined for this servlet -&gt; create a local one</span></span><br><span class="line">      wac = createWebApplicationContext(rootContext);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> (!<span class="keyword">this</span>.refreshEventReceived) &#123;</span><br><span class="line">      <span class="comment">// Either the context is not a ConfigurableApplicationContext with refresh</span></span><br><span class="line">      <span class="comment">// support or the context injected at construction time had already been</span></span><br><span class="line">      <span class="comment">// refreshed -&gt; trigger initial onRefresh manually here.</span></span><br><span class="line">      <span class="keyword">synchronized</span> (<span class="keyword">this</span>.onRefreshMonitor) &#123;</span><br><span class="line">         <span class="comment">// 留给子类实现</span></span><br><span class="line">         onRefresh(wac);</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">if</span> (<span class="keyword">this</span>.publishContext) &#123;</span><br><span class="line">      <span class="comment">// Publish the context as a servlet context attribute.</span></span><br><span class="line">      String attrName = getServletContextAttributeName();</span><br><span class="line">      getServletContext().setAttribute(attrName, wac);</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="keyword">return</span> wac;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>初始化webApplicationContext时主要做两件事：</p>
+<ul>
+<li>关联servlet与容器，做法是设置父上下文</li>
+<li>推送事件</li>
+</ul>
+<h1 id="DispatcherServlet"><a href="#DispatcherServlet" class="headerlink" title="DispatcherServlet"></a>DispatcherServlet</h1><p>我们顺着上面留给子类重写的方法看起，这个类中并没有重写<code>initFrameworkdServlet()</code>，但是重写了<code>onRefresh()</code>方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onRefresh</span><span class="params">(ApplicationContext context)</span> </span>&#123;</span><br><span class="line">	initStrategies(context);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Initialize the strategy objects that this servlet uses.</span></span><br><span class="line"><span class="comment"> * &lt;p&gt;May be overridden in subclasses in order to initialize further strategy objects.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">initStrategies</span><span class="params">(ApplicationContext context)</span> </span>&#123;</span><br><span class="line">	initMultipartResolver(context);</span><br><span class="line">	initLocaleResolver(context);</span><br><span class="line">	initThemeResolver(context);</span><br><span class="line">	initHandlerMappings(context);</span><br><span class="line">	initHandlerAdapters(context);</span><br><span class="line">	initHandlerExceptionResolvers(context);</span><br><span class="line">	initRequestToViewNameTranslator(context);</span><br><span class="line">	initViewResolvers(context);</span><br><span class="line">	initFlashMapManager(context);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>也就是说，在初始化阶段会做这么多事情，主要是集中在了这里，包括我们熟悉的<em>HandlerMapping</em>请求映射处理和异常处理<em>HandlerExceptionResolvers</em>等，做的是更具体的功能的实现。</p>
+<p>所以说，<code>HttpServletBean</code>也是继承了<code>HttpServlet</code>的，他做的是完成Bean所需要的工作，如配置环境属性；<code>FrameworkServlet</code>扩展了父类初始化时能做的事情，并且更加适配了spring上下文：有了上下文属性和事件推送；在这个类中，他做的事情更加具体了。</p>
+<h2 id="分发请求"><a href="#分发请求" class="headerlink" title="分发请求"></a>分发请求</h2><p>上面提到<code>HttpSrevlet</code>对每个请求做了分装，细分了不同种类的请求，如POST、GET等，他的子类<code>HttpServletBean</code>是对bean的一种适配，业务规则没有做什么改变，而<code>FrameworkServlet</code>重写了*service()*方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span></span><br><span class="line"><span class="function">      <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">   HttpMethod httpMethod = HttpMethod.resolve(request.getMethod());</span><br><span class="line">    <span class="comment">// 判断方法是否是PATHCH或null</span></span><br><span class="line">   <span class="keyword">if</span> (httpMethod == HttpMethod.PATCH || httpMethod == <span class="keyword">null</span>) &#123;</span><br><span class="line">      processRequest(request, response);</span><br><span class="line">   &#125;</span><br><span class="line">   <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="keyword">super</span>.service(request, response);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">processRequest</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">long</span> startTime = System.currentTimeMillis();</span><br><span class="line">    Throwable failureCause = <span class="keyword">null</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 这部分是国际化的处理</span></span><br><span class="line">    LocaleContext previousLocaleContext = LocaleContextHolder.getLocaleContext();</span><br><span class="line">    LocaleContext localeContext = buildLocaleContext(request);</span><br><span class="line"></span><br><span class="line">    RequestAttributes previousAttributes = RequestContextHolder.getRequestAttributes();</span><br><span class="line">    ServletRequestAttributes requestAttributes = buildRequestAttributes(request, response, previousAttributes);</span><br><span class="line"></span><br><span class="line">    WebAsyncManager asyncManager = WebAsyncUtils.getAsyncManager(request);</span><br><span class="line">    asyncManager.registerCallableInterceptor(FrameworkServlet.class.getName(), <span class="keyword">new</span> RequestBindingInterceptor());</span><br><span class="line"></span><br><span class="line">    initContextHolders(request, localeContext, requestAttributes);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 留给子类实现，即Dispatcherservlet</span></span><br><span class="line">        doService(request, response);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (ServletException | IOException ex) &#123;</span><br><span class="line">        failureCause = ex;</span><br><span class="line">        <span class="keyword">throw</span> ex;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">catch</span> (Throwable ex) &#123;</span><br><span class="line">        failureCause = ex;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NestedServletException(<span class="string">&quot;Request processing failed&quot;</span>, ex);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">finally</span> &#123;</span><br><span class="line">        resetContextHolders(request, previousLocaleContext, previousAttributes);</span><br><span class="line">        <span class="keyword">if</span> (requestAttributes != <span class="keyword">null</span>) &#123;</span><br><span class="line">            requestAttributes.requestCompleted();</span><br><span class="line">        &#125;</span><br><span class="line">        logResult(request, response, failureCause, asyncManager);</span><br><span class="line">        publishRequestHandledEvent(request, response, startTime, failureCause);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doService</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">    logRequest(request);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Keep a snapshot of the request attributes in case of an include,</span></span><br><span class="line">    <span class="comment">// to be able to restore the original attributes after the include.</span></span><br><span class="line">    Map&lt;String, Object&gt; attributesSnapshot = <span class="keyword">null</span>;</span><br><span class="line">    <span class="comment">// 如果是include请求，特殊处理</span></span><br><span class="line">    <span class="keyword">if</span> (WebUtils.isIncludeRequest(request)) &#123;</span><br><span class="line">        attributesSnapshot = <span class="keyword">new</span> HashMap&lt;&gt;();</span><br><span class="line">        Enumeration&lt;?&gt; attrNames = request.getAttributeNames();</span><br><span class="line">        <span class="keyword">while</span> (attrNames.hasMoreElements()) &#123;</span><br><span class="line">            String attrName = (String) attrNames.nextElement();</span><br><span class="line">            <span class="keyword">if</span> (<span class="keyword">this</span>.cleanupAfterInclude || attrName.startsWith(DEFAULT_STRATEGIES_PREFIX)) &#123;</span><br><span class="line">                attributesSnapshot.put(attrName, request.getAttribute(attrName));</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Make framework objects available to handlers and view objects.</span></span><br><span class="line">    request.setAttribute(WEB_APPLICATION_CONTEXT_ATTRIBUTE, getWebApplicationContext());</span><br><span class="line">    request.setAttribute(LOCALE_RESOLVER_ATTRIBUTE, <span class="keyword">this</span>.localeResolver);</span><br><span class="line">    request.setAttribute(THEME_RESOLVER_ATTRIBUTE, <span class="keyword">this</span>.themeResolver);</span><br><span class="line">    request.setAttribute(THEME_SOURCE_ATTRIBUTE, getThemeSource());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.flashMapManager != <span class="keyword">null</span>) &#123;</span><br><span class="line">        FlashMap inputFlashMap = <span class="keyword">this</span>.flashMapManager.retrieveAndUpdate(request, response);</span><br><span class="line">        <span class="keyword">if</span> (inputFlashMap != <span class="keyword">null</span>) &#123;</span><br><span class="line">            request.setAttribute(INPUT_FLASH_MAP_ATTRIBUTE, Collections.unmodifiableMap(inputFlashMap));</span><br><span class="line">        &#125;</span><br><span class="line">        request.setAttribute(OUTPUT_FLASH_MAP_ATTRIBUTE, <span class="keyword">new</span> FlashMap());</span><br><span class="line">        request.setAttribute(FLASH_MAP_MANAGER_ATTRIBUTE, <span class="keyword">this</span>.flashMapManager);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 其他请求在这里处理</span></span><br><span class="line">        doDispatch(request, response);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">finally</span> &#123;</span><br><span class="line">        <span class="keyword">if</span> (!WebAsyncUtils.getAsyncManager(request).isConcurrentHandlingStarted()) &#123;</span><br><span class="line">            <span class="comment">// Restore the original attribute snapshot, in case of an include.</span></span><br><span class="line">            <span class="keyword">if</span> (attributesSnapshot != <span class="keyword">null</span>) &#123;</span><br><span class="line">                restoreAttributesAfterInclude(request, attributesSnapshot);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>我们可以看到，在最初的<code>FrameworkServlet</code>中进入到<code>DispatcherServlet</code>中是有条件的，如果不是PATCH或null的方法就进入不了了吗？并不是，看到上面的流程，他会先去执行父类的方法，然后同样会回到<code>DispatcherServlet</code>中的*doDispatcherf()<em>中，更准确的说是</em>processRequest()<em>中，在process之后会紧接着发布事件，<code>FrameworkServlet</code>是针对父类有了较大的业务修改的，重写了很多方法，其中就包括各种</em>doPost()<em>、</em>doGet()*……这些，按照上面的流程，执行父类的请求，就会回到<code>FrameworkServlet</code>类中，而不是<code>HttpServlet</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">    processRequest(request, response);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * Delegate POST requests to &#123;<span class="doctag">@link</span> #processRequest&#125;.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@see</span> #doService</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">doPost</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span></span><br><span class="line"><span class="function">    <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line"></span><br><span class="line">    processRequest(request, response);</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>以上是这篇的内容，主要介绍要了DispatcherServlet及其父类之间的关系，在融合进spring框架时各自的侧重点。关于请求时如何准确找到对应的controller（也就是没有展开将的*doDispatch(request, response)*方法）将在后面继续分析。</p>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/source/" rel="tag">source</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/04/06/springmvc-dispatch/"
+                    data-tooltip="springmvc-dispatch"
+                    aria-label="PREVIOUS: springmvc-dispatch"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/03/23/jvm-memory-manage/"
+                    data-tooltip="jvm memory-manage"
+                    aria-label="NEXT: jvm memory-manage"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/04/06/springmvc-dispatcherservlet/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/04/06/springmvc-dispatcherservlet/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/04/06/springmvc-dispatcherservlet/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2021 Sebastian Getts. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/04/06/springmvc-dispatch/"
+                    data-tooltip="springmvc-dispatch"
+                    aria-label="PREVIOUS: springmvc-dispatch"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/03/23/jvm-memory-manage/"
+                    data-tooltip="jvm memory-manage"
+                    aria-label="NEXT: jvm memory-manage"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/04/06/springmvc-dispatcherservlet/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/04/06/springmvc-dispatcherservlet/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/04/06/springmvc-dispatcherservlet/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/04/06/springmvc-dispatcherservlet/"
+                        aria-label="Share on Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/04/06/springmvc-dispatcherservlet/"
+                        aria-label="Share on Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/04/06/springmvc-dispatcherservlet/"
+                        aria-label="Share on Google+"
+                    >
+                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Sebastian Getts</h4>
+        
+            <div id="about-card-bio"><p>I write code to enrich and ease life of others.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Software Engineer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Shenzhen China
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover-v1.2.0.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-jsoeqoqa2ajw9nwj0xf5gmftvb2jhopk3sxu8iodabvev2jdlmr0zsitv3jm.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
+</html>
