@@ -28,26 +28,25 @@ HTTP的URL地址开头是`http://`，默认使用的端口是`80`，他没有使
 
 
 
-## Limitation
+## 加密过程
 
-SSL/TSL没有禁止网络搜索器（website crawler）搜索它的索引，所以在这种情况下，请求和响应的报文的大小是会被知晓的（内容仍然加密无法破解）。
+首先我们要知道，HTTPs是HTTP的安全版本，相当于在HTTP与TCP之间加了一层SSL，这一块主要看他是如何实现的。
 
+**原理**：采用**对称加密**和**非对称加密结合**的方式来保护浏览器和服务端之间的通信安全。
 
+**大致流程**：相比于HTTP多个SSL，这样就由原来的“不安全”变成了“安全”的，所以肯定的是：HTTPS是HTTP直接将报文信息传输给SSL套接字进行加密，SSL加密后将报文发送给TCP套接字，然后TCP套接字再将报文发送给目的主机，目的主机将通过TCP套接字获取加密后的报文发送给SSL套接字，SSL解密后交给对应进程。
 
-# URI、URL与URN
+上面的自上而下的层面的理解，正如我们平时使用的那样，浏览器中输入的是https，从tcp的三次握手的角度看，https多了一次握手，**详细流程**：
 
-url是uri的子集。
+- 客户端发起握手请求，以明文传输请求信息（也就是https，，连接到服务端443端口）
+- 服务端返回信息，包括选择使用的协议版本、加密套件、压缩算法以及**证书（也就是公钥！）**
+- 客户端验证证书的合法性，如是否吊销、是否过期、域名等。这些工作是由客户端的SSL来完成，没问题的话就生成一个随机值，然后用随机值加密报文，再用证书加密随机值。
+- 客户端使用公钥对对称密钥加密，发送给服务端。通过上面可知，发送的是证书加密后的随机值（也就是对称密钥），目的是让服务端得到这个随机值，以后服务端和客户端的通信就可以通过这个随机值来进行加密解密了（对称加密原理）
+- 服务器用私钥解密，拿到对称加密的密钥。
+- 传输加密后的信息，这部分信息就是服务端用随机值加密后的，可以在客户端用随机值解密还原。
+- 客户端用之前生成的私钥解密服务端传过来的信息，获取内容。
 
-## URI
+**小结**：用非对称加密来加密对称加密的密钥，发送的报文是用堆成加密来加密的，服务端私钥解密获取堆成加密的密钥，用它来解开密文。采用非对称加密是因为安全性，采用对称加密是因为速度快。
 
-统一资源标识符。*A string of characters that unambiguously identifies a particular resource*.  它规定了一些特定的语法规则，并且在规则下还可以自有扩展，例如`http://`。
+## TLS VS SSL
 
-## URN
-
-统一资源名称。*A Uniform Resource Name(URN) is a URI that identifies a resource by name in a particular namespace.* 它能标识一个唯一的名称，但不清楚它的位置。
-
-## URL
-
-统一资源定位符。*A Uniform Resource Locator(URL) is a URI that specifies the means of acting upon or obtaining the representation of a resource.* 就是我们常见的http请求地址。
-
-[reference](https://en.wikipedia.org/wiki/Uniform_Resource_Identifier)

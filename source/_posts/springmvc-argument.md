@@ -190,4 +190,4 @@ public void invokeAndHandle(ServletWebRequest webRequest, ModelAndViewContainer 
 
 # 小结
 
-简而言之，请求（handlerMethod）由特定的adapter处理，比如*RequestMappingHandlerAdapter*，他会继续被封装成*ServletInvocableHandlerMethod*，Adapter的作用就是
+简而言之，请求（handlerMethod）由特定的adapter处理，比如*RequestMappingHandlerAdapter*，他会继续被封装成*ServletInvocableHandlerMethod*。
