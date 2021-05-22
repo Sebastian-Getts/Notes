@@ -1,0 +1,616 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hola">
+    <title>predict the winner - Hola</title>
+    <meta name="author" content="Sebastian Getts">
+    
+    
+        <link rel="icon" href="http://github.com/sebastian/about/assets/images/avatar.png">
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sebastian Getts","sameAs":["https://github.com/Sebastian-Getts","zzzqsw@gmail.com"],"image":"avatar.png"},"articleBody":"这是一道关于选择的问题，来源于[LeetCode](Predict the Winner - LeetCode)，一道很有意思的题目，这篇blog记录了从暴力逐步优化到dp的过程。\n\n\n题目简单说下题目，详细的数量限制等条件可以参照题目网站。\n两个选手，从一个池中选取数字，选的时候只能从两端拿，并且每个人都是按照最优的方式。数字的大小代表得分，问最后一号选手的得分是否可以大于二号选手。\n例1. 有数组{1，5，2}，无论一号选手选择1还是2，最后二号选手都将选择5并且获胜。\n例2，有数组{1, 5, 233, 7}，一号选手可以通过一定的策略获取到233，所以一号选手可以获胜。\n分析如何下手呢？首先啊，涉及到策略，一味地贪心法是不可取的，我们可以枚举出所有的可能性，并且自下而上地选择最优。对于一号选手来说，可选的数字下标为i，j，那么有两种情况：\n\n选择i，此时二号选手也有两种情况可选：i+1，j。如果选择i+1，一号就剩下i+2或j；如果选择j，一号就剩下i+1或j-1，对于一号选手来说，可以获取的分数有两种情况（取min是因为二号选手获取最优解，那对 一号选手来说获取的就是最小值）\nscore.i + min(score.i+1, score.j-1)。二号选手选取了j\nscore.i + min(score.i+2, score.j)。二号选手选取了i\n\n\n选择j，此时二号选手的可选情况为：i，j-1。如果选择i，一号剩下i+1或j-1；如果选择j-1，一号剩下i+1，j-2，对一号选手来说，同上：\nscore.j + min(score.i+1, j-1)。二号选手选取了i\nscore.j + min(score.i, score.j-2)。二号选手选取了j\n\n\n\n对于一号选手来说，也是择优，所以最终的结果是Math.max(两种情况)，最后与二号选手的的得分相比较。\n法一1234567891011121314151617public boolean predictWinner(int[] nums)&#123;    int total = 0;    for(int num : nums) total += num;    int firstPlayer = helper(nums, 0, nums.length-1);        return firstPlayer &gt;= total - firstPlayer;&#125;private int helper(int[] nums, int i, int j)&#123;    if(i &gt; j) return 0;    if(i == j) return nums[i];        return Math.max(    \tnums[i] + Math.min(helper(nums, i+1, j-1), helper(nums, i+2, j)),        nums[j] + Math.min(helper(nums, i+1, j-1), helper(nums, i, j-2))    );&#125;\n\n对于如何一组数字来说，都是可以拆解成更小的问题，例如上面的{1,5,2}，可以看作是{1,5}的扩展版本，所以，有了上面的方程，可以引入备忘录来代替重复的计算，减少递归深度。\n法二1234567891011121314151617181920212223public boolean predictWinner(int[] nums)&#123;    int total = 0;    for(int num : nums) total += num;    int len = nums.length;    int[][] memo = new int[len][len];    Arrays.fill(memo, -1);    int firstPlayer = helper(nums, 0, len-1, memo);        return firstPlayer &gt;= total - firstPlayer;&#125;private int helper(int[] nums, int i, int j)&#123;    if(i &gt; j) return 0;    if(i == j) return nums[i];    if(memo[i][j] != -1) return memo[i][j];    int score = Math.max(    \tnums[i] + Math.min(helper(nums, i+1, j-1, memo), helper(nums, i+2, j, memo)),        nums[j] + Math.min(helper(nums, i+1, j-1, memo), helper(nums, i, j-2, memo))    );    memo[i][j] = score;        return score;&#125;\n\n","dateCreated":"2021-05-14T15:59:32+08:00","dateModified":"2021-05-14T16:39:56+08:00","datePublished":"2021-05-14T15:59:32+08:00","description":"这是一道关于选择的问题，来源于[LeetCode](Predict the Winner - LeetCode)，一道很有意思的题目，这篇blog记录了从暴力逐步优化到dp的过程。","headline":"predict the winner","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://github.com/sebastian/about/2021/05/14/predict-the-winner/"},"publisher":{"@type":"Organization","name":"Sebastian Getts","sameAs":["https://github.com/Sebastian-Getts","zzzqsw@gmail.com"],"image":"avatar.png","logo":{"@type":"ImageObject","url":"avatar.png"}},"url":"http://github.com/sebastian/about/2021/05/14/predict-the-winner/","keywords":"dp"}</script>
+    <meta name="description" content="这是一道关于选择的问题，来源于[LeetCode](Predict the Winner - LeetCode)，一道很有意思的题目，这篇blog记录了从暴力逐步优化到dp的过程。">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="predict the winner">
+<meta property="og:url" content="http://github.com/sebastian/about/2021/05/14/predict-the-winner/index.html">
+<meta property="og:site_name" content="Hola">
+<meta property="og:description" content="这是一道关于选择的问题，来源于[LeetCode](Predict the Winner - LeetCode)，一道很有意思的题目，这篇blog记录了从暴力逐步优化到dp的过程。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-05-14T07:59:32.000Z">
+<meta property="article:modified_time" content="2021-05-14T08:39:56.362Z">
+<meta property="article:author" content="Sebastian Getts">
+<meta property="article:tag" content="dp">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://github.com/sebastian/about/assets/images/avatar.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-xsmpikcbczzhpff1zqybzgesjqcgmkdkx9b5ntr0bkmk6wqucpktuaodiuvy.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Hola
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/avatar.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Sebastian Getts</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>I write code to enrich and ease life of others.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/Sebastian-Getts"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/zzzqsw@gmail.com"
+                            
+                            rel="noopener"
+                            title="Mail"
+                        >
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            predict the winner
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2021-05-14T15:59:32+08:00">
+	
+		    May 14, 2021
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/Leetcode/">Leetcode</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p>这是一道关于选择的问题，来源于[LeetCode](<a target="_blank" rel="noopener" href="https://leetcode.com/problems/predict-the-winner/">Predict the Winner - LeetCode</a>)，一道很有意思的题目，这篇blog记录了从暴力逐步优化到dp的过程。</p>
+<span id="more"></span>
+
+<h1 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h1><p>简单说下题目，详细的数量限制等条件可以参照题目网站。</p>
+<p>两个选手，从一个池中选取数字，选的时候只能从两端拿，并且每个人都是按照最优的方式。数字的大小代表得分，问最后一号选手的得分是否可以大于二号选手。</p>
+<p>例1. 有数组{1，5，2}，无论一号选手选择1还是2，最后二号选手都将选择5并且获胜。</p>
+<p>例2，有数组{1, 5, 233, 7}，一号选手可以通过一定的策略获取到233，所以一号选手可以获胜。</p>
+<h1 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h1><p>如何下手呢？首先啊，涉及到策略，一味地贪心法是不可取的，我们可以枚举出所有的可能性，并且自下而上地选择最优。对于一号选手来说，可选的数字下标为i，j，那么有两种情况：</p>
+<ol>
+<li>选择i，此时二号选手也有两种情况可选：i+1，j。如果选择i+1，一号就剩下i+2或j；如果选择j，一号就剩下i+1或j-1，对于一号选手来说，可以获取的分数有两种情况（取min是因为二号选手获取最优解，那对 一号选手来说获取的就是最小值）<ul>
+<li>score.i + min(score.i+1, score.j-1)。二号选手选取了j</li>
+<li>score.i + min(score.i+2, score.j)。二号选手选取了i</li>
+</ul>
+</li>
+<li>选择j，此时二号选手的可选情况为：i，j-1。如果选择i，一号剩下i+1或j-1；如果选择j-1，一号剩下i+1，j-2，对一号选手来说，同上：<ul>
+<li>score.j + min(score.i+1, j-1)。二号选手选取了i</li>
+<li>score.j + min(score.i, score.j-2)。二号选手选取了j</li>
+</ul>
+</li>
+</ol>
+<p>对于一号选手来说，也是择优，所以最终的结果是Math.max(两种情况)，最后与二号选手的的得分相比较。</p>
+<h2 id="法一"><a href="#法一" class="headerlink" title="法一"></a>法一</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">predictWinner</span><span class="params">(<span class="keyword">int</span>[] nums)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> total = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> num : nums) total += num;</span><br><span class="line">    <span class="keyword">int</span> firstPlayer = helper(nums, <span class="number">0</span>, nums.length-<span class="number">1</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> firstPlayer &gt;= total - firstPlayer;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">helper</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(i &gt; j) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(i == j) <span class="keyword">return</span> nums[i];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> Math.max(</span><br><span class="line">    	nums[i] + Math.min(helper(nums, i+<span class="number">1</span>, j-<span class="number">1</span>), helper(nums, i+<span class="number">2</span>, j)),</span><br><span class="line">        nums[j] + Math.min(helper(nums, i+<span class="number">1</span>, j-<span class="number">1</span>), helper(nums, i, j-<span class="number">2</span>))</span><br><span class="line">    );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>对于如何一组数字来说，都是可以拆解成更小的问题，例如上面的{1,5,2}，可以看作是{1,5}的扩展版本，所以，有了上面的方程，可以引入备忘录来代替重复的计算，减少递归深度。</p>
+<h2 id="法二"><a href="#法二" class="headerlink" title="法二"></a>法二</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">predictWinner</span><span class="params">(<span class="keyword">int</span>[] nums)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> total = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> num : nums) total += num;</span><br><span class="line">    <span class="keyword">int</span> len = nums.length;</span><br><span class="line">    <span class="keyword">int</span>[][] memo = <span class="keyword">new</span> <span class="keyword">int</span>[len][len];</span><br><span class="line">    Arrays.fill(memo, -<span class="number">1</span>);</span><br><span class="line">    <span class="keyword">int</span> firstPlayer = helper(nums, <span class="number">0</span>, len-<span class="number">1</span>, memo);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> firstPlayer &gt;= total - firstPlayer;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">helper</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> i, <span class="keyword">int</span> j)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(i &gt; j) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span>(i == j) <span class="keyword">return</span> nums[i];</span><br><span class="line">    <span class="keyword">if</span>(memo[i][j] != -<span class="number">1</span>) <span class="keyword">return</span> memo[i][j];</span><br><span class="line">    <span class="keyword">int</span> score = Math.max(</span><br><span class="line">    	nums[i] + Math.min(helper(nums, i+<span class="number">1</span>, j-<span class="number">1</span>, memo), helper(nums, i+<span class="number">2</span>, j, memo)),</span><br><span class="line">        nums[j] + Math.min(helper(nums, i+<span class="number">1</span>, j-<span class="number">1</span>, memo), helper(nums, i, j-<span class="number">2</span>, memo))</span><br><span class="line">    );</span><br><span class="line">    memo[i][j] = score;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> score;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/dp/" rel="tag">dp</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/05/12/arraylist-grow/"
+                    data-tooltip="arraylist-grow"
+                    aria-label="NEXT: arraylist-grow"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/05/14/predict-the-winner/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/05/14/predict-the-winner/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/05/14/predict-the-winner/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2021 Sebastian Getts. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/05/12/arraylist-grow/"
+                    data-tooltip="arraylist-grow"
+                    aria-label="NEXT: arraylist-grow"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/05/14/predict-the-winner/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/05/14/predict-the-winner/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/05/14/predict-the-winner/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#" aria-label="Back to top">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/05/14/predict-the-winner/"
+                        aria-label="Share on Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/05/14/predict-the-winner/"
+                        aria-label="Share on Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/05/14/predict-the-winner/"
+                        aria-label="Share on Google+"
+                    >
+                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Sebastian Getts</h4>
+        
+            <div id="about-card-bio"><p>I write code to enrich and ease life of others.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Software Engineer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Shenzhen China
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover-v1.2.0.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-jsoeqoqa2ajw9nwj0xf5gmftvb2jhopk3sxu8iodabvev2jdlmr0zsitv3jm.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
+</html>

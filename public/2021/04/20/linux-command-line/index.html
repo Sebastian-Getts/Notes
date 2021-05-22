@@ -13,7 +13,7 @@
         <link rel="icon" href="http://github.com/sebastian/about/assets/images/avatar.png">
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sebastian Getts","sameAs":["https://github.com/Sebastian-Getts","zzzqsw@gmail.com"],"image":"avatar.png"},"articleBody":"这篇总结一下linux常用命令，也就是bash命令。虽然一直用的Ubuntu，到现在也只熟悉几个常用的命令，对于生产环境来说是远远不够的，好在有条件熟悉，下面学习总结一下，遇到有意思的命令再补充。\n\n\n这里将命令分为两大类，一类是系统相关的，例如磁盘存储、进程状态等，另一类是业务相关，例如查找、移动、复制文件等。\n\n\n系统\n根据端口查看程序\n有两种方式，可以用netstat或者lsof。\n12lsof -i:8080netstat -nlt | grep 8080\n\n系统中磁盘使用情况\n1df -h\n\n\n\n\n\n业务这部分大都与查找有关，可以分为文件外查找与文件内查找。 \n文件外查找\n根据名称查找某个目录下的文件\n1find / -name xxx.md\n\n递归查找某个文件\n1find . -name *.java\n\n\n\n文件内查找\n显示文件的后几行\n1tail -n 10 xx.txt\n\n显示文件的前几行\n1head -n 10 xx.txt\n\n在给定的文件中根据条件搜索字符串\n1grep println Main.java\n\n","dateCreated":"2021-04-20T14:12:03+08:00","dateModified":"2021-05-08T15:12:44+08:00","datePublished":"2021-04-20T14:12:03+08:00","description":"这篇总结一下linux常用命令，也就是bash命令。虽然一直用的Ubuntu，到现在也只熟悉几个常用的命令，对于生产环境来说是远远不够的，好在有条件熟悉，下面学习总结一下，遇到有意思的命令再补充。","headline":"linux-command-line","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://github.com/sebastian/about/2021/04/20/linux-command-line/"},"publisher":{"@type":"Organization","name":"Sebastian Getts","sameAs":["https://github.com/Sebastian-Getts","zzzqsw@gmail.com"],"image":"avatar.png","logo":{"@type":"ImageObject","url":"avatar.png"}},"url":"http://github.com/sebastian/about/2021/04/20/linux-command-line/","keywords":"utils"}</script>
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sebastian Getts","sameAs":["https://github.com/Sebastian-Getts","zzzqsw@gmail.com"],"image":"avatar.png"},"articleBody":"这篇总结一下linux常用命令，也就是bash命令。虽然一直用的Ubuntu，到现在也只熟悉几个常用的命令，对于生产环境来说是远远不够的，好在有条件熟悉，下面学习总结一下，遇到有意思的命令再补充。\n\n\n这里将命令分为两大类，一类是系统相关的，例如磁盘存储、进程状态等，另一类是业务相关，例如查找、移动、复制文件等。\n\n\n系统\n根据端口查看程序\n有两种方式，可以用netstat或者lsof。\n12lsof -i:8080 -- list openfilesnetstat -nlt | grep 8080\n\n系统中磁盘使用情况\n1df -h\n\n\n\n\n\n业务这部分大都与查找有关，可以分为文件外查找与文件内查找。 \n文件外查找\n根据名称查找某个目录下的文件\n1find / -name xxx.md\n\n递归查找某个文件\n1find . -name *.java\n\n\n\n文件内查找\n显示文件的后几行\n1tail -n 10 xx.txt\n\n显示文件的前几行\n1head -n 10 xx.txt\n\n在给定的文件中根据条件搜索字符串\n1grep println Main.java\n\n","dateCreated":"2021-04-20T14:12:03+08:00","dateModified":"2021-05-22T21:37:57+08:00","datePublished":"2021-04-20T14:12:03+08:00","description":"这篇总结一下linux常用命令，也就是bash命令。虽然一直用的Ubuntu，到现在也只熟悉几个常用的命令，对于生产环境来说是远远不够的，好在有条件熟悉，下面学习总结一下，遇到有意思的命令再补充。","headline":"linux-command-line","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://github.com/sebastian/about/2021/04/20/linux-command-line/"},"publisher":{"@type":"Organization","name":"Sebastian Getts","sameAs":["https://github.com/Sebastian-Getts","zzzqsw@gmail.com"],"image":"avatar.png","logo":{"@type":"ImageObject","url":"avatar.png"}},"url":"http://github.com/sebastian/about/2021/04/20/linux-command-line/","keywords":"utils"}</script>
     <meta name="description" content="这篇总结一下linux常用命令，也就是bash命令。虽然一直用的Ubuntu，到现在也只熟悉几个常用的命令，对于生产环境来说是远远不够的，好在有条件熟悉，下面学习总结一下，遇到有意思的命令再补充。">
 <meta property="og:type" content="blog">
 <meta property="og:title" content="linux-command-line">
@@ -22,7 +22,7 @@
 <meta property="og:description" content="这篇总结一下linux常用命令，也就是bash命令。虽然一直用的Ubuntu，到现在也只熟悉几个常用的命令，对于生产环境来说是远远不够的，好在有条件熟悉，下面学习总结一下，遇到有意思的命令再补充。">
 <meta property="og:locale" content="en_US">
 <meta property="article:published_time" content="2021-04-20T06:12:03.000Z">
-<meta property="article:modified_time" content="2021-05-08T07:12:44.284Z">
+<meta property="article:modified_time" content="2021-05-22T13:37:57.364Z">
 <meta property="article:author" content="Sebastian Getts">
 <meta property="article:tag" content="utils">
 <meta name="twitter:card" content="summary">
@@ -269,7 +269,7 @@
 <h1 id="系统"><a href="#系统" class="headerlink" title="系统"></a>系统</h1><ol>
 <li><p>根据端口查看程序</p>
 <p>有两种方式，可以用<code>netstat</code>或者<code>lsof</code>。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lsof -i:8080</span><br><span class="line">netstat -nlt | grep 8080</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">lsof -i:8080 -- list openfiles</span><br><span class="line">netstat -nlt | grep 8080</span><br></pre></td></tr></table></figure>
 </li>
 <li><p>系统中磁盘使用情况</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">df -h</span><br></pre></td></tr></table></figure>

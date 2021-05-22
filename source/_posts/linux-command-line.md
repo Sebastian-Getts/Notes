@@ -20,7 +20,7 @@ tags: utils
    有两种方式，可以用`netstat`或者`lsof`。
 
    ```shell
-   lsof -i:8080
+   lsof -i:8080 -- list openfiles
    netstat -nlt | grep 8080
    ```
 
