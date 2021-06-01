@@ -1,0 +1,633 @@
+
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="generator" content="Hola">
+    <title>jump games - Hola</title>
+    <meta name="author" content="Sebastian Getts">
+    
+    
+        <link rel="icon" href="http://github.com/sebastian/about/assets/images/avatar.png">
+    
+    
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sebastian Getts","sameAs":["https://github.com/Sebastian-Getts","zzzqsw@gmail.com"],"image":"avatar.png"},"articleBody":"Jump Games在LeetCode中是一个系列的问题，涉及动态规划、贪心等策略，非常有意思，尤其是昨天周赛再次遇到了这个系列的新题，在此复盘、总结。\n\n\n\n\nJump Game\n输入一个数组，从下标0开始，数组中每个数字表示你能跳跃的最大距离，问能否到达终点。\n\n这道题是能否到达终点，返回的是一个布尔值，所以不用关心到达终点的方式以及相关数量。假设有i，它可以跳跃的距离是d，那么在距离(i+1, i+d)之间都是可行进的范围，我们需要从这里面选出一步来往下走，对于下一步也重复上一步的操作，直到终点。但是这样做的话时间复杂度会到O(n^2)，提交肯定会TLE。\ndp动态规划，用数组维护一个跳力值，只要到终点还有跳力（不为负）就说明是可行的。如何去写状态转移方程呢？对于一个位置i，只能从前n步中过来，但是这是不确定的，所以我们可以一步一步地往前走，同时维护最大跳力即可，所以回到刚才的位置i，他是从i-1过来的，那么他所剩的跳力可以从上一步中获取，到目前的i时减去一（i-1到i要耗费一个跳力）。对于i-1，有两种选择，一种是维护的跳力dp，另一种是i-1位置时获取的跳力nums，取一个最大值就行。dp中存储的就是跳力值了。\n12345678910public boolean canReach(int[] nums)&#123;    int len = nums.length, res = 0;    int[] dp = new int[len];    for(int i=1; i&lt;nums.length; i++)&#123;        res = Math.max(dp[i-1], nums[i-1]) - 1;        if(res &lt; 0) return false;    &#125;        return true;&#125;\n\ngreedy可以对上面的dp做化简，我们只关心能否到达终点，一个简单的布尔值，不关心最终能跳多远，也就是跳力，所以可以只保留一个最远的值，判断他是否到比终点大就可，用到了贪心的思想。\n123456789public boolean canReach(int[] nums)&#123;    int len = nums.length, reach = 0;    for(int i=0; i&lt;len; i++)&#123;        if(i &gt; reach || reach &gt;= len - 1) break;        reach = Math.max(reach, i + nums[i]);    &#125;        return reach &gt;= len - 1;&#125;\n\n\n\nJump Game II\n同样是给一个数组，从下标0开始，每个数字表示你能跳跃的最大距离，区别是，在保证总能到达终点的情况下，返回耗费最少的跳跃次数。\n\n既然题目都保证了是终点可达的，那么是不是可以每次都选择跳的最远的那个？具体怎么选？其实不然，题目要求返回最少的次数，没有让详细返回跳的方案，所以，在一个能跳跃的区间内，总有一个符合条件的点，循环往复总会到达终点，我们只需要记录“循环”多少次不就行了。有三个变量：jump、curEnd、curFarthest，对于每一步都有一个区间范围，范围的末端就是curEnd，每个范围都会产生一个能到达的最远距离，我们以curEnd和curFarthest的最大值作为末尾标志，一旦区间跑完，就加一次jump，这样就做到了不关心具体在哪个点jump，而只关心次数了。\n123456789101112public boolean minJumpTimes(int[] nums)&#123;    int jumps = 0, curEnd = 0, curFarthest = 0;    for(int i=0; i&lt;nums.length-1; i++)&#123;        curFarthest = Math.max(curFarthest, i + nums[i]);        if(i == curEnd)&#123;            jumps++;            curEnd = curFarthest;        &#125;    &#125;        return jumps;&#125;\n\n\n\nJump Game III\n给定一个数组和一个起始位置start，对于每个点，只能走i-start或i+start两个位置，问能否访问到数组中任意0的位置。\n\n这种题实际上也是属于模拟，根据题目中的要求来做就好了，目前至少有两种方式，一种是递归地遍历（或者说深度优先），同时带上备忘录来标记访问过的点，另一种是广度优先，因为一个点可以带出来两个访问的方向，而且是顺序进行的。\ndfs回溯，总是可以穷举出来的，每个点上都有两种方式可选，同一个点可能会被访问多次，我们也需要做一个标记来表示他被访问过，不能到达的话不必重复访问。\n123456789public boolean canReach(int][] nums, int start)&#123;    if(start &gt;= 0 &amp;&amp; start &lt; nums.length &amp;&amp; nums[start] &lt; nums.length)&#123;        int jump = nums[start];        nums[start] += nums.length; // 做标记，这样nums[start]总是不合法的，不会再访问了        return jump == 0 || canReach(nums, start + jump) || canReach(nums, start - jump);    &#125;        return false;&#125;\n\nbfs……\nJumpGame VII\n给一个数组和一个minJump以及一个maxJump，其中只包含0或1，下标0处为0，从下标0处出发，每次跳跃的范围是(i+minJump, i+maxJump)且只能跳落到其中的0处，问能否跳跃到终点。\n\n可以怎么做？如果按照题目中的要求，在一个范围内找寻0来作为下一个起跳点，那么对于长度为n的数组，即便是使用dp来保存状态，时间复杂度也将会是O(n^2)。参考上面类似的思想， 他只询问能到到达终点，并不关心具体的路径，所以可以在范围的地方着手优化。\n","dateCreated":"2021-05-24T12:13:39+08:00","dateModified":"2021-05-24T23:35:05+08:00","datePublished":"2021-05-24T12:13:39+08:00","description":"Jump Games在LeetCode中是一个系列的问题，涉及动态规划、贪心等策略，非常有意思，尤其是昨天周赛再次遇到了这个系列的新题，在此复盘、总结。","headline":"jump games","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://github.com/sebastian/about/2021/05/24/jump-games/"},"publisher":{"@type":"Organization","name":"Sebastian Getts","sameAs":["https://github.com/Sebastian-Getts","zzzqsw@gmail.com"],"image":"avatar.png","logo":{"@type":"ImageObject","url":"avatar.png"}},"url":"http://github.com/sebastian/about/2021/05/24/jump-games/","keywords":"greedy dp stratey"}</script>
+    <meta name="description" content="Jump Games在LeetCode中是一个系列的问题，涉及动态规划、贪心等策略，非常有意思，尤其是昨天周赛再次遇到了这个系列的新题，在此复盘、总结。">
+<meta property="og:type" content="blog">
+<meta property="og:title" content="jump games">
+<meta property="og:url" content="http://github.com/sebastian/about/2021/05/24/jump-games/index.html">
+<meta property="og:site_name" content="Hola">
+<meta property="og:description" content="Jump Games在LeetCode中是一个系列的问题，涉及动态规划、贪心等策略，非常有意思，尤其是昨天周赛再次遇到了这个系列的新题，在此复盘、总结。">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2021-05-24T04:13:39.000Z">
+<meta property="article:modified_time" content="2021-05-24T15:35:05.633Z">
+<meta property="article:author" content="Sebastian Getts">
+<meta property="article:tag" content="greedy dp stratey">
+<meta name="twitter:card" content="summary">
+    
+    
+        
+    
+    
+        <meta property="og:image" content="http://github.com/sebastian/about/assets/images/avatar.png"/>
+    
+    
+    
+    
+    <!--STYLES-->
+    
+<link rel="stylesheet" href="/assets/css/style-xsmpikcbczzhpff1zqybzgesjqcgmkdkx9b5ntr0bkmk6wqucpktuaodiuvy.min.css">
+
+    <!--STYLES END-->
+    
+
+    
+
+    
+        
+    
+</head>
+
+    <body>
+        <div id="blog">
+            <!-- Define author's picture -->
+
+
+    
+        
+            
+        
+    
+
+<header id="header" data-behavior="4">
+    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+    <div class="header-title">
+        <a
+            class="header-title-link"
+            href="/"
+            aria-label=""
+        >
+            Hola
+        </a>
+    </div>
+    
+        
+            <a
+                class="header-right-picture "
+                href="#about"
+                aria-label="Open the link: /#about"
+            >
+        
+        
+            <img class="header-picture" src="/assets/images/avatar.png" alt="Author&#39;s picture"/>
+        
+        </a>
+    
+</header>
+
+            <!-- Define author's picture -->
+
+
+
+        
+    
+
+<nav id="sidebar" data-behavior="4">
+    <div class="sidebar-container">
+        
+            <div class="sidebar-profile">
+                <a
+                    href="/#about"
+                    aria-label="Read more about the author"
+                >
+                    <img class="sidebar-profile-picture" src="/assets/images/avatar.png" alt="Author&#39;s picture"/>
+                </a>
+                <h4 class="sidebar-profile-name">Sebastian Getts</h4>
+                
+                    <h5 class="sidebar-profile-bio"><p>I write code to enrich and ease life of others.</p>
+</h5>
+                
+            </div>
+        
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/"
+                            
+                            rel="noopener"
+                            title="Home"
+                        >
+                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Home</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-categories"
+                            
+                            rel="noopener"
+                            title="Categories"
+                        >
+                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Categories</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-tags"
+                            
+                            rel="noopener"
+                            title="Tags"
+                        >
+                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Tags</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/all-archives"
+                            
+                            rel="noopener"
+                            title="Archives"
+                        >
+                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Archives</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="#about"
+                            
+                            rel="noopener"
+                            title="About"
+                        >
+                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">About</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+            <ul class="sidebar-buttons">
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="https://github.com/Sebastian-Getts"
+                            
+                                target="_blank"
+                            
+                            rel="noopener"
+                            title="GitHub"
+                        >
+                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">GitHub</span>
+                    </a>
+            </li>
+            
+                <li class="sidebar-button">
+                    
+                        <a
+                            class="sidebar-button-link "
+                            href="/zzzqsw@gmail.com"
+                            
+                            rel="noopener"
+                            title="Mail"
+                        >
+                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
+                        <span class="sidebar-button-desc">Mail</span>
+                    </a>
+            </li>
+            
+        </ul>
+        
+    </div>
+</nav>
+
+            
+            <div id="main" data-behavior="4"
+                 class="
+                        hasCoverMetaIn
+                        ">
+                
+<article class="post">
+    
+    
+        <div class="post-header main-content-wrap text-left">
+    
+        <h1 class="post-title">
+            jump games
+        </h1>
+    
+    
+        <div class="post-meta">
+    <time datetime="2021-05-24T12:13:39+08:00">
+	
+		    May 24, 2021
+    	
+    </time>
+    
+        <span>in </span>
+        
+    <a class="category-link" href="/categories/LeetCode/">LeetCode</a>
+
+
+    
+</div>
+
+    
+</div>
+
+    
+    <div class="post-content markdown">
+        <div class="main-content-wrap">
+            <p><em>Jump Games</em>在LeetCode中是一个系列的问题，涉及动态规划、贪心等策略，非常有意思，尤其是昨天周赛再次遇到了这个系列的新题，在此复盘、总结。</p>
+<span id="more"></span>
+
+<h1 id="table-of-contents">Table of Contents</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Jump-Game"><span class="toc-text">Jump Game</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#dp"><span class="toc-text">dp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#greedy"><span class="toc-text">greedy</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Jump-Game-II"><span class="toc-text">Jump Game II</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Jump-Game-III"><span class="toc-text">Jump Game III</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#dfs"><span class="toc-text">dfs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bfs"><span class="toc-text">bfs</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#JumpGame-VII"><span class="toc-text">JumpGame VII</span></a></li></ol>
+
+<h1 id="Jump-Game"><a href="#Jump-Game" class="headerlink" title="Jump Game"></a>Jump Game</h1><blockquote>
+<p>输入一个数组，从下标0开始，数组中每个数字表示你能跳跃的最大距离，问能否到达终点。</p>
+</blockquote>
+<p>这道题是能否到达终点，返回的是一个布尔值，所以不用关心到达终点的方式以及相关数量。假设有i，它可以跳跃的距离是d，那么在距离(i+1, i+d)之间都是可行进的范围，我们需要从这里面选出一步来往下走，对于下一步也重复上一步的操作，直到终点。但是这样做的话时间复杂度会到O(n^2)，提交肯定会TLE。</p>
+<h3 id="dp"><a href="#dp" class="headerlink" title="dp"></a>dp</h3><p>动态规划，用数组维护一个跳力值，只要到终点还有跳力（不为负）就说明是可行的。如何去写状态转移方程呢？对于一个位置i，只能从前n步中过来，但是这是不确定的，所以我们可以一步一步地往前走，同时维护最大跳力即可，所以回到刚才的位置i，他是从i-1过来的，那么他所剩的跳力可以从上一步中获取，到目前的i时减去一（i-1到i要耗费一个跳力）。对于i-1，有两种选择，一种是维护的跳力dp，另一种是i-1位置时获取的跳力nums，取一个最大值就行。dp中存储的就是跳力值了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">canReach</span><span class="params">(<span class="keyword">int</span>[] nums)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len = nums.length, res = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;nums.length; i++)&#123;</span><br><span class="line">        res = Math.max(dp[i-<span class="number">1</span>], nums[i-<span class="number">1</span>]) - <span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(res &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="greedy"><a href="#greedy" class="headerlink" title="greedy"></a>greedy</h3><p>可以对上面的dp做化简，我们只关心能否到达终点，一个简单的布尔值，不关心最终能跳多远，也就是跳力，所以可以只保留一个最远的值，判断他是否到比终点大就可，用到了贪心的思想。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">canReach</span><span class="params">(<span class="keyword">int</span>[] nums)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len = nums.length, reach = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;len; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(i &gt; reach || reach &gt;= len - <span class="number">1</span>) <span class="keyword">break</span>;</span><br><span class="line">        reach = Math.max(reach, i + nums[i]);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> reach &gt;= len - <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Jump-Game-II"><a href="#Jump-Game-II" class="headerlink" title="Jump Game II"></a>Jump Game II</h1><blockquote>
+<p>同样是给一个数组，从下标0开始，每个数字表示你能跳跃的最大距离，区别是，在保证总能到达终点的情况下，返回耗费最少的跳跃次数。</p>
+</blockquote>
+<p>既然题目都保证了是终点可达的，那么是不是可以每次都选择跳的最远的那个？具体怎么选？其实不然，题目要求返回最少的次数，没有让详细返回跳的方案，所以，在一个能跳跃的区间内，总有一个符合条件的点，循环往复总会到达终点，我们只需要记录“循环”多少次不就行了。有三个变量：jump、curEnd、curFarthest，对于每一步都有一个区间范围，范围的末端就是curEnd，每个范围都会产生一个能到达的最远距离，我们以curEnd和curFarthest的最大值作为末尾标志，一旦区间跑完，就加一次jump，这样就做到了不关心具体在哪个点jump，而只关心次数了。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">minJumpTimes</span><span class="params">(<span class="keyword">int</span>[] nums)</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> jumps = <span class="number">0</span>, curEnd = <span class="number">0</span>, curFarthest = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;nums.length-<span class="number">1</span>; i++)&#123;</span><br><span class="line">        curFarthest = Math.max(curFarthest, i + nums[i]);</span><br><span class="line">        <span class="keyword">if</span>(i == curEnd)&#123;</span><br><span class="line">            jumps++;</span><br><span class="line">            curEnd = curFarthest;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> jumps;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Jump-Game-III"><a href="#Jump-Game-III" class="headerlink" title="Jump Game III"></a>Jump Game III</h1><blockquote>
+<p>给定一个数组和一个起始位置start，对于每个点，只能走i-start或i+start两个位置，问能否访问到数组中任意0的位置。</p>
+</blockquote>
+<p>这种题实际上也是属于模拟，根据题目中的要求来做就好了，目前至少有两种方式，一种是递归地遍历（或者说深度优先），同时带上备忘录来标记访问过的点，另一种是广度优先，因为一个点可以带出来两个访问的方向，而且是顺序进行的。</p>
+<h3 id="dfs"><a href="#dfs" class="headerlink" title="dfs"></a>dfs</h3><p>回溯，总是可以穷举出来的，每个点上都有两种方式可选，同一个点可能会被访问多次，我们也需要做一个标记来表示他被访问过，不能到达的话不必重复访问。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">canReach</span><span class="params">(<span class="keyword">int</span>][] nums, <span class="keyword">int</span> start)</span></span>&#123;</span><br><span class="line">    <span class="keyword">if</span>(start &gt;= <span class="number">0</span> &amp;&amp; start &lt; nums.length &amp;&amp; nums[start] &lt; nums.length)&#123;</span><br><span class="line">        <span class="keyword">int</span> jump = nums[start];</span><br><span class="line">        nums[start] += nums.length; <span class="comment">// 做标记，这样nums[start]总是不合法的，不会再访问了</span></span><br><span class="line">        <span class="keyword">return</span> jump == <span class="number">0</span> || canReach(nums, start + jump) || canReach(nums, start - jump);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="bfs"><a href="#bfs" class="headerlink" title="bfs"></a>bfs</h3><p>……</p>
+<h1 id="JumpGame-VII"><a href="#JumpGame-VII" class="headerlink" title="JumpGame VII"></a>JumpGame VII</h1><blockquote>
+<p>给一个数组和一个minJump以及一个maxJump，其中只包含0或1，下标0处为0，从下标0处出发，每次跳跃的范围是(i+minJump, i+maxJump)且只能跳落到其中的0处，问能否跳跃到终点。</p>
+</blockquote>
+<p>可以怎么做？如果按照题目中的要求，在一个范围内找寻0来作为下一个起跳点，那么对于长度为n的数组，即便是使用dp来保存状态，时间复杂度也将会是O(n^2)。参考上面类似的思想， 他只询问能到到达终点，并不关心具体的路径，所以可以在范围的地方着手优化。</p>
+
+            
+
+
+        </div>
+    </div>
+    <div id="post-footer" class="post-footer main-content-wrap">
+        
+            <div class="post-footer-tags">
+                <span class="text-color-light text-small">TAGGED IN</span><br/>
+                
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/greedy-dp-stratey/" rel="tag">greedy dp stratey</a>
+
+            </div>
+        
+        
+            <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/05/31/search-suggestions-system/"
+                    data-tooltip="search suggestions system"
+                    aria-label="PREVIOUS: search suggestions system"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/05/14/predict-the-winner/"
+                    data-tooltip="predict the winner"
+                    aria-label="NEXT: predict the winner"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/05/24/jump-games/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/05/24/jump-games/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/05/24/jump-games/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+        
+        
+            
+        
+    </div>
+</article>
+
+
+
+                <footer id="footer" class="main-content-wrap">
+    <span class="copyrights">
+        Copyrights &copy; 2021 Sebastian Getts. All Rights Reserved.
+    </span>
+</footer>
+
+            </div>
+            
+                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+                    <div class="post-actions-wrap">
+    <nav>
+        <ul class="post-actions post-action-nav">
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/05/31/search-suggestions-system/"
+                    data-tooltip="search suggestions system"
+                    aria-label="PREVIOUS: search suggestions system"
+                >
+                    
+                        <i class="fa fa-angle-left" aria-hidden="true"></i>
+                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
+                    </a>
+            </li>
+            <li class="post-action">
+                
+                    
+                <a
+                    class="post-action-btn btn btn--default tooltip--top"
+                    href="/2021/05/14/predict-the-winner/"
+                    data-tooltip="predict the winner"
+                    aria-label="NEXT: predict the winner"
+                >
+                    
+                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
+                        <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    </a>
+            </li>
+        </ul>
+    </nav>
+    <ul class="post-actions post-action-share">
+        <li class="post-action hide-lg hide-md hide-sm">
+            <a
+                class="post-action-btn btn btn--default btn-open-shareoptions"
+                href="#btn-open-shareoptions"
+                aria-label="Share this post"
+            >
+                <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </a>
+        </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/05/24/jump-games/"
+                    title="Share on Facebook"
+                    aria-label="Share on Facebook"
+                >
+                    <i class="fab fa-facebook" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/05/24/jump-games/"
+                    title="Share on Twitter"
+                    aria-label="Share on Twitter"
+                >
+                    <i class="fab fa-twitter" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+            
+            
+            <li class="post-action hide-xs">
+                <a
+                    class="post-action-btn btn btn--default"
+                    target="new" href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/05/24/jump-games/"
+                    title="Share on Google+"
+                    aria-label="Share on Google+"
+                >
+                    <i class="fab fa-google-plus" aria-hidden="true"></i>
+                </a>
+            </li>
+        
+        
+            
+        
+        <li class="post-action">
+            
+                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
+            
+                <i class="fa fa-list" aria-hidden="true"></i>
+            </a>
+        </li>
+    </ul>
+</div>
+
+
+                </div>
+                
+    <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+        <i id="btn-close-shareoptions" class="fa fa-times"></i>
+        <ul class="share-options">
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/05/24/jump-games/"
+                        aria-label="Share on Facebook"
+                    >
+                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/05/24/jump-games/"
+                        aria-label="Share on Twitter"
+                    >
+                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
+                    </a>
+                </li>
+            
+                
+                
+                <li class="share-option">
+                    <a
+                        class="share-option-btn"
+                        target="new"
+                        href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/05/24/jump-games/"
+                        aria-label="Share on Google+"
+                    >
+                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
+                    </a>
+                </li>
+            
+        </ul>
+    </div>
+
+
+            
+        </div>
+        
+
+
+    
+        
+    
+
+<div id="about">
+    <div id="about-card">
+        <div id="about-btn-close">
+            <i class="fa fa-times"></i>
+        </div>
+        
+            <img id="about-card-picture" src="/assets/images/avatar.png" alt="Author&#39;s picture"/>
+        
+            <h4 id="about-card-name">Sebastian Getts</h4>
+        
+            <div id="about-card-bio"><p>I write code to enrich and ease life of others.</p>
+</div>
+        
+        
+            <div id="about-card-job">
+                <i class="fa fa-briefcase"></i>
+                <br/>
+                <p>Software Engineer</p>
+
+            </div>
+        
+        
+            <div id="about-card-location">
+                <i class="fa fa-map-marker-alt"></i>
+                <br/>
+                Shenzhen China
+            </div>
+        
+    </div>
+</div>
+
+        
+        
+<div id="cover" style="background-image:url('/assets/images/cover-v1.2.0.jpg');"></div>
+        <!--SCRIPTS-->
+
+<script src="/assets/js/script-jsoeqoqa2ajw9nwj0xf5gmftvb2jhopk3sxu8iodabvev2jdlmr0zsitv3jm.min.js"></script>
+
+<!--SCRIPTS END-->
+
+
+    
+
+
+
+
+    </body>
+</html>
