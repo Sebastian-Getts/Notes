@@ -6,25 +6,25 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Hola">
-    <title>search suggestions system - Hola</title>
+    <title>2021_mid - Hola</title>
     <meta name="author" content="Sebastian Getts">
     
     
         <link rel="icon" href="http://github.com/sebastian/about/assets/images/avatar.png">
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sebastian Getts","sameAs":["https://github.com/Sebastian-Getts","zzzqsw@gmail.com"],"image":"avatar.png"},"articleBody":"来源于5月”每日一题“板块中最后一天的一道题，乍一看应该是用Trie，但是实现起来有些复杂，没有其他更好的思路，然后评论区一看，又被Lee神的代码震撼到了。\n\n\nTreeMapQ: 根据输入的目标词，每输入一个字符，就从提供的词组中找出最符合规则的三个词（最多三个）。详情[戳这](Explore - LeetCode)。\nA: 最大的功臣就是treemap了。首先来了解一下他的常用的、易混淆的API，如higherKey与ceilingKey的区别，前者是寻找大于当前key的key，后者是寻找大于等于当前key的key。lowerKey和floorKey同理。\n1234567891011121314151617181920212223public List&lt;List&lt;String&gt;&gt; suggestedProducts(String[] products, String searchWord) &#123;    List&lt;List&lt;String&gt;&gt; res = new ArrayList&lt;&gt;();    TreeMap&lt;String, Integer&gt; map = new TreeMap&lt;&gt;();    Arrays.sort(products);    List&lt;String&gt; productList = Arrays.asList(products);    for(int i= 0; i&lt;products.length; i++)&#123;        map.put(products[i], i);    &#125;    String key = &quot;&quot;;    for(char c : searchWord.toCharArray())&#123;        key += c;        String ceiling = map.ceilingKey(key);        // 只要大于&#x27;z&#x27;的任意字符都可以        String floor = map.floorKey(key + &quot;~&quot;);        // 当前字符都匹配不到，后续更不可能了        if(ceiling == null || floor == null) break;        // Math防止越界，map.get(floor)+1就是囊括了最后一个元素的极限        res.add(productList.subList(map.get(ceiling), Math.min(map.get(ceiling) + 3, map.get(floor) + 1)));    &#125;    while(res.size() &lt; searchWord.length()) res.add(new ArrayList&lt;&gt;());    return res;&#125;\n\n","dateCreated":"2021-05-31T22:54:11+08:00","dateModified":"2021-06-01T09:32:49+08:00","datePublished":"2021-05-31T22:54:11+08:00","description":"来源于5月”每日一题“板块中最后一天的一道题，乍一看应该是用Trie，但是实现起来有些复杂，没有其他更好的思路，然后评论区一看，又被Lee神的代码震撼到了。","headline":"search suggestions system","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://github.com/sebastian/about/2021/05/31/search-suggestions-system/"},"publisher":{"@type":"Organization","name":"Sebastian Getts","sameAs":["https://github.com/Sebastian-Getts","zzzqsw@gmail.com"],"image":"avatar.png","logo":{"@type":"ImageObject","url":"avatar.png"}},"url":"http://github.com/sebastian/about/2021/05/31/search-suggestions-system/","keywords":"treeMap trie"}</script>
-    <meta name="description" content="来源于5月”每日一题“板块中最后一天的一道题，乍一看应该是用Trie，但是实现起来有些复杂，没有其他更好的思路，然后评论区一看，又被Lee神的代码震撼到了。">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sebastian Getts","sameAs":["https://github.com/Sebastian-Getts","zzzqsw@gmail.com"],"image":"avatar.png"},"articleBody":"2021过了一半，结合2020年末的总结，对2021年中做了总结，这是一年的承上启下。\n\n\n上半年，做了件“大”事——换了工作，与金融相关，做的不是那么的纯计算机的工作了，除了金融，还涉及了项目管理的工作，总的来说是拔高的。一直觉得计算机行业需要交叉，需要交叉学科的人才，我也算是中途出道的，金融小白一枚。\n上半年总结\n算法和数据结构：计划完成，在LeetCode平台上进行了每日的打卡和算法竞赛，比赛中从一开始的完成签到题都困难，到目前至少能完成2道题，偶尔三道，国内排名有时候也能突破前1000.\n《算法导论》：在能手撕基础算法的情况下，完成了该书的阅读，尤其是动态规划那一板块很有帮助。应该作为handbook，时常翻阅。\n408：正好面试会涉及，就一并带过了，不过应该不深，算50%吧。\n框架：研究了Spring、Mybatis和SpringMVC框架源码，达到了前所未有的深度，对他的设计有了更深入的思考。\n分布式、中间件：从操作系统以及分布式理论的角度学习了中间件相关的东西\n项目设计：这是面向面试去做的学习和准备，毕竟“开发练习时长一年多”的我还没有实战的设计经验，例如“分布式的唯一id”这样，但可以提前了解。\n\n上半年就这样，去年年末定下来的任务完成了一部分，剩下的还是比较艰巨的，因为有了新的工作，会带来新的挑战。通过面试我也发现了不足，尤其是对项目的理解，有些面试官的问题是很有深度的，这也是一个思想交流的机会。\n下半年计划\n跟入一项新的开源项目，要有提交贡献！！（学习项目架构和设计）\n熟悉vue，做到全栈。从小程序的角度去学习vue，应该会很快。这人很单独开一个repo放在github上面。\n学习项目管理！PMP安排上！\n学习金融知识，完成一些书的阅读与笔记整理，从小白进化成小黑\n算法和数据结构，进阶，多语言的练习，上面提到了vue，所以后续可以用js去刷 。有时间的情况下可以战CodeForces\n408：基础知识都熟悉了，该刷题巩固了\n数学：慢慢来，白板不只可以拿来写算法\n逃避虽可耻但有用：看了一集，哈哈哈 安排上。\nJava紧跟潮流，新版本，新特性，以及JVM。\n\n","dateCreated":"2021-06-06T22:22:06+08:00","dateModified":"2021-06-06T23:07:03+08:00","datePublished":"2021-06-06T22:22:06+08:00","description":"2021过了一半，结合2020年末的总结，对2021年中做了总结，这是一年的承上启下。","headline":"2021_mid","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://github.com/sebastian/about/2021/06/06/2021-mid/"},"publisher":{"@type":"Organization","name":"Sebastian Getts","sameAs":["https://github.com/Sebastian-Getts","zzzqsw@gmail.com"],"image":"avatar.png","logo":{"@type":"ImageObject","url":"avatar.png"}},"url":"http://github.com/sebastian/about/2021/06/06/2021-mid/","keywords":"summary"}</script>
+    <meta name="description" content="2021过了一半，结合2020年末的总结，对2021年中做了总结，这是一年的承上启下。">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="search suggestions system">
-<meta property="og:url" content="http://github.com/sebastian/about/2021/05/31/search-suggestions-system/index.html">
+<meta property="og:title" content="2021_mid">
+<meta property="og:url" content="http://github.com/sebastian/about/2021/06/06/2021-mid/index.html">
 <meta property="og:site_name" content="Hola">
-<meta property="og:description" content="来源于5月”每日一题“板块中最后一天的一道题，乍一看应该是用Trie，但是实现起来有些复杂，没有其他更好的思路，然后评论区一看，又被Lee神的代码震撼到了。">
+<meta property="og:description" content="2021过了一半，结合2020年末的总结，对2021年中做了总结，这是一年的承上启下。">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-05-31T14:54:11.000Z">
-<meta property="article:modified_time" content="2021-06-01T01:32:49.617Z">
+<meta property="article:published_time" content="2021-06-06T14:22:06.000Z">
+<meta property="article:modified_time" content="2021-06-06T15:07:03.786Z">
 <meta property="article:author" content="Sebastian Getts">
-<meta property="article:tag" content="treeMap trie">
+<meta property="article:tag" content="summary">
 <meta name="twitter:card" content="summary">
     
     
@@ -235,20 +235,20 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
-            search suggestions system
+            2021_mid
         </h1>
     
     
         <div class="post-meta">
-    <time datetime="2021-05-31T22:54:11+08:00">
+    <time datetime="2021-06-06T22:22:06+08:00">
 	
-		    May 31, 2021
+		    Jun 06, 2021
     	
     </time>
     
         <span>in </span>
         
-    <a class="category-link" href="/categories/LeetCode/">LeetCode</a>
+    <a class="category-link" href="/categories/essay/">essay</a>
 
 
     
@@ -260,13 +260,30 @@
     
     <div class="post-content markdown">
         <div class="main-content-wrap">
-            <p>来源于5月”每日一题“板块中最后一天的一道题，乍一看应该是用<code>Trie</code>，但是实现起来有些复杂，没有其他更好的思路，然后评论区一看，又被Lee神的代码震撼到了。</p>
+            <p>2021过了一半，结合2020年末的总结，对2021年中做了总结，这是一年的承上启下。</p>
 <span id="more"></span>
 
-<h1 id="TreeMap"><a href="#TreeMap" class="headerlink" title="TreeMap"></a>TreeMap</h1><p>Q: 根据输入的目标词，每输入一个字符，就从提供的词组中找出最符合规则的三个词（最多三个）。详情[戳这](<a target="_blank" rel="noopener" href="https://leetcode.com/explore/challenge/card/may-leetcoding-challenge-2021/602/week-5-may-29th-may-31st/3762/">Explore - LeetCode</a>)。</p>
-<p>A: 最大的功臣就是treemap了。首先来了解一下他的常用的、易混淆的API，如<code>higherKey</code>与<code>ceilingKey</code>的区别，前者是寻找大于当前key的key，后者是寻找大于等于当前key的key。<code>lowerKey</code>和<code>floorKey</code>同理。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> List&lt;List&lt;String&gt;&gt; suggestedProducts(String[] products, String searchWord) &#123;</span><br><span class="line">    List&lt;List&lt;String&gt;&gt; res = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    TreeMap&lt;String, Integer&gt; map = <span class="keyword">new</span> TreeMap&lt;&gt;();</span><br><span class="line">    Arrays.sort(products);</span><br><span class="line">    List&lt;String&gt; productList = Arrays.asList(products);</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i= <span class="number">0</span>; i&lt;products.length; i++)&#123;</span><br><span class="line">        map.put(products[i], i);</span><br><span class="line">    &#125;</span><br><span class="line">    String key = <span class="string">&quot;&quot;</span>;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">char</span> c : searchWord.toCharArray())&#123;</span><br><span class="line">        key += c;</span><br><span class="line">        String ceiling = map.ceilingKey(key);</span><br><span class="line">        <span class="comment">// 只要大于&#x27;z&#x27;的任意字符都可以</span></span><br><span class="line">        String floor = map.floorKey(key + <span class="string">&quot;~&quot;</span>);</span><br><span class="line">        <span class="comment">// 当前字符都匹配不到，后续更不可能了</span></span><br><span class="line">        <span class="keyword">if</span>(ceiling == <span class="keyword">null</span> || floor == <span class="keyword">null</span>) <span class="keyword">break</span>;</span><br><span class="line">        <span class="comment">// Math防止越界，map.get(floor)+1就是囊括了最后一个元素的极限</span></span><br><span class="line">        res.add(productList.subList(map.get(ceiling), Math.min(map.get(ceiling) + <span class="number">3</span>, map.get(floor) + <span class="number">1</span>)));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(res.size() &lt; searchWord.length()) res.add(<span class="keyword">new</span> ArrayList&lt;&gt;());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> res;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<p>上半年，做了件“大”事——换了工作，与金融相关，做的不是那么的纯计算机的工作了，除了金融，还涉及了项目管理的工作，总的来说是拔高的。一直觉得计算机行业需要交叉，需要交叉学科的人才，我也算是中途出道的，金融小白一枚。</p>
+<h2 id="上半年总结"><a href="#上半年总结" class="headerlink" title="上半年总结"></a>上半年总结</h2><ul>
+<li>算法和数据结构：计划完成，在LeetCode平台上进行了每日的打卡和算法竞赛，比赛中从一开始的完成签到题都困难，到目前至少能完成2道题，偶尔三道，国内排名有时候也能突破前1000.</li>
+<li>《算法导论》：在能手撕基础算法的情况下，完成了该书的阅读，尤其是动态规划那一板块很有帮助。应该作为handbook，时常翻阅。</li>
+<li>408：正好面试会涉及，就一并带过了，不过应该不深，算50%吧。</li>
+<li>框架：研究了Spring、Mybatis和SpringMVC框架源码，达到了前所未有的深度，对他的设计有了更深入的思考。</li>
+<li>分布式、中间件：从操作系统以及分布式理论的角度学习了中间件相关的东西</li>
+<li>项目设计：这是面向面试去做的学习和准备，毕竟“开发练习时长一年多”的我还没有实战的设计经验，例如“分布式的唯一id”这样，但可以提前了解。</li>
+</ul>
+<p>上半年就这样，去年年末定下来的任务完成了一部分，剩下的还是比较艰巨的，因为有了新的工作，会带来新的挑战。通过面试我也发现了不足，尤其是对项目的理解，有些面试官的问题是很有深度的，这也是一个思想交流的机会。</p>
+<h2 id="下半年计划"><a href="#下半年计划" class="headerlink" title="下半年计划"></a>下半年计划</h2><ul>
+<li>跟入一项新的开源项目，要有提交贡献！！（学习项目架构和设计）</li>
+<li>熟悉vue，做到全栈。从小程序的角度去学习vue，应该会很快。这人很单独开一个repo放在github上面。</li>
+<li>学习项目管理！PMP安排上！</li>
+<li>学习金融知识，完成一些书的阅读与笔记整理，从小白进化成小黑</li>
+<li>算法和数据结构，进阶，多语言的练习，上面提到了vue，所以后续可以用js去刷 。有时间的情况下可以战CodeForces</li>
+<li>408：基础知识都熟悉了，该刷题巩固了</li>
+<li>数学：慢慢来，白板不只可以拿来写算法</li>
+<li>逃避虽可耻但有用：看了一集，哈哈哈 安排上。</li>
+<li>Java紧跟潮流，新版本，新特性，以及JVM。</li>
+</ul>
 
             
 
@@ -278,7 +295,7 @@
             <div class="post-footer-tags">
                 <span class="text-color-light text-small">TAGGED IN</span><br/>
                 
-    <a class="tag tag--primary tag--small t-none-link" href="/tags/treeMap-trie/" rel="tag">treeMap trie</a>
+    <a class="tag tag--primary tag--small t-none-link" href="/tags/summary/" rel="tag">summary</a>
 
             </div>
         
@@ -288,14 +305,11 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/2021/06/06/2021-mid/"
-                    data-tooltip="2021_mid"
-                    aria-label="PREVIOUS: 2021_mid"
-                >
-                    
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
                         <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
                     </a>
@@ -305,9 +319,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2021/05/24/jump-games/"
-                    data-tooltip="jump games"
-                    aria-label="NEXT: jump games"
+                    href="/2021/05/31/search-suggestions-system/"
+                    data-tooltip="search suggestions system"
+                    aria-label="NEXT: search suggestions system"
                 >
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
@@ -332,7 +346,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/05/31/search-suggestions-system/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/06/06/2021-mid/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -345,7 +359,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/05/31/search-suggestions-system/"
+                    target="new" href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/06/06/2021-mid/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -358,7 +372,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/05/31/search-suggestions-system/"
+                    target="new" href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/06/06/2021-mid/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -403,14 +417,11 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/2021/06/06/2021-mid/"
-                    data-tooltip="2021_mid"
-                    aria-label="PREVIOUS: 2021_mid"
-                >
-                    
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
                         <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
                     </a>
@@ -420,9 +431,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2021/05/24/jump-games/"
-                    data-tooltip="jump games"
-                    aria-label="NEXT: jump games"
+                    href="/2021/05/31/search-suggestions-system/"
+                    data-tooltip="search suggestions system"
+                    aria-label="NEXT: search suggestions system"
                 >
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
@@ -447,7 +458,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/05/31/search-suggestions-system/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/06/06/2021-mid/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -460,7 +471,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/05/31/search-suggestions-system/"
+                    target="new" href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/06/06/2021-mid/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -473,7 +484,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/05/31/search-suggestions-system/"
+                    target="new" href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/06/06/2021-mid/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -507,7 +518,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/05/31/search-suggestions-system/"
+                        href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/06/06/2021-mid/"
                         aria-label="Share on Facebook"
                     >
                         <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
@@ -520,7 +531,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/05/31/search-suggestions-system/"
+                        href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/06/06/2021-mid/"
                         aria-label="Share on Twitter"
                     >
                         <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
@@ -533,7 +544,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/05/31/search-suggestions-system/"
+                        href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/06/06/2021-mid/"
                         aria-label="Share on Google+"
                     >
                         <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
