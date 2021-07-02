@@ -6,23 +6,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="generator" content="Hola">
-    <title>2021_mid - Hola</title>
+    <title>leetcode_contest_55&amp;247 - Hola</title>
     <meta name="author" content="Sebastian Getts">
     
     
         <link rel="icon" href="http://github.com/sebastian/about/assets/images/avatar.png">
     
     
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sebastian Getts","sameAs":["https://github.com/Sebastian-Getts","zzzqsw@gmail.com"],"image":"avatar.png"},"articleBody":"2021过了一半，结合2020年末的总结，对2021年中做了总结，这是一年的承上启下。\n\n\n上半年，做了件“大”事——换了工作，与金融相关，做的不是那么的纯计算机的工作了，除了金融，还涉及了项目管理的工作，总的来说是拔高的。一直觉得计算机行业需要交叉，需要交叉学科的人才，我也算是中途出道的，金融小白一枚。\n上半年总结\n算法和数据结构：计划完成，在LeetCode平台上进行了每日的打卡和算法竞赛，比赛中从一开始的完成签到题都困难，到目前至少能完成2道题，偶尔三道，国内排名有时候也能突破前1000.\n《算法导论》：在能手撕基础算法的情况下，完成了该书的阅读，尤其是动态规划那一板块很有帮助。应该作为handbook，时常翻阅。\n408：正好面试会涉及，就一并带过了，不过应该不深，算50%吧。\n框架：研究了Spring、Mybatis和SpringMVC框架源码，达到了前所未有的深度，对他的设计有了更深入的思考。\n分布式、中间件：从操作系统以及分布式理论的角度学习了中间件相关的东西\n项目设计：这是面向面试去做的学习和准备，毕竟“开发练习时长一年多”的我还没有实战的设计经验，例如“分布式的唯一id”这样，但可以提前了解。\n\n上半年就这样，去年年末定下来的任务完成了一部分，剩下的还是比较艰巨的，因为有了新的工作，会带来新的挑战。通过面试我也发现了不足，尤其是对项目的理解，有些面试官的问题是很有深度的，这也是一个思想交流的机会。\n下半年计划\n跟入一项新的开源项目，要有提交贡献！！（学习项目架构和设计）\n熟悉vue，做到全栈。从小程序的角度去学习vue，应该会很快。这人很单独开一个repo放在github上面。\n学习项目管理！PMP安排上！\n学习金融知识，完成一些书的阅读与笔记整理，从小白进化成小黑\n算法和数据结构，进阶，多语言的练习，上面提到了vue，所以后续可以用js去刷 。有时间的情况下可以战CodeForces\n408：基础知识都熟悉了，该刷题巩固了\n数学：慢慢来，白板不只可以拿来写算法\n逃避虽可耻但有用：看了一集，哈哈哈 安排上。\nJava紧跟潮流，新版本，新特性，以及JVM。\n\n","dateCreated":"2021-06-06T22:22:06+08:00","dateModified":"2021-06-06T23:07:03+08:00","datePublished":"2021-06-06T22:22:06+08:00","description":"2021过了一半，结合2020年末的总结，对2021年中做了总结，这是一年的承上启下。","headline":"2021_mid","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://github.com/sebastian/about/2021/06/06/2021-mid/"},"publisher":{"@type":"Organization","name":"Sebastian Getts","sameAs":["https://github.com/Sebastian-Getts","zzzqsw@gmail.com"],"image":"avatar.png","logo":{"@type":"ImageObject","url":"avatar.png"}},"url":"http://github.com/sebastian/about/2021/06/06/2021-mid/","keywords":"summary"}</script>
-    <meta name="description" content="2021过了一半，结合2020年末的总结，对2021年中做了总结，这是一年的承上启下。">
+    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sebastian Getts","sameAs":["https://github.com/Sebastian-Getts","zzzqsw@gmail.com"],"image":"avatar.png"},"articleBody":"这周是双周，打了两场周赛，总结一下这两场\n\n\n247删除一个元素使数组严格一堆无序的数组，从里面删除一个元素保证整个数组是严格递增。题目中的限制是数组的长度小于1000（从这里考虑是否暴力）。当时做法有顾虑暴力法，而且考虑的是是否挨个将每一个元素剔除掉然后再遍历一遍都是是递增（考虑到复杂度，时间成本大，空间上可能还要创建多个数组，我直接pass了）；考虑的方法二是多指针，试了一个三指针的，WA了，又试了一个四指针，也WA==。\n其实想复杂了，遍历一遍，删除掉不符合的元素，然后再遍历一遍，看看是否符合。（枚举+暴力）\n12345678910111213141516171819202122232425public boolean canBeIncreasing(int[] nums) &#123;    // 模拟每个数组被删除的场景    if(check(nums)) return true;    int len = nums.length;    for(int i=0; i&lt;len; i++)&#123;        int[] t = new int[len - 1];        int k = 0;        for(int j=0; j&lt;len; j++)&#123;            if(j == i) continue;            t[k++] = nums[j];        &#125;        if(check(t)) return true;    &#125;        return false;&#125;private boolean check(int[] nums) &#123;    for(int i=1; i&lt;nums.length; i++)&#123;        if(nums[i] &lt;= nums[i-1]) return false;    &#125;        return true;&#125;\n\n\n\n删除一个字符串中所有出现的给定子字符串额外要求是从左开始删除，字符串和子字符串的长度都不超过1000.\n这道题体现了会python的重要性.\n12345def removeOccurences(self, s: str, part: str) -&gt; str:    while part in s:        s = s.replace(part, &#x27;&#x27;)           return s\n\n\n\n最大序列的交替和","dateCreated":"2021-06-27T12:55:29+08:00","dateModified":"2021-06-27T14:14:54+08:00","datePublished":"2021-06-27T12:55:29+08:00","description":"这周是双周，打了两场周赛，总结一下这两场","headline":"leetcode_contest_55&247","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://github.com/sebastian/about/2021/06/27/leetcode-contest-55-247/"},"publisher":{"@type":"Organization","name":"Sebastian Getts","sameAs":["https://github.com/Sebastian-Getts","zzzqsw@gmail.com"],"image":"avatar.png","logo":{"@type":"ImageObject","url":"avatar.png"}},"url":"http://github.com/sebastian/about/2021/06/27/leetcode-contest-55-247/","keywords":"summary"}</script>
+    <meta name="description" content="这周是双周，打了两场周赛，总结一下这两场">
 <meta property="og:type" content="blog">
-<meta property="og:title" content="2021_mid">
-<meta property="og:url" content="http://github.com/sebastian/about/2021/06/06/2021-mid/index.html">
+<meta property="og:title" content="leetcode_contest_55&amp;247">
+<meta property="og:url" content="http://github.com/sebastian/about/2021/06/27/leetcode-contest-55-247/index.html">
 <meta property="og:site_name" content="Hola">
-<meta property="og:description" content="2021过了一半，结合2020年末的总结，对2021年中做了总结，这是一年的承上启下。">
+<meta property="og:description" content="这周是双周，打了两场周赛，总结一下这两场">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-06-06T14:22:06.000Z">
-<meta property="article:modified_time" content="2021-06-06T15:07:03.786Z">
+<meta property="article:published_time" content="2021-06-27T04:55:29.000Z">
+<meta property="article:modified_time" content="2021-06-27T06:14:54.775Z">
 <meta property="article:author" content="Sebastian Getts">
 <meta property="article:tag" content="summary">
 <meta name="twitter:card" content="summary">
@@ -235,20 +235,20 @@
         <div class="post-header main-content-wrap text-left">
     
         <h1 class="post-title">
-            2021_mid
+            leetcode_contest_55&amp;247
         </h1>
     
     
         <div class="post-meta">
-    <time datetime="2021-06-06T22:22:06+08:00">
+    <time datetime="2021-06-27T12:55:29+08:00">
 	
-		    Jun 06, 2021
+		    Jun 27, 2021
     	
     </time>
     
         <span>in </span>
         
-    <a class="category-link" href="/categories/essay/">essay</a>
+    <a class="category-link" href="/categories/LeetCode/">LeetCode</a>
 
 
     
@@ -260,31 +260,22 @@
     
     <div class="post-content markdown">
         <div class="main-content-wrap">
-            <p>2021过了一半，结合2020年末的总结，对2021年中做了总结，这是一年的承上启下。</p>
+            <p>这周是双周，打了两场周赛，总结一下这两场</p>
 <span id="more"></span>
 
-<p>上半年，做了件“大”事——换了工作，与金融相关，做的不是那么的纯计算机的工作了，除了金融，还涉及了项目管理的工作，总的来说是拔高的。一直觉得计算机行业需要交叉，需要交叉学科的人才，我也算是中途出道的，金融小白一枚。</p>
-<h2 id="上半年总结"><a href="#上半年总结" class="headerlink" title="上半年总结"></a>上半年总结</h2><ul>
-<li>算法和数据结构：计划完成，在LeetCode平台上进行了每日的打卡和算法竞赛，比赛中从一开始的完成签到题都困难，到目前至少能完成2道题，偶尔三道，国内排名有时候也能突破前1000.</li>
-<li>《算法导论》：在能手撕基础算法的情况下，完成了该书的阅读，尤其是动态规划那一板块很有帮助。应该作为handbook，时常翻阅。</li>
-<li>408：正好面试会涉及，就一并带过了，不过应该不深，算50%吧。</li>
-<li>框架：研究了Spring、Mybatis和SpringMVC框架源码，达到了前所未有的深度，对他的设计有了更深入的思考。</li>
-<li>分布式、中间件：从操作系统以及分布式理论的角度学习了中间件相关的东西</li>
-<li>项目设计：这是面向面试去做的学习和准备，毕竟“开发练习时长一年多”的我还没有实战的设计经验，例如“分布式的唯一id”这样，但可以提前了解。</li>
-</ul>
-<p>上半年就这样，去年年末定下来的任务完成了一部分，剩下的还是比较艰巨的，因为有了新的工作，会带来新的挑战。通过面试我也发现了不足，尤其是对项目的理解，有些面试官的问题是很有深度的，这也是一个思想交流的机会。</p>
-<h2 id="下半年计划"><a href="#下半年计划" class="headerlink" title="下半年计划"></a>下半年计划</h2><ul>
-<li>跟入一项新的开源项目，要有提交贡献！！（学习项目架构和设计）</li>
-<li>熟悉vue，做到全栈。从小程序的角度去学习vue，应该会很快。这人很单独开一个repo放在github上面。</li>
-<li>学习项目管理！PMP安排上！</li>
-<li>学习金融知识，完成一些书的阅读与笔记整理，从小白进化成小黑</li>
-<li>算法和数据结构，进阶，多语言的练习，上面提到了vue，所以后续可以用js去刷 。有时间的情况下可以战CodeForces</li>
-<li>408：基础知识都熟悉了，该刷题巩固了</li>
-<li>数学：慢慢来，白板不只可以拿来写算法</li>
-<li>逃避虽可耻但有用：看了一集，哈哈哈 安排上。</li>
-<li>Java紧跟潮流，新版本，新特性，以及JVM。</li>
-</ul>
+<h1 id="247"><a href="#247" class="headerlink" title="247"></a>247</h1><h2 id="删除一个元素使数组严格"><a href="#删除一个元素使数组严格" class="headerlink" title="删除一个元素使数组严格"></a>删除一个元素使数组严格</h2><p>一堆无序的数组，从里面删除一个元素保证整个数组是严格递增。题目中的限制是数组的长度小于1000（从这里考虑是否暴力）。当时做法有顾虑暴力法，而且考虑的是<strong>是否挨个将每一个元素剔除掉然后再遍历一遍都是是递增</strong>（考虑到复杂度，时间成本大，空间上可能还要创建多个数组，我直接pass了）；考虑的方法二是<strong>多指针</strong>，试了一个三指针的，WA了，又试了一个四指针，也WA==。</p>
+<p>其实想复杂了，遍历一遍，删除掉不符合的元素，然后再遍历一遍，看看是否符合。（枚举+暴力）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">canBeIncreasing</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 模拟每个数组被删除的场景</span></span><br><span class="line">    <span class="keyword">if</span>(check(nums)) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    <span class="keyword">int</span> len = nums.length;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;len; i++)&#123;</span><br><span class="line">        <span class="keyword">int</span>[] t = <span class="keyword">new</span> <span class="keyword">int</span>[len - <span class="number">1</span>];</span><br><span class="line">        <span class="keyword">int</span> k = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;len; j++)&#123;</span><br><span class="line">            <span class="keyword">if</span>(j == i) <span class="keyword">continue</span>;</span><br><span class="line">            t[k++] = nums[j];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(check(t)) <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">check</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">1</span>; i&lt;nums.length; i++)&#123;</span><br><span class="line">        <span class="keyword">if</span>(nums[i] &lt;= nums[i-<span class="number">1</span>]) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
+
+
+<h2 id="删除一个字符串中所有出现的给定子字符串"><a href="#删除一个字符串中所有出现的给定子字符串" class="headerlink" title="删除一个字符串中所有出现的给定子字符串"></a>删除一个字符串中所有出现的给定子字符串</h2><p>额外要求是从左开始删除，字符串和子字符串的长度都不超过1000.</p>
+<p>这道题体现了<strong>会python的重要性</strong>.</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">removeOccurences</span>(<span class="params">self, s: <span class="built_in">str</span>, part: <span class="built_in">str</span></span>) -&gt; <span class="built_in">str</span>:</span></span><br><span class="line">    <span class="keyword">while</span> part <span class="keyword">in</span> s:</span><br><span class="line">        s = s.replace(part, <span class="string">&#x27;&#x27;</span>)</span><br><span class="line">       </span><br><span class="line">    <span class="keyword">return</span> s</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="最大序列的交替和"><a href="#最大序列的交替和" class="headerlink" title="最大序列的交替和"></a>最大序列的交替和</h2>
             
 
 
@@ -305,14 +296,11 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/2021/06/27/leetcode-contest-55-247/"
-                    data-tooltip="leetcode_contest_55&amp;247"
-                    aria-label="PREVIOUS: leetcode_contest_55&amp;247"
-                >
-                    
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
                         <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
                     </a>
@@ -322,9 +310,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2021/05/31/search-suggestions-system/"
-                    data-tooltip="search suggestions system"
-                    aria-label="NEXT: search suggestions system"
+                    href="/2021/06/06/2021-mid/"
+                    data-tooltip="2021_mid"
+                    aria-label="NEXT: 2021_mid"
                 >
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
@@ -349,7 +337,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/06/06/2021-mid/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/06/27/leetcode-contest-55-247/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -362,7 +350,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/06/06/2021-mid/"
+                    target="new" href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/06/27/leetcode-contest-55-247/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -375,7 +363,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/06/06/2021-mid/"
+                    target="new" href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/06/27/leetcode-contest-55-247/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -420,14 +408,11 @@
         <ul class="post-actions post-action-nav">
             <li class="post-action">
                 
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/2021/06/27/leetcode-contest-55-247/"
-                    data-tooltip="leetcode_contest_55&amp;247"
-                    aria-label="PREVIOUS: leetcode_contest_55&amp;247"
-                >
-                    
+                    <a
+                        class="post-action-btn btn btn--disabled"
+                        aria-hidden="true"
+                    >
+                        
                         <i class="fa fa-angle-left" aria-hidden="true"></i>
                         <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
                     </a>
@@ -437,9 +422,9 @@
                     
                 <a
                     class="post-action-btn btn btn--default tooltip--top"
-                    href="/2021/05/31/search-suggestions-system/"
-                    data-tooltip="search suggestions system"
-                    aria-label="NEXT: search suggestions system"
+                    href="/2021/06/06/2021-mid/"
+                    data-tooltip="2021_mid"
+                    aria-label="NEXT: 2021_mid"
                 >
                     
                         <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
@@ -464,7 +449,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/06/06/2021-mid/"
+                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/06/27/leetcode-contest-55-247/"
                     title="Share on Facebook"
                     aria-label="Share on Facebook"
                 >
@@ -477,7 +462,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/06/06/2021-mid/"
+                    target="new" href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/06/27/leetcode-contest-55-247/"
                     title="Share on Twitter"
                     aria-label="Share on Twitter"
                 >
@@ -490,7 +475,7 @@
             <li class="post-action hide-xs">
                 <a
                     class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/06/06/2021-mid/"
+                    target="new" href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/06/27/leetcode-contest-55-247/"
                     title="Share on Google+"
                     aria-label="Share on Google+"
                 >
@@ -524,7 +509,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/06/06/2021-mid/"
+                        href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/06/27/leetcode-contest-55-247/"
                         aria-label="Share on Facebook"
                     >
                         <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
@@ -537,7 +522,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/06/06/2021-mid/"
+                        href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/06/27/leetcode-contest-55-247/"
                         aria-label="Share on Twitter"
                     >
                         <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
@@ -550,7 +535,7 @@
                     <a
                         class="share-option-btn"
                         target="new"
-                        href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/06/06/2021-mid/"
+                        href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/06/27/leetcode-contest-55-247/"
                         aria-label="Share on Google+"
                     >
                         <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
