@@ -1,269 +1,227 @@
-
 <!DOCTYPE html>
 <html lang="en">
-    
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="generator" content="Hola">
-    <title>springmvc-dispatcherservlet - Hola</title>
-    <meta name="author" content="Sebastian Getts">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="Hexo Theme Keep">
+    <meta name="description" content="Hexo Theme Keep">
+    <meta name="author" content="Sebastian">
     
-    
-        <link rel="icon" href="http://github.com/sebastian/about/assets/images/avatar.png">
-    
-    
-    <script type="application/ld+json">{"@context":"http://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Sebastian Getts","sameAs":["https://github.com/Sebastian-Getts","zzzqsw@gmail.com"],"image":"avatar.png"},"articleBody":"这是剖析springmvc的第一篇，剖析前的他的原理已经猜的差不多了， 看源码是为了做一个验证，因为他也是依托于spring的，离不开ioc，所以一部分的原理已经清楚了， 剩下的是核心类DispatcherServlet以及为springboot适配而做的工作。\n\n\n\n\nHttpServletBean1234-- HttpServlet    -- HttpServletBean    \t-- FrameworkServlet    \t\t-- DispatcherServlet\n\nHttpServlet我们都知道，是javax提供的类，对所有的http请求做了封装，也是对每个servlet类的具体实现，在springmvc中为了将这个类融入到框架中，首先将他视作bean，添加了一些属性、实现了两个接口：EnvironmentCapable和EnvironmentAware，这两个接口的作用可通过名称或方法名来看（正符合spring的规范的设计）：\n123456public interface EnvironmentCapable&#123;    Environment getEnvironment();&#125;public interface EnvironmentAware extends Aware&#123;    void setEnvironment(Environment environment);\n\n除此之外，HttpServletBean重写了*init()*方法：\n12345678910111213141516171819202122232425public final void init() throws ServletException &#123;   // Set bean properties from init parameters.   PropertyValues pvs = new ServletConfigPropertyValues(getServletConfig(), this.requiredProperties);   if (!pvs.isEmpty()) &#123;      try &#123;          // 使用beanWrapper构造servletBean         BeanWrapper bw = PropertyAccessorFactory.forBeanPropertyAccess(this);         ResourceLoader resourceLoader = new ServletContextResourceLoader(getServletContext());         bw.registerCustomEditor(Resource.class, new ResourceEditor(resourceLoader, getEnvironment()));         initBeanWrapper(bw);         bw.setPropertyValues(pvs, true);      &#125;      catch (BeansException ex) &#123;         if (logger.isErrorEnabled()) &#123;            logger.error(&quot;Failed to set bean properties on servlet &#x27;&quot; + getServletName() + &quot;&#x27;&quot;, ex);         &#125;         throw ex;      &#125;   &#125;    // 子类方法重写，也就是初始化时可以做更多的事情   // Let subclasses do whatever initialization they like.   initServletBean();&#125;\n\nFrameworkServlet这是一个抽象类，但他把控了大方向，正如他的名字一样，充分适配了spring上下文，具体体现在两个方面：\n\n每个servlet都管理着web上下文实例\n事件推送机制\n\n了解上面之前我们还是先顺着HttpServletBean中提到的扩展初始化的机制——留给子类复写的方法*initServletBean()*，看看在这里他是如何实现的：\n1234567891011121314protected final void initServletBean() throws ServletException &#123;    // log...   try &#123;       // 初始化WebApplicationContext，如果不存在的话会先创建      this.webApplicationContext = initWebApplicationContext();       // 留给子类重写      initFrameworkServlet();   &#125;   catch (ServletException | RuntimeException ex) &#123;      logger.error(&quot;Context initialization failed&quot;, ex);      throw ex;   &#125;   // log...&#125;\n\n12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152protected WebApplicationContext initWebApplicationContext() &#123;   WebApplicationContext rootContext =         WebApplicationContextUtils.getWebApplicationContext(getServletContext());   WebApplicationContext wac = null;   if (this.webApplicationContext != null) &#123;      // A context instance was injected at construction time -&gt; use it      wac = this.webApplicationContext;      if (wac instanceof ConfigurableWebApplicationContext) &#123;         ConfigurableWebApplicationContext cwac = (ConfigurableWebApplicationContext) wac;         if (!cwac.isActive()) &#123;            // The context has not yet been refreshed -&gt; provide services such as            // setting the parent context, setting the application context id, etc            if (cwac.getParent() == null) &#123;               // The context instance was injected without an explicit parent -&gt; set               // the root application context (if any; may be null) as the parent               cwac.setParent(rootContext);            &#125;            configureAndRefreshWebApplicationContext(cwac);         &#125;      &#125;   &#125;   if (wac == null) &#123;      // No context instance was injected at construction time -&gt; see if one      // has been registered in the servlet context. If one exists, it is assumed      // that the parent context (if any) has already been set and that the      // user has performed any initialization such as setting the context id      wac = findWebApplicationContext();   &#125;   if (wac == null) &#123;      // No context instance is defined for this servlet -&gt; create a local one      wac = createWebApplicationContext(rootContext);   &#125;   if (!this.refreshEventReceived) &#123;      // Either the context is not a ConfigurableApplicationContext with refresh      // support or the context injected at construction time had already been      // refreshed -&gt; trigger initial onRefresh manually here.      synchronized (this.onRefreshMonitor) &#123;         // 留给子类实现         onRefresh(wac);      &#125;   &#125;   if (this.publishContext) &#123;      // Publish the context as a servlet context attribute.      String attrName = getServletContextAttributeName();      getServletContext().setAttribute(attrName, wac);   &#125;   return wac;&#125;\n\n初始化webApplicationContext时主要做两件事：\n\n关联servlet与容器，做法是设置父上下文\n推送事件\n\nDispatcherServlet我们顺着上面留给子类重写的方法看起，这个类中并没有重写initFrameworkdServlet()，但是重写了onRefresh()方法：\n1234567891011121314151617181920@Overrideprotected void onRefresh(ApplicationContext context) &#123;\tinitStrategies(context);&#125;/** * Initialize the strategy objects that this servlet uses. * &lt;p&gt;May be overridden in subclasses in order to initialize further strategy objects. */protected void initStrategies(ApplicationContext context) &#123;\tinitMultipartResolver(context);\tinitLocaleResolver(context);\tinitThemeResolver(context);\tinitHandlerMappings(context);\tinitHandlerAdapters(context);\tinitHandlerExceptionResolvers(context);\tinitRequestToViewNameTranslator(context);\tinitViewResolvers(context);\tinitFlashMapManager(context);&#125;\n\n也就是说，在初始化阶段会做这么多事情，主要是集中在了这里，包括我们熟悉的HandlerMapping请求映射处理和异常处理HandlerExceptionResolvers等，做的是更具体的功能的实现。\n所以说，HttpServletBean也是继承了HttpServlet的，他做的是完成Bean所需要的工作，如配置环境属性；FrameworkServlet扩展了父类初始化时能做的事情，并且更加适配了spring上下文：有了上下文属性和事件推送；在这个类中，他做的事情更加具体了。\n分发请求上面提到HttpSrevlet对每个请求做了分装，细分了不同种类的请求，如POST、GET等，他的子类HttpServletBean是对bean的一种适配，业务规则没有做什么改变，而FrameworkServlet重写了*service()*方法：\n123456789101112protected void service(HttpServletRequest request, HttpServletResponse response)      throws ServletException, IOException &#123;   HttpMethod httpMethod = HttpMethod.resolve(request.getMethod());    // 判断方法是否是PATHCH或null   if (httpMethod == HttpMethod.PATCH || httpMethod == null) &#123;      processRequest(request, response);   &#125;   else &#123;      super.service(request, response);   &#125;&#125;\n\n12345678910111213141516171819202122232425262728293031323334353637383940protected final void processRequest(HttpServletRequest request, HttpServletResponse response)    throws ServletException, IOException &#123;    long startTime = System.currentTimeMillis();    Throwable failureCause = null;    // 这部分是国际化的处理    LocaleContext previousLocaleContext = LocaleContextHolder.getLocaleContext();    LocaleContext localeContext = buildLocaleContext(request);    RequestAttributes previousAttributes = RequestContextHolder.getRequestAttributes();    ServletRequestAttributes requestAttributes = buildRequestAttributes(request, response, previousAttributes);    WebAsyncManager asyncManager = WebAsyncUtils.getAsyncManager(request);    asyncManager.registerCallableInterceptor(FrameworkServlet.class.getName(), new RequestBindingInterceptor());    initContextHolders(request, localeContext, requestAttributes);    try &#123;        // 留给子类实现，即Dispatcherservlet        doService(request, response);    &#125;    catch (ServletException | IOException ex) &#123;        failureCause = ex;        throw ex;    &#125;    catch (Throwable ex) &#123;        failureCause = ex;        throw new NestedServletException(&quot;Request processing failed&quot;, ex);    &#125;    finally &#123;        resetContextHolders(request, previousLocaleContext, previousAttributes);        if (requestAttributes != null) &#123;            requestAttributes.requestCompleted();        &#125;        logResult(request, response, failureCause, asyncManager);        publishRequestHandledEvent(request, response, startTime, failureCause);    &#125;&#125;\n\n12345678910111213141516171819202122232425262728293031323334353637383940414243444546protected void doService(HttpServletRequest request, HttpServletResponse response) throws Exception &#123;    logRequest(request);    // Keep a snapshot of the request attributes in case of an include,    // to be able to restore the original attributes after the include.    Map&lt;String, Object&gt; attributesSnapshot = null;    // 如果是include请求，特殊处理    if (WebUtils.isIncludeRequest(request)) &#123;        attributesSnapshot = new HashMap&lt;&gt;();        Enumeration&lt;?&gt; attrNames = request.getAttributeNames();        while (attrNames.hasMoreElements()) &#123;            String attrName = (String) attrNames.nextElement();            if (this.cleanupAfterInclude || attrName.startsWith(DEFAULT_STRATEGIES_PREFIX)) &#123;                attributesSnapshot.put(attrName, request.getAttribute(attrName));            &#125;        &#125;    &#125;    // Make framework objects available to handlers and view objects.    request.setAttribute(WEB_APPLICATION_CONTEXT_ATTRIBUTE, getWebApplicationContext());    request.setAttribute(LOCALE_RESOLVER_ATTRIBUTE, this.localeResolver);    request.setAttribute(THEME_RESOLVER_ATTRIBUTE, this.themeResolver);    request.setAttribute(THEME_SOURCE_ATTRIBUTE, getThemeSource());    if (this.flashMapManager != null) &#123;        FlashMap inputFlashMap = this.flashMapManager.retrieveAndUpdate(request, response);        if (inputFlashMap != null) &#123;            request.setAttribute(INPUT_FLASH_MAP_ATTRIBUTE, Collections.unmodifiableMap(inputFlashMap));        &#125;        request.setAttribute(OUTPUT_FLASH_MAP_ATTRIBUTE, new FlashMap());        request.setAttribute(FLASH_MAP_MANAGER_ATTRIBUTE, this.flashMapManager);    &#125;    try &#123;        // 其他请求在这里处理        doDispatch(request, response);    &#125;    finally &#123;        if (!WebAsyncUtils.getAsyncManager(request).isConcurrentHandlingStarted()) &#123;            // Restore the original attribute snapshot, in case of an include.            if (attributesSnapshot != null) &#123;                restoreAttributesAfterInclude(request, attributesSnapshot);            &#125;        &#125;    &#125;&#125;\n\n我们可以看到，在最初的FrameworkServlet中进入到DispatcherServlet中是有条件的，如果不是PATCH或null的方法就进入不了了吗？并不是，看到上面的流程，他会先去执行父类的方法，然后同样会回到DispatcherServlet中的*doDispatcherf()中，更准确的说是processRequest()中，在process之后会紧接着发布事件，FrameworkServlet是针对父类有了较大的业务修改的，重写了很多方法，其中就包括各种doPost()、doGet()*……这些，按照上面的流程，执行父类的请求，就会回到FrameworkServlet类中，而不是HttpServlet：\n123456789101112131415protected final void doGet(HttpServletRequest request, HttpServletResponse response)    throws ServletException, IOException &#123;    processRequest(request, response);&#125;/** * Delegate POST requests to &#123;@link #processRequest&#125;. * @see #doService */@Overrideprotected final void doPost(HttpServletRequest request, HttpServletResponse response)    throws ServletException, IOException &#123;    processRequest(request, response);\n\n\n\n小结以上是这篇的内容，主要介绍要了DispatcherServlet及其父类之间的关系，在融合进spring框架时各自的侧重点。关于请求时如何准确找到对应的controller（也就是没有展开将的*doDispatch(request, response)*方法）将在后面继续分析。\n","dateCreated":"2021-04-06T13:59:49+08:00","dateModified":"2021-04-06T15:56:02+08:00","datePublished":"2021-04-06T13:59:49+08:00","description":"这是剖析springmvc的第一篇，剖析前的他的原理已经猜的差不多了， 看源码是为了做一个验证，因为他也是依托于spring的，离不开ioc，所以一部分的原理已经清楚了， 剩下的是核心类DispatcherServlet以及为springboot适配而做的工作。","headline":"springmvc-dispatcherservlet","image":[],"mainEntityOfPage":{"@type":"WebPage","@id":"http://github.com/sebastian/about/2021/04/06/springmvc-dispatcherservlet/"},"publisher":{"@type":"Organization","name":"Sebastian Getts","sameAs":["https://github.com/Sebastian-Getts","zzzqsw@gmail.com"],"image":"avatar.png","logo":{"@type":"ImageObject","url":"avatar.png"}},"url":"http://github.com/sebastian/about/2021/04/06/springmvc-dispatcherservlet/","keywords":"source"}</script>
-    <meta name="description" content="这是剖析springmvc的第一篇，剖析前的他的原理已经猜的差不多了， 看源码是为了做一个验证，因为他也是依托于spring的，离不开ioc，所以一部分的原理已经清楚了， 剩下的是核心类DispatcherServlet以及为springboot适配而做的工作。">
-<meta property="og:type" content="blog">
-<meta property="og:title" content="springmvc-dispatcherservlet">
-<meta property="og:url" content="http://github.com/sebastian/about/2021/04/06/springmvc-dispatcherservlet/index.html">
-<meta property="og:site_name" content="Hola">
-<meta property="og:description" content="这是剖析springmvc的第一篇，剖析前的他的原理已经猜的差不多了， 看源码是为了做一个验证，因为他也是依托于spring的，离不开ioc，所以一部分的原理已经清楚了， 剩下的是核心类DispatcherServlet以及为springboot适配而做的工作。">
-<meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-04-06T05:59:49.000Z">
-<meta property="article:modified_time" content="2021-04-06T07:56:02.649Z">
-<meta property="article:author" content="Sebastian Getts">
-<meta property="article:tag" content="source">
-<meta name="twitter:card" content="summary">
-    
-    
+    <title>
         
-    
-    
-        <meta property="og:image" content="http://github.com/sebastian/about/assets/images/avatar.png"/>
-    
-    
-    
-    
-    <!--STYLES-->
-    
-<link rel="stylesheet" href="/assets/css/style-xsmpikcbczzhpff1zqybzgesjqcgmkdkx9b5ntr0bkmk6wqucpktuaodiuvy.min.css">
-
-    <!--STYLES END-->
-    
-
-    
-
-    
+            springmvc-dispatcherservlet |
         
+        Sebastian&#39;s blog
+    </title>
     
-</head>
+<link rel="stylesheet" href="/css/style.css">
 
-    <body>
-        <div id="blog">
-            <!-- Define author's picture -->
+    <link rel="shortcut icon" href="/images/logo.svg">
+    
+<link rel="stylesheet" href="/css/font-awesome.min.css">
 
+    <script id="hexo-configurations">
+    let KEEP = window.KEEP || {};
+    KEEP.hexo_config = {"hostname":"github.com","root":"/","language":"en"};
+    KEEP.theme_config = {"toc":{"enable":false,"number":false,"expand_all":false,"init_open":false},"style":{"primary_color":"#0066CC","avatar":"/images/avatar.svg","favicon":"/images/logo.svg","article_img_align":"left","left_side_width":"260px","content_max_width":"920px","hover":{"shadow":false,"scale":false},"first_screen":{"enable":true,"background_img":"/images/bg.svg","description":"I write code to enrich and ease lift of others."},"scroll":{"progress_bar":{"enable":false},"percent":{"enable":false}}},"local_search":{"enable":false,"preload":false},"code_copy":{"enable":false,"style":"default"},"pjax":{"enable":false},"lazyload":{"enable":false},"version":"3.4.3"};
+    KEEP.language_ago = {"second":"%s seconds ago","minute":"%s minutes ago","hour":"%s hours ago","day":"%s days ago","week":"%s weeks ago","month":"%s months ago","year":"%s years ago"};
+  </script>
+<meta name="generator" content="Hexo 5.4.2"></head>
+
+
+<body>
+<div class="progress-bar-container">
+    
 
     
-        
+</div>
+
+
+<main class="page-container">
+
+    
+
+    <div class="page-main-content">
+
+        <div class="page-main-content-top">
+            <header class="header-wrapper">
+
+    <div class="header-content">
+        <div class="left">
             
-        
-    
+                <a class="logo-image" href="/">
+                    <img src="/images/avatar.png">
+                </a>
+            
+            <a class="logo-title" href="/">
+                Sebastian&#39;s blog
+            </a>
+        </div>
 
-<header id="header" data-behavior="4">
-    <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
-    <div class="header-title">
-        <a
-            class="header-title-link"
-            href="/"
-            aria-label=""
-        >
-            Hola
-        </a>
+        <div class="right">
+            <div class="pc">
+                <ul class="menu-list">
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/"
+                            >
+                                HOME
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/archives"
+                            >
+                                ARCHIVES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/categories"
+                            >
+                                CATEGORIES
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/tags"
+                            >
+                                TAGS
+                            </a>
+                        </li>
+                    
+                        <li class="menu-item">
+                            <a class=""
+                               href="/about"
+                            >
+                                ABOUT
+                            </a>
+                        </li>
+                    
+                    
+                </ul>
+            </div>
+            <div class="mobile">
+                
+                <div class="icon-item menu-bar">
+                    <div class="menu-bar-middle"></div>
+                </div>
+            </div>
+        </div>
     </div>
-    
-        
-            <a
-                class="header-right-picture "
-                href="#about"
-                aria-label="Open the link: /#about"
-            >
-        
-        
-            <img class="header-picture" src="/assets/images/avatar.png" alt="Author&#39;s picture"/>
-        
-        </a>
-    
+
+    <div class="header-drawer">
+        <ul class="drawer-menu-list">
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/">HOME</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/archives">ARCHIVES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/categories">CATEGORIES</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/tags">TAGS</a>
+                </li>
+            
+                <li class="drawer-menu-item flex-center">
+                    <a class=""
+                       href="/about">ABOUT</a>
+                </li>
+            
+        </ul>
+    </div>
+
+    <div class="window-mask"></div>
+
 </header>
 
-            <!-- Define author's picture -->
 
+        </div>
 
+        <div class="page-main-content-middle">
+
+            <div class="main-content">
+
+                
+                    <div class="fade-in-down-animation">
+    <div class="article-content-container">
+
+        <div class="article-title">
+            <span class="title-hover-animation">springmvc-dispatcherservlet</span>
+        </div>
 
         
+            <div class="article-header">
+                <div class="avatar">
+                    <img src="/images/avatar.svg">
+                </div>
+                <div class="info">
+                    <div class="author">
+                        <span class="name">Sebastian</span>
+                        
+                            <span class="author-label">Lv4</span>
+                        
+                    </div>
+                    <div class="meta-info">
+                        <div class="article-meta-info">
+    <span class="article-date article-meta-item">
+        <i class="fas fa-edit"></i>&nbsp;2021-04-06 13:59:49
+    </span>
+    
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/springmvc/">springmvc</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/source/">source</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
     
 
-<nav id="sidebar" data-behavior="4">
-    <div class="sidebar-container">
-        
-            <div class="sidebar-profile">
-                <a
-                    href="/#about"
-                    aria-label="Read more about the author"
-                >
-                    <img class="sidebar-profile-picture" src="/assets/images/avatar.png" alt="Author&#39;s picture"/>
-                </a>
-                <h4 class="sidebar-profile-name">Sebastian Getts</h4>
-                
-                    <h5 class="sidebar-profile-bio"><p>I write code to enrich and ease life of others.</p>
-</h5>
-                
+    
+    
+    
+    
+</div>
+
+                    </div>
+                </div>
             </div>
         
-        
-            <ul class="sidebar-buttons">
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="/"
-                            
-                            rel="noopener"
-                            title="Home"
-                        >
-                        <i class="sidebar-button-icon fa fa-home" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Home</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="/all-categories"
-                            
-                            rel="noopener"
-                            title="Categories"
-                        >
-                        <i class="sidebar-button-icon fa fa-bookmark" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Categories</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="/all-tags"
-                            
-                            rel="noopener"
-                            title="Tags"
-                        >
-                        <i class="sidebar-button-icon fa fa-tags" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Tags</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="/all-archives"
-                            
-                            rel="noopener"
-                            title="Archives"
-                        >
-                        <i class="sidebar-button-icon fa fa-archive" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Archives</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="#about"
-                            
-                            rel="noopener"
-                            title="About"
-                        >
-                        <i class="sidebar-button-icon fa fa-question" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">About</span>
-                    </a>
-            </li>
-            
-        </ul>
-        
-            <ul class="sidebar-buttons">
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="https://github.com/Sebastian-Getts"
-                            
-                                target="_blank"
-                            
-                            rel="noopener"
-                            title="GitHub"
-                        >
-                        <i class="sidebar-button-icon fab fa-github" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">GitHub</span>
-                    </a>
-            </li>
-            
-                <li class="sidebar-button">
-                    
-                        <a
-                            class="sidebar-button-link "
-                            href="/zzzqsw@gmail.com"
-                            
-                            rel="noopener"
-                            title="Mail"
-                        >
-                        <i class="sidebar-button-icon fa fa-envelope" aria-hidden="true"></i>
-                        <span class="sidebar-button-desc">Mail</span>
-                    </a>
-            </li>
-            
-        </ul>
-        
-    </div>
-</nav>
 
-            
-            <div id="main" data-behavior="4"
-                 class="
-                        hasCoverMetaIn
-                        ">
-                
-<article class="post">
-    
-    
-        <div class="post-header main-content-wrap text-left">
-    
-        <h1 class="post-title">
-            springmvc-dispatcherservlet
-        </h1>
-    
-    
-        <div class="post-meta">
-    <time datetime="2021-04-06T13:59:49+08:00">
-	
-		    Apr 06, 2021
-    	
-    </time>
-    
-        <span>in </span>
-        
-    <a class="category-link" href="/categories/springmvc/">springmvc</a>
-
-
-    
-</div>
-
-    
-</div>
-
-    
-    <div class="post-content markdown">
-        <div class="main-content-wrap">
+        <div class="article-content markdown-body">
             <p>这是剖析springmvc的第一篇，剖析前的他的原理已经猜的差不多了， 看源码是为了做一个验证，因为他也是依托于spring的，离不开ioc，所以一部分的原理已经清楚了， 剩下的是核心类<code>DispatcherServlet</code>以及为springboot适配而做的工作。</p>
 <span id="more"></span>
 
-<h1 id="table-of-contents">Table of Contents</h1><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#HttpServletBean"><span class="toc-text">HttpServletBean</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FrameworkServlet"><span class="toc-text">FrameworkServlet</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DispatcherServlet"><span class="toc-text">DispatcherServlet</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E5%8F%91%E8%AF%B7%E6%B1%82"><span class="toc-text">分发请求</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B0%8F%E7%BB%93"><span class="toc-text">小结</span></a></li></ol>
+<!-- toc -->
 
 <h1 id="HttpServletBean"><a href="#HttpServletBean" class="headerlink" title="HttpServletBean"></a>HttpServletBean</h1><figure class="highlight properties"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">--</span> <span class="string">HttpServlet</span></span><br><span class="line">    <span class="meta">--</span> <span class="string">HttpServletBean</span></span><br><span class="line">    	<span class="meta">--</span> <span class="string">FrameworkServlet</span></span><br><span class="line">    		<span class="meta">--</span> <span class="string">DispatcherServlet</span></span><br></pre></td></tr></table></figure>
 
@@ -307,336 +265,174 @@
 
 <h1 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h1><p>以上是这篇的内容，主要介绍要了DispatcherServlet及其父类之间的关系，在融合进spring框架时各自的侧重点。关于请求时如何准确找到对应的controller（也就是没有展开将的*doDispatch(request, response)*方法）将在后面继续分析。</p>
 
-            
-
-
         </div>
-    </div>
-    <div id="post-footer" class="post-footer main-content-wrap">
-        
-            <div class="post-footer-tags">
-                <span class="text-color-light text-small">TAGGED IN</span><br/>
-                
-    <a class="tag tag--primary tag--small t-none-link" href="/tags/source/" rel="tag">source</a>
 
+        
+
+        
+            <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                           rel="prev"
+                           href="/2021/04/06/springmvc-dispatch/"
+                        >
+                            <span class="left arrow-icon flex-center">
+                              <i class="fas fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">springmvc-dispatch</span>
+                                <span class="post-nav-item">Prev posts</span>
+                            </span>
+                        </a>
+                    </div>
+                
+                
+                    <div class="article-next">
+                        <a class="next"
+                           rel="next"
+                           href="/2021/03/23/jvm-memory-manage/"
+                        >
+                            <span class="title flex-center">
+                                <span class="post-nav-title-item">jvm memory-manage</span>
+                                <span class="post-nav-item">Next posts</span>
+                            </span>
+                            <span class="right arrow-icon flex-center">
+                              <i class="fas fa-chevron-right"></i>
+                            </span>
+                        </a>
+                    </div>
+                
             </div>
         
+
         
-            <div class="post-actions-wrap">
-    <nav>
-        <ul class="post-actions post-action-nav">
-            <li class="post-action">
-                
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/2021/04/06/springmvc-dispatch/"
-                    data-tooltip="springmvc-dispatch"
-                    aria-label="PREVIOUS: springmvc-dispatch"
-                >
-                    
-                        <i class="fa fa-angle-left" aria-hidden="true"></i>
-                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
-                    </a>
-            </li>
-            <li class="post-action">
-                
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/2021/03/23/jvm-memory-manage/"
-                    data-tooltip="jvm memory-manage"
-                    aria-label="NEXT: jvm memory-manage"
-                >
-                    
-                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
-                        <i class="fa fa-angle-right" aria-hidden="true"></i>
-                    </a>
-            </li>
-        </ul>
-    </nav>
-    <ul class="post-actions post-action-share">
-        <li class="post-action hide-lg hide-md hide-sm">
-            <a
-                class="post-action-btn btn btn--default btn-open-shareoptions"
-                href="#btn-open-shareoptions"
-                aria-label="Share this post"
-            >
-                <i class="fa fa-share-alt" aria-hidden="true"></i>
-            </a>
-        </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/04/06/springmvc-dispatcherservlet/"
-                    title="Share on Facebook"
-                    aria-label="Share on Facebook"
-                >
-                    <i class="fab fa-facebook" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/04/06/springmvc-dispatcherservlet/"
-                    title="Share on Twitter"
-                    aria-label="Share on Twitter"
-                >
-                    <i class="fab fa-twitter" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/04/06/springmvc-dispatcherservlet/"
-                    title="Share on Google+"
-                    aria-label="Share on Google+"
-                >
-                    <i class="fab fa-google-plus" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-        
-            
-        
-        <li class="post-action">
-            
-                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
-            
-                <i class="fa fa-list" aria-hidden="true"></i>
-            </a>
-        </li>
-    </ul>
+    </div>
 </div>
 
 
-        
-        
+                
+            </div>
+
+        </div>
+
+        <div class="page-main-content-bottom">
+            <footer class="footer">
+    <div class="info-container">
+        <div class="copyright-info info-item">
+            &copy;
             
+              <span>2020</span>
+              -
+            
+            2022&nbsp;<i class="fas fa-heart icon-animate"></i>&nbsp;<a href="/">Sebastian</a>
+        </div>
+        
+        <div class="theme-info info-item">
+            Powered by <a target="_blank" href="https://hexo.io">Hexo</a>&nbsp;|&nbsp;Theme&nbsp;<a class="theme-version" target="_blank" href="https://github.com/XPoet/hexo-theme-keep">Keep v3.4.3</a>
+        </div>
+        
         
     </div>
-</article>
-
-
-
-                <footer id="footer" class="main-content-wrap">
-    <span class="copyrights">
-        Copyrights &copy; 2021 Sebastian Getts. All Rights Reserved.
-    </span>
 </footer>
 
-            </div>
-            
-                <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
-                    <div class="post-actions-wrap">
-    <nav>
-        <ul class="post-actions post-action-nav">
-            <li class="post-action">
-                
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/2021/04/06/springmvc-dispatch/"
-                    data-tooltip="springmvc-dispatch"
-                    aria-label="PREVIOUS: springmvc-dispatch"
-                >
-                    
-                        <i class="fa fa-angle-left" aria-hidden="true"></i>
-                        <span class="hide-xs hide-sm text-small icon-ml">PREVIOUS</span>
-                    </a>
-            </li>
-            <li class="post-action">
-                
-                    
-                <a
-                    class="post-action-btn btn btn--default tooltip--top"
-                    href="/2021/03/23/jvm-memory-manage/"
-                    data-tooltip="jvm memory-manage"
-                    aria-label="NEXT: jvm memory-manage"
-                >
-                    
-                        <span class="hide-xs hide-sm text-small icon-mr">NEXT</span>
-                        <i class="fa fa-angle-right" aria-hidden="true"></i>
-                    </a>
-            </li>
-        </ul>
-    </nav>
-    <ul class="post-actions post-action-share">
-        <li class="post-action hide-lg hide-md hide-sm">
-            <a
-                class="post-action-btn btn btn--default btn-open-shareoptions"
-                href="#btn-open-shareoptions"
-                aria-label="Share this post"
-            >
-                <i class="fa fa-share-alt" aria-hidden="true"></i>
-            </a>
-        </li>
+        </div>
+    </div>
+
+    
+        <div class="post-tools">
+            <div class="post-tools-container">
+    <ul class="tools-list">
+        <!-- TOC aside toggle -->
         
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/04/06/springmvc-dispatcherservlet/"
-                    title="Share on Facebook"
-                    aria-label="Share on Facebook"
-                >
-                    <i class="fab fa-facebook" aria-hidden="true"></i>
-                </a>
-            </li>
+
+        <!-- go comment -->
         
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/04/06/springmvc-dispatcherservlet/"
-                    title="Share on Twitter"
-                    aria-label="Share on Twitter"
-                >
-                    <i class="fab fa-twitter" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-            
-            
-            <li class="post-action hide-xs">
-                <a
-                    class="post-action-btn btn btn--default"
-                    target="new" href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/04/06/springmvc-dispatcherservlet/"
-                    title="Share on Google+"
-                    aria-label="Share on Google+"
-                >
-                    <i class="fab fa-google-plus" aria-hidden="true"></i>
-                </a>
-            </li>
-        
-        
-            
-        
-        <li class="post-action">
-            
-                <a class="post-action-btn btn btn--default" href="#table-of-contents" aria-label="Table of Contents">
-            
-                <i class="fa fa-list" aria-hidden="true"></i>
-            </a>
-        </li>
     </ul>
 </div>
 
-
-                </div>
-                
-    <div id="share-options-bar" class="share-options-bar" data-behavior="4">
-        <i id="btn-close-shareoptions" class="fa fa-times"></i>
-        <ul class="share-options">
-            
-                
-                
-                <li class="share-option">
-                    <a
-                        class="share-option-btn"
-                        target="new"
-                        href="https://www.facebook.com/sharer/sharer.php?u=http://github.com/sebastian/about/2021/04/06/springmvc-dispatcherservlet/"
-                        aria-label="Share on Facebook"
-                    >
-                        <i class="fab fa-facebook" aria-hidden="true"></i><span>Share on Facebook</span>
-                    </a>
-                </li>
-            
-                
-                
-                <li class="share-option">
-                    <a
-                        class="share-option-btn"
-                        target="new"
-                        href="https://twitter.com/intent/tweet?text=http://github.com/sebastian/about/2021/04/06/springmvc-dispatcherservlet/"
-                        aria-label="Share on Twitter"
-                    >
-                        <i class="fab fa-twitter" aria-hidden="true"></i><span>Share on Twitter</span>
-                    </a>
-                </li>
-            
-                
-                
-                <li class="share-option">
-                    <a
-                        class="share-option-btn"
-                        target="new"
-                        href="https://plus.google.com/share?url=http://github.com/sebastian/about/2021/04/06/springmvc-dispatcherservlet/"
-                        aria-label="Share on Google+"
-                    >
-                        <i class="fab fa-google-plus" aria-hidden="true"></i><span>Share on Google+</span>
-                    </a>
-                </li>
-            
-        </ul>
-    </div>
-
-
-            
         </div>
-        
-
-
-    
-        
     
 
-<div id="about">
-    <div id="about-card">
-        <div id="about-btn-close">
-            <i class="fa fa-times"></i>
-        </div>
-        
-            <img id="about-card-picture" src="/assets/images/avatar.png" alt="Author&#39;s picture"/>
-        
-            <h4 id="about-card-name">Sebastian Getts</h4>
-        
-            <div id="about-card-bio"><p>I write code to enrich and ease life of others.</p>
-</div>
-        
-        
-            <div id="about-card-job">
-                <i class="fa fa-briefcase"></i>
-                <br/>
-                <p>Software Engineer</p>
+    <div class="right-bottom-side-tools">
+        <div class="side-tools-container">
+    <ul class="side-tools-list">
+        <li class="tools-item tool-font-adjust-plus flex-center">
+            <i class="fas fa-search-plus"></i>
+        </li>
 
-            </div>
+        <li class="tools-item tool-font-adjust-minus flex-center">
+            <i class="fas fa-search-minus"></i>
+        </li>
+
+        <li class="tools-item tool-expand-width flex-center">
+            <i class="fas fa-arrows-alt-h"></i>
+        </li>
+
+        <li class="tools-item tool-dark-light-toggle flex-center">
+            <i class="fas fa-moon"></i>
+        </li>
+
+        <!-- rss -->
         
+
         
-            <div id="about-card-location">
-                <i class="fa fa-map-marker-alt"></i>
-                <br/>
-                Shenzhen China
-            </div>
+            <li class="tools-item tool-scroll-to-top flex-center">
+                <i class="fas fa-arrow-up"></i>
+            </li>
         
-    </div>
+
+        <li class="tools-item tool-scroll-to-bottom flex-center">
+            <i class="fas fa-arrow-down"></i>
+        </li>
+    </ul>
+
+    <ul class="exposed-tools-list">
+        <li class="tools-item tool-toggle-show flex-center">
+            <i class="fas fa-cog fa-spin"></i>
+        </li>
+        
+    </ul>
 </div>
 
-        
-        
-<div id="cover" style="background-image:url('/assets/images/cover-v1.2.0.jpg');"></div>
-        <!--SCRIPTS-->
+    </div>
 
-<script src="/assets/js/script-jsoeqoqa2ajw9nwj0xf5gmftvb2jhopk3sxu8iodabvev2jdlmr0zsitv3jm.min.js"></script>
+    
 
-<!--SCRIPTS END-->
+    <div class="image-viewer-container">
+    <img src="">
+</div>
 
 
     
 
+</main>
 
 
 
-    </body>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/main.js"></script>
+
+<script src="/js/header-shrink.js"></script>
+
+<script src="/js/back2top.js"></script>
+
+<script src="/js/dark-light-toggle.js"></script>
+
+
+
+
+
+
+
+
+<div class="post-scripts">
+    
+</div>
+
+
+
+</body>
 </html>
