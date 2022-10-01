@@ -9,7 +9,7 @@
     
     <title>
         
-            2022_mid_summary |
+            spring_transactional |
         
         Sebastian&#39;s blog
     </title>
@@ -161,7 +161,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">2022_mid_summary</span>
+            <span class="title-hover-animation">spring_transactional</span>
         </div>
 
         
@@ -179,9 +179,31 @@
                     <div class="meta-info">
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
-        <i class="fas fa-edit"></i>&nbsp;2022-05-14 13:53:16
+        <i class="fas fa-edit"></i>&nbsp;2022-09-01 11:13:45
     </span>
     
+        <span class="article-categories article-meta-item">
+            <i class="fas fa-folder"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/categories/Spring/">Spring</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
+    
+    
+        <span class="article-tags article-meta-item">
+            <i class="fas fa-tags"></i>&nbsp;
+            <ul>
+                
+                    <li>
+                        <a href="/tags/transaction/">transaction</a>&nbsp;
+                    </li>
+                
+            </ul>
+        </span>
     
 
     
@@ -196,33 +218,14 @@
         
 
         <div class="article-content markdown-body">
-            <p>从2021的年中到现在，将近一年的时间，疫情此起彼伏。</p>
-<p>这一年我换了工作，想多了解一些业务，除了编程之外的业务，将代码与之结合，我想这样会更产生更大的能量。目前在一家金融公司任职做开发工程师，初次接触金融，蛮有意思的。</p>
-<p>除了写代码，还应该有更多的个人能力，包括项目管理、需求、沟通等能力，要在新的环境历炼。</p>
+            <p>在Spring中事务是如何处理的，事务的传播机制又是怎样的。</p>
 <span id="more"></span>
 
-<h2 id="2021年底"><a href="#2021年底" class="headerlink" title="2021年底"></a>2021年底</h2><p>截止到2021年底，flag完成度不高，最大的变量是新的工作。业务熟悉不达预期，因此花费了大量的时间在这上面。原本的系统架构师考试因为疫情甚至都没有去现场考试，当然最大的原因在于个人时间安排规划上面，没有拿到核酸检测导致不能入考场。</p>
-<p>查看2021年中安排的所有计划，只有“逃避虽可耻但有用”、“金融知识”以及“项目管理”做了，而且是完成度最高的算是看剧了，后面两个仍然有很大的提升空间。</p>
-<p>这一年我开始记账了，分析自己的财务状况。</p>
-<h2 id="2022-年初"><a href="#2022-年初" class="headerlink" title="2022 年初"></a>2022 年初</h2><p>年初的规划一直没有放到这里，整体规划延续2021的。</p>
-<ul>
-<li>跟入一项新的开源项目，要有提交贡献！！（学习项目架构和设计）</li>
-<li>熟悉vue，做到全栈。从小程序的角度去学习vue，应该会很快。这人很单独开一个repo放在github上面。</li>
-<li>学习项目管理！PMP安排上！</li>
-<li>学习金融知识，完成一些书的阅读与笔记整理，从小白进化成小黑</li>
-<li>算法和数据结构，进阶，多语言的练习，上面提到了vue，所以后续可以用js去刷 。有时间的情况下可以战CodeForces</li>
-<li>408：基础知识都熟悉了，该刷题巩固了</li>
-<li>数学：概率论、线性代数、高数等。</li>
-<li>Java紧跟潮流，新版本，新特性，以及JVM。</li>
-<li>个人原因，单身了，要多投资自己。</li>
-<li>多到外面走走，开放一些，在深圳要利用好这个大城市的资源，开阔视野。</li>
-<li>基金从业资格证</li>
-<li>系统分析师、系统架构师</li>
-<li>金融科技师</li>
-</ul>
-<h2 id="2022-年中"><a href="#2022-年中" class="headerlink" title="2022 年中"></a>2022 年中</h2><p>年中，半年过去了。原本的基金从业资格证延期到七月，马上到来系统分析师的考试。工作上的业务还没有完全吃透。原本想上半年考到PMP的，现在看来得推到下半年了。上半年去了趟阳朔，风景真不错，算是“到外面走走”达标。</p>
-<p>工作方面上半年交到手上一项单元测试的任务，让我对项目质量、项目管理有了新的认识，诚然这是一个开发工程师需要掌握的基本内容……。</p>
-<p>还有关于系统负责人这个角色，颇有感触。我认为，项目负责人应该能够有架构师的能力，一个良好的状态是：系统负责人/架构师评估一个需求，出具方案、做设计，新手开发做编码工作，架构师审核，不合格的退回重改；同时核心模块的编码工作也应该由架构师来完成。这样才是一个良性循环，才能保证项目质量。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMyTransaction</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">	<span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们看到有两个关键的参数，一个是接受就滚时的异常类型，另一个是传播机制。</p>
+<h2 id="传播机制"><a href="#传播机制" class="headerlink" title="传播机制"></a>传播机制</h2><p>稍微复杂些的代码中会出现事务嵌套事务的情况，这就会涉及到事务传播。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">Propagation</span> </span>&#123;</span><br><span class="line">    REQUIRED(<span class="number">0</span>),</span><br><span class="line">    SUPPORTS(<span class="number">1</span>),</span><br><span class="line">    MANDATORY(<span class="number">2</span>),</span><br><span class="line">    REQUIRES_NEW(<span class="number">3</span>),</span><br><span class="line">    NOT_SUPPORTED(<span class="number">4</span>),</span><br><span class="line">    NEVER(<span class="number">5</span>),</span><br><span class="line">    NESTED(<span class="number">6</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> value;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Propagation</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">value</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>看到如上所示，对应的传播机制有<strong>7种</strong>，其中默认的是<code>REQUIRED</code>。<br>｜传播类型｜释义｜<br>｜-｜-｜<br>｜REQUIRED|Support a current transaction, create a new one if none exists|<br>|SUPPORTS|Support a current transaction, execute non-transactionally if none exists|<br>|MANDATORY|Support a current transaction, throw an exception if none exists|<br>|REQUIRES_NEW|<strong>Create</strong> a new transaction, and suspend the current transaction if one exists|<br>|NOT_SUPPORTED|Execute non-transactionally, suspend the current transaction if one exists|<br>|NEVER|Execute non-transactionally, throw an exception if a transaction exists|<br>|NESTED|Executed within a nested transaction if a current transaction exists, behave like REQUIRED otherwise|</p>
 
         </div>
 
@@ -231,29 +234,14 @@
         
             <div class="article-nav">
                 
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/2022/09/01/Apollo-01/"
-                        >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">Apollo_01</span>
-                                <span class="post-nav-item">Prev posts</span>
-                            </span>
-                        </a>
-                    </div>
-                
                 
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/2021/06/27/leetcode-contest-55-247/"
+                           href="/2022/09/01/Apollo-01/"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">leetcode_contest_55&amp;247</span>
+                                <span class="post-nav-title-item">Apollo_01</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                             <span class="right arrow-icon flex-center">
