@@ -1,7 +1,8 @@
 ---
 title: ArrangementAndCombination
 date: 2022-09-30 16:59:04
-tags:Leetcode
+categories: Java
+tags: Leetcode
 ---
 
 本文整理排列组合相关的算法，包含各类可能存在的附加条件。相关列题参考Leetcode的`combination sum`以及`subset`系列。
@@ -16,10 +17,10 @@ tags:Leetcode
     public List<List<Integer>> combinationSum(int[] candidates, int target) {
         List<List<Integer>> list = new ArrayList<>();
         helper(list, new ArrayList<>(), candidates, target, 0);
-        
+
         return list;
     }
-    
+
     public void helper(List<List<Integer>> list, List<Integer> tempList, int[] candidates, int target, int start) {
         if(target <= 0) {
             // target为0时符合要求，小于0的舍弃。
@@ -51,10 +52,10 @@ Output: [[2,2,2,2],[2,3,3],[3,5]]
         // 先对数据排序，用于后续判断nusm[i]、nums[i-1]时使用
         Arrays.sort(candidates);
         helper(list, new ArrayList<>(), candidates, target, 0);
-        
+
         return list;
     }
-    
+
     public void helper(List<List<Integer>> list, List<Integer> templist, int[] nums, int target, int start) {
         if(target <= 0) {
             if(target == 0) list.add(new ArrayList<>(templist));
@@ -81,10 +82,10 @@ Output: [[2,2,2,2],[2,3,3],[3,5]]
         List<List<Integer>> list = new ArrayList<>();
         int[] nums = {1,2,3,4,5,6,7,8,9};
         helper(list, new ArrayList<>(), nums, 0, n, k);
-        
+
         return list;
     }
-    
+
     public void helper(List<List<Integer>> list, List<Integer> templist, int[] nums, int start, int target, int k) {
         // 与其他的情况相比，这里多了长度限制和对目标值的判断
         if(target <= 0 && templist.size() == k) {
