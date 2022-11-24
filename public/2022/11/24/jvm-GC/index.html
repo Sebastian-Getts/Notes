@@ -9,7 +9,7 @@
     
     <title>
         
-            spring_transactional |
+            jvm-GC |
         
         Sebastian&#39;s blog
     </title>
@@ -161,7 +161,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">spring_transactional</span>
+            <span class="title-hover-animation">jvm-GC</span>
         </div>
 
         
@@ -179,7 +179,7 @@
                     <div class="meta-info">
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
-        <i class="fas fa-edit"></i>&nbsp;2022-09-01 11:13:45
+        <i class="fas fa-edit"></i>&nbsp;2022-11-24 14:11:47
     </span>
     
         <span class="article-categories article-meta-item">
@@ -187,7 +187,7 @@
             <ul>
                 
                     <li>
-                        <a href="/categories/Spring/">Spring</a>&nbsp;
+                        <a href="/categories/JVM/">JVM</a>&nbsp;
                     </li>
                 
             </ul>
@@ -199,7 +199,7 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/transaction/">transaction</a>&nbsp;
+                        <a href="/tags/GC/">GC</a>&nbsp;
                     </li>
                 
             </ul>
@@ -218,52 +218,66 @@
         
 
         <div class="article-content markdown-body">
-            <p>在Spring中事务是如何处理的，事务的传播机制又是怎样的。</p>
-<span id="more"></span>
-
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Transactional(rollbackFor = Exception.class, propagation = Propagation.REQUIRED)</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">testMyTransaction</span><span class="params">(String s)</span> </span>&#123;</span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>我们看到有两个关键的参数，一个是接受就滚时的异常类型，另一个是传播机制。</p>
-<h2 id="传播机制"><a href="#传播机制" class="headerlink" title="传播机制"></a>传播机制</h2><p>稍微复杂些的代码中会出现事务嵌套事务的情况，这就会涉及到事务传播。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">enum</span> <span class="title">Propagation</span> </span>&#123;</span><br><span class="line">    REQUIRED(<span class="number">0</span>),</span><br><span class="line">    SUPPORTS(<span class="number">1</span>),</span><br><span class="line">    MANDATORY(<span class="number">2</span>),</span><br><span class="line">    REQUIRES_NEW(<span class="number">3</span>),</span><br><span class="line">    NOT_SUPPORTED(<span class="number">4</span>),</span><br><span class="line">    NEVER(<span class="number">5</span>),</span><br><span class="line">    NESTED(<span class="number">6</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> value;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">Propagation</span><span class="params">(<span class="keyword">int</span> value)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.value = value;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">value</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.value;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>看到如上所示，对应的传播机制有<strong>7种</strong>，其中默认的是<code>REQUIRED</code>。</p>
-<table>
-<thead>
-<tr>
-<th>传播类型</th>
-<th>含义</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>REQUIRED</td>
-<td>Support a current transaction, create a new one if none exists</td>
-</tr>
-<tr>
-<td>SUPPORTS</td>
-<td>Support a current transaction, execute non-transactionally if none exists</td>
-</tr>
-<tr>
-<td>MANDATORY</td>
-<td>Support a current transaction, throw an exception if none exists</td>
-</tr>
-<tr>
-<td>REQUIRES_NEW</td>
-<td>Create** a new transaction, and suspend the current transaction if one exists</td>
-</tr>
-<tr>
-<td>NOT_SUPPORTED</td>
-<td>Execute non-transactionally, suspend the current transaction if one exists</td>
-</tr>
-<tr>
-<td>NEVER</td>
-<td>Execute non-transactionally, throw an exception if a transaction exists</td>
-</tr>
-<tr>
-<td>NESTED</td>
-<td>Executed within a nested transaction if a current transaction exists, behave like REQUIRED otherwise</td>
-</tr>
-</tbody></table>
+            <p>这一篇聊聊java虚拟机中的垃圾回收，梳理目前我所掌握的有关内容，当谈到此话题时应该从哪几个方面去深入交流，体现专业性，供查漏补缺，必要时再更新。</p>
+<h2 id="JVM的运行时数据区"><a href="#JVM的运行时数据区" class="headerlink" title="JVM的运行时数据区"></a>JVM的运行时数据区</h2><blockquote>
+<p>从这个角度去理解GC的必要性以及发生的区域、重点关注区域</p>
+</blockquote>
+<p>JVM中的运行时数据区主要有堆、栈、方法区、虚拟机栈以及程序计数器。其中会发生GC的区域为堆、栈和方法区。</p>
+<p>堆：存放Java对象的地方，是GC的主要场所，当没有区域来存放对象时会抛出<strong>OutOfMemoryError</strong>。</p>
+<p>方法区：各个线程共享，用于存储被虚拟机加载的类型信息、常量、静态变量等信息。回收时主要针对常量池的回收和类型的卸载，对类型的卸载有严格的条件限制，一般不会发生。如果方法区没有足够的空间去存储新的内容，会抛出<strong>OutOfMemoryError</strong>。</p>
+<h2 id="垃圾回收算法"><a href="#垃圾回收算法" class="headerlink" title="垃圾回收算法"></a>垃圾回收算法</h2><blockquote>
+<p>虽然叫算法，也可以理解为垃圾回收方式，不同的算法都围绕的可用性来做，也以不影响用户程序为目标来改进，减少<em>stop the world</em>的影响。</p>
+</blockquote>
+<p>标记清除</p>
+<p>标记复制</p>
+<p>标记整理</p>
+<p>以上三种算法的原理都在字面意义上了，之所以会有这些不同的算法，主要是考虑到分代的思想以及内存的利用率，减少内存碎片。</p>
+<h2 id="垃圾回收器"><a href="#垃圾回收器" class="headerlink" title="垃圾回收器"></a>垃圾回收器</h2><blockquote>
+<p>GC时的主要参与者之一，有哪些回收器是可供选择的，各自的区别及特点是什么？</p>
+</blockquote>
+<p>现代垃圾回收器都是基于分代收集理论设计的。对于新生代，对象存活时间短，对于老年代，存放大的且长时间存货的对象，各自的收集风格不同。</p>
+<ul>
+<li><p>Serial</p>
+</li>
+<li><p>ParNew</p>
+</li>
+<li><p>Parallel Scavenge</p>
+</li>
+<li><p>Serial Old</p>
+</li>
+<li><p>Parallel Old</p>
+</li>
+<li><p>CMS</p>
+</li>
+<li><p>Garbage First</p>
+</li>
+<li><p>Shenandoah</p>
+</li>
+<li><p>ZGC</p>
+</li>
+<li><p>Epsilon</p>
+</li>
+</ul>
+<h2 id="GC-Root"><a href="#GC-Root" class="headerlink" title="GC Root"></a>GC Root</h2><p>GC时的另一个主要参与者，哪些对象是要回收的，如何判断</p>
+<p>从GC Root开始去查相关引用，任何直接或非直接引用到的对象都不在GC的目标内。</p>
+<p>系统类加载器加载的类，也包含其静态变量</p>
+<p>存储在栈中的本地变量和方法参数</p>
+<p>活跃的线程</p>
+<p>native栈中的对象、参数</p>
+<p>用于同步的对象</p>
+<h2 id="OOM"><a href="#OOM" class="headerlink" title="OOM"></a>OOM</h2><p>垃圾回收也无法保证JVM的正常使用，集体罢工了，这种情况怎么办<del>（很无奈，至今没遇到过）</del></p>
+<ol>
+<li><p>通过分析工具对dump出来的快照进行分析，明确内存中导致OOM的对象是否是必要的， 以此区分是<em>Memory Leak</em>还是<em>Memory Overflow</em>。</p>
+<ul>
+<li>如果是内存泄漏，可以进一步通过工具找到GC Root引用链，可以看到如何引用到，然后一步步定位到代码的具体位置。</li>
+</ul>
+</li>
+<li><p>检查JVM的参数设置”-Xmx, -Xms”，与机器内存做对比，看看是否还有向上调整的空间</p>
+</li>
+<li><p>从代码上检查是否某些对象的生存周期过长、持有状态时间过长、数据结构不合理等情况，减少程序运行周期的内存消耗。</p>
+</li>
+</ol>
+<h3 id="Memory-Leak"><a href="#Memory-Leak" class="headerlink" title="Memory Leak"></a>Memory Leak</h3><p>对象在堆中不再使用了，但无法通过GC回收，如果不加处理，堆中资源会被消耗殆尽，进造成OOM。</p>
 
         </div>
 
@@ -272,29 +286,14 @@
         
             <div class="article-nav">
                 
-                    <div class="article-prev">
-                        <a class="prev"
-                           rel="prev"
-                           href="/2022/11/24/jvm-GC/"
-                        >
-                            <span class="left arrow-icon flex-center">
-                              <i class="fas fa-chevron-left"></i>
-                            </span>
-                            <span class="title flex-center">
-                                <span class="post-nav-title-item">jvm-GC</span>
-                                <span class="post-nav-item">Prev posts</span>
-                            </span>
-                        </a>
-                    </div>
-                
                 
                     <div class="article-next">
                         <a class="next"
                            rel="next"
-                           href="/2022/09/01/Apollo-01/"
+                           href="/2022/09/01/spring-transactional/"
                         >
                             <span class="title flex-center">
-                                <span class="post-nav-title-item">Apollo_01</span>
+                                <span class="post-nav-title-item">spring_transactional</span>
                                 <span class="post-nav-item">Next posts</span>
                             </span>
                             <span class="right arrow-icon flex-center">
