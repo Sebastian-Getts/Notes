@@ -1,7 +1,7 @@
 ---
 title: https
 date: 2020-03-14 10:43:29
-categories: Network
+categories: network
 tags: ['http','https']
 ---
 
@@ -16,8 +16,6 @@ How to encrypt communication? Through referred to as **HTTP over TLS**, or **HTT
 
 # HTTP与HTTPS
 
-
-
 ## Difference
 
 HTTPS的URL地址开头是`https://`，默认使用的的端口是`443`，在http与TCP之间加入了SSL或者TSL，它的设计就是为了防止信息被窃取，会对包括header在内的整个信息加密。
@@ -25,8 +23,6 @@ HTTPS的URL地址开头是`https://`，默认使用的的端口是`443`，在htt
 ---
 
 HTTP的URL地址开头是`http://`，默认使用的端口是`80`，他没有使用加密，直接通过TCP来进行传输，因此传输过程中的敏感信息有被窃听、攻击的风险。
-
-
 
 ## 加密过程
 
@@ -49,4 +45,3 @@ HTTP的URL地址开头是`http://`，默认使用的端口是`80`，他没有使
 **小结**：用非对称加密来加密对称加密的密钥，发送的报文是用堆成加密来加密的，服务端私钥解密获取堆成加密的密钥，用它来解开密文。采用非对称加密是因为安全性，采用对称加密是因为速度快。
 
 ## TLS VS SSL
-

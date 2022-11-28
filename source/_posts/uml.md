@@ -32,8 +32,6 @@ Class <|-- SubClass1
 Class <|-- SubClass2 
 ```
 
-
-
 ---
 
 ## Simple Association
@@ -46,8 +44,6 @@ Class <|-- SubClass2
 classDiagram
 Class1 .. Class2
 ```
-
-
 
 ---
 
@@ -92,6 +88,3 @@ Class1 *-- Class2
 classDiagram
 Class1 ..> Class2
 ```
-
-
-

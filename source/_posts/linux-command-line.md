@@ -1,7 +1,7 @@
 ---
 title: linux-command-line
 date: 2021-04-20 14:12:03
-categories: Linux
+categories: linux
 tags: utils
 ---
 
@@ -16,21 +16,19 @@ tags: utils
 # 系统
 
 1. 根据端口查看程序
-
+   
    有两种方式，可以用`netstat`或者`lsof`。
-
+   
    ```shell
    lsof -i:8080 -- list openfiles
    netstat -nlt | grep 8080
    ```
 
 2. 系统中磁盘使用情况
-
+   
    ```shell
    df -h
    ```
-
-   
 
 # 业务
 
@@ -39,13 +37,13 @@ tags: utils
 ## 文件外查找
 
 1. 根据名称查找某个目录下的文件
-
+   
    ```shell
    find / -name xxx.md
    ```
 
 2. 递归查找某个文件
-
+   
    ```shell
    find . -name *.java
    ```
@@ -53,19 +51,19 @@ tags: utils
 ## 文件内查找
 
 1. 显示文件的后几行
-
+   
    ```shell
    tail -n 10 xx.txt
    ```
 
 2. 显示文件的前几行
-
+   
    ```shell
    head -n 10 xx.txt
    ```
 
 3. 在给定的文件中根据条件搜索字符串
-
+   
    ```shell
    grep println Main.java
    ```

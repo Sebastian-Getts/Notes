@@ -15,10 +15,6 @@ tags: classloader
 
 提类加载器之前有必要说说他要加载的东西——class。
 
-
-
 # classLoader
-
-
 
 # 实践

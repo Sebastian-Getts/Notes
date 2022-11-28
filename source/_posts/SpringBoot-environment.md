@@ -5,7 +5,7 @@ categories: springboot
 tags: source
 ---
 
-​		SpringBoot配置文件的相关分析。我们都知道目前SpringBoot的配置文件可以配置文件很简单，支持多环境，有yml和properties，那么他的加载机制是怎样的呢？又是如何读取的？
+​        SpringBoot配置文件的相关分析。我们都知道目前SpringBoot的配置文件可以配置文件很简单，支持多环境，有yml和properties，那么他的加载机制是怎样的呢？又是如何读取的？
 
 <!--more-->
 
@@ -144,7 +144,6 @@ void load() {
                                      addLoadedPropertySources();
                                      applyActiveProfiles(defaultProperties);
                                  });
-
 ```
 
 上面的方法看着长，别被lambda吓到了，实际上是调用了apply方法，后面那个只是一个consumer参数。也就是在这个listener里解析了properties以及yml，定义了解析顺序和规则。里面有多个重载的load方法，在load方法内还会遍历地用*propertySourceLoaders*中的loader去调用load方法，propertySourceLoader是一个接口，有两个实现类：`PropertiesPropertySourceLoader`和`YamlPropertySourceLoader`。

@@ -187,7 +187,7 @@
             <ul>
                 
                     <li>
-                        <a href="/categories/Java/">Java</a>&nbsp;
+                        <a href="/categories/java/">java</a>&nbsp;
                     </li>
                 
             </ul>
@@ -199,7 +199,7 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/summary/">summary</a>&nbsp;
+                        <a href="/tags/arraylist/">arraylist</a>&nbsp;
                     </li>
                 
             </ul>
@@ -218,7 +218,7 @@
         
 
         <div class="article-content markdown-body">
-            <p>以前一直想当然的以为arrayList是双倍扩容（跟HashMap不一样！）……吸取教训，今天总结一下。</p>
+            <p>以前一直想当然的以为arrayList是双倍扩容（跟HashMap不一样），今天总结一下。</p>
 <span id="more"></span>
 
 <!-- toc -->
@@ -246,7 +246,7 @@
 <p>不是想象中简单的两倍，但是最终是一样的，拿到一个新的数组，将旧数组的元素复制过去，那么， 新的数组长度如何确认呢？关键就在这个方法中了。</p>
 <ul>
 <li><code>oldCapacity</code>：原始数组长度</li>
-<li><code>newCapacity</code>：原始数组长度 + 原始数组长度/2 （也就是1.5倍的原始数组长度）</li>
+<li><code>newCapacity</code>：原始数组长度 + 原始数组长度/2 （也就是<strong>1.5倍的原始数组长度</strong>）</li>
 </ul>
 <p>上面两个是初始定义的参数，除了这两个，还会传入一个参数<code>minCapacity</code>，这里会有个问题，按照定义的参数，新数组能满足期望的长度么？按理说每次都只是加一个元素，是可以满足的吧？代码中有后续的判断：</p>
 <ul>

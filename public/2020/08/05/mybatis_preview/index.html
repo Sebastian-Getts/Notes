@@ -187,7 +187,7 @@
             <ul>
                 
                     <li>
-                        <a href="/categories/framework/">framework</a>&nbsp;
+                        <a href="/categories/mybatis/">mybatis</a>&nbsp;
                     </li>
                 
             </ul>
@@ -227,7 +227,7 @@
 <h2 id="属性名与数据库表字段名"><a href="#属性名与数据库表字段名" class="headerlink" title="属性名与数据库表字段名"></a>属性名与数据库表字段名</h2><p>当pojo中的实例变量与数据库字段中不一致时，可以使用<code>resultMap</code>来解决，即<strong>结果集映射</strong>。</p>
 <p>也常用<code>resultType</code>，但是他是简单地将所有列映射到HashMap中的key上，很单一，不适合处理复杂情况，而map可以更加灵活地处理情况。用来<code>resultMap</code>时可以去掉<code>resultType</code>属性。</p>
 <h2 id="日志工厂"><a href="#日志工厂" class="headerlink" title="日志工厂"></a>日志工厂</h2><p>mybatis会默认去寻找日志框架，配置后会有sql信息输出，十分有用！</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">settings</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">&quot;logImpl&quot;</span> <span class="attr">value</span>=<span class="string">&quot;log4j&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">settings</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">settings</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">setting</span> <span class="attr">name</span>=<span class="string">&quot;logImpl&quot;</span> <span class="attr">value</span>=<span class="string">&quot;log4j&quot;</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">settings</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
 <h2 id="分页"><a href="#分页" class="headerlink" title="分页"></a>分页</h2><p>mybatis支持分页，有<code>limit</code>和<code>rowBounts</code>两个方法。区别是前者在sql中实现，后者面向对象。</p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> <span class="keyword">USER</span> limit #&#123;index&#125;,#&#123;size&#125;</span><br></pre></td></tr></table></figure>

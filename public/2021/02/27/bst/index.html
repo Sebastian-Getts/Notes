@@ -9,7 +9,7 @@
     
     <title>
         
-            binary search tree |
+            bst |
         
         Sebastian&#39;s blog
     </title>
@@ -161,7 +161,7 @@
     <div class="article-content-container">
 
         <div class="article-title">
-            <span class="title-hover-animation">binary search tree</span>
+            <span class="title-hover-animation">bst</span>
         </div>
 
         
@@ -187,7 +187,7 @@
             <ul>
                 
                     <li>
-                        <a href="/categories/Leetcode/">Leetcode</a>&nbsp;
+                        <a href="/categories/LeetCode/">LeetCode</a>&nbsp;
                     </li>
                 
             </ul>
@@ -224,13 +224,11 @@
 <!-- toc -->
 
 <h1 id="遍历"><a href="#遍历" class="headerlink" title="遍历"></a>遍历</h1><p>二叉树有前中后序遍历，其中，中序遍历能使我们得到二叉树从小到大的节点值。如何能按照中序遍历二叉树呢？根据我们的习惯，从左侧最下方开始找，按照这个思路，必然是一个深度优先的算法，可以从递归和迭代两个思路入手。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">getValuesFromBST</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">    TreeNode p = root;</span><br><span class="line">    List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    Deque&lt;TreeNode&gt; deque = <span class="keyword">new</span> ArrayDeque&lt;&gt;();</span><br><span class="line">    whlie(p != <span class="keyword">null</span> || deque.isEmpty())&#123;</span><br><span class="line">        <span class="keyword">while</span>(p != <span class="keyword">null</span>)&#123;</span><br><span class="line">            deque.offerLast(p);</span><br><span class="line">            p = p.left;</span><br><span class="line">        &#125;</span><br><span class="line">        p = deque.pollLast();</span><br><span class="line">        list.add(p.val); <span class="comment">// u can do anything here</span></span><br><span class="line">        p = p.right;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">return</span> list;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> List&lt;Integer&gt; <span class="title">getValuesFromBST</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">    TreeNode p = root;</span><br><span class="line">    List&lt;Integer&gt; list = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    Deque&lt;TreeNode&gt; deque = <span class="keyword">new</span> ArrayDeque&lt;&gt;();</span><br><span class="line">    whlie(p != <span class="keyword">null</span> || deque.isEmpty())&#123;</span><br><span class="line">        <span class="keyword">while</span>(p != <span class="keyword">null</span>)&#123;</span><br><span class="line">            deque.offerLast(p);</span><br><span class="line">            p = p.left;</span><br><span class="line">        &#125;</span><br><span class="line">        p = deque.pollLast();</span><br><span class="line">        list.add(p.val); <span class="comment">// u can do anything here</span></span><br><span class="line">        p = p.right;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> list;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>按照上面遍历的代码，其实我们还可以做更多的事情，毕竟都能便利出来了，其他的诸如取前N个数、验证BST是否合法等等其他的都可以参照这个来做。</p>
 <h1 id="有效"><a href="#有效" class="headerlink" title="有效"></a>有效</h1><p>根据二叉树“左小右大”的特点，在进行中序遍历时就可以来验证他的有效性：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isBSTValid</span><span class="params">(TreeNode root)</span></span>&#123;</span><br><span class="line">    TreeNode p = root;</span><br><span class="line">    TreeNode pre = <span class="keyword">null</span>; <span class="comment">// 记录前一个节点</span></span><br><span class="line">    Deque&lt;TreeNode&gt; deque = <span class="keyword">new</span> ArrayDeque&lt;&gt;();</span><br><span class="line">    whlie(p != <span class="keyword">null</span> || deque.isEmpty())&#123;</span><br><span class="line">        <span class="keyword">while</span>(p.left != <span class="keyword">null</span>)&#123;</span><br><span class="line">            deque.offerLast(p);</span><br><span class="line">            p = p.left;</span><br><span class="line">        &#125;</span><br><span class="line">        p = deque.pollLast();</span><br><span class="line">        <span class="keyword">if</span>(pre != <span class="keyword">null</span> &amp;&amp; p.val &lt;= pre.val)&#123; <span class="comment">// 判断是否合法</span></span><br><span class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        pre = p;</span><br><span class="line">        p = p.right;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
 
 <h1 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h1><p>其实BST的可玩性挺高的，想对于其他数据结构，BST是活灵活现地展示出来的，而且还有具有二分查找的效率、左小右大的规律，所以题目大多来源于他的展示，例如打印前序遍历、中序遍历、层序遍历等等。还有一种是比较隐晦的，例如这道题：*<a class="link"   target="_blank" rel="noopener" href="https://leetcode.com/problems/score-of-parentheses/" >Score of Parentheses<i class="fas fa-external-link-alt"></i></a>*。</p>
 

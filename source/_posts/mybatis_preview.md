@@ -1,7 +1,7 @@
 ---
 title: mybatis_preview
 date: 2020-08-05 22:21:19
-categories: framework
+categories: mybatis
 tags: mybatis
 ---
 
@@ -39,7 +39,7 @@ mybatis会默认去寻找日志框架，配置后会有sql信息输出，十分�
 
 ```xml
 <settings>
-	<setting name="logImpl" value="log4j"/>
+    <setting name="logImpl" value="log4j"/>
 </settings>
 ```
 

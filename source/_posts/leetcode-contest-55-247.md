@@ -31,7 +31,7 @@ public boolean canBeIncreasing(int[] nums) {
         }
         if(check(t)) return true;
     }
-    
+
     return false;
 }
 
@@ -39,13 +39,10 @@ private boolean check(int[] nums) {
     for(int i=1; i<nums.length; i++){
         if(nums[i] <= nums[i-1]) return false;
     }
-    
+
     return true;
 }
-
 ```
-
-
 
 ## 删除一个字符串中所有出现的给定子字符串
 
@@ -57,11 +54,8 @@ private boolean check(int[] nums) {
 def removeOccurences(self, s: str, part: str) -> str:
     while part in s:
         s = s.replace(part, '')
-       
+
     return s
 ```
 
-
-
 ## 最大序列的交替和
-

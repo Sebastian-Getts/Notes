@@ -1,11 +1,11 @@
 ---
 title: arraylist-grow
 date: 2021-05-12 23:35:52
-categories: Java
-tags: summary
+categories: java
+tags: arraylist
 ---
 
-以前一直想当然的以为arrayList是双倍扩容（跟HashMap不一样！）……吸取教训，今天总结一下。
+以前一直想当然的以为arrayList是双倍扩容（跟HashMap不一样），今天总结一下。
 
 <!-- more -->
 
@@ -36,8 +36,6 @@ private void ensureCapacityInternal(int minCapacity) {
 ```
 
 这个方法内将他分为两步
-
-
 
 ## 计算capacity
 
@@ -85,7 +83,7 @@ private void grow(int minCapacity) {
 不是想象中简单的两倍，但是最终是一样的，拿到一个新的数组，将旧数组的元素复制过去，那么， 新的数组长度如何确认呢？关键就在这个方法中了。
 
 - `oldCapacity`：原始数组长度
-- `newCapacity`：原始数组长度 + 原始数组长度/2 （也就是1.5倍的原始数组长度）
+- `newCapacity`：原始数组长度 + 原始数组长度/2 （也就是**1.5倍的原始数组长度**）
 
 上面两个是初始定义的参数，除了这两个，还会传入一个参数`minCapacity`，这里会有个问题，按照定义的参数，新数组能满足期望的长度么？按理说每次都只是加一个元素，是可以满足的吧？代码中有后续的判断：
 

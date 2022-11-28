@@ -1,8 +1,7 @@
 ---
-
 title: decorating
 date: 2020-06-12 18:30:28
-categories: DesignPatterns
+categories: design_patterns
 tags: design_patterns
 ---
 
@@ -18,8 +17,6 @@ tags: design_patterns
 
 > 类应该堆扩展开放，对修改关闭。
 
-
-
 # 装饰者模式
 
 以上个场景为例，以父类为主体，在运行时以调味料来“装饰”父类，最终得到顾客想要的口味。
@@ -29,13 +26,9 @@ tags: design_patterns
 3. 用奶泡装饰
 4. 调用cost方法，依赖delegate添加价钱
 
-
-
 # 实现
 
 ![Screenshot from 2020-06-12 20-50-33.png](https://i.loli.net/2020/06/12/jQwAkbz7V6n8dGK.png)
-
-
 
 其中`Condiment`是调料类，重写了`Beverage`的`getDescription`方法。以Whip为例：
 
@@ -94,4 +87,3 @@ para1(path2, right)->op1
 para2(path2, right)->op2
 para3(path2, right)->op3
 ```
-

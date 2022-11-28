@@ -1,9 +1,12 @@
 ---
+
 title: nginx
 date: 2019-11-02 22:53:32
-categories: Network
+categories: middleware
 tags: network
+
 ---
+
 # NIGNX
 
 *Nginx* (engine x) 是一个高性能的HTTP和**反向代理**web服务器，同时也提供了IMAP/POP3/SMTP服务。Nginx是由伊戈尔·赛索耶夫为俄罗斯访问量第二的Rambler.ru站点（俄文：Рамблер）开发的，第一个公开版本0.1.0发布于2004年10月4日。
@@ -17,8 +20,6 @@ tags: network
 - 动静分离
 - 高可用
 
-
-
 ## 反向代理
 
 客户端对代理是无感知的，因为客户端不需要任何配置就可以访问，只需要将请求发送到反向代理服务器，由反向代理服务器去选择目标服务器获取数据后，再返回给客户端。此时反向代理服务器的目标服务器对外就是一个服务器，暴露的是代理服务器地址，隐藏了真实服务器IP地址。
@@ -29,13 +30,9 @@ tags: network
 
 正向访问需要在浏览器配置代理服务器。
 
-
-
 ## 负载均衡
 
 单个服务器解决不了问题，我们增加服务器的数量，然后将请求分发到各个服务上，将原先请求集中到单个服务器上的情况改为将请求分发到多个服务器上，将负载分发到不同的服务器，即负载均衡。
-
-
 
 ## 动静分离
 
@@ -63,30 +60,30 @@ tags: network
 # 配置
 
 1. 配置EPEL源
-
+   
    ```bash
    sudo yum install -y epel-release
    sudo yum -y update
    ```
 
 2. 安装nginx
-
+   
    ```bash
    sudo yum instll -y nginx
    ```
-
+   
    安装成功后：
-
+   
    `默认网站目录`：_/usr/share/nginx/html_
-
+   
    `默认的配置文件为`：_/etc/nginx/nginx.conf_
-
+   
    `自定义配置文件目录为`：_/etc/nginx/conf.d/_
 
 3. 开启端口80和443
-
+   
    如果关闭了防火墙，直接略过。
-
+   
    ```bash
    sudo firewall-cmd --permanent --zone=public --add-service=http
    sudo firewall-cmd --permanent --zone=public --add-service=https
@@ -94,84 +91,84 @@ tags: network
    ```
 
 4. 命令
-
+   
    - 启动
-
+     
      ```bash
      systemctl start nginx
      ```
-
+   
    - 停止
-
+     
      ```bash
      systemctl stop nginx
      ```
-
+   
    - 重启
-
+     
      ```bash
      systemctl restart nginx
      ```
-
+   
    - 查看状态
-
+     
      ```bash
      systemctl status nginx
      ```
-
+   
    - 启用开机启动
-
+     
      ```bash
      systemctl enable nginx
      ```
-
+     
      测试的时候，直接`nginx`命令即可，方便调试，调试时使用：
-
+     
      ```bash
      nginx -t
      ```
-
+     
      ```bash
      nginx -s reload
      ```
-
-     
-
-   - 禁止开机启动
-
-     ```bash
-     systemctl disbale nginx
-     ```
-
+- 禁止开机启动
+  
+  ```bash
+  systemctl disbale nginx
+  ```
 5. https
-
+   
    1. 关于https的相关证书，可以从阿里云控制台获取（因为我租用的是阿里云服务器）。
-
-   3. 拷贝证书至nginx
    
-      domain为个人域名。
-   
-      ```bash
-   mkdir -p /etc/nginx/ssl
+   2. 拷贝证书至nginx
       
+      domain为个人域名。
+      
+      ```bash
+      mkdir -p /etc/nginx/ssl
+      ```
+   
    acme.sh --install-cert -d domain \
       --key-file       /etc/nginx/ssl/domain.key  \
       --fullchain-file /etc/nginx/ssl/domain.cer \
       --reloadcmd     "service nginx force-reload"
-      ```
    
+   ```
+   
+   ```
+
 6. 配置nginx
-
+   
    删除**/etc/nginx/nginx.conf**中的server部分代码
-
+   
    ```markdown
    server{
    ...
    }
    ```
-
+   
    在**/etc/nginx/conf.d**创建自定义配置文件夹**default.conf**
-
+   
    ```properties
    server {
        listen 80;
@@ -192,8 +189,3 @@ tags: network
        error_page 497  https://$host$uri?$args;
    }
    ```
-   
-
-   
-
-   

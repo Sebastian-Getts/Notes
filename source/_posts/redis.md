@@ -1,7 +1,7 @@
 ---
 title: redis
 date: 2020-06-09 21:54:01
-categories: DB
+categories: middleware
 tags: 
 - redis
 - nosql
@@ -259,4 +259,3 @@ condition(no)->op1->end
 #### 数据预热
 
 正式部署前先把可能的数据访问一遍（加入缓存），设置不同的过期时间，让缓存失效的时间尽可能平均。
-

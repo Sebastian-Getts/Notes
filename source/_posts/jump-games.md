@@ -2,7 +2,7 @@
 title: jump games
 date: 2021-05-24 12:13:39
 categories: LeetCode
-tags: greedy dp stratey
+tags: greedy, dp, stratey
 ---
 
 *Jump Games*在LeetCode中是一个系列的问题，涉及动态规划、贪心等策略，非常有意思，尤其是昨天周赛再次遇到了这个系列的新题，在此复盘、总结。
@@ -29,7 +29,7 @@ public boolean canReach(int[] nums){
         res = Math.max(dp[i-1], nums[i-1]) - 1;
         if(res < 0) return false;
     }
-    
+
     return true;
 }
 ```
@@ -45,12 +45,10 @@ public boolean canReach(int[] nums){
         if(i > reach || reach >= len - 1) break;
         reach = Math.max(reach, i + nums[i]);
     }
-    
+
     return reach >= len - 1;
 }
 ```
-
-
 
 # Jump Game II
 
@@ -68,12 +66,10 @@ public boolean minJumpTimes(int[] nums){
             curEnd = curFarthest;
         }
     }
-    
+
     return jumps;
 }
 ```
-
-
 
 # Jump Game III
 
@@ -92,7 +88,7 @@ public boolean canReach(int][] nums, int start){
         nums[start] += nums.length; // 做标记，这样nums[start]总是不合法的，不会再访问了
         return jump == 0 || canReach(nums, start + jump) || canReach(nums, start - jump);
     }
-    
+
     return false;
 }
 ```
@@ -100,8 +96,6 @@ public boolean canReach(int][] nums, int start){
 ### bfs
 
 ……
-
-
 
 # JumpGame VII
 

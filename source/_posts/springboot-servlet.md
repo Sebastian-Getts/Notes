@@ -31,8 +31,6 @@ protected void onRefresh() {
 }
 ```
 
-
-
 # 创建服务
 
 入口找到后，接下来我们分析他是如何创建的：

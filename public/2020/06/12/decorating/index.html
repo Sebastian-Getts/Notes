@@ -187,7 +187,7 @@
             <ul>
                 
                     <li>
-                        <a href="/categories/DesignPatterns/">DesignPatterns</a>&nbsp;
+                        <a href="/categories/design-patterns/">design_patterns</a>&nbsp;
                     </li>
                 
             </ul>
@@ -245,7 +245,6 @@
 <p>制作一杯咖啡时，添加不同的调料只需要创建调料的实例，里面装上饮料父类，最后打印出描述和价格的时候，会自动加上父类的。这样的方式不妨称之为<strong>委托</strong>.</p>
 <h1 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h1><h2 id="Java-I-O"><a href="#Java-I-O" class="headerlink" title="Java I/O"></a>Java I/O</h2><p>大量的<code>Decorator Pattern</code>在java的io包中运用。输入输出在计算机中的底层实现都是0101……来实现的，所以，例如，最底层的实现类是_FileInputStream_（好比是_Beverage_），往上”装饰“一层可以是字节_BufferedInputStream_（好比是_Espresso_），接着往上是_LineNumberInutStream_（好比是加调料_Mocha_）。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">para1=&gt;parallel: FileInputStream</span><br><span class="line">para2=&gt;parallel: BufferedInputStream</span><br><span class="line">para3=&gt;parallel: LineNumberInputStream</span><br><span class="line">op1=&gt;operation: Beferage</span><br><span class="line">op2=&gt;operation: Espresso</span><br><span class="line">op3=&gt;operation: Mocha</span><br><span class="line">para1(path1, bottom)-&gt;para2</span><br><span class="line">para2(path1,bottom)-&gt;para3</span><br><span class="line">para1(path2, right)-&gt;op1</span><br><span class="line">para2(path2, right)-&gt;op2</span><br><span class="line">para3(path2, right)-&gt;op3</span><br></pre></td></tr></table></figure>
-
 
         </div>
 

@@ -1,8 +1,8 @@
 ---
 title: hashmap
 date: 2020-08-20 23:04:30
-categories: Java
-tags: hashmap, data structure
+categories: datastructure
+tags: hashmap 
 ---
 
 Java Hashmap，经典数据结构。主要理解他的组成结构和哈希原理，哈希冲突如何处理。基于jdk8。
@@ -85,8 +85,6 @@ static final int hash(Object key) {
 
 关于异或先放在这里，我们来看看后续是如何存储的，往下一跟便能发现一个变量`table`，他的类型是`Noe<K,V> []`，即Node类型数组，接下来我们来看看他的结构，包括存储时防止冲突的解决方法。
 
-
-
 # Node
 
 它是HahsMap的静态内部类，存储的核心，构造也不复杂，可以看看。
@@ -108,17 +106,17 @@ static class Node<K,V> implements Map.Entry<K,V> {
         this.value = value;
         this.next = next;
     }
-    
+
     // get, set equals ...
 }
 ```
 
-- 脱脱的链表有么有！！！ `Node<K, V> next`！！！
+- 妥妥的链表有么有！！！ `Node<K, V> next`！！！
 - 上面提到的`table`就是一个链表类型的数组，里面用来装Node链表。所以他的基本储存就明了了：数组+链表。
 - 实现了`Map.Entry<K, V>`接口，所以，他的本质（或者说表现）就是一个k-v键值对。
 - 与算法题通常定义的简易链表不同，除了`next`外这里存储了三个值：`hash`, `key`, `value`
 
-
+注意其中的key，后面要考～
 
 # 冲突解决
 
@@ -176,7 +174,9 @@ size就是表示目前存储的Node的数量。
 
 参考HashTable的初始化，`initialCapacity`就是11. 进行这种非常规的设计必然是有道理的，这道理猜都能猜的到吧，当然是为了减少冲突，直接哈希是肯定不可能，不如素数来得快，所以必然是做了一些操作。什么操作呢？后续且看代码。另外，即时哈希算法和桶做得再合理也免不了出现链表过长的情况（数组中一个坑里好长的链表）。链表过长会影响性能，数组形同虚设，所以，在jdk8中引入了**红黑树**，当链表长度过长（默认为8）时会将链表转换为红黑数，利用它快速增删改查的特点提高hashmap的性能。
 
+### 解决完冲突后如何查找?
 
+比如，在冲突发生后转换成链表或者红黑树后，此时意味着同一个key的hash相同，如何寻找对应的value呢，在每个Node中，除了hash和value之外，还存储着key，根据key找到对应的value。
 
 # 确定索引
 
@@ -192,8 +192,6 @@ if ((p = tab[i = (n - 1) & hash]) == null)
 ```
 
 在代码中有这么一行，n为数组长度，hash为key的哈希码，由于n总是2的n次方，所以`(n-1)&hash`等价于对length取模，比使用`%`具有更高的效率。
-
- 
 
 # put详解
 
@@ -259,8 +257,6 @@ final V putVal(int hash, K key, V value, boolean onlyIfAbsent,
     return null;
 }
 ```
-
-
 
 # 扩容
 
@@ -356,4 +352,3 @@ final Node<K,V>[] resize() {
     return newTab;
 }
 ```
-

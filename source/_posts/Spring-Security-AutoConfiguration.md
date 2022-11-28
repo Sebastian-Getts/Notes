@@ -1,11 +1,11 @@
 ---
 title: Spring Security AutoConfiguration
 date: 2021-03-22 22:18:10
-categories: framework
-tags: spring security
+categories: springsecurity
+tags: security
 ---
 
-​		最近有设计权限模块，用到了*Spring Security*，在SpringBoot项目中导入了相关的jar包后几乎不用做任何配置（当然，除了启用的*@EnableWebSecurity*）就会拦截请求，达到了“安全“的目的，配置的方式也是多种多样，我们先从”方便使用“这个角度，看看他如何做到的”拆箱即用“。
+​        最近有设计权限模块，用到了*Spring Security*，在SpringBoot项目中导入了相关的jar包后几乎不用做任何配置（当然，除了启用的*@EnableWebSecurity*）就会拦截请求，达到了“安全“的目的，配置的方式也是多种多样，我们先从”方便使用“这个角度，看看他如何做到的”拆箱即用“。
 
 <!-- more -->
 
@@ -13,24 +13,24 @@ tags: spring security
 
 # 入口
 
-​		在SpringBoot中使用注解来解放xml配置文件后，一直都是*@Configuration*的天下，开启一个模块的功能同样需要它。开头提到的那个注解*@EnableWebSecurity*就是探究的入口：
+​        在SpringBoot中使用注解来解放xml配置文件后，一直都是*@Configuration*的天下，开启一个模块的功能同样需要它。开头提到的那个注解*@EnableWebSecurity*就是探究的入口：
 
 ```java
 @Retention(value = java.lang.annotation.RetentionPolicy.RUNTIME)
 @Target(value = { java.lang.annotation.ElementType.TYPE })
 @Documented
 @Import({ WebSecurityConfiguration.class,
-		SpringWebMvcImportSelector.class,
-		OAuth2ImportSelector.class })
+        SpringWebMvcImportSelector.class,
+        OAuth2ImportSelector.class })
 @EnableGlobalAuthentication
 @Configuration
 public @interface EnableWebSecurity {
 
-	/**
-	 * Controls debugging support for Spring Security. Default is false.
-	 * @return if true, enables debug support with Spring Security
-	 */
-	boolean debug() default false;
+    /**
+     * Controls debugging support for Spring Security. Default is false.
+     * @return if true, enables debug support with Spring Security
+     */
+    boolean debug() default false;
 }
 ```
 
@@ -38,7 +38,7 @@ public @interface EnableWebSecurity {
 
 在进入第一个配置类之前有必要看一下这个注解的注释信息：
 
->Add this annotation to an @Configuration class to have the Spring Security configuration defined in any WebSecurityConfigurer or more likely by extending the WebSecurityConfigurerAdapter base class and overriding individual methods
+> Add this annotation to an @Configuration class to have the Spring Security configuration defined in any WebSecurityConfigurer or more likely by extending the WebSecurityConfigurerAdapter base class and overriding individual methods
 
 告诉了我们如何使用以及自定义安全规则，那么使用起来应该是这样：
 
@@ -46,7 +46,7 @@ public @interface EnableWebSecurity {
 @EnableWebSecurity
 @Configuration
 public class MyWebSecurityConfiguration extends WebSecurityConfigurerAdapter {
-    
+
     @Override
     public void confugre(HttpSecurity httpSecurity){
         // ....
@@ -79,7 +79,7 @@ public void setFilterChainProxySecurityConfigurer(
     if (debugEnabled != null) {
         webSecurity.debug(debugEnabled);
     }
-    
+
     webSecurityConfigurers.sort(AnnotationAwareOrderComparator.INSTANCE);
 
     Integer previousOrder = null;
@@ -104,8 +104,6 @@ public void setFilterChainProxySecurityConfigurer(
 }
 ```
 
-
-
 ### getWebSecurityConfigurers
 
 入参二是有些奇怪的，实际上是执行了类`AutowiredWebSecurityConfigurersIgnoreParents`中的静态方法*getWebSecurityConfigurers*，目的是从上下文中获取到configures：
@@ -121,8 +119,6 @@ public List<SecurityConfigurer<Filter, WebSecurity>> getWebSecurityConfigurers()
    return webSecurityConfigurers;
 }
 ```
-
-
 
 ### apply
 
@@ -156,14 +152,12 @@ public abstract class WebSecurityConfigurerAdapter implements WebSecurityConfigu
 
 所以可以总结一下这个方法：在这个配置类的这一方法中，我们实现的configurer会被方法*getWebSecurityConfigurers*从上下文中取出，经过排序等操作后填充至webSecurity的属性中保存。
 
-
-
 ## springSecurityFilterChain
 
 准备工作之后是过滤器链。
 
 ```java
-// 	public static final String DEFAULT_FILTER_NAME = "springSecurityFilterChain";
+//     public static final String DEFAULT_FILTER_NAME = "springSecurityFilterChain";
 @Bean(name = AbstractSecurityWebApplicationInitializer.DEFAULT_FILTER_NAME)
 public Filter springSecurityFilterChain() throws Exception {
     // 在上个方法中有给属性赋值，我们有继承的话 这里不为空，即true
@@ -265,8 +259,6 @@ protected final HttpSecurity getHttp() throws Exception {
 ```
 
 上面的方法中在返回httpSecurity对象之前会执行*configure*方法，是否记得demo以及开篇时讲的关于如何使用注解*@EnableSpringSecurity*？注释给的方法是在一个实现了抽象类的配置类中用该注解，并且重写*configure*方法，于是，在这里就用到了，方法会以httpSecurity作为配置对象并实现安全机制。
-
-
 
 # 小结
 

@@ -9,7 +9,7 @@ tags: source
 
 <!--more-->
 
-​		使用SpringBoot会让人感到清爽，没有那么多的配置文件。笔者曾参与过Spring和Struts2的项目，虽然时间不长，但仍感受到了配置文件的复杂，难以维护。后来使用SpringBoot做web应用，只需一个程序入口main方法，启动后便能使用，无形中它帮助我们配置了一切，如果想修改，这一切也可以在properties/yml中修改。从软件工程学的角度来看，Spring是非常成功的产品，SpringBoot则更贴近用户，“约定大于配置。并不是很神奇的不用配置，而是在启动时帮助我们配置好了，除了自动配置，我们还会看看他的IOC、AOP的实现，包括常用的web服务器也内嵌在里面，所以接下来几篇我们会一探究竟。
+​        使用SpringBoot会让人感到清爽，没有那么多的配置文件。笔者曾参与过Spring和Struts2的项目，虽然时间不长，但仍感受到了配置文件的复杂，难以维护。后来使用SpringBoot做web应用，只需一个程序入口main方法，启动后便能使用，无形中它帮助我们配置了一切，如果想修改，这一切也可以在properties/yml中修改。从软件工程学的角度来看，Spring是非常成功的产品，SpringBoot则更贴近用户，“约定大于配置。并不是很神奇的不用配置，而是在启动时帮助我们配置好了，除了自动配置，我们还会看看他的IOC、AOP的实现，包括常用的web服务器也内嵌在里面，所以接下来几篇我们会一探究竟。
 
 <!--toc-->
 
@@ -67,9 +67,9 @@ public SpringApplication(ResourceLoader resourceLoader, Class<?>... primarySourc
 ```java
 private static final String WEBMVC_INDICATOR_CLASS = "org.springframework.web.servlet.DispatcherServlet";
 
-	private static final String WEBFLUX_INDICATOR_CLASS = "org.springframework.web.reactive.DispatcherHandler";
+    private static final String WEBFLUX_INDICATOR_CLASS = "org.springframework.web.reactive.DispatcherHandler";
 
-	private static final String JERSEY_INDICATOR_CLASS = "org.glassfish.jersey.servlet.ServletContainer";
+    private static final String JERSEY_INDICATOR_CLASS = "org.glassfish.jersey.servlet.ServletContainer";
 
 static WebApplicationType deduceFromClasspath() {
     if (ClassUtils.isPresent(WEBFLUX_INDICATOR_CLASS, null) && !ClassUtils.isPresent(WEBMVC_INDICATOR_CLASS, null)
@@ -212,14 +212,14 @@ public void starting() {
 ## createApplicationContext
 
 ```java
-	public static final String DEFAULT_CONTEXT_CLASS = "org.springframework.context."
-			+ "annotation.AnnotationConfigApplicationContext";
+    public static final String DEFAULT_CONTEXT_CLASS = "org.springframework.context."
+            + "annotation.AnnotationConfigApplicationContext";
 
-	public static final String DEFAULT_SERVLET_WEB_CONTEXT_CLASS = "org.springframework.boot."
-			+ "web.servlet.context.AnnotationConfigServletWebServerApplicationContext";
+    public static final String DEFAULT_SERVLET_WEB_CONTEXT_CLASS = "org.springframework.boot."
+            + "web.servlet.context.AnnotationConfigServletWebServerApplicationContext";
 
-	public static final String DEFAULT_REACTIVE_WEB_CONTEXT_CLASS = "org.springframework."
-			+ "boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext";
+    public static final String DEFAULT_REACTIVE_WEB_CONTEXT_CLASS = "org.springframework."
+            + "boot.web.reactive.context.AnnotationConfigReactiveWebServerApplicationContext";
 
 protected ConfigurableApplicationContext createApplicationContext() {
     Class<?> contextClass = this.applicationContextClass;
@@ -354,8 +354,6 @@ protected void load(ApplicationContext context, Object[] sources) {
     loader.load();
 }
 ```
-
-
 
 # 总结
 

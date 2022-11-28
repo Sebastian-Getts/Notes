@@ -5,7 +5,7 @@ categories: springmvc
 tags: source
 ---
 
-​		如何匹配controller，根据我们的使用以及对spring容器的理解，我可以猜测是通过反射获取注解，进而分类的，那springmvc是对他如何封装的呢？在springboot中又是如何融入springmvc，何时做的那些工作呢？
+​        如何匹配controller，根据我们的使用以及对spring容器的理解，我可以猜测是通过反射获取注解，进而分类的，那springmvc是对他如何封装的呢？在springboot中又是如何融入springmvc，何时做的那些工作呢？
 
 <!-- more -->
 
@@ -13,7 +13,7 @@ tags: source
 
 # AbstractHandlerMappingMethod
 
-​		这个类继承了`AbstractHandlerMapping`并且实现了接口`InitializingBean`（任何bean在初始化时都会执行他的方法，接口中只有一个方法*afterPropertiesSet()*）。那这个类是做什么的呢？首先他是一个抽象类，一定会有更具体的类来实现它，其次，又是因为他是抽象类，所以内部一定定义了不用子类重复实现的公公流程，指明了大方向，结合web环境来说，**他定义了每个请求与`HandlerMethod`之间的映射关系**。
+​        这个类继承了`AbstractHandlerMapping`并且实现了接口`InitializingBean`（任何bean在初始化时都会执行他的方法，接口中只有一个方法*afterPropertiesSet()*）。那这个类是做什么的呢？首先他是一个抽象类，一定会有更具体的类来实现它，其次，又是因为他是抽象类，所以内部一定定义了不用子类重复实现的公公流程，指明了大方向，结合web环境来说，**他定义了每个请求与`HandlerMethod`之间的映射关系**。
 
 下面我们从他实现的接口开始看，因为那时这个类刚刚实例化，我们看看他作为bean都做了哪些工作：
 
@@ -171,4 +171,4 @@ protected HandlerExecutionChain getHandlerExecutionChain(Object handler, HttpSer
 
 # 小结
 
-​		这里再提一下springmvc的处理流程，首先到DispatcherServlet，他通过handlerMapping获得HandlerExecutionChain，然后获得HandlerAdapter，HandlerAdapter在内部对于每个请求都会实例化一个ServletInvocableHandlerMethod进行处理，ServletInvocableHandlerMethod在进行处理的时候会对请求和响应分别处理。下一篇我们分析他的参数处理，关于adapter和handlerMethod。
+​        这里再提一下springmvc的处理流程，首先到DispatcherServlet，他通过handlerMapping获得HandlerExecutionChain，然后获得HandlerAdapter，HandlerAdapter在内部对于每个请求都会实例化一个ServletInvocableHandlerMethod进行处理，ServletInvocableHandlerMethod在进行处理的时候会对请求和响应分别处理。下一篇我们分析他的参数处理，关于adapter和handlerMethod。

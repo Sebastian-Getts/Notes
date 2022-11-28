@@ -1,7 +1,7 @@
 ---
 title: mybatis sql resolution
 date: 2021-03-07 19:03:54
-categories: framework
+categories: mybatis
 tags: mybatis
 ---
 
@@ -106,7 +106,7 @@ interface UserMapper {
 
     @Select("select * from User where id = #{id}")
     List<Test.User> selectUesList(Integer id);
-}	
+}    
 ```
 
 以上只是模拟mybatis架构中的解析sql的部分，真正的解析还是比较复杂的，要考虑很多种情况，但是原理是一样，都离不开动态代理。下面我们看看他的架构设计图（非官方）：![mybatis_structure.jpg](https://i.loli.net/2021/03/07/cPamMLRFU4xHXu8.jpg)

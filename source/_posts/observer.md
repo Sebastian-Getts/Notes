@@ -1,7 +1,7 @@
 ---
 title: observer
 date: 2020-06-12 17:12:38
-categories: DesignPatterns
+categories: designpatterns
 tags: design_patterns
 ---
 
@@ -19,7 +19,7 @@ tags: design_patterns
 public class WeatherData(){
     getTemperature(){};
     getHumidity(){};
-    
+
     /**
     * 一旦气象更新，此方法会被调用。
     */

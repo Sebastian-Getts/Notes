@@ -39,16 +39,16 @@ public boolean predictWinner(int[] nums){
     int total = 0;
     for(int num : nums) total += num;
     int firstPlayer = helper(nums, 0, nums.length-1);
-    
+
     return firstPlayer >= total - firstPlayer;
 }
 
 private int helper(int[] nums, int i, int j){
     if(i > j) return 0;
     if(i == j) return nums[i];
-    
+
     return Math.max(
-    	nums[i] + Math.min(helper(nums, i+1, j-1), helper(nums, i+2, j)),
+        nums[i] + Math.min(helper(nums, i+1, j-1), helper(nums, i+2, j)),
         nums[j] + Math.min(helper(nums, i+1, j-1), helper(nums, i, j-2))
     );
 }
@@ -66,7 +66,7 @@ public boolean predictWinner(int[] nums){
     int[][] memo = new int[len][len];
     Arrays.fill(memo, -1);
     int firstPlayer = helper(nums, 0, len-1, memo);
-    
+
     return firstPlayer >= total - firstPlayer;
 }
 
@@ -75,12 +75,11 @@ private int helper(int[] nums, int i, int j){
     if(i == j) return nums[i];
     if(memo[i][j] != -1) return memo[i][j];
     int score = Math.max(
-    	nums[i] + Math.min(helper(nums, i+1, j-1, memo), helper(nums, i+2, j, memo)),
+        nums[i] + Math.min(helper(nums, i+1, j-1, memo), helper(nums, i+2, j, memo)),
         nums[j] + Math.min(helper(nums, i+1, j-1, memo), helper(nums, i, j-2, memo))
     );
     memo[i][j] = score;
-    
+
     return score;
 }
 ```
-

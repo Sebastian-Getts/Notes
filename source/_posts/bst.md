@@ -1,7 +1,7 @@
 ---
-title: binary search tree
+title: bst
 date: 2021-02-27 15:58:06
-categories: Leetcode
+categories: LeetCode
 tags: bst
 ---
 
@@ -29,7 +29,7 @@ public List<Integer> getValuesFromBST(TreeNode root){
         list.add(p.val); // u can do anything here
         p = p.right;
     }
-    
+
     return list;
 }
 ```
@@ -61,8 +61,6 @@ public boolean isBSTValid(TreeNode root){
     return true;
 }
 ```
-
-
 
 # 其他
 

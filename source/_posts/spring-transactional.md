@@ -1,8 +1,8 @@
 ---
 title: spring_transactional
 date: 2022-09-01 11:13:45
+categories: springboot
 tags: 'transaction'
-categories: 'Spring'
 ---
 
 在Spring中事务是如何处理的，事务的传播机制又是怎样的。
@@ -46,9 +46,6 @@ public enum Propagation {
 
 看到如上所示，对应的传播机制有**7种**，其中默认的是`REQUIRED`。
 
-
-
-
 | 传播类型          | 含义                                                                                                   |
 | ------------- | ---------------------------------------------------------------------------------------------------- |
 | REQUIRED      | Support a current transaction, create a new one if none exists                                       |
@@ -58,11 +55,3 @@ public enum Propagation {
 | NOT_SUPPORTED | Execute non-transactionally, suspend the current transaction if one exists                           |
 | NEVER         | Execute non-transactionally, throw an exception if a transaction exists                              |
 | NESTED        | Executed within a nested transaction if a current transaction exists, behave like REQUIRED otherwise |
-
-
-
-
-
-
-
-

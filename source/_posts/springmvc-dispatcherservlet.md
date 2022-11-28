@@ -16,8 +16,8 @@ tags: source
 ```properties
 -- HttpServlet
     -- HttpServletBean
-    	-- FrameworkServlet
-    		-- DispatcherServlet
+        -- FrameworkServlet
+            -- DispatcherServlet
 ```
 
 `HttpServlet`我们都知道，是javax提供的类，对所有的http请求做了封装，也是对每个servlet类的具体实现，在springmvc中为了将这个类融入到框架中，首先将他视作bean，添加了一些属性、实现了两个接口：`EnvironmentCapable`和`EnvironmentAware`，这两个接口的作用可通过名称或方法名来看（正符合spring的规范的设计）：
@@ -152,33 +152,31 @@ protected WebApplicationContext initWebApplicationContext() {
 我们顺着上面留给子类重写的方法看起，这个类中并没有重写`initFrameworkdServlet()`，但是重写了`onRefresh()`方法：
 
 ```java
-	@Override
-	protected void onRefresh(ApplicationContext context) {
-		initStrategies(context);
-	}
+    @Override
+    protected void onRefresh(ApplicationContext context) {
+        initStrategies(context);
+    }
 
-	/**
-	 * Initialize the strategy objects that this servlet uses.
-	 * <p>May be overridden in subclasses in order to initialize further strategy objects.
-	 */
-	protected void initStrategies(ApplicationContext context) {
-		initMultipartResolver(context);
-		initLocaleResolver(context);
-		initThemeResolver(context);
-		initHandlerMappings(context);
-		initHandlerAdapters(context);
-		initHandlerExceptionResolvers(context);
-		initRequestToViewNameTranslator(context);
-		initViewResolvers(context);
-		initFlashMapManager(context);
-	}
+    /**
+     * Initialize the strategy objects that this servlet uses.
+     * <p>May be overridden in subclasses in order to initialize further strategy objects.
+     */
+    protected void initStrategies(ApplicationContext context) {
+        initMultipartResolver(context);
+        initLocaleResolver(context);
+        initThemeResolver(context);
+        initHandlerMappings(context);
+        initHandlerAdapters(context);
+        initHandlerExceptionResolvers(context);
+        initRequestToViewNameTranslator(context);
+        initViewResolvers(context);
+        initFlashMapManager(context);
+    }
 ```
 
 也就是说，在初始化阶段会做这么多事情，主要是集中在了这里，包括我们熟悉的*HandlerMapping*请求映射处理和异常处理*HandlerExceptionResolvers*等，做的是更具体的功能的实现。
 
 所以说，`HttpServletBean`也是继承了`HttpServlet`的，他做的是完成Bean所需要的工作，如配置环境属性；`FrameworkServlet`扩展了父类初始化时能做的事情，并且更加适配了spring上下文：有了上下文属性和事件推送；在这个类中，他做的事情更加具体了。
-
-
 
 ## 分发请求
 
@@ -310,8 +308,6 @@ protected final void doPost(HttpServletRequest request, HttpServletResponse resp
 
     processRequest(request, response);
 ```
-
-
 
 # 小结
 

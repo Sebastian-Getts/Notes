@@ -1,7 +1,7 @@
 ---
 title: lock
 date: 2020-07-20 21:46:41
-categories: Java
+categories: java
 tags: lock
 ---
 
@@ -44,8 +44,6 @@ private AtomicInteger ai = new AtomicInteger();
 atomicInteger.incrementAndGet(); // 执行自增1
 ```
 
-
-
 # Compare And Swap
 
 CAS，比较与交换，是一种无锁算法，在不使用锁的情况下实现多线程之间的变量同步，java并发包中的**原子类**就是通过这种算法实现了乐观锁。算法涉及到三个操作数：
@@ -74,7 +72,7 @@ public class AtomicInteger extends Number implements java.io.Serializable {
                 (AtomicInteger.class.getDeclaredField("value"));
         } catch (Exception ex) { throw new Error(ex); }
     }
-	// 存储AtomicInteger的int值
+    // 存储AtomicInteger的int值
     private volatile int value;
 ```
 

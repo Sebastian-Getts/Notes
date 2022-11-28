@@ -1,7 +1,7 @@
 ---
 title: volatile
 date: 2020-07-20 21:23:51
-categories: Java
+categories: JVM
 tags: lock
 ---
 
@@ -53,7 +53,7 @@ public class MyClass{
     private int years;
     private int months;
     private volatile int days;
-    
+
     // 更改了三个变量，只有days是volatile的
     public void update(int years, int months, int days){
         this.years = year;
@@ -115,7 +115,7 @@ public class MyClass{
     private int years;
     private int months;
     private volatile int days;
-    
+
     public void update(int years, int months, int days){
         this.years = years;
         this.months = months;

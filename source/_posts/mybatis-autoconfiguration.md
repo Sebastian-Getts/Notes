@@ -1,7 +1,7 @@
 ---
 title: mybatis autoconfiguration
 date: 2021-03-09 20:48:57
-categories: framework
+categories: myabtis
 tags: mybatis
 ---
 
@@ -118,7 +118,6 @@ public class MapperFactoryBean<T> extends SqlSessionDaoSupport implements Factor
     }
     // ...
 }
-
 ```
 
 总结一下，这个自动配置类主要做了以下工作：
