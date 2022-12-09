@@ -2,7 +2,7 @@
 title: SpringBoot environment
 date: 2021-02-15 16:19:17
 categories: springboot
-tags: source
+tags: environment
 ---
 
 ​        SpringBoot配置文件的相关分析。我们都知道目前SpringBoot的配置文件可以配置文件很简单，支持多环境，有yml和properties，那么他的加载机制是怎样的呢？又是如何读取的？

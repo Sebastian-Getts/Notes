@@ -1,7 +1,7 @@
 ---
 title: leetcode_contest_55&247
 date: 2021-06-27 12:55:29
-categories: LeetCode
+categories: leetcode
 tags: summary
 ---
 

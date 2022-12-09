@@ -187,7 +187,7 @@
             <ul>
                 
                     <li>
-                        <a href="/categories/design-patterns/">design_patterns</a>&nbsp;
+                        <a href="/categories/designpatterns/">designpatterns</a>&nbsp;
                     </li>
                 
             </ul>
@@ -199,7 +199,7 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/design-patterns/">design_patterns</a>&nbsp;
+                        <a href="/tags/decorating/">decorating</a>&nbsp;
                     </li>
                 
             </ul>
@@ -221,7 +221,7 @@
             <p>继承滥用：一个父类下有成百上千个子类，还无法高效解决问题，怎么优化？装饰者模式。</p>
 <span id="more"></span>
 
-<h1 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h1><p>一家咖啡厅售卖咖啡，在这里讨论的当然是网上售卖。父类是<code>Beverage</code>抽象类，包含一个抽象方法_cost()_，根据不同口味实现不同的价格，诸如HouseBlend, DarkRoast Decaf, Espresso… 购买咖啡时，也可以加入各种调料，如豆浆、摩卡等等，这些也是要收费的，最终下单时会将这些所有整合。</p>
+<h1 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h1><p>一家咖啡厅售卖咖啡，在这里讨论的当然是网上售卖。父类是<code>Beverage</code>抽象类，包含一个抽象方法*cost()*，根据不同口味实现不同的价格，诸如HouseBlend, DarkRoast Decaf, Espresso… 购买咖啡时，也可以加入各种调料，如豆浆、摩卡等等，这些也是要收费的，最终下单时会将这些所有整合。</p>
 <p>如何高效设计呢？如果某个调料价格上涨该从何处修改？新增原料怎么办？</p>
 <blockquote>
 <p>类应该堆扩展开放，对修改关闭。</p>

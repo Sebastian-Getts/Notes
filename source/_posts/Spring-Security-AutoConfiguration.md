@@ -2,7 +2,7 @@
 title: Spring Security AutoConfiguration
 date: 2021-03-22 22:18:10
 categories: springsecurity
-tags: security
+tags: autoconfiguration
 ---
 
 ​        最近有设计权限模块，用到了*Spring Security*，在SpringBoot项目中导入了相关的jar包后几乎不用做任何配置（当然，除了启用的*@EnableWebSecurity*）就会拦截请求，达到了“安全“的目的，配置的方式也是多种多样，我们先从”方便使用“这个角度，看看他如何做到的”拆箱即用“。
@@ -13,7 +13,7 @@ tags: security
 
 # 入口
 
-​        在SpringBoot中使用注解来解放xml配置文件后，一直都是*@Configuration*的天下，开启一个模块的功能同样需要它。开头提到的那个注解*@EnableWebSecurity*就是探究的入口：
+​        在SpringBoot中使用注解来解放xml配置文件后，一直都是_@Configuration_的天下，开启一个模块的功能同样需要它。开头提到的那个注解_@EnableWebSecurity_就是探究的入口：
 
 ```java
 @Retention(value = java.lang.annotation.RetentionPolicy.RUNTIME)
@@ -34,7 +34,7 @@ public @interface EnableWebSecurity {
 }
 ```
 
-我们看到通过*@Import(...)*导入了三个class，后两个都是以*Selector*结尾，在命名规范的Spring源码中大概是可以猜出内容的：根据某个条件选择性地加载类，也就是动态地*@Import(...)*，这里我们不去关注Selector，从”方便使用“的角度，我们是来探究开箱即用的，所以着重看下第一个*WebSecurityConfiguration*配置类。
+我们看到通过`@Import(...)`导入了三个class，后两个都是以_Selector_结尾，在命名规范的Spring源码中大概是可以猜出内容的：根据某个条件选择性地加载类，也就是动态地`@Import(...)`，这里我们不去关注Selector，从”方便使用“的角度，我们是来探究开箱即用的，所以着重看下第一个_WebSecurityConfiguration_配置类。
 
 在进入第一个配置类之前有必要看一下这个注解的注释信息：
 

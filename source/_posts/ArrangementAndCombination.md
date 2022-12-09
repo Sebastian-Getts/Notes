@@ -1,8 +1,8 @@
 ---
 title: ArrangementAndCombination
 date: 2022-09-30 16:59:04
-categories: java
-tags: Leetcode
+categories: leetcode
+tags: combination
 ---
 
 本文整理排列组合相关的算法，包含各类可能存在的附加条件。相关列题参考Leetcode的`combination sum`以及`subset`系列。

@@ -30,7 +30,7 @@ public synchronized void testMehthod(){
 
 // ReentrantLock
 private ReentrantLock lock = new ReentrantLock();
-public void modifyPublicResources()){
+public void modifyPublicResources(){
     try{
         lock.lock();
         // do something...

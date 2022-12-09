@@ -2,7 +2,7 @@
 title: observer
 date: 2020-06-12 17:12:38
 categories: designpatterns
-tags: design_patterns
+tags: observer
 ---
 
 观察者模式，融入一个场景的话就是观察者能够及时的知晓被观察者的动态。换句话说，改变常规的获取信息的方式，就是被观察者的每次动态推送到观察者。有咩有MQ的味道？

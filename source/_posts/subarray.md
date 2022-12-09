@@ -1,10 +1,10 @@
 ---
 title: subarray
 date: 2021-02-27 13:45:38
-categories: Leetcode
+categories: leetcode
 tags: 
-- double poiters
-- map+preSum
+- double pointers
+- preSum
 ---
 
 这篇聊聊双指针以及他的替代方法。title是subarray，这是因为相关的题使用双指针解起来是十分方便的，但是也有不适用的情况，所以更建议使用一步到位的`map` + `preSum`，双指针的思路是很容易理解的，后者需要绕个弯。

@@ -2,7 +2,7 @@
 title: springmvc-argument
 date: 2021-04-07 12:20:01
 categories: springmvc
-tags: source
+tags: argument
 ---
 
 这一篇承接上面的handlerMapping，在通过request获取到handlerExecutionChain和handler之后的处理操作，实际上不同的handlerMapping映射出来的东西是不一样的，adapter在这里的作用是用handler得到对应的视图方法。
@@ -124,7 +124,7 @@ public class SimpleServletHandlerAdapter implements HandlerAdapter {
 }
 ```
 
-他的实现类大都像上面的一样支持某种类型的handler，但我们最常用的是`RequestMappingHandlerAdapter`，他是专门用来处理标记了*@RequestMapping*注解的HandlerMethod。
+他的实现类大都像上面的一样支持某种类型的handler，但我们最常用的是`RequestMappingHandlerAdapter`，他是专门用来处理标记了_@RequestMapping_注解的HandlerMethod。
 
 # 参数处理
 

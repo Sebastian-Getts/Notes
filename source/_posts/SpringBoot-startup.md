@@ -2,7 +2,7 @@
 title: SpringBoot startup
 date: 2021-02-15 13:18:14
 categories: springboot
-tags: source
+tags: startup
 ---
 
 出个系列总结一下SpringBoot，会偏底层一些。这篇主要介绍SpringBoot的大致启动过程，细节会在稍后文章中讲解。
@@ -357,7 +357,7 @@ protected void load(ApplicationContext context, Object[] sources) {
 
 # 总结
 
-我们启动SpringBoot很简单，实际上内部做了非常多的事情，正是这些“约定”简化了我们的使用。核心是围绕着上下文来做的：
+我们启动SpringBoot虽然很简单，但实际上内部做了非常多的事情，正是这些“约定”简化了我们的使用。核心是围绕着上下文来做的：
 
 - 根据应用程序的类型创建对应的上下文
 - 初始化器配置上下文

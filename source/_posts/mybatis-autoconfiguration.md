@@ -1,7 +1,7 @@
 ---
 title: mybatis autoconfiguration
 date: 2021-03-09 20:48:57
-categories: myabtis
+categories: springbot
 tags: mybatis
 ---
 
@@ -84,7 +84,7 @@ public static class MapperScannerRegistrarNotFoundConfiguration implements Initi
 }
 ```
 
-这个类导入了一个内部类，并且会在`MapperFactoryBean`和`MapperScannerConfigure.class`缺少时生效，这个大家就很熟悉了，**通常没有写*@MapperScan*时的异常就是在这里产生的**：
+这个类导入了一个内部类，并且会在`MapperFactoryBean`和`MapperScannerConfigure.class`缺少时生效，这个大家就很熟悉了，**通常没有写_@MapperScan_时的异常就是在这里产生的**：
 
 ```java
 public class MapperFactoryBean<T> extends SqlSessionDaoSupport implements FactoryBean<T> {

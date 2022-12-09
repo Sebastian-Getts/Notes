@@ -2,10 +2,10 @@
 title: springmvc-dispatcherservlet
 date: 2021-04-06 13:59:49
 categories: springmvc
-tags: source
+tags: dispatcherservlet
 ---
 
-这是剖析springmvc的第一篇，剖析前的他的原理已经猜的差不多了， 看源码是为了做一个验证，因为他也是依托于spring的，离不开ioc，所以一部分的原理已经清楚了， 剩下的是核心类`DispatcherServlet`以及为springboot适配而做的工作。
+这是剖析springmvc的第一篇，剖析前他的原理已经猜的差不多了， 看源码是为了做一个验证，因为他也是依托于spring的，离不开ioc，所以一部分的原理已经清楚了， 剩下的是核心类`DispatcherServlet`以及为springboot适配而做的工作。
 
 <!-- more -->
 

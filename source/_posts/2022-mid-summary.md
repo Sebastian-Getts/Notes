@@ -1,8 +1,8 @@
 ---
 title: 2022_mid_summary
 date: 2022-05-14 13:53:16
-
-tags: #summary
+categories: essay
+tags: summary
 ---
 
 从2021的年中到现在，将近一年的时间，疫情此起彼伏。

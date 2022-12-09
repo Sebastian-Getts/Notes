@@ -267,7 +267,7 @@
 <p>用于同步的对象</p>
 <h2 id="OOM"><a href="#OOM" class="headerlink" title="OOM"></a>OOM</h2><p>垃圾回收也无法保证JVM的正常使用，集体罢工了，这种情况怎么办<del>（很无奈，至今没遇到过）</del></p>
 <ol>
-<li><p>通过分析工具对dump出来的快照进行分析，明确内存中导致OOM的对象是否是必要的， 以此区分是<em>Memory Leak</em>还是<em>Memory Overflow</em>。</p>
+<li><p>通过分析工具（目前为止我都是在客户端看的，运维同事提供dump日志，我用jdk自带的工具jvisualvm）对dump出来的快照进行分析，明确内存中导致OOM的对象是否是必要的， 以此区分是<em>Memory Leak</em>还是<em>Memory Overflow</em>。</p>
 <ul>
 <li>如果是内存泄漏，可以进一步通过工具找到GC Root引用链，可以看到如何引用到，然后一步步定位到代码的具体位置。</li>
 </ul>
@@ -277,7 +277,7 @@
 <li><p>从代码上检查是否某些对象的生存周期过长、持有状态时间过长、数据结构不合理等情况，减少程序运行周期的内存消耗。</p>
 </li>
 </ol>
-<h3 id="Memory-Leak"><a href="#Memory-Leak" class="headerlink" title="Memory Leak"></a>Memory Leak</h3><p>对象在堆中不再使用了，但无法通过GC回收，如果不加处理，堆中资源会被消耗殆尽，进造成OOM。</p>
+<h3 id="Memory-Leak"><a href="#Memory-Leak" class="headerlink" title="Memory Leak"></a>Memory Leak</h3><p>对象在业务中理应不再使用了，但无法通过GC回收。如果不加处理，堆中资源会被消耗殆尽，进造成OOM。</p>
 
         </div>
 

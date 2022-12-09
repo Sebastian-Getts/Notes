@@ -2,7 +2,7 @@
 title: SpringBoot refresh
 date: 2021-02-15 16:19:30
 categories: springboot
-tags: source
+tags: refresh
 ---
 
 这篇主要分析SpringBoot在run阶段的*refresh*过程。

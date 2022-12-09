@@ -352,3 +352,6 @@ final Node<K,V>[] resize() {
     return newTab;
 }
 ```
+
+# todo
+扩容后的如何快速将原来的数据放置新的位置？

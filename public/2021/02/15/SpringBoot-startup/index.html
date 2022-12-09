@@ -199,7 +199,7 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/source/">source</a>&nbsp;
+                        <a href="/tags/startup/">startup</a>&nbsp;
                     </li>
                 
             </ul>
@@ -285,7 +285,7 @@
 <h3 id="contextLoaded"><a href="#contextLoaded" class="headerlink" title="contextLoaded"></a>contextLoaded</h3><p>这里主要是创建<code>BeanDefinitionLoader</code>，用来后续从xml、javaConfig中加载bean。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">load</span><span class="params">(ApplicationContext context, Object[] sources)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (logger.isDebugEnabled()) &#123;</span><br><span class="line">        logger.debug(<span class="string">&quot;Loading source &quot;</span> + StringUtils.arrayToCommaDelimitedString(sources));</span><br><span class="line">    &#125;</span><br><span class="line">    BeanDefinitionLoader loader = createBeanDefinitionLoader(getBeanDefinitionRegistry(context), sources);</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.beanNameGenerator != <span class="keyword">null</span>) &#123;</span><br><span class="line">        loader.setBeanNameGenerator(<span class="keyword">this</span>.beanNameGenerator);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.resourceLoader != <span class="keyword">null</span>) &#123;</span><br><span class="line">        loader.setResourceLoader(<span class="keyword">this</span>.resourceLoader);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">this</span>.environment != <span class="keyword">null</span>) &#123;</span><br><span class="line">        loader.setEnvironment(<span class="keyword">this</span>.environment);</span><br><span class="line">    &#125;</span><br><span class="line">    loader.load();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>我们启动SpringBoot很简单，实际上内部做了非常多的事情，正是这些“约定”简化了我们的使用。核心是围绕着上下文来做的：</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>我们启动SpringBoot虽然很简单，但实际上内部做了非常多的事情，正是这些“约定”简化了我们的使用。核心是围绕着上下文来做的：</p>
 <ul>
 <li>根据应用程序的类型创建对应的上下文</li>
 <li>初始化器配置上下文</li>

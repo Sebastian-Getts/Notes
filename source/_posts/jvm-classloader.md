@@ -1,7 +1,7 @@
 ---
 title: jvm classloader
 date: 2021-03-23 23:32:02
-categories: JVM
+categories: jvm
 tags: classloader
 ---
 

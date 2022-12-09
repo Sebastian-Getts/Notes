@@ -1,8 +1,11 @@
 ---
 title: jump games
 date: 2021-05-24 12:13:39
-categories: LeetCode
-tags: greedy, dp, stratey
+categories: leetcode
+tags: 
+- greedy
+- dp
+- stratey
 ---
 
 *Jump Games*在LeetCode中是一个系列的问题，涉及动态规划、贪心等策略，非常有意思，尤其是昨天周赛再次遇到了这个系列的新题，在此复盘、总结。

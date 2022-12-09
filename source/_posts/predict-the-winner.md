@@ -1,7 +1,7 @@
 ---
 title: predict the winner
 date: 2021-05-14 15:59:32
-categories: Leetcode
+categories: leetcode
 tags: dp
 ---
 

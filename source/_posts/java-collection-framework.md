@@ -1,7 +1,7 @@
 ---
 title: java collection framework
 date: 2021-03-06 12:03:11
-categories: jdk
+categories: java
 tags: framework
 ---
 

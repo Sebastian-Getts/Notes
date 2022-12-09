@@ -1,8 +1,8 @@
 ---
 title: volatile
 date: 2020-07-20 21:23:51
-categories: JVM
-tags: lock
+categories: jvm
+tags: volatile
 ---
 
 这个关键字用于将Java变量标记为`being stored in main memory`，意味着每次对volatile变量的读取都将从计算机内存中读取，而不是从CPU缓存中读取，并且对volatile变量的写入都将被写入主存而不是CPU缓存。

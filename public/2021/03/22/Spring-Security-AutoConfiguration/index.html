@@ -199,7 +199,7 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/security/">security</a>&nbsp;
+                        <a href="/tags/autoconfiguration/">autoconfiguration</a>&nbsp;
                     </li>
                 
             </ul>
@@ -223,10 +223,10 @@
 
 <!-- toc -->
 
-<h1 id="入口"><a href="#入口" class="headerlink" title="入口"></a>入口</h1><p>​        在SpringBoot中使用注解来解放xml配置文件后，一直都是*@Configuration<em>的天下，开启一个模块的功能同样需要它。开头提到的那个注解</em>@EnableWebSecurity*就是探究的入口：</p>
+<h1 id="入口"><a href="#入口" class="headerlink" title="入口"></a>入口</h1><p>​        在SpringBoot中使用注解来解放xml配置文件后，一直都是_@Configuration_的天下，开启一个模块的功能同样需要它。开头提到的那个注解_@EnableWebSecurity_就是探究的入口：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Retention(value = java.lang.annotation.RetentionPolicy.RUNTIME)</span></span><br><span class="line"><span class="meta">@Target(value = &#123; java.lang.annotation.ElementType.TYPE &#125;)</span></span><br><span class="line"><span class="meta">@Documented</span></span><br><span class="line"><span class="meta">@Import(&#123; WebSecurityConfiguration.class,</span></span><br><span class="line"><span class="meta">        SpringWebMvcImportSelector.class,</span></span><br><span class="line"><span class="meta">        OAuth2ImportSelector.class &#125;)</span></span><br><span class="line"><span class="meta">@EnableGlobalAuthentication</span></span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> EnableWebSecurity &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Controls debugging support for Spring Security. Default is false.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@return</span> if true, enables debug support with Spring Security</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">boolean</span> <span class="title">debug</span><span class="params">()</span> <span class="keyword">default</span> <span class="keyword">false</span></span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>我们看到通过*@Import(…)<em>导入了三个class，后两个都是以</em>Selector<em>结尾，在命名规范的Spring源码中大概是可以猜出内容的：根据某个条件选择性地加载类，也就是动态地</em>@Import(…)<em>，这里我们不去关注Selector，从”方便使用“的角度，我们是来探究开箱即用的，所以着重看下第一个</em>WebSecurityConfiguration*配置类。</p>
+<p>我们看到通过<code>@Import(...)</code>导入了三个class，后两个都是以_Selector_结尾，在命名规范的Spring源码中大概是可以猜出内容的：根据某个条件选择性地加载类，也就是动态地<code>@Import(...)</code>，这里我们不去关注Selector，从”方便使用“的角度，我们是来探究开箱即用的，所以着重看下第一个_WebSecurityConfiguration_配置类。</p>
 <p>在进入第一个配置类之前有必要看一下这个注解的注释信息：</p>
 <blockquote>
 <p>Add this annotation to an @Configuration class to have the Spring Security configuration defined in any WebSecurityConfigurer or more likely by extending the WebSecurityConfigurerAdapter base class and overriding individual methods</p>

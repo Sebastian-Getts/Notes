@@ -2,7 +2,7 @@
 title: springmvc-dispatch
 date: 2021-04-06 16:35:27
 categories: springmvc
-tags: source
+tags: dispatch
 ---
 
 ​        如何匹配controller，根据我们的使用以及对spring容器的理解，我可以猜测是通过反射获取注解，进而分类的，那springmvc是对他如何封装的呢？在springboot中又是如何融入springmvc，何时做的那些工作呢？

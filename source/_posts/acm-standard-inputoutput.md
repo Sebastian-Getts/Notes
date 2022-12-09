@@ -1,7 +1,7 @@
 ---
 title: acm standard inputoutput
 date: 2021-04-19 21:56:55
-categories: Leetcode
+categories: leetcode
 tags: standard
 ---
 

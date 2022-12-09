@@ -1,8 +1,8 @@
 ---
 title: search suggestions system
 date: 2021-05-31 22:54:11
-categories: LeetCode
-tags: treeMap trie
+categories: leetcode
+tags: treeMap
 ---
 
 来源于5月”每日一题“板块中最后一天的一道题，乍一看应该是用`Trie`，但是实现起来有些复杂，没有其他更好的思路，然后评论区一看，又被Lee神的代码震撼到了。
