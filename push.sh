@@ -4,40 +4,57 @@
 CHOICE=''
 
 function hexo_opr {
-    echo '=======hexo start clean========'
-    hexo clean
+    echo '===hexo start to clean...'
+    hexo clean >> process.log 2>&1
     if [[ $? -ne 0 ]]; then
-        echo '======hexo clean failed======'
+        echo '===hexo clean failed'
         exit
     fi
-    echo '=======hexo start generate======'
-    hexo g
+    echo '===hexo clean done'
+    echo '===hexo start to generate...'
+    hexo g >> process.log 2>&1
     if [[ $? -ne 0 ]]; then
-        echo '=========hexo generate failed======='
+        echo '===hexo generate failed======='
         exit
     fi
-    echo '=======hexo start deploy========='
-    hexo deploy
+    echo '===hexo generate done'
+    echo '===hexo start to deploy...'
+    hexo d >> process.log 2>&1
     if [[ $? -ne 0 ]]; then
-        echo '=========hexo deploy failed======='
+        echo '===hexo deploy failed'
         exit
     fi
+    echo '===hexo deploy done'
+    echo -e "\n"
 }
 
 function git_opr {
-    read -t 15 -p "commit messsage: " MESSAGE
-    echo '===========git status=================='
+    echo '===git start...'
+    sleep 3
     git status
-    echo '===========git status=================='
-    choice 'Do you want to continue?(y/n) '
-    if [[ $? = 'y' ]]; then
-        echo '==========start git add && comit && push=========='
-        git add -A
-        git commit -m $MESSAGE
-        git push
-    else
+    read -t 15 -p "Here's git status info, do you want to continue?(y/n): " GIT_OPR_ANS
+    if [[ ${GIT_OPR_ANS} != 'y' ]]; then
+        echo "bye~"
+        exit;
+    fi
+    echo '===git add...'
+    git add -A
+    echo '===git add All done'
+    git status
+    read -t 60 -p "commit messsage: " MESSAGE
+    echo '===git commit...'
+    git commit -m "$MESSAGE" >> process.log 2>&1
+    if [[ $? -ne 0 ]]; then
+        echo '==git commit failed'
         exit
     fi
+    echo '===git commit done'
+    echo '===git push...'
+    git push
+    if [[ $? -ne 0 ]]; then
+        echo '===git psuh failed'
+    fi
+    echo '===git push done'
 }
 
 function choice {
@@ -54,16 +71,17 @@ function choice {
 }
 
 function main {
+    init_env
     echo 'Do you want to execute hexo or git? '
     PS3="Enter option: "
-    select option in "git" "hexo" "git && hexo" "Exit"
+    select option in "git" "hexo" "hexo && git" "Exit"
     do
         case $option in
             "git")
                 git_opr;;
             "hexo")
                 hexo_opr;;
-            "git && hexo")
+            "hexo && git")
                 hexo_opr
                 git_opr;;
             "Exit")
@@ -75,6 +93,16 @@ function main {
         done
 }
 
+function init_env() {
+    cat process.log > /dev/null
+    if [[ $? -ne 0 ]]; then
+        touch process.log
+    fi
+    cat process.log > /dev/null
+    if [[ $? -ne 0 ]]; then
+        echo "failed to touch process.log"
+    fi
+    "" > process.log
+}
+
 main
-#hexoOpr
-#gitOpr
